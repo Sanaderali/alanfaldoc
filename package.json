@@ -1,0 +1,39 @@
+{
+  "name": "alanfaldoc",
+  "version": "1.0.0",
+  "description": "Alan Faldo's Business website",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sanaderali/alanfaldoc.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Sanaderali/alanfaldoc/issues"
+  },
+  "homepage": "https://github.com/Sanaderali/alanfaldoc#readme",
+  "dependencies": {
+    "@tailwindcss/postcss": "^4.3.3",
+    "next": "^16.4.3",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.5",
+    "@types/react": "^19.3.0",
+    "autoprefixer": "^10.6.1",
+    "eslint": "^9.39.5",
+    "eslint-config-next": "^16.4.3",
+    "postcss": "^8.5.31",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^6.0.3"
+  }
+}
