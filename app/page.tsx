@@ -11,20 +11,20 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center p-4 sm:p-6 md:p-8 overflow-hidden relative">
-      {/* Animated background elements */}
+    <main className="min-h-screen bg-white flex items-center justify-center p-4 sm:p-6 md:p-8 overflow-hidden relative">
+      {/* Animated background elements - light colored */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 -right-40 w-60 h-60 md:w-80 md:h-80 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse-slow"></div>
-        <div className="absolute -bottom-40 -left-40 w-60 h-60 md:w-80 md:h-80 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse-slow" style={{ animationDelay: "1s" }}></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-60 h-60 md:w-80 md:h-80 bg-pink-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse-slow" style={{ animationDelay: "2s" }}></div>
+        <div className="absolute -top-40 -right-40 w-60 h-60 md:w-80 md:h-80 bg-emerald-200 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-pulse-slow"></div>
+        <div className="absolute -bottom-40 -left-40 w-60 h-60 md:w-80 md:h-80 bg-red-200 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-pulse-slow" style={{ animationDelay: "1s" }}></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-60 h-60 md:w-80 md:h-80 bg-gray-200 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-pulse-slow" style={{ animationDelay: "2s" }}></div>
       </div>
 
-      {/* Floating particles */}
+      {/* Floating particles - dark */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {[...Array(20)].map((_, i) => (
           <div
             key={i}
-            className="absolute w-1 h-1 bg-white/30 rounded-full animate-float"
+            className="absolute w-1 h-1 bg-gray-400/40 rounded-full animate-float"
             style={{
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
@@ -40,10 +40,10 @@ export default function Home() {
         <div className="mb-6 md:mb-10 flex justify-center animate-scale-in">
           <div className="relative w-48 h-48 sm:w-56 sm:h-56 md:w-72 md:h-72 lg:w-80 lg:h-80 transition-transform hover:scale-105 duration-500">
             <Image
-              src="/logo.png"
+              src="/logo-black.png"
               alt="Al Anfal Doc Logo"
               fill
-              className="object-contain drop-shadow-2xl"
+              className="object-contain drop-shadow-lg"
               priority
             />
           </div>
@@ -51,18 +51,18 @@ export default function Home() {
 
         {/* Title with gradient text */}
         <div className="mb-8 md:mb-12">
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold bg-gradient-to-r from-white via-purple-200 to-pink-200 bg-clip-text text-transparent mb-4 tracking-tight animate-slide-up px-4">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold bg-gradient-to-r from-gray-900 via-gray-700 to-gray-900 bg-clip-text text-transparent mb-4 tracking-tight animate-slide-up px-4">
             Al Anfal Doc
           </h1>
-          <div className="w-24 md:w-32 h-1 bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 mx-auto rounded-full animate-expand"></div>
+          <div className="w-24 md:w-32 h-1 bg-gradient-to-r from-emerald-500 via-red-500 to-gray-600 mx-auto rounded-full animate-expand"></div>
         </div>
 
         {/* Coming Soon Message */}
         <div className="space-y-4 md:space-y-6 mb-10 md:mb-16 px-4">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold text-white/90 animate-slide-up" style={{ animationDelay: "0.2s" }}>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold text-gray-800 animate-slide-up" style={{ animationDelay: "0.2s" }}>
             Something Amazing is Coming
           </h2>
-          <p className="text-base sm:text-lg md:text-xl text-white/70 max-w-2xl mx-auto leading-relaxed animate-slide-up" style={{ animationDelay: "0.4s" }}>
+          <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed animate-slide-up" style={{ animationDelay: "0.4s" }}>
             We're crafting an exceptional documentation experience just for you.
             Stay tuned for the launch of something extraordinary.
           </p>
@@ -70,7 +70,7 @@ export default function Home() {
 
         {/* Email Notification Form */}
         <div className="max-w-md mx-auto mb-10 md:mb-16 px-4 animate-slide-up" style={{ animationDelay: "0.6s" }}>
-          <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-2 shadow-2xl border border-white/20 hover:border-white/40 transition-all duration-300">
+          <div className="bg-gray-50 rounded-2xl p-2 shadow-xl border border-gray-200 hover:border-gray-300 hover:shadow-2xl transition-all duration-300">
             <form className="flex flex-col sm:flex-row gap-2" onSubmit={(e) => {
               e.preventDefault();
               const form = e.target as HTMLFormElement;
@@ -83,11 +83,11 @@ export default function Home() {
                 name="email"
                 placeholder="Enter your email"
                 required
-                className="flex-1 px-4 sm:px-6 py-3 sm:py-4 rounded-xl bg-white/90 text-slate-900 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-purple-400 transition-all text-sm sm:text-base"
+                className="flex-1 px-4 sm:px-6 py-3 sm:py-4 rounded-xl bg-white text-gray-900 placeholder-gray-500 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all text-sm sm:text-base"
               />
               <button
                 type="submit"
-                className="px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold rounded-xl hover:from-purple-600 hover:to-pink-600 transition-all transform hover:scale-105 active:scale-95 shadow-lg text-sm sm:text-base whitespace-nowrap"
+                className="px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-emerald-600 to-emerald-700 text-white font-semibold rounded-xl hover:from-emerald-700 hover:to-emerald-800 transition-all transform hover:scale-105 active:scale-95 shadow-lg text-sm sm:text-base whitespace-nowrap"
               >
                 Notify Me
               </button>
@@ -99,7 +99,7 @@ export default function Home() {
         <div className="flex justify-center gap-4 md:gap-6 mb-8 animate-slide-up px-4" style={{ animationDelay: "0.8s" }}>
           <a
             href="#"
-            className="w-11 h-11 md:w-14 md:h-14 rounded-full bg-white/10 backdrop-blur-lg border border-white/20 flex items-center justify-center text-white hover:bg-white/20 hover:border-white/40 transition-all transform hover:scale-110 hover:-translate-y-1 duration-300"
+            className="w-11 h-11 md:w-14 md:h-14 rounded-full bg-gray-100 border border-gray-200 flex items-center justify-center text-gray-700 hover:bg-gray-200 hover:border-gray-300 hover:text-gray-900 transition-all transform hover:scale-110 hover:-translate-y-1 duration-300 shadow-md"
             aria-label="Twitter"
           >
             <svg className="w-5 h-5 md:w-6 md:h-6" fill="currentColor" viewBox="0 0 24 24">
@@ -108,7 +108,7 @@ export default function Home() {
           </a>
           <a
             href="#"
-            className="w-11 h-11 md:w-14 md:h-14 rounded-full bg-white/10 backdrop-blur-lg border border-white/20 flex items-center justify-center text-white hover:bg-white/20 hover:border-white/40 transition-all transform hover:scale-110 hover:-translate-y-1 duration-300"
+            className="w-11 h-11 md:w-14 md:h-14 rounded-full bg-gray-100 border border-gray-200 flex items-center justify-center text-gray-700 hover:bg-gray-200 hover:border-gray-300 hover:text-gray-900 transition-all transform hover:scale-110 hover:-translate-y-1 duration-300 shadow-md"
             aria-label="LinkedIn"
           >
             <svg className="w-5 h-5 md:w-6 md:h-6" fill="currentColor" viewBox="0 0 24 24">
@@ -117,7 +117,7 @@ export default function Home() {
           </a>
           <a
             href="#"
-            className="w-11 h-11 md:w-14 md:h-14 rounded-full bg-white/10 backdrop-blur-lg border border-white/20 flex items-center justify-center text-white hover:bg-white/20 hover:border-white/40 transition-all transform hover:scale-110 hover:-translate-y-1 duration-300"
+            className="w-11 h-11 md:w-14 md:h-14 rounded-full bg-gray-100 border border-gray-200 flex items-center justify-center text-gray-700 hover:bg-gray-200 hover:border-gray-300 hover:text-gray-900 transition-all transform hover:scale-110 hover:-translate-y-1 duration-300 shadow-md"
             aria-label="Instagram"
           >
             <svg className="w-5 h-5 md:w-6 md:h-6" fill="currentColor" viewBox="0 0 24 24">
@@ -127,7 +127,7 @@ export default function Home() {
         </div>
 
         {/* Footer */}
-        <div className="mt-8 md:mt-12 text-white/50 text-xs sm:text-sm px-4 animate-slide-up" style={{ animationDelay: "1s" }}>
+        <div className="mt-8 md:mt-12 text-gray-500 text-xs sm:text-sm px-4 animate-slide-up" style={{ animationDelay: "1s" }}>
           <p>&copy; {new Date().getFullYear()} Al Anfal Doc. All rights reserved.</p>
         </div>
       </div>
