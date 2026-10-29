@@ -4,7 +4,13 @@
       "Bash(npx create-next-app@latest . --typescript --tailwind --app --no-src-dir --import-alias \"@/*\" --eslint)",
       "Bash(git add *)",
       "Bash(git commit *)",
-      "Bash(git push *)"
+      "Bash(git push *)",
+      "Bash(npm install *)",
+      "Bash(npm uninstall *)",
+      "Bash(mkdir -p D:/alanfaldoc/public && cp ~/Downloads/bg11.jpg D:/alanfaldoc/public/hero-team.jpg 2>/dev/null || echo \"Please add bg11.jpg to public folder manually\")"
+    ],
+    "additionalDirectories": [
+      "C:\\Users\\Administrator\\Downloads"
     ]
   }
 }
