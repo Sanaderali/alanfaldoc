@@ -25,11 +25,11 @@ export default function Home() {
     <div className="min-h-screen bg-[#f6f7f9]">
       {/* Header - Light Background */}
       <header className="bg-white/80 backdrop-blur-md border-b border-gray-200/50 sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-2 sm:py-3 md:py-4">
           <div className="flex justify-between items-center">
-            {/* Logo - Medium Size */}
+            {/* Logo - Responsive Size */}
             <Link href="/" className="flex items-center group">
-              <div className="relative w-24 h-24 sm:w-28 sm:h-28 transform group-hover:scale-105 transition-transform duration-300">
+              <div className="relative w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 transform group-hover:scale-105 transition-transform duration-300">
                 <Image
                   src="/logo-black.png"
                   alt="Al Anfal Doc"
@@ -105,26 +105,26 @@ export default function Home() {
       </header>
 
       {/* Hero Section with Team Image */}
-      <section id="home" className="relative bg-[#f6f7f9] pt-24 pb-0">
+      <section id="home" className="relative bg-[#f6f7f9] pt-16 sm:pt-20 md:pt-24 pb-0">
         {/* Content Container */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6 sm:mb-8 md:mb-12">
           <div className={`text-center transition-all duration-1000 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             {/* Tagline */}
-            <p className="text-sm font-semibold tracking-widest text-gray-500 uppercase mb-6">
+            <p className="text-xs sm:text-sm font-semibold tracking-wider sm:tracking-widest text-gray-500 uppercase mb-4 sm:mb-6">
               HELLO! THIS IS AL ANFAL DOC
             </p>
 
             {/* Main Heading */}
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-gray-900 mb-8 leading-tight px-4">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-gray-900 mb-6 sm:mb-8 leading-tight px-2 sm:px-4">
               We bring rapid solutions<br />for your business.
             </h1>
 
             {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <Link href="#services" className="px-10 py-4 bg-[#343f52] text-white font-semibold rounded-full hover:bg-gray-900 transition-all duration-300 transform hover:scale-105 shadow-lg text-base">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center">
+              <Link href="#services" className="w-full sm:w-auto px-8 sm:px-10 py-3 sm:py-4 bg-[#343f52] text-white font-semibold rounded-full hover:bg-gray-900 transition-all duration-300 transform hover:scale-105 shadow-lg text-sm sm:text-base">
                 Explore Now
               </Link>
-              <Link href="#contact" className="px-10 py-4 bg-white text-gray-900 font-semibold rounded-full border-2 border-gray-900 hover:bg-gray-50 transition-all duration-300 transform hover:scale-105 text-base">
+              <Link href="#contact" className="w-full sm:w-auto px-8 sm:px-10 py-3 sm:py-4 bg-white text-gray-900 font-semibold rounded-full border-2 border-gray-900 hover:bg-gray-50 transition-all duration-300 transform hover:scale-105 text-sm sm:text-base">
                 Contact Us
               </Link>
             </div>
@@ -132,7 +132,7 @@ export default function Home() {
         </div>
 
         {/* Full-Width Team Image - No Container */}
-        <div className="relative w-full h-[400px] md:h-[500px] lg:h-[550px]">
+        <div className="relative w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[550px]">
           <Image
             src="/hero-team.jpg"
             alt="Professional Team"
@@ -145,23 +145,23 @@ export default function Home() {
       </section>
 
       {/* Services Section */}
-      <section id="services" className="py-24 px-4 sm:px-6 lg:px-8 bg-white">
+      <section id="services" className="py-12 sm:py-16 md:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-white">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">Our Services</h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          <div className="text-center mb-10 sm:mb-12 md:mb-16">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-3 sm:mb-4">Our Services</h2>
+            <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-2xl mx-auto px-4">
               Comprehensive business setup and corporate services tailored for Dubai & UAE
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
             {services.map((service, index) => (
               <div
                 key={index}
-                className="p-8 bg-white rounded-2xl border-2 border-gray-100 hover:border-gray-900 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 group"
+                className="p-6 sm:p-7 md:p-8 bg-white rounded-xl sm:rounded-2xl border-2 border-gray-100 hover:border-gray-900 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 group"
               >
-                <div className="text-5xl mb-4 transform group-hover:scale-110 transition-transform duration-300">{service.icon}</div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-3">{service.title}</h3>
-                <p className="text-gray-600 leading-relaxed">{service.desc}</p>
+                <div className="text-4xl sm:text-5xl mb-3 sm:mb-4 transform group-hover:scale-110 transition-transform duration-300">{service.icon}</div>
+                <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2 sm:mb-3">{service.title}</h3>
+                <p className="text-sm sm:text-base text-gray-600 leading-relaxed">{service.desc}</p>
               </div>
             ))}
           </div>
@@ -169,15 +169,15 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8 bg-[#f6f7f9]">
+      <section className="py-12 sm:py-16 md:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-[#f6f7f9]">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-6">Ready to Start Your Business in Dubai?</h2>
-          <p className="text-xl text-gray-600 mb-10">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-4 sm:mb-6">Ready to Start Your Business in Dubai?</h2>
+          <p className="text-base sm:text-lg md:text-xl text-gray-600 mb-6 sm:mb-8 md:mb-10 px-4">
             Get expert guidance and fast-track your business setup process with our professional team
           </p>
           <Link
             href="#contact"
-            className="inline-block px-12 py-5 bg-[#343f52] text-white font-semibold rounded-full hover:bg-gray-900 transition-all duration-300 transform hover:scale-105 shadow-xl text-lg"
+            className="inline-block w-full sm:w-auto px-10 sm:px-12 py-4 sm:py-5 bg-[#343f52] text-white font-semibold rounded-full hover:bg-gray-900 transition-all duration-300 transform hover:scale-105 shadow-xl text-base sm:text-lg"
           >
             Schedule a Consultation
           </Link>
@@ -186,15 +186,15 @@ export default function Home() {
 
       {/* Footer */}
       <footer className="bg-white border-t-2 border-gray-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12 md:py-16">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 sm:gap-10 md:gap-12">
             <div className="col-span-1 md:col-span-2">
-              <div className="flex items-center space-x-4 mb-6">
-                <div className="relative w-32 h-32">
+              <div className="flex items-center space-x-4 mb-4 sm:mb-6">
+                <div className="relative w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32">
                   <Image src="/logo-black.png" alt="Al Anfal Doc" fill className="object-contain" />
                 </div>
               </div>
-              <p className="text-gray-600 mb-6 max-w-md leading-relaxed">
+              <p className="text-sm sm:text-base text-gray-600 mb-4 sm:mb-6 max-w-md leading-relaxed">
                 Your trusted partner for Dubai business setup, corporate services, PRO services, visa processing, and document clearing in UAE.
               </p>
               <div className="flex space-x-4">
