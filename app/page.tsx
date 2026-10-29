@@ -170,67 +170,146 @@ export default function Home() {
               </Link>
             </div>
 
-            {/* Right Side - Animated Reviews */}
-            <div className="relative h-[500px] sm:h-[600px]">
-              {/* Review Card 1 */}
-              <div className="absolute top-0 right-0 w-full sm:w-[90%] animate-float-slow">
+            {/* Right Side - Auto-Scrolling Reviews */}
+            <div className="relative h-[500px] sm:h-[600px] overflow-hidden">
+              {/* Scrolling Container */}
+              <div className="animate-scroll-reviews space-y-6">
+                {/* Review Card 1 */}
                 <div className="bg-white rounded-2xl shadow-xl p-6 border border-gray-100 hover:shadow-2xl transition-shadow duration-300">
                   <div className="flex items-start space-x-4 mb-4">
-                    <div className="relative w-14 h-14 rounded-full overflow-hidden flex-shrink-0 bg-gray-200">
-                      <div className="w-full h-full flex items-center justify-center text-2xl font-bold text-gray-600">
-                        M
-                      </div>
+                    <div className="relative w-16 h-16 rounded-full overflow-hidden flex-shrink-0 bg-gradient-to-br from-blue-400 to-blue-600">
+                      <Image
+                        src="https://ui-avatars.com/api/?name=Mohammed+Al+Rashid&background=3b82f6&color=fff&size=128"
+                        alt="Mohammed Al Rashid"
+                        fill
+                        className="object-cover"
+                      />
                     </div>
                     <div className="flex-1">
-                      <p className="text-3xl text-gray-400 mb-2">"</p>
+                      <p className="text-4xl text-gray-300 leading-none mb-2">"</p>
                       <p className="text-gray-700 text-sm sm:text-base leading-relaxed">
                         We had a great time collaborating with the Al Anfal team. They have my high recommendation!
                       </p>
                     </div>
                   </div>
-                  <p className="text-right text-sm font-semibold text-gray-500">- Mohammed Al Rashid</p>
+                  <p className="text-right text-sm font-semibold text-gray-900">Mohammed Al Rashid</p>
+                  <p className="text-right text-xs text-gray-500">CEO, Dubai Trade Solutions</p>
                 </div>
-              </div>
 
-              {/* Review Card 2 */}
-              <div className="absolute top-32 sm:top-40 right-0 w-full sm:w-[90%] animate-float-medium" style={{ animationDelay: '1s' }}>
+                {/* Review Card 2 */}
                 <div className="bg-white rounded-2xl shadow-xl p-6 border border-gray-100 hover:shadow-2xl transition-shadow duration-300">
                   <div className="flex items-start space-x-4 mb-4">
-                    <div className="relative w-14 h-14 rounded-full overflow-hidden flex-shrink-0 bg-gray-200">
-                      <div className="w-full h-full flex items-center justify-center text-2xl font-bold text-gray-600">
-                        A
-                      </div>
+                    <div className="relative w-16 h-16 rounded-full overflow-hidden flex-shrink-0 bg-gradient-to-br from-purple-400 to-purple-600">
+                      <Image
+                        src="https://ui-avatars.com/api/?name=Ahmed+Ibrahim&background=9333ea&color=fff&size=128"
+                        alt="Ahmed Ibrahim"
+                        fill
+                        className="object-cover"
+                      />
                     </div>
                     <div className="flex-1">
-                      <p className="text-3xl text-gray-400 mb-2">"</p>
+                      <p className="text-4xl text-gray-300 leading-none mb-2">"</p>
                       <p className="text-gray-700 text-sm sm:text-base leading-relaxed">
                         The team drastically improved our products and helped us increased our business outreach.
                       </p>
                     </div>
                   </div>
-                  <p className="text-right text-sm font-semibold text-gray-500">- Ahmed Ibrahim</p>
+                  <p className="text-right text-sm font-semibold text-gray-900">Ahmed Ibrahim</p>
+                  <p className="text-right text-xs text-gray-500">Founder, Emirates Ventures</p>
                 </div>
-              </div>
 
-              {/* Review Card 3 */}
-              <div className="absolute top-64 sm:top-80 right-0 w-full sm:w-[90%] animate-float-fast" style={{ animationDelay: '2s' }}>
+                {/* Review Card 3 */}
                 <div className="bg-white rounded-2xl shadow-xl p-6 border border-gray-100 hover:shadow-2xl transition-shadow duration-300">
                   <div className="flex items-start space-x-4 mb-4">
-                    <div className="relative w-14 h-14 rounded-full overflow-hidden flex-shrink-0 bg-gray-200">
-                      <div className="w-full h-full flex items-center justify-center text-2xl font-bold text-gray-600">
-                        S
-                      </div>
+                    <div className="relative w-16 h-16 rounded-full overflow-hidden flex-shrink-0 bg-gradient-to-br from-pink-400 to-pink-600">
+                      <Image
+                        src="https://ui-avatars.com/api/?name=Sarah+Abdul&background=ec4899&color=fff&size=128"
+                        alt="Sarah Abdul"
+                        fill
+                        className="object-cover"
+                      />
                     </div>
                     <div className="flex-1">
-                      <p className="text-3xl text-gray-400 mb-2">"</p>
+                      <p className="text-4xl text-gray-300 leading-none mb-2">"</p>
                       <p className="text-gray-700 text-sm sm:text-base leading-relaxed">
-                        I enjoyed every bit of working with the Al Anfal team. They helped us streamline our business process.
+                        I enjoyed every bit of working with the Al Anfal team. They helped streamline our business process.
                       </p>
                     </div>
                   </div>
-                  <p className="text-right text-sm font-semibold text-gray-500">- Sarah Abdul</p>
+                  <p className="text-right text-sm font-semibold text-gray-900">Sarah Abdul</p>
+                  <p className="text-right text-xs text-gray-500">Director, Gulf Business Hub</p>
+                </div>
+
+                {/* Review Card 4 */}
+                <div className="bg-white rounded-2xl shadow-xl p-6 border border-gray-100 hover:shadow-2xl transition-shadow duration-300">
+                  <div className="flex items-start space-x-4 mb-4">
+                    <div className="relative w-16 h-16 rounded-full overflow-hidden flex-shrink-0 bg-gradient-to-br from-green-400 to-green-600">
+                      <Image
+                        src="https://ui-avatars.com/api/?name=Fatima+Hassan&background=10b981&color=fff&size=128"
+                        alt="Fatima Hassan"
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-4xl text-gray-300 leading-none mb-2">"</p>
+                      <p className="text-gray-700 text-sm sm:text-base leading-relaxed">
+                        Professional, efficient, and reliable. Al Anfal Doc made our company formation process seamless!
+                      </p>
+                    </div>
+                  </div>
+                  <p className="text-right text-sm font-semibold text-gray-900">Fatima Hassan</p>
+                  <p className="text-right text-xs text-gray-500">Managing Partner, Al Noor Group</p>
+                </div>
+
+                {/* Review Card 5 */}
+                <div className="bg-white rounded-2xl shadow-xl p-6 border border-gray-100 hover:shadow-2xl transition-shadow duration-300">
+                  <div className="flex items-start space-x-4 mb-4">
+                    <div className="relative w-16 h-16 rounded-full overflow-hidden flex-shrink-0 bg-gradient-to-br from-orange-400 to-orange-600">
+                      <Image
+                        src="https://ui-avatars.com/api/?name=Khalid+Mansoor&background=f97316&color=fff&size=128"
+                        alt="Khalid Mansoor"
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-4xl text-gray-300 leading-none mb-2">"</p>
+                      <p className="text-gray-700 text-sm sm:text-base leading-relaxed">
+                        Outstanding service! They handled all our PRO requirements with professionalism and speed.
+                      </p>
+                    </div>
+                  </div>
+                  <p className="text-right text-sm font-semibold text-gray-900">Khalid Mansoor</p>
+                  <p className="text-right text-xs text-gray-500">Operations Manager, Dubai Logistics</p>
+                </div>
+
+                {/* Duplicate set for seamless loop */}
+                <div className="bg-white rounded-2xl shadow-xl p-6 border border-gray-100 hover:shadow-2xl transition-shadow duration-300">
+                  <div className="flex items-start space-x-4 mb-4">
+                    <div className="relative w-16 h-16 rounded-full overflow-hidden flex-shrink-0 bg-gradient-to-br from-blue-400 to-blue-600">
+                      <Image
+                        src="https://ui-avatars.com/api/?name=Mohammed+Al+Rashid&background=3b82f6&color=fff&size=128"
+                        alt="Mohammed Al Rashid"
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-4xl text-gray-300 leading-none mb-2">"</p>
+                      <p className="text-gray-700 text-sm sm:text-base leading-relaxed">
+                        We had a great time collaborating with the Al Anfal team. They have my high recommendation!
+                      </p>
+                    </div>
+                  </div>
+                  <p className="text-right text-sm font-semibold text-gray-900">Mohammed Al Rashid</p>
+                  <p className="text-right text-xs text-gray-500">CEO, Dubai Trade Solutions</p>
                 </div>
               </div>
+
+              {/* Gradient Overlays for smooth fade */}
+              <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-gray-50 to-transparent pointer-events-none z-10"></div>
+              <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-white to-transparent pointer-events-none z-10"></div>
             </div>
           </div>
         </div>

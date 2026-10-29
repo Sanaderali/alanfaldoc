@@ -176,3 +176,20 @@ body {
 .animate-float-fast {
   animation: floatFast 4s ease-in-out infinite;
 }
+
+@keyframes scrollReviews {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-50%);
+  }
+}
+
+.animate-scroll-reviews {
+  animation: scrollReviews 30s linear infinite;
+}
+
+.animate-scroll-reviews:hover {
+  animation-play-state: paused;
+}
