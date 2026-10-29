@@ -105,10 +105,10 @@ export default function Home() {
       </header>
 
       {/* Hero Section with Team Image */}
-      <section id="home" className="relative bg-[#f6f7f9] pt-24 pb-0 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Content */}
-          <div className={`text-center mb-16 transition-all duration-1000 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+      <section id="home" className="relative bg-[#f6f7f9] pt-24 pb-0">
+        {/* Content Container */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
+          <div className={`text-center transition-all duration-1000 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             {/* Tagline */}
             <p className="text-sm font-semibold tracking-widest text-gray-500 uppercase mb-6">
               HELLO! THIS IS AL ANFAL DOC
@@ -120,7 +120,7 @@ export default function Home() {
             </h1>
 
             {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Link href="#services" className="px-10 py-4 bg-[#343f52] text-white font-semibold rounded-full hover:bg-gray-900 transition-all duration-300 transform hover:scale-105 shadow-lg text-base">
                 Explore Now
               </Link>
@@ -129,17 +129,18 @@ export default function Home() {
               </Link>
             </div>
           </div>
+        </div>
 
-          {/* Team Image */}
-          <div className="relative w-full h-[400px] md:h-[500px] lg:h-[600px] rounded-t-3xl overflow-hidden shadow-2xl">
-            <Image
-              src="/hero-team.jpg"
-              alt="Professional Team"
-              fill
-              className="object-cover object-top"
-              priority
-            />
-          </div>
+        {/* Full-Width Team Image - No Container */}
+        <div className="relative w-full h-[400px] md:h-[500px] lg:h-[550px]">
+          <Image
+            src="/hero-team.jpg"
+            alt="Professional Team"
+            fill
+            className="object-cover object-center"
+            priority
+            sizes="100vw"
+          />
         </div>
       </section>
 
