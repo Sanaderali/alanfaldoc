@@ -144,6 +144,98 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Customer Reviews Section */}
+      <section className="relative py-12 sm:py-16 md:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-50 to-white overflow-hidden">
+        {/* Decorative Background Elements */}
+        <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-gray-100 to-transparent opacity-50 rounded-bl-[150px]"></div>
+
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+            {/* Left Side - Content */}
+            <div className="text-left">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-4 sm:mb-6">
+                Read what our customers love about us
+              </h2>
+              <p className="text-base sm:text-lg text-gray-600 mb-4 leading-relaxed">
+                Over 200 companies from diverse sectors consult us to enhance the user experience of their products and services.
+              </p>
+              <p className="text-base sm:text-lg text-gray-600 mb-6 sm:mb-8 leading-relaxed">
+                We have helped companies increase their customer base and generate multifold revenue with our services.
+              </p>
+              <Link
+                href="#contact"
+                className="inline-block px-8 sm:px-10 py-3 sm:py-4 bg-[#343f52] text-white font-semibold rounded-full hover:bg-gray-900 transition-all duration-300 transform hover:scale-105 shadow-lg text-sm sm:text-base"
+              >
+                Read our success stories
+              </Link>
+            </div>
+
+            {/* Right Side - Animated Reviews */}
+            <div className="relative h-[500px] sm:h-[600px]">
+              {/* Review Card 1 */}
+              <div className="absolute top-0 right-0 w-full sm:w-[90%] animate-float-slow">
+                <div className="bg-white rounded-2xl shadow-xl p-6 border border-gray-100 hover:shadow-2xl transition-shadow duration-300">
+                  <div className="flex items-start space-x-4 mb-4">
+                    <div className="relative w-14 h-14 rounded-full overflow-hidden flex-shrink-0 bg-gray-200">
+                      <div className="w-full h-full flex items-center justify-center text-2xl font-bold text-gray-600">
+                        M
+                      </div>
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-3xl text-gray-400 mb-2">"</p>
+                      <p className="text-gray-700 text-sm sm:text-base leading-relaxed">
+                        We had a great time collaborating with the Al Anfal team. They have my high recommendation!
+                      </p>
+                    </div>
+                  </div>
+                  <p className="text-right text-sm font-semibold text-gray-500">- Mohammed Al Rashid</p>
+                </div>
+              </div>
+
+              {/* Review Card 2 */}
+              <div className="absolute top-32 sm:top-40 right-0 w-full sm:w-[90%] animate-float-medium" style={{ animationDelay: '1s' }}>
+                <div className="bg-white rounded-2xl shadow-xl p-6 border border-gray-100 hover:shadow-2xl transition-shadow duration-300">
+                  <div className="flex items-start space-x-4 mb-4">
+                    <div className="relative w-14 h-14 rounded-full overflow-hidden flex-shrink-0 bg-gray-200">
+                      <div className="w-full h-full flex items-center justify-center text-2xl font-bold text-gray-600">
+                        A
+                      </div>
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-3xl text-gray-400 mb-2">"</p>
+                      <p className="text-gray-700 text-sm sm:text-base leading-relaxed">
+                        The team drastically improved our products and helped us increased our business outreach.
+                      </p>
+                    </div>
+                  </div>
+                  <p className="text-right text-sm font-semibold text-gray-500">- Ahmed Ibrahim</p>
+                </div>
+              </div>
+
+              {/* Review Card 3 */}
+              <div className="absolute top-64 sm:top-80 right-0 w-full sm:w-[90%] animate-float-fast" style={{ animationDelay: '2s' }}>
+                <div className="bg-white rounded-2xl shadow-xl p-6 border border-gray-100 hover:shadow-2xl transition-shadow duration-300">
+                  <div className="flex items-start space-x-4 mb-4">
+                    <div className="relative w-14 h-14 rounded-full overflow-hidden flex-shrink-0 bg-gray-200">
+                      <div className="w-full h-full flex items-center justify-center text-2xl font-bold text-gray-600">
+                        S
+                      </div>
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-3xl text-gray-400 mb-2">"</p>
+                      <p className="text-gray-700 text-sm sm:text-base leading-relaxed">
+                        I enjoyed every bit of working with the Al Anfal team. They helped us streamline our business process.
+                      </p>
+                    </div>
+                  </div>
+                  <p className="text-right text-sm font-semibold text-gray-500">- Sarah Abdul</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Services Section */}
       <section id="services" className="py-12 sm:py-16 md:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-white">
         <div className="max-w-7xl mx-auto">
