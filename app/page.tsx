@@ -23,13 +23,13 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-[#f6f7f9]">
-      {/* Header - Light Background */}
-      <header className="bg-white/80 backdrop-blur-md border-b border-gray-200/50 sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-2 sm:py-3 md:py-4">
+      {/* Header - Compact Design */}
+      <header className="bg-white/95 backdrop-blur-md border-b border-gray-200/50 sticky top-0 z-50 shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
           <div className="flex justify-between items-center">
-            {/* Logo - Responsive Size */}
+            {/* Logo - Larger Size */}
             <Link href="/" className="flex items-center group">
-              <div className="relative w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 transform group-hover:scale-105 transition-transform duration-300">
+              <div className="relative w-32 h-16 sm:w-40 sm:h-20 md:w-48 md:h-24 transform group-hover:scale-105 transition-transform duration-300">
                 <Image
                   src="/logo-black.png"
                   alt="Al Anfal Doc"
@@ -105,27 +105,48 @@ export default function Home() {
       </header>
 
       {/* Hero Section with Team Image */}
-      <section id="home" className="relative bg-[#f6f7f9] pt-16 sm:pt-20 md:pt-24 pb-0">
+      <section id="home" className="relative bg-[#f6f7f9] pt-20 sm:pt-24 md:pt-28 pb-0">
         {/* Content Container */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6 sm:mb-8 md:mb-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8 sm:mb-10 md:mb-12">
           <div className={`text-center transition-all duration-1000 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             {/* Tagline */}
             <p className="text-xs sm:text-sm font-semibold tracking-wider sm:tracking-widest text-gray-500 uppercase mb-4 sm:mb-6">
-              HELLO! THIS IS AL ANFAL DOC
+              YOUR TRUSTED PARTNER IN DUBAI
             </p>
 
             {/* Main Heading */}
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-gray-900 mb-6 sm:mb-8 leading-tight px-2 sm:px-4">
-              We bring rapid solutions<br />for your business.
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-gray-900 mb-4 sm:mb-6 leading-tight px-2 sm:px-4">
+              Dubai Business Setup &<br />Document Clearing Services
             </h1>
+
+            {/* Description */}
+            <p className="text-base sm:text-lg md:text-xl text-gray-600 mb-6 sm:mb-8 max-w-3xl mx-auto leading-relaxed px-4">
+              Complete company formation, PRO services, visa processing, and government documentation solutions for businesses in UAE
+            </p>
+
+            {/* Key Services Pills */}
+            <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-6 sm:mb-8 px-4">
+              <span className="px-4 py-2 bg-white rounded-full text-xs sm:text-sm font-medium text-gray-700 shadow-sm border border-gray-200">
+                ✓ Company Formation
+              </span>
+              <span className="px-4 py-2 bg-white rounded-full text-xs sm:text-sm font-medium text-gray-700 shadow-sm border border-gray-200">
+                ✓ PRO Services
+              </span>
+              <span className="px-4 py-2 bg-white rounded-full text-xs sm:text-sm font-medium text-gray-700 shadow-sm border border-gray-200">
+                ✓ Visa Processing
+              </span>
+              <span className="px-4 py-2 bg-white rounded-full text-xs sm:text-sm font-medium text-gray-700 shadow-sm border border-gray-200">
+                ✓ Document Clearing
+              </span>
+            </div>
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center">
               <Link href="#services" className="w-full sm:w-auto px-8 sm:px-10 py-3 sm:py-4 bg-[#343f52] text-white font-semibold rounded-full hover:bg-gray-900 transition-all duration-300 transform hover:scale-105 shadow-lg text-sm sm:text-base">
-                Explore Now
+                Explore Services
               </Link>
               <Link href="#contact" className="w-full sm:w-auto px-8 sm:px-10 py-3 sm:py-4 bg-white text-gray-900 font-semibold rounded-full border-2 border-gray-900 hover:bg-gray-50 transition-all duration-300 transform hover:scale-105 text-sm sm:text-base">
-                Contact Us
+                Get Free Consultation
               </Link>
             </div>
           </div>
