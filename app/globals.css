@@ -298,3 +298,15 @@ body {
   animation-delay: 0.6s;
   opacity: 0;
 }
+
+/* FAQ Accordion Smooth Transitions */
+.faq-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), padding 0.5s ease;
+}
+
+.faq-content.open {
+  max-height: 500px;
+  transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1), padding 0.6s ease;
+}

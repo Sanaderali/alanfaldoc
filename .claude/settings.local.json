@@ -11,7 +11,8 @@
       "WebFetch(domain:jthemes.net)",
       "Bash(git commit -m 'Redesign with light header, orange CTA buttons, and professional layout inspired by modern immigration consultation websites *)",
       "Bash(git commit -m 'Fix footer styling - light background, proper colors, and professional font *)",
-      "Bash(git commit -m 'Add smooth transitions and animations throughout the page *)"
+      "Bash(git commit -m 'Add smooth transitions and animations throughout the page *)",
+      "Bash(git commit -m 'Add smooth header scroll transition and enhanced FAQ animations *)"
     ],
     "additionalDirectories": [
       "C:\\Users\\Administrator\\Downloads"

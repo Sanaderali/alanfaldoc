@@ -8,9 +8,21 @@ export default function Home() {
   const [mounted, setMounted] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeAccordion, setActiveAccordion] = useState<number | null>(0);
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
     setMounted(true);
+
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY;
+      const windowHeight = window.innerHeight;
+      const scrollThreshold = windowHeight * 0.2; // 20% of viewport height
+
+      setScrolled(scrollPosition > scrollThreshold);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const services = [
@@ -93,11 +105,11 @@ export default function Home() {
       </div>
 
       {/* Main Header */}
-      <header className="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
+      <header className={`bg-white border-b border-gray-200 sticky top-0 z-50 transition-all duration-500 ${scrolled ? 'shadow-xl py-2' : 'shadow-sm py-0'}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16 sm:h-20">
+          <div className={`flex justify-between items-center transition-all duration-500 ${scrolled ? 'h-14 sm:h-16' : 'h-16 sm:h-20'}`}>
             <Link href="/" className="flex items-center">
-              <div className="relative w-28 h-10 sm:w-36 sm:h-12">
+              <div className={`relative transition-all duration-500 ${scrolled ? 'w-24 h-8 sm:w-32 sm:h-10' : 'w-28 h-10 sm:w-36 sm:h-12'}`}>
                 <Image src="/logo-black.png" alt="Al Anfal Doc" fill className="object-contain" priority />
               </div>
             </Link>
@@ -342,18 +354,16 @@ export default function Home() {
                   className="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-100 transition-all duration-300 group"
                 >
                   <span className="font-semibold text-gray-900 text-sm sm:text-base pr-4 group-hover:text-[#ff5722] transition-colors">{index + 1}. {faq.question}</span>
-                  <span className="text-2xl text-gray-400 flex-shrink-0 transform group-hover:scale-125 group-hover:text-[#ff5722] transition-all duration-300">{activeAccordion === index ? '−' : '+'}</span>
+                  <span className={`text-2xl text-gray-400 flex-shrink-0 transform group-hover:scale-125 group-hover:text-[#ff5722] transition-all duration-500 ${activeAccordion === index ? 'rotate-180' : 'rotate-0'}`}>{activeAccordion === index ? '−' : '+'}</span>
                 </button>
-                {activeAccordion === index && (
-                  <div className="px-6 pb-4 animate-slide-down">
-                    <ul className="space-y-2 text-gray-600 text-sm leading-relaxed">
-                      <li className="flex items-start">
-                        <span className="mr-2 mt-1.5 w-1.5 h-1.5 rounded-full bg-[#ff5722] flex-shrink-0"></span>
-                        <span>{faq.answer}</span>
-                      </li>
-                    </ul>
-                  </div>
-                )}
+                <div className={`faq-content ${activeAccordion === index ? 'open' : ''} ${activeAccordion === index ? 'px-6 pb-4 pt-2' : 'px-6'}`}>
+                  <ul className="space-y-2 text-gray-600 text-sm leading-relaxed">
+                    <li className="flex items-start">
+                      <span className="mr-2 mt-1.5 w-1.5 h-1.5 rounded-full bg-[#ff5722] flex-shrink-0"></span>
+                      <span>{faq.answer}</span>
+                    </li>
+                  </ul>
+                </div>
               </div>
             ))}
           </div>
