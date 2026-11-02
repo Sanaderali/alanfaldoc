@@ -8,7 +8,8 @@
       "Bash(npm install *)",
       "Bash(npm uninstall *)",
       "Bash(mkdir -p D:/alanfaldoc/public && cp ~/Downloads/bg11.jpg D:/alanfaldoc/public/hero-team.jpg 2>/dev/null || echo \"Please add bg11.jpg to public folder manually\")",
-      "WebFetch(domain:jthemes.net)"
+      "WebFetch(domain:jthemes.net)",
+      "Bash(git commit -m 'Redesign with light header, orange CTA buttons, and professional layout inspired by modern immigration consultation websites *)"
     ],
     "additionalDirectories": [
       "C:\\Users\\Administrator\\Downloads"
