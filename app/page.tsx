@@ -107,7 +107,7 @@ export default function Home() {
               <Link href="#pages" className="text-gray-800 hover:text-[#ff5722] text-sm font-medium transition-colors">PAGES</Link>
               <Link href="#services" className="text-gray-800 hover:text-[#ff5722] text-sm font-medium transition-colors">MEGA MENU</Link>
               <Link href="#link" className="text-gray-800 hover:text-[#ff5722] text-sm font-medium transition-colors">SIMPLE LINK</Link>
-              <Link href="#consultation" className="px-5 py-2.5 bg-[#ff5722] text-white text-sm font-semibold rounded hover:bg-[#e64a19] transition-all uppercase">
+              <Link href="#consultation" className="px-5 py-2.5 bg-[#ff5722] text-white text-sm font-semibold rounded hover:bg-[#e64a19] hover:shadow-lg hover:scale-105 transition-all duration-300 uppercase">
                 GET CONSULTATION
               </Link>
             </nav>
@@ -180,7 +180,7 @@ export default function Home() {
                 <option>Trade License</option>
                 <option>Document Clearing</option>
               </select>
-              <button type="submit" className="px-6 py-3 bg-[#ff5722] text-white font-semibold rounded hover:bg-[#e64a19] transition-all uppercase text-sm">
+              <button type="submit" className="px-6 py-3 bg-[#ff5722] text-white font-semibold rounded hover:bg-[#e64a19] hover:shadow-lg hover:scale-105 transition-all duration-300 uppercase text-sm">
                 SEND REQUEST
               </button>
             </form>
@@ -192,11 +192,11 @@ export default function Home() {
       <section id="about" className="py-16 md:py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div className="relative h-[300px] sm:h-[400px] rounded-lg overflow-hidden">
-              <Image src="/hero-team.jpg" alt="About Us" fill className="object-cover" />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-white rounded-full flex items-center justify-center shadow-lg cursor-pointer hover:scale-110 transition-transform">
-                  <svg className="w-8 h-8 sm:w-10 sm:h-10 text-[#ff5722] ml-1" fill="currentColor" viewBox="0 0 20 20">
+            <div className="relative h-[300px] sm:h-[400px] rounded-lg overflow-hidden group">
+              <Image src="/hero-team.jpg" alt="About Us" fill className="object-cover transform group-hover:scale-110 transition-transform duration-700" />
+              <div className="absolute inset-0 flex items-center justify-center group-hover:backdrop-blur-sm transition-all duration-500">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-white rounded-full flex items-center justify-center shadow-lg cursor-pointer hover:scale-125 hover:shadow-2xl transition-all duration-500 animate-pulse-slow group">
+                  <svg className="w-8 h-8 sm:w-10 sm:h-10 text-[#ff5722] ml-1 group-hover:scale-110 transition-transform duration-300" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
                   </svg>
                 </div>
@@ -213,7 +213,7 @@ export default function Home() {
               <p className="text-gray-600 mb-6 leading-relaxed">
                 Cursus risus laoreet auctor, varius augue. Nulla dolor and sapien risus nec, luctus mauris donec diam sapien neque in cubilia an ligula quaerat ipsum volute turpis sodales sapien vitae donec an ipsum porta justo integer at velna vitae auctor a magna risus
               </p>
-              <Link href="#" className="inline-block px-8 py-3 border-2 border-gray-800 text-gray-900 font-semibold rounded hover:bg-gray-800 hover:text-white transition-all uppercase text-sm">
+              <Link href="#" className="inline-block px-8 py-3 border-2 border-gray-800 text-gray-900 font-semibold rounded hover:bg-gray-800 hover:text-white hover:shadow-lg hover:scale-105 transition-all duration-300 uppercase text-sm">
                 DISCOVER MORE
               </Link>
             </div>
@@ -234,12 +234,12 @@ export default function Home() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {services.map((service, index) => (
-              <div key={index} className="bg-white rounded-lg p-8 hover:shadow-lg transition-shadow border border-gray-100">
-                <div className="text-4xl mb-4">{service.icon}</div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3">{service.title}</h3>
+              <div key={index} className={`bg-white rounded-lg p-8 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 border border-gray-100 animate-slide-up stagger-${index + 1} group`}>
+                <div className="text-4xl mb-4 transform group-hover:scale-125 transition-transform duration-300">{service.icon}</div>
+                <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-[#ff5722] transition-colors">{service.title}</h3>
                 <p className="text-gray-600 mb-4 leading-relaxed text-sm">{service.desc}</p>
-                <Link href="#" className="text-gray-500 hover:text-[#ff5722] text-sm font-medium transition-colors">
-                  READ MORE ›
+                <Link href="#" className="text-gray-500 hover:text-[#ff5722] text-sm font-medium transition-all inline-flex items-center group-hover:gap-2">
+                  READ MORE <span className="inline-block group-hover:translate-x-1 transition-transform">›</span>
                 </Link>
               </div>
             ))}
@@ -260,10 +260,10 @@ export default function Home() {
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
             {countries.slice(0, 7).map((country, index) => (
-              <div key={index} className="relative h-32 sm:h-40 rounded-lg overflow-hidden group cursor-pointer">
-                <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/70"></div>
-                <div className="absolute inset-0 flex items-center justify-center text-5xl sm:text-6xl">{country.img}</div>
-                <div className="absolute bottom-4 left-0 right-0 text-center">
+              <div key={index} className="relative h-32 sm:h-40 rounded-lg overflow-hidden group cursor-pointer transform hover:scale-105 hover:shadow-xl transition-all duration-500">
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/70 group-hover:to-black/85 transition-all duration-300"></div>
+                <div className="absolute inset-0 flex items-center justify-center text-5xl sm:text-6xl transform group-hover:scale-110 transition-transform duration-500">{country.img}</div>
+                <div className="absolute bottom-4 left-0 right-0 text-center transform group-hover:translate-y-[-4px] transition-transform duration-300">
                   <h3 className="text-white font-bold text-sm sm:text-base">{country.name}</h3>
                 </div>
               </div>
@@ -299,23 +299,23 @@ export default function Home() {
             </p>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
-            <div className="text-center bg-white p-6 sm:p-8 rounded-lg">
-              <div className="text-4xl sm:text-5xl mb-3">🎓</div>
+            <div className="text-center bg-white p-6 sm:p-8 rounded-lg shadow-sm hover:shadow-xl transform hover:scale-110 transition-all duration-500 animate-bounce-in stagger-1 group">
+              <div className="text-4xl sm:text-5xl mb-3 transform group-hover:rotate-12 transition-transform duration-300">🎓</div>
               <div className="text-3xl sm:text-4xl font-bold text-[#ff5722] mb-2">820+</div>
               <div className="text-gray-600 text-sm">Students</div>
             </div>
-            <div className="text-center bg-white p-6 sm:p-8 rounded-lg">
-              <div className="text-4xl sm:text-5xl mb-3">🏛️</div>
+            <div className="text-center bg-white p-6 sm:p-8 rounded-lg shadow-sm hover:shadow-xl transform hover:scale-110 transition-all duration-500 animate-bounce-in stagger-2 group">
+              <div className="text-4xl sm:text-5xl mb-3 transform group-hover:rotate-12 transition-transform duration-300">🏛️</div>
               <div className="text-3xl sm:text-4xl font-bold text-[#ff5722] mb-2">127</div>
               <div className="text-gray-600 text-sm">Universities</div>
             </div>
-            <div className="text-center bg-white p-6 sm:p-8 rounded-lg">
-              <div className="text-4xl sm:text-5xl mb-3">🌍</div>
+            <div className="text-center bg-white p-6 sm:p-8 rounded-lg shadow-sm hover:shadow-xl transform hover:scale-110 transition-all duration-500 animate-bounce-in stagger-3 group">
+              <div className="text-4xl sm:text-5xl mb-3 transform group-hover:rotate-12 transition-transform duration-300">🌍</div>
               <div className="text-3xl sm:text-4xl font-bold text-[#ff5722] mb-2">81</div>
               <div className="text-gray-600 text-sm">Countries</div>
             </div>
-            <div className="text-center bg-white p-6 sm:p-8 rounded-lg">
-              <div className="text-4xl sm:text-5xl mb-3">💼</div>
+            <div className="text-center bg-white p-6 sm:p-8 rounded-lg shadow-sm hover:shadow-xl transform hover:scale-110 transition-all duration-500 animate-bounce-in stagger-4 group">
+              <div className="text-4xl sm:text-5xl mb-3 transform group-hover:rotate-12 transition-transform duration-300">💼</div>
               <div className="text-3xl sm:text-4xl font-bold text-[#ff5722] mb-2">969</div>
               <div className="text-gray-600 text-sm">Immigrations</div>
             </div>
@@ -336,19 +336,19 @@ export default function Home() {
           </div>
           <div className="space-y-3">
             {faqs.map((faq, index) => (
-              <div key={index} className="bg-gray-50 rounded overflow-hidden border border-gray-200">
+              <div key={index} className="bg-gray-50 rounded overflow-hidden border border-gray-200 hover:border-[#ff5722] hover:shadow-md transition-all duration-300">
                 <button
                   onClick={() => setActiveAccordion(activeAccordion === index ? null : index)}
-                  className="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-100 transition-colors"
+                  className="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-100 transition-all duration-300 group"
                 >
-                  <span className="font-semibold text-gray-900 text-sm sm:text-base pr-4">{index + 1}. {faq.question}</span>
-                  <span className="text-2xl text-gray-400 flex-shrink-0">{activeAccordion === index ? '−' : '+'}</span>
+                  <span className="font-semibold text-gray-900 text-sm sm:text-base pr-4 group-hover:text-[#ff5722] transition-colors">{index + 1}. {faq.question}</span>
+                  <span className="text-2xl text-gray-400 flex-shrink-0 transform group-hover:scale-125 group-hover:text-[#ff5722] transition-all duration-300">{activeAccordion === index ? '−' : '+'}</span>
                 </button>
                 {activeAccordion === index && (
-                  <div className="px-6 pb-4">
+                  <div className="px-6 pb-4 animate-slide-down">
                     <ul className="space-y-2 text-gray-600 text-sm leading-relaxed">
                       <li className="flex items-start">
-                        <span className="mr-2 mt-1.5 w-1.5 h-1.5 rounded-full bg-gray-400 flex-shrink-0"></span>
+                        <span className="mr-2 mt-1.5 w-1.5 h-1.5 rounded-full bg-[#ff5722] flex-shrink-0"></span>
                         <span>{faq.answer}</span>
                       </li>
                     </ul>
@@ -378,11 +378,11 @@ export default function Home() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {testimonials.map((testimonial, index) => (
-              <div key={index} className="bg-white rounded-lg p-6 sm:p-8 shadow-sm border border-gray-100">
+              <div key={index} className={`bg-white rounded-lg p-6 sm:p-8 shadow-sm border border-gray-100 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 animate-slide-up stagger-${index + 1} group`}>
                 <div className="flex items-center mb-4">
-                  <div className="w-14 h-14 bg-gray-200 rounded-full flex items-center justify-center text-2xl mr-4">{testimonial.img}</div>
+                  <div className="w-14 h-14 bg-gradient-to-br from-[#ff5722] to-[#e64a19] rounded-full flex items-center justify-center text-2xl mr-4 transform group-hover:scale-110 transition-transform duration-300 shadow-md">{testimonial.img}</div>
                   <div>
-                    <div className="font-bold text-gray-900">{testimonial.name}</div>
+                    <div className="font-bold text-gray-900 group-hover:text-[#ff5722] transition-colors">{testimonial.name}</div>
                     <div className="text-sm text-gray-500">{testimonial.role}</div>
                   </div>
                 </div>
@@ -404,7 +404,7 @@ export default function Home() {
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <span className="text-sm sm:text-base">Call : <span className="font-bold text-lg">+12 9 8765 4321</span></span>
-            <Link href="#" className="px-8 py-3 bg-[#ff5722] text-white font-semibold rounded hover:bg-[#e64a19] transition-all uppercase text-sm">
+            <Link href="#" className="px-8 py-3 bg-[#ff5722] text-white font-semibold rounded hover:bg-[#e64a19] hover:shadow-lg hover:scale-105 transition-all duration-300 uppercase text-sm">
               GET CONSULTATION
             </Link>
           </div>
