@@ -65,7 +65,7 @@ export default function Header() {
               <Link href="/" className="text-gray-800 hover:text-[#ff5722] text-sm font-medium transition-colors">HOME</Link>
               <Link href="/services" className="text-gray-800 hover:text-[#ff5722] text-sm font-medium transition-colors">SERVICES</Link>
               <Link href="#about" className="text-gray-800 hover:text-[#ff5722] text-sm font-medium transition-colors">ABOUT</Link>
-              <Link href="#contact" className="text-gray-800 hover:text-[#ff5722] text-sm font-medium transition-colors">CONTACT</Link>
+              <Link href="/contact" className="text-gray-800 hover:text-[#ff5722] text-sm font-medium transition-colors">CONTACT</Link>
               <Link href="#consultation" className="px-5 py-2.5 bg-[#ff5722] text-white text-sm font-semibold rounded hover:bg-[#e64a19] hover:shadow-lg hover:scale-105 transition-all duration-300 uppercase">
                 GET CONSULTATION
               </Link>
@@ -84,7 +84,7 @@ export default function Header() {
                 <Link href="/" className="text-gray-800 hover:text-[#ff5722] font-medium">HOME</Link>
                 <Link href="/services" className="text-gray-800 hover:text-[#ff5722] font-medium">SERVICES</Link>
                 <Link href="#about" className="text-gray-800 hover:text-[#ff5722] font-medium">ABOUT</Link>
-                <Link href="#contact" className="text-gray-800 hover:text-[#ff5722] font-medium">CONTACT</Link>
+                <Link href="/contact" className="text-gray-800 hover:text-[#ff5722] font-medium">CONTACT</Link>
                 <Link href="#consultation" className="px-5 py-2.5 bg-[#ff5722] text-white font-semibold rounded text-center">GET CONSULTATION</Link>
               </nav>
             </div>
