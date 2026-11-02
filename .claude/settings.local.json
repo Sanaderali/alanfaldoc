@@ -13,7 +13,8 @@
       "Bash(git commit -m 'Fix footer styling - light background, proper colors, and professional font *)",
       "Bash(git commit -m 'Add smooth transitions and animations throughout the page *)",
       "Bash(git commit -m 'Add smooth header scroll transition and enhanced FAQ animations *)",
-      "Bash(git commit -m 'Add services page with breadcrumb navigation and create global header/footer components *)"
+      "Bash(git commit -m 'Add services page with breadcrumb navigation and create global header/footer components *)",
+      "Bash(git commit -m 'Fix duplicate header issue - remove header/footer from homepage *)"
     ],
     "additionalDirectories": [
       "C:\\Users\\Administrator\\Downloads"
