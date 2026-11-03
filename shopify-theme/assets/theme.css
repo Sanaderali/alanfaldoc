@@ -54,7 +54,7 @@ textarea{resize:vertical}
 
 /* announcement + header */
 .announce{background:var(--c-ink);color:#fff;font-size:13px;font-weight:600;text-align:center;padding:8px 0}
-.header{position:sticky;inset-block-start:0;z-index:40;background:color-mix(in srgb,var(--c-bg) 92%,transparent);backdrop-filter:saturate(1.4) blur(10px);border-block-end:1px solid color-mix(in srgb,var(--c-ink) 8%,transparent)}
+.header{position:sticky;inset-block-start:0;z-index:40;background:color-mix(in srgb,var(--c-bg) 92%,transparent);border-block-end:1px solid color-mix(in srgb,var(--c-ink) 8%,transparent)}
 .header__row{display:flex;align-items:center;gap:10px;padding-block:10px;flex-wrap:wrap}
 .header__burger{order:0}
 .logo{font-weight:800;font-size:24px;letter-spacing:-.03em;display:inline-flex;align-items:baseline;gap:2px;order:1}
@@ -340,3 +340,6 @@ textarea{resize:vertical}
   .footer__grid{grid-template-columns:1.6fr 1fr 1fr 1fr}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+
+/* skip rendering work for sections far below the fold */
+.section:not(:first-child),.footer{content-visibility:auto;contain-intrinsic-size:auto 520px}
