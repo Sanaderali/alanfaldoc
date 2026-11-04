@@ -68,3 +68,12 @@ Or connect your GitHub repository to Vercel for automatic deployments.
 ## 📄 License
 
 ISC
+
+## Managing content (countries, services, blog)
+
+All content lives in `data/` (`countries.ts`, `services.ts`, `posts.ts`, `site.ts`) and is read **only** through `lib/content.ts`.
+
+- **Add a country / service / post:** add one object to the matching file. Its page (`/countries/<slug>`, `/services/<slug>`, `/blog/<slug>`), the listing, the footer and the sitemap update automatically.
+- **Country photo:** set `image: "/countries/xyz.jpg"` (file in `public/`); without it a gradient + flag banner is used.
+- **Move to a CMS / database / API later:** change the function bodies in `lib/content.ts`. Pages and components stay untouched.
+- Site name, contact details, navigation and social links: `data/site.ts`.

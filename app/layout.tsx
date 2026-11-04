@@ -2,10 +2,12 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import { site } from "@/data/site";
 
 export const metadata: Metadata = {
-  title: "Al Anfal Doc - Dubai Business Setup & Document Services",
-  description: "Expert consultation for company formation, PRO services, visa processing in UAE",
+  title: { default: `${site.name} - ${site.tagline}`, template: `%s | ${site.name}` },
+  description: site.description,
+  metadataBase: new URL(site.url),
 };
 
 export default function RootLayout({
@@ -17,7 +19,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className="antialiased" suppressHydrationWarning>
         <Header />
-        <main>{children}</main>
+        <main id="main">{children}</main>
         <Footer />
       </body>
     </html>

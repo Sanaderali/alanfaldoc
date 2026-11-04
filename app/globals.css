@@ -310,3 +310,39 @@ body {
   max-height: 500px;
   transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1), padding 0.6s ease;
 }
+
+/* ---------- Smooth scrolling & page transitions ---------- */
+html { scroll-behavior: smooth; scroll-padding-top: 5rem; }
+
+/* page enter: every route change (see app/template.tsx) */
+@keyframes pageEnter {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: none; }
+}
+.page-enter { animation: pageEnter 0.5s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+/* scroll reveal, works scrolling down AND up (see components/Reveal.tsx) */
+.reveal { transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1); will-change: opacity, transform; }
+.reveal[data-reveal="below"], .reveal[data-reveal="ready"] { opacity: 0; transform: translateY(36px); }
+.reveal[data-reveal="above"] { opacity: 0; transform: translateY(-36px); }
+.reveal-left[data-reveal="below"],  .reveal-left[data-reveal="above"],  .reveal-left[data-reveal="ready"]  { transform: translateX(-36px); }
+.reveal-right[data-reveal="below"], .reveal-right[data-reveal="above"], .reveal-right[data-reveal="ready"] { transform: translateX(36px); }
+.reveal-zoom[data-reveal="below"],  .reveal-zoom[data-reveal="above"],  .reveal-zoom[data-reveal="ready"]  { transform: scale(0.92); }
+.reveal[data-reveal="in"] { opacity: 1; transform: none; }
+
+/* carousel: hide scrollbar */
+.carousel-track { scrollbar-width: none; }
+.carousel-track::-webkit-scrollbar { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .page-enter, [class*="animate-"], [class*="stagger-"] { animation: none !important; opacity: 1 !important; }
+  .reveal { transition: none; }
+}
+
+/* never let slide-in animations or wide children create sideways scroll */
+html, body { overflow-x: clip; }
+@media (max-width: 1023px) {
+  .reveal-left[data-reveal="below"],  .reveal-left[data-reveal="above"],  .reveal-left[data-reveal="ready"],
+  .reveal-right[data-reveal="below"], .reveal-right[data-reveal="above"], .reveal-right[data-reveal="ready"] { transform: translateY(36px); }
+}
