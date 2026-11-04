@@ -1,4 +1,4 @@
-import type { NextConfig } from "next";
+/** Plain JavaScript on purpose: the server loads it without needing the native compiler (faster, safer start-up on shared hosting). */
 
 const security = [
   { key: "X-Content-Type-Options", value: "nosniff" },
@@ -7,7 +7,8 @@ const security = [
   { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
 ];
 
-const nextConfig: NextConfig = {
+/** @type {import("next").NextConfig} */
+const nextConfig = {
   reactStrictMode: false,
   poweredByHeader: false,
   typescript: {
