@@ -45,7 +45,8 @@ export const auditFaqGroup = (g: FaqGroup): Issue[] => (g.faqs.length ? [] : [{ 
 export const score = (issues: Issue[]) => Math.max(0, 100 - issues.filter((i) => i.level === "error").length * 25 - issues.filter((i) => i.level === "warn").length * 10 - issues.filter((i) => i.level === "info").length * 3);
 
 /** live / draft / scheduled for any managed item */
-export function visibility(x: { status?: string; publishAt?: string }, at = Date.now()): "live" | "draft" | "scheduled" {
+export function visibility(x: { status?: string; publishAt?: string }, at = Date.now()): "live" | "draft" | "scheduled" | "trash" {
+  if (x.status === "trash") return "trash";
   if ((x.status ?? "published") !== "published") return "draft";
   return x.publishAt && new Date(x.publishAt).getTime() > at ? "scheduled" : "live";
 }

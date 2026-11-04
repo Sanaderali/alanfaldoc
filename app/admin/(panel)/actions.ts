@@ -5,7 +5,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { redirect } from "next/navigation";
 import { requireAdmin } from "@/lib/auth";
-import { mutate, readAll, now, UPLOAD_DIR, writePreview, type CollectionMap } from "@/lib/store";
+import { mutate, readAll, now, UPLOAD_DIR, writePreview, removePreview, type CollectionMap } from "@/lib/store";
 import { refreshSite } from "@/lib/revalidate";
 import { cleanCountry, cleanPage, cleanPost, cleanService, str, cleanFaqs, type Errors } from "@/lib/validate";
 import type { FaqGroup } from "@/types/content";
@@ -42,6 +42,7 @@ export async function saveItem(kind: Kind, payload: string, id?: string): Promis
     if (kind === "posts" && prev) (next as { updated?: string }).updated = now().slice(0, 10);
     return i >= 0 ? items.map((x, n) => (n === i ? next : x)) : [...items, next];
   });
+  if (savedId) await removePreview(savedId);
   refreshSite();
   return { ok: true, id: savedId, message: "Saved" };
 }
@@ -73,7 +74,7 @@ export async function duplicateItem(kind: Kind, id: string) {
 
 export async function setStatus(kind: Kind, id: string, status: "draft" | "published") {
   await requireAdmin();
-  await mutate(kind, (items) => items.map((x) => (x.id === id ? { ...x, status, updatedAt: now() } : x)));
+  await mutate(kind, (items) => items.map((x) => (x.id === id && x.status !== "trash" ? { ...x, status, updatedAt: now() } : x)));
   refreshSite();
   redirect(adminPath(kind));
 }
@@ -165,4 +166,90 @@ export async function savePreview(kind: Kind | "faqs", payload: string, id?: str
   const existing = (await readAll(kind)).find((x) => x.id === id);
   await writePreview(pid, { ...(existing ?? {}), ...item, id: pid, createdAt: existing?.createdAt ?? now(), updatedAt: now() });
   return { ok: true, id: pid };
+}
+
+/* ---------------- Trash, restore, bulk (WordPress-style lists) ---------------- */
+const back = (kind: Kind, qs = "") => redirect(`${adminPath(kind)}${qs}`);
+
+export async function trashItem(kind: Kind, id: string) {
+  await requireAdmin();
+  await mutate(kind, (items) => items.map((x) => (x.id === id ? { ...x, status: "trash", updatedAt: now() } : x)));
+  refreshSite();
+  back(kind);
+}
+export async function restoreItem(kind: Kind, id: string) {
+  await requireAdmin();
+  await mutate(kind, (items) => items.map((x) => (x.id === id ? { ...x, status: "draft", updatedAt: now() } : x)));
+  refreshSite();
+  back(kind, "?status=trash");
+}
+export async function deletePermanently(kind: Kind, id: string) {
+  await requireAdmin();
+  await mutate(kind, (items) => items.filter((x) => !(x.id === id && x.status === "trash")));
+  await removePreview(id);
+  refreshSite();
+  back(kind, "?status=trash");
+}
+
+/** Bulk actions from the list tables. Form fields: kind, action, ids[] */
+export async function bulkAction(formData: FormData) {
+  await requireAdmin();
+  const kind = String(formData.get("kind")) as Kind;
+  if (!["services", "countries", "posts"].includes(kind)) return;
+  const action = String(formData.get("action") ?? "");
+  const ids = new Set(formData.getAll("ids").map(String));
+  if (!ids.size || !action) return back(kind);
+  await mutate(kind, (items) => {
+    if (action === "delete") return items.filter((x) => !(ids.has(x.id!) && x.status === "trash"));
+    const status = action === "publish" ? "published" : action === "draft" ? "draft" : action === "trash" ? "trash" : action === "restore" ? "draft" : null;
+    if (!status) return items;
+    return items.map((x) => (ids.has(x.id!) ? { ...x, status, updatedAt: now() } : x));
+  });
+  refreshSite();
+  back(kind, `?status=${action === "delete" || action === "restore" ? "trash" : "all"}`);
+}
+
+export async function emptyTrash(kind: Kind) {
+  await requireAdmin();
+  await mutate(kind, (items) => items.filter((x) => x.status !== "trash"));
+  refreshSite();
+  back(kind, "?status=all");
+}
+
+/* ---------------- Categories & tags ---------------- */
+export type TermResult = { ok: boolean; message?: string };
+const cleanName = (v: unknown) => str(v, 60);
+
+export async function addTerm(type: "category" | "tag", name: string): Promise<TermResult> {
+  await requireAdmin();
+  const n = cleanName(name);
+  if (!n) return { ok: false, message: "Enter a name" };
+  await mutate("terms", (items) => (items.some((t) => t.type === type && t.name.toLowerCase() === n.toLowerCase()) ? items : [...items, { id: randomUUID(), type, name: n, createdAt: now() }]));
+  return { ok: true };
+}
+
+export async function renameTerm(type: "category" | "tag", oldName: string, newName: string): Promise<TermResult> {
+  await requireAdmin();
+  const n = cleanName(newName);
+  if (!n) return { ok: false, message: "Enter a name" };
+  await mutate("terms", (items) => {
+    const has = items.some((t) => t.type === type && t.name === oldName);
+    const renamed = items.map((t) => (t.type === type && t.name === oldName ? { ...t, name: n } : t));
+    return has ? renamed : [...renamed, { id: randomUUID(), type, name: n, createdAt: now() }];
+  });
+  await mutate("posts", (posts) =>
+    posts.map((p) => (type === "category" ? (p.category === oldName ? { ...p, category: n, updatedAt: now() } : p) : p.tags?.includes(oldName) ? { ...p, tags: [...new Set(p.tags.map((t) => (t === oldName ? n : t)))], updatedAt: now() } : p))
+  );
+  refreshSite();
+  return { ok: true };
+}
+
+export async function deleteTerm(type: "category" | "tag", name: string): Promise<TermResult> {
+  await requireAdmin();
+  await mutate("terms", (items) => items.filter((t) => !(t.type === type && t.name === name)));
+  await mutate("posts", (posts) =>
+    posts.map((p) => (type === "category" ? (p.category === name ? { ...p, category: "Uncategorized", updatedAt: now() } : p) : p.tags?.includes(name) ? { ...p, tags: p.tags.filter((t) => t !== name), updatedAt: now() } : p))
+  );
+  refreshSite();
+  return { ok: true };
 }

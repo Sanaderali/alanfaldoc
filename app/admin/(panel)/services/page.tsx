@@ -1,9 +1,9 @@
 import { requireAdmin } from "@/lib/auth";
-import ResourceList from "../_ui/ResourceList";
+import ResourceList, { type ListParams } from "../_ui/ResourceList";
 
 export const dynamic = "force-dynamic";
 
-export default async function Page({ searchParams }: { searchParams: Promise<{ q?: string; status?: string }> }) {
+export default async function Page({ searchParams }: { searchParams: Promise<ListParams> }) {
   await requireAdmin();
-  return <ResourceList kind="services" searchParams={await searchParams} />;
+  return <ResourceList kind="services" params={await searchParams} />;
 }

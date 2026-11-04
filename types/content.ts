@@ -5,7 +5,7 @@
  */
 
 /** Publishing + audit fields shared by everything managed in the dashboard (filled in by lib/store.ts). */
-export type Status = "draft" | "published";
+export type Status = "draft" | "published" | "trash";
 export type Managed = {
   id?: string;
   /** missing = published (keeps hand-written data/*.ts content working) */
@@ -128,6 +128,9 @@ export type PageSettings = Managed & {
   path: string;
   seo?: Seo;
 };
+
+/** Categories / tags created in the dashboard (they also exist implicitly through the posts that use them). */
+export type Term = { id: string; type: "category" | "tag"; name: string; createdAt: string };
 
 export type MediaItem = {
   id: string;

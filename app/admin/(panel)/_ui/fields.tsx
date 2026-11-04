@@ -13,7 +13,7 @@ export type Form = Record<string, any>;
 
 export function Section({ title, hint, children, id }: { title: string; hint?: string; children: ReactNode; id?: string }) {
   return (
-    <section id={id} className="bg-white border border-gray-200 rounded-lg shadow-sm">
+    <section id={id} className="bg-white border border-[#c3c4c7] shadow-[0_1px_1px_rgba(0,0,0,.04)]">
       <div className="px-5 py-4 border-b border-gray-200">
         <h2 className="font-semibold">{title}</h2>
         {hint && <p className="text-xs text-gray-500 mt-0.5">{hint}</p>}

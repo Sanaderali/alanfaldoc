@@ -6,14 +6,15 @@ import { useRouter } from "next/navigation";
 import Icon from "@/app/components/Icon";
 import { articleLd, countryPageLd, faqLd, serviceLd } from "@/lib/seo";
 import { btnGhost, btnPrimary, inputCls } from "../../ui";
-import { saveItem, deleteItem, duplicateItem, savePreview } from "../actions";
+import { saveItem, duplicateItem, savePreview, trashItem } from "../actions";
+import { CategoryBox, TagBox } from "./TaxonomyBoxes";
 import RichEditor from "./RichEditor";
 import Flag from "@/app/components/Flag";
 import { BUILTIN_FLAGS, builtinFlag, emojiToCode } from "@/lib/flags";
 import { CheckList, Counter, Field, FaqsEditor, ImageField, PairsEditor, SchemaPanel, SeoPanel, TextArea, TextField, Toggle, type Errors, type Form } from "./fields";
 
 type Kind = "services" | "countries" | "posts";
-export type EditorContext = { siteUrl: string; siteName: string; services: { value: string; label: string }[]; categories: string[] };
+export type EditorContext = { siteUrl: string; siteName: string; services: { value: string; label: string }[]; categories: { name: string; count: number }[]; tags: { name: string; count: number }[] };
 
 const GRADIENTS = [
   "from-emerald-100 via-green-100 to-green-200", "from-red-100 via-rose-100 to-red-200", "from-indigo-100 via-blue-100 to-indigo-200",
@@ -40,11 +41,11 @@ function blank(kind: Kind): Form {
 
 function Box({ title, children, open, className = "" }: { title: string; children: React.ReactNode; open?: boolean; className?: string }) {
   return (
-    <details open={open ?? true} className={`group bg-white border border-gray-200 rounded-lg shadow-sm ${className}`}>
-      <summary className="flex items-center justify-between cursor-pointer list-none px-4 py-3 font-semibold text-sm select-none">
-        {title}<Icon name="chevron-down" className="text-gray-400 text-xs transition-transform group-open:rotate-180" />
+    <details open={open ?? true} className={`group bg-white border border-[#c3c4c7] shadow-[0_1px_1px_rgba(0,0,0,.04)] ${className}`}>
+      <summary className="flex items-center justify-between cursor-pointer list-none px-3 py-2.5 font-semibold text-[14px] text-[#1d2327] select-none group-open:border-b border-[#c3c4c7]">
+        {title}<Icon name="caret-up" className="text-[#787c82] text-xs transition-transform group-open:rotate-0 rotate-180" />
       </summary>
-      <div className="px-4 pb-4 pt-1 space-y-4 border-t border-gray-100">{children}</div>
+      <div className="p-3 space-y-3">{children}</div>
     </details>
   );
 }
@@ -56,6 +57,9 @@ export default function ItemEditor({ kind, id, initial, ctx }: { kind: Kind; id?
   const [msg, setMsg] = useState<{ ok: boolean; text: string } | null>(null);
   const [dirty, setDirty] = useState(false);
   const [pending, start] = useTransition();
+  const [editSlug, setEditSlug] = useState(false);
+  const [editStatus, setEditStatus] = useState(false);
+  const [editDate, setEditDate] = useState(false);
   const [previewing, setPreviewing] = useState(false);
   const [previewId, setPreviewId] = useState<string | undefined>(id);
   const slugTouched = useRef(!!id);
@@ -125,19 +129,26 @@ export default function ItemEditor({ kind, id, initial, ctx }: { kind: Kind; id?
   const errorList = Object.entries(errors).filter(([, v]) => v);
 
   return (
-    <div className="grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_320px] gap-6 items-start">
+    <div className="grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_280px] gap-5 items-start">
       {/* ------------ main column ------------ */}
       <div className="space-y-5 min-w-0">
         <div>
           <input
             value={f[titleKey]}
             onChange={(e) => setTitle(e.target.value)}
-            placeholder={kind === "countries" ? "Country name" : "Add title"}
+            placeholder={kind === "countries" ? "Enter country name" : "Enter title here"}
             aria-label="Title"
-            className="w-full px-4 py-3 text-2xl sm:text-3xl font-bold bg-white border border-gray-300 rounded-lg placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-brand/40"
+            className="w-full px-3 py-1.5 text-[1.55rem] leading-snug bg-white border border-[#8c8f94] rounded-[3px] placeholder-[#a7aaad] shadow-[inset_0_1px_2px_rgba(0,0,0,.07)] focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand"
           />
           {errors[titleKey] && <p role="alert" className="text-xs text-red-600 mt-1">{errors[titleKey]}</p>}
-          <p className="mt-2 text-sm text-gray-500 break-all"><span>Link: </span><span className="text-gray-800">{ctx.siteUrl.replace(/^https?:\/\//, "")}{path}</span></p>
+          <p className="mt-2 text-[13px] text-[#50575e] flex flex-wrap items-center gap-x-1.5 gap-y-1 break-all">
+            <strong>Permalink:</strong>
+            {editSlug ? (
+              <span className="inline-flex items-center gap-1.5">{ctx.siteUrl.replace(/^https?:\/\//, "")}{base[kind]}<input aria-label="URL slug" value={f.slug} onChange={(e) => { slugTouched.current = true; set({ slug: slugify(e.target.value) }); }} className="px-1.5 py-0.5 border border-[#8c8f94] rounded-[3px]" /><button type="button" className={btnGhost} onClick={() => setEditSlug(false)}>OK</button></span>
+            ) : (
+              <><span className="text-brand-text">{ctx.siteUrl.replace(/^https?:\/\//, "")}{path}</span><button type="button" onClick={() => setEditSlug(true)} className={btnGhost}>Edit</button></>
+            )}
+          </p>
           {errors.slug && <p role="alert" className="text-xs text-red-600 mt-1">{errors.slug}</p>}
         </div>
 
@@ -191,59 +202,54 @@ export default function ItemEditor({ kind, id, initial, ctx }: { kind: Kind; id?
           </Box>
         )}
 
-        <section className="bg-white border border-gray-200 rounded-lg shadow-sm">
-          <h2 className="px-4 py-3 font-semibold text-sm border-b border-gray-100">Publish</h2>
-          <div className="p-4 space-y-4">
-            <p className="text-sm flex items-center gap-2">
-              <span className="text-gray-500">Status:</span>
-              <span className={`font-medium ${isLive ? "text-emerald-700" : future ? "text-amber-700" : "text-gray-700"}`}>{f.status === "draft" ? "Draft" : future ? "Scheduled" : "Published"}</span>
-            </p>
-            <Field label="Publish date" htmlFor="publishAt" error={errors.publishAt} hint={future ? "Goes live automatically on this date." : "Leave empty to publish immediately. Pick a future date to schedule."}>
-              <input id="publishAt" type="datetime-local" value={f.publishAt} onChange={(e) => set({ publishAt: e.target.value })} className={inputCls} />
-            </Field>
-            {id && initial?.updatedAt && <p className="text-xs text-gray-400">Last updated {new Date(initial.updatedAt).toLocaleString("en-GB")}</p>}
-
-            {msg && <p role={msg.ok ? "status" : "alert"} className={`text-sm rounded-md px-3 py-2 ${msg.ok ? "bg-emerald-50 text-emerald-800" : "bg-red-50 text-red-700"}`}>{msg.text}{!msg.ok && errorList.length > 1 && " (see the highlighted fields)"}</p>}
-            {!msg && dirty && <p className="text-xs text-amber-700">You have unsaved changes.</p>}
-
-            <div className="flex flex-col gap-2">
-              {f.status === "published" ? (
-                <>
-                  <button type="button" disabled={pending} onClick={() => save("published")} className={`${btnPrimary} w-full`}>{pending ? "Saving…" : "Update"}</button>
-                  <div className="grid grid-cols-2 gap-2">
-                    <button type="button" disabled={previewing} onClick={openPreview} className={btnGhost}><Icon name="eye" />Preview</button>
-                    <button type="button" disabled={pending} onClick={() => save("draft")} className={btnGhost}>Draft</button>
-                  </div>
-                </>
-              ) : (
-                <>
-                  <button type="button" disabled={pending} onClick={() => save("published")} className={`${btnPrimary} w-full`}>{pending ? "Saving…" : future ? "Schedule" : "Publish"}</button>
-                  <div className="grid grid-cols-2 gap-2">
-                    <button type="button" disabled={previewing} onClick={openPreview} className={btnGhost}><Icon name="eye" />Preview</button>
-                    <button type="button" disabled={pending} onClick={() => save("draft")} className={btnGhost}>Save draft</button>
-                  </div>
-                </>
-              )}
-              {id && isLive && <Link href={path} target="_blank" className="text-center text-sm text-brand-text hover:underline">View on website ↗</Link>}
+        <section className="bg-white border border-[#c3c4c7] shadow-[0_1px_1px_rgba(0,0,0,.04)]">
+          <h2 className="px-3 py-2.5 font-semibold text-[14px] border-b border-[#c3c4c7]">Publish</h2>
+          <div className="p-3 space-y-3">
+            <div className="flex items-center justify-between gap-2">
+              <button type="button" disabled={pending || f.status === "published"} onClick={() => save("draft")} className={btnGhost}>Save Draft</button>
+              <button type="button" disabled={previewing} onClick={openPreview} className={btnGhost}>Preview</button>
             </div>
+            <ul className="text-[13px] space-y-2.5 text-[#1d2327]">
+              <li className="flex flex-wrap items-center gap-1.5">
+                <Icon name="thumbtack" className="text-[#787c82]" />Status: <strong>{f.status === "draft" ? "Draft" : future ? "Scheduled" : "Published"}</strong>
+                {editStatus ? (
+                  <span className="inline-flex items-center gap-1.5 w-full pl-6">
+                    <select aria-label="Status" value={f.status} onChange={(e) => set({ status: e.target.value })} className="px-1.5 py-1 border border-[#8c8f94] rounded-[3px] bg-white"><option value="draft">Draft</option><option value="published">Published</option></select>
+                    <button type="button" className={btnGhost} onClick={() => setEditStatus(false)}>OK</button>
+                  </span>
+                ) : <button type="button" onClick={() => setEditStatus(true)} className="text-brand-text underline">Edit</button>}
+              </li>
+              <li className="flex flex-wrap items-center gap-1.5">
+                <Icon name="calendar" className="text-[#787c82]" />
+                {f.publishAt ? <>{future ? "Schedule for" : "Published on"}: <strong>{new Date(f.publishAt).toLocaleString("en-GB", { day: "2-digit", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" })}</strong></> : <strong>Publish immediately</strong>}
+                {editDate ? (
+                  <span className="inline-flex flex-col gap-1.5 w-full pl-6">
+                    <input id="publishAt" type="datetime-local" aria-label="Publish date" value={f.publishAt} onChange={(e) => set({ publishAt: e.target.value })} className={inputCls} />
+                    <span className="flex gap-1.5"><button type="button" className={btnGhost} onClick={() => setEditDate(false)}>OK</button><button type="button" className="text-brand-text underline" onClick={() => { set({ publishAt: "" }); setEditDate(false); }}>Publish immediately</button></span>
+                    {errors.publishAt && <span role="alert" className="text-xs text-red-600">{errors.publishAt}</span>}
+                  </span>
+                ) : <button type="button" onClick={() => setEditDate(true)} className="text-brand-text underline">Edit</button>}
+              </li>
+            </ul>
+            {id && initial?.updatedAt && <p className="text-xs text-[#646970]">Last edited {new Date(initial.updatedAt).toLocaleString("en-GB")}</p>}
+            {msg && <p role={msg.ok ? "status" : "alert"} className={`text-[13px] px-2.5 py-1.5 border-l-4 ${msg.ok ? "bg-white border-emerald-600 text-emerald-800" : "bg-white border-red-600 text-red-700"}`}>{msg.text}{!msg.ok && errorList.length > 1 && " (see the highlighted fields)"}</p>}
+            {!msg && dirty && <p className="text-xs text-amber-700">You have unsaved changes.</p>}
           </div>
+          <div className="flex items-center justify-between gap-2 px-3 py-2.5 bg-[#f6f7f7] border-t border-[#dcdcde]">
+            {id ? (
+              <form action={trashItem.bind(null, kind, id)}><button className="text-[13px] text-red-600 underline hover:text-red-800">Move to Trash</button></form>
+            ) : <span />}
+            <button type="button" disabled={pending} onClick={() => save("published")} className={btnPrimary}>{pending ? "Saving…" : f.status === "published" ? (future ? "Schedule" : "Update") : future ? "Schedule" : "Publish"}</button>
+          </div>
+          {id && isLive && <p className="px-3 py-2 text-[13px] border-t border-[#dcdcde]"><Link href={path} target="_blank" className="text-brand-text underline">View on website ↗</Link></p>}
         </section>
 
-        <Box title="URL" open={false}>
-          <Field label="Slug" htmlFor="slug" error={errors.slug} hint={`${ctx.siteUrl}${path}`}>
-            <TextField id="slug" value={f.slug} onChange={(v) => { slugTouched.current = true; set({ slug: slugify(v) }); }} />
-          </Field>
-        </Box>
-
         {kind === "posts" && (
-          <Box title="Post details">
-            <Field label="Category" htmlFor="category" error={errors.category}>
-              <input id="category" list="cats" value={f.category} onChange={(e) => set({ category: e.target.value })} className={inputCls} />
-              <datalist id="cats">{ctx.categories.map((c) => <option key={c} value={c} />)}</datalist>
-            </Field>
-            <Field label="Tags" htmlFor="tags" hint="Separate with commas"><TextField id="tags" value={(f.tags ?? []).join(", ")} onChange={(v) => set({ tags: v.split(",").map((x: string) => x.trim()).filter(Boolean) })} /></Field>
-            <Field label="Author" htmlFor="author"><TextField id="author" value={f.author ?? ""} onChange={(v) => set({ author: v })} /></Field>
-          </Box>
+          <>
+            <Box title="Categories"><CategoryBox value={f.category} onChange={(v) => set({ category: v })} options={ctx.categories} error={errors.category} /></Box>
+            <Box title="Tags"><TagBox value={f.tags ?? []} onChange={(v) => set({ tags: v })} options={ctx.tags} /></Box>
+            <Box title="Author" open={false}><TextField id="author" value={f.author ?? ""} onChange={(v) => set({ author: v })} /></Box>
+          </>
         )}
 
         {kind === "services" && (
@@ -289,9 +295,6 @@ export default function ItemEditor({ kind, id, initial, ctx }: { kind: Kind; id?
         {id && (
           <Box title="More actions" open={false}>
             <form action={duplicateItem.bind(null, kind, id)}><button className={`${btnGhost} w-full`}><Icon name="copy" />Duplicate as draft</button></form>
-            <form action={deleteItem.bind(null, kind, id)} onSubmit={(e) => { if (!confirm(`Delete this ${singular[kind]} permanently? This cannot be undone.`)) e.preventDefault(); }}>
-              <button className="w-full inline-flex items-center justify-center gap-2 px-3 py-2 border border-red-200 text-red-600 text-sm font-medium rounded-md hover:bg-red-50"><Icon name="trash-can" />Move to trash (delete)</button>
-            </form>
           </Box>
         )}
       </aside>

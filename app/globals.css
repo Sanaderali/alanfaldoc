@@ -379,3 +379,13 @@ html, body { overflow-x: clip; }
 .ProseMirror img.ProseMirror-selectednode { outline: 3px solid rgb(var(--brand)); }
 .rich-content li > p { margin: 0; }
 .rich-content li > ul, .rich-content li > ol { margin: 0.3rem 0 0; }
+
+/* Dashboard palette: WordPress blue, independent of the public site's theme (scoped to /admin) */
+.admin-theme {
+  --brand: 34 113 177;       /* #2271b1 */
+  --brand-dark: 19 94 150;   /* #135e96 */
+  --brand-text: 34 113 177;
+  --brand-50: 240 246 252;
+  --brand-100: 220 234 247;
+  --brand-200: 184 214 240;
+}

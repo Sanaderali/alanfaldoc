@@ -52,8 +52,9 @@ function Toolbar({ editor, onImage }: { editor: Editor; onImage: () => void }) {
   };
 
   return (
-    <div className="sticky top-0 z-20 bg-white border-b border-gray-200 rounded-t-lg">
+    <div className="sticky top-8 z-20 bg-[#f6f7f7] border-b border-[#c3c4c7]">
       <div className="flex flex-wrap items-center gap-0.5 p-2">
+        <button type="button" onMouseDown={(e) => e.preventDefault()} onClick={onImage} className="mr-2 inline-flex items-center gap-1.5 h-9 px-3 text-[13px] font-medium text-brand-text bg-[#f6f7f7] border border-brand/70 rounded-[3px] hover:bg-white"><Icon name="photo-film" />Add Media</button>
         <select value={block} onChange={(e) => setBlock(e.target.value)} aria-label="Text style" className="h-9 mr-1 px-2 text-sm border border-gray-300 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-brand/40">
           <option value="p">Paragraph</option>
           <option value="h2">Heading</option>
@@ -96,9 +97,9 @@ export default function RichEditor({ value, onChange, placeholder = "Start writi
     onUpdate: ({ editor }) => onChange(editor.isEmpty ? "" : editor.getHTML()),
   });
 
-  if (!editor) return <div className="border border-gray-300 rounded-lg bg-white h-96 animate-pulse" aria-busy="true" />;
+  if (!editor) return <div className="border border-[#c3c4c7] bg-white h-96 animate-pulse" aria-busy="true" />;
   return (
-    <div className="border border-gray-300 rounded-lg bg-white shadow-sm focus-within:ring-2 focus-within:ring-brand/30">
+    <div className="border border-[#c3c4c7] bg-white shadow-[0_1px_1px_rgba(0,0,0,.04)] focus-within:border-brand">
       <Toolbar editor={editor} onImage={() => setPicker(true)} />
       <EditorContent editor={editor} />
       <MediaPicker

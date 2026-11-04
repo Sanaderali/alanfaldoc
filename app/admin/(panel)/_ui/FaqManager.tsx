@@ -78,7 +78,7 @@ export default function FaqManager({ initial }: { initial: Form[] }) {
         })}
         <button type="button" onClick={() => { change([...groups, { title: "", status: "published", faqs: [] }]); setOpen(groups.length); }} className={btnGhost}><Icon name="plus" />Add group</button>
 
-        <details className="bg-white border border-gray-200 rounded-lg shadow-sm">
+        <details className="bg-white border border-[#c3c4c7] shadow-[0_1px_1px_rgba(0,0,0,.04)]">
           <summary className="cursor-pointer px-4 py-3 text-sm font-semibold">FAQ schema preview ({live.length} questions)</summary>
           <pre className="px-4 pb-4 text-xs overflow-auto max-h-80 border-t border-gray-100 pt-3">{JSON.stringify(faqLd(live as never), null, 2)}</pre>
         </details>
@@ -86,7 +86,7 @@ export default function FaqManager({ initial }: { initial: Form[] }) {
 
       {/* ---------- sidebar ---------- */}
       <aside className="space-y-5 xl:sticky xl:top-4">
-        <section className="bg-white border border-gray-200 rounded-lg shadow-sm">
+        <section className="bg-white border border-[#c3c4c7] shadow-[0_1px_1px_rgba(0,0,0,.04)]">
           <h2 className="px-4 py-3 font-semibold text-sm border-b border-gray-100">Publish</h2>
           <div className="p-4 space-y-4">
             <p className="text-sm text-gray-600">{groups.length} groups · {total} questions</p>
@@ -100,7 +100,7 @@ export default function FaqManager({ initial }: { initial: Form[] }) {
           </div>
         </section>
 
-        <section className="bg-white border border-gray-200 rounded-lg shadow-sm">
+        <section className="bg-white border border-[#c3c4c7] shadow-[0_1px_1px_rgba(0,0,0,.04)]">
           <h2 className="px-4 py-3 font-semibold text-sm border-b border-gray-100">{g ? "Selected group" : "Group options"}</h2>
           <div className="p-4 space-y-4">
             {!g || open === null ? <p className="text-sm text-gray-500">Open a group to change its status, order or delete it.</p> : (
@@ -121,7 +121,7 @@ export default function FaqManager({ initial }: { initial: Form[] }) {
           </div>
         </section>
 
-        <section className="bg-white border border-gray-200 rounded-lg shadow-sm">
+        <section className="bg-white border border-[#c3c4c7] shadow-[0_1px_1px_rgba(0,0,0,.04)]">
           <h2 className="px-4 py-3 font-semibold text-sm border-b border-gray-100">Search engine</h2>
           <div className="p-4"><Link href="/admin/pages/faqs" className={`${btnGhost} w-full`}>FAQ page SEO & schema</Link></div>
         </section>

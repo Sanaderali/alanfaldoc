@@ -58,7 +58,7 @@ export default function MediaManager({ items }: { items: MediaItem[] }) {
 
   return (
     <div className="space-y-6">
-      <div className="bg-white border border-gray-200 rounded-lg shadow-sm p-5 space-y-3">
+      <div className="bg-white border border-[#c3c4c7] shadow-[0_1px_1px_rgba(0,0,0,.04)] p-5 space-y-3">
         <h2 className="font-semibold">Upload image</h2>
         <div className="flex flex-col sm:flex-row gap-3">
           <input value={alt} onChange={(e) => setAlt(e.target.value)} placeholder="Alt text: describe the image (required)" aria-label="Alt text" className={inputCls} />

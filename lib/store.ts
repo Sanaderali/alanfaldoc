@@ -2,7 +2,7 @@ import "server-only";
 import fs from "node:fs/promises";
 import path from "node:path";
 import { randomUUID } from "node:crypto";
-import type { Country, FaqGroup, MediaItem, PageSettings, Post, Service } from "@/types/content";
+import type { Country, FaqGroup, MediaItem, PageSettings, Post, Service, Term } from "@/types/content";
 import { countries as seedCountries } from "@/data/countries";
 import { services as seedServices } from "@/data/services";
 import { posts as seedPosts } from "@/data/posts";
@@ -26,6 +26,7 @@ export type CollectionMap = {
   faqs: FaqGroup;
   pages: PageSettings;
   media: MediaItem;
+  terms: Term;
 };
 export type CollectionName = keyof CollectionMap;
 
@@ -60,6 +61,7 @@ function seed<K extends CollectionName>(name: K): CollectionMap[K][] {
     faqs: seedFaqs.map(stamp),
     pages: seedPages(),
     media: [],
+    terms: [],
   };
   return data[name] as CollectionMap[K][];
 }
@@ -136,4 +138,8 @@ export async function readPreview<T = unknown>(id: string): Promise<T | undefine
   } catch {
     return undefined;
   }
+}
+
+export async function removePreview(id: string): Promise<void> {
+  if (safeId(id)) await fs.rm(path.join(PREVIEW_DIR, `${id}.json`), { force: true });
 }
