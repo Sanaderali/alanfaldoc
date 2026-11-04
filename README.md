@@ -93,3 +93,14 @@ All content lives in `data/` (`countries.ts`, `services.ts`, `posts.ts`, `site.t
 Environment variables (all optional): `NEXT_PUBLIC_SITE_URL`, `GOOGLE_SITE_VERIFICATION`, `BING_SITE_VERIFICATION`, `SITE_INDEXING=off` (blocks all crawlers on staging).
 
 Before launch: replace sample content/contact details, add real social URLs, address/geo, and submit `/sitemap.xml` in Google Search Console and Bing Webmaster Tools.
+
+## Icons (Font Awesome Free kit)
+
+The kit is loaded once in `app/layout.tsx` (override with `NEXT_PUBLIC_FA_KIT=<your kit id>`). Use icons through `app/components/Icon.tsx`:
+
+```tsx
+<Icon name="building" />                      // solid icon
+<Icon name="fa-brands fa-facebook-f" />       // brands / other styles
+```
+
+Service icons are the `icon` field in `data/services.ts`; blog category icons are `categoryIcons` and social icons are `social[].icon` in `data/site.ts`. Find names at https://fontawesome.com/search?o=r&m=free (free set only). In the Font Awesome kit settings, add your site's domain(s) to **Allowed Domains** (including `localhost` for development), otherwise the icons will not load.

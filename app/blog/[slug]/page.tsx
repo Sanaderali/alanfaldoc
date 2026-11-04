@@ -5,6 +5,7 @@ import BlogCard from "../../components/BlogCard";
 import BlogSidebar from "../../components/BlogSidebar";
 import Breadcrumb from "../../components/Breadcrumb";
 import CTABanner from "../../components/CTABanner";
+import Icon from "../../components/Icon";
 import JsonLd from "../../components/JsonLd";
 import PostBody from "../../components/PostBody";
 import PostImage from "../../components/PostImage";
@@ -34,10 +35,10 @@ export default async function PostPage({ params }: Props) {
   const related = all.filter((p) => p.slug !== post.slug && p.category === post.category).slice(0, 2);
   const url = abs(`/blog/${post.slug}`);
   const share = [
-    { label: "Facebook", href: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}` },
-    { label: "X", href: `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(post.title)}` },
-    { label: "LinkedIn", href: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}` },
-    { label: "WhatsApp", href: `https://wa.me/?text=${encodeURIComponent(post.title + " " + url)}` },
+    { label: "Facebook", icon: "fa-brands fa-facebook-f", href: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}` },
+    { label: "X", icon: "fa-brands fa-x-twitter", href: `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(post.title)}` },
+    { label: "LinkedIn", icon: "fa-brands fa-linkedin-in", href: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}` },
+    { label: "WhatsApp", icon: "fa-brands fa-whatsapp", href: `https://wa.me/?text=${encodeURIComponent(post.title + " " + url)}` },
   ];
 
   return (
@@ -76,7 +77,7 @@ export default async function PostPage({ params }: Props) {
             <Reveal className="mt-6 flex flex-wrap items-center gap-3 py-5 border-y border-gray-200">
               <span className="text-sm font-semibold text-gray-900">Share:</span>
               {share.map((s) => (
-                <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" className="px-3 py-1.5 border border-gray-200 rounded text-xs text-gray-600 hover:border-[#ff5722] hover:text-[#ff5722] transition-colors">{s.label}</a>
+                <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" className="px-3 py-1.5 border border-gray-200 rounded text-xs text-gray-600 hover:border-[#ff5722] hover:text-[#ff5722] transition-colors"><Icon name={s.icon} className="mr-1.5" />{s.label}</a>
               ))}
             </Reveal>
 
@@ -92,13 +93,13 @@ export default async function PostPage({ params }: Props) {
               <nav aria-label="More articles" className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {older ? (
                   <Link href={`/blog/${older.slug}`} rel="prev" className="group border border-gray-200 rounded-lg p-4 hover:border-[#ff5722] transition-colors">
-                    <span className="text-xs text-gray-400">← Previous article</span>
+                    <span className="text-xs text-gray-400"><Icon name="arrow-left" className="mr-1" />Previous article</span>
                     <span className="block font-medium text-gray-900 group-hover:text-[#ff5722] transition-colors">{older.title}</span>
                   </Link>
                 ) : <span />}
                 {newer && (
                   <Link href={`/blog/${newer.slug}`} rel="next" className="group border border-gray-200 rounded-lg p-4 hover:border-[#ff5722] transition-colors sm:text-right">
-                    <span className="text-xs text-gray-400">Next article →</span>
+                    <span className="text-xs text-gray-400">Next article<Icon name="arrow-right" className="ml-1" /></span>
                     <span className="block font-medium text-gray-900 group-hover:text-[#ff5722] transition-colors">{newer.title}</span>
                   </Link>
                 )}

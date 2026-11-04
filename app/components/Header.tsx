@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { mainNav, site } from "@/data/site";
+import Icon from "./Icon";
 
 export default function Header() {
   const pathname = usePathname();
@@ -28,10 +29,10 @@ export default function Header() {
     <>
       <div className="hidden sm:block bg-gray-50 border-b border-gray-200 text-xs sm:text-sm text-gray-600">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 flex justify-between items-center gap-4">
-          <span>📍 {site.address}</span>
+          <span><Icon name="location-dot" className="text-[#ff5722] mr-1.5" /> {site.address}</span>
           <span className="flex items-center gap-5">
-            <a href={`tel:${site.phone.replace(/\s/g, "")}`} className="hover:text-[#ff5722]">📞 {site.phone}</a>
-            <a href={`mailto:${site.email}`} className="hidden md:inline hover:text-[#ff5722]">✉️ {site.email}</a>
+            <a href={`tel:${site.phone.replace(/\s/g, "")}`} className="hover:text-[#ff5722]"><Icon name="phone" className="text-[#ff5722] mr-1.5" /> {site.phone}</a>
+            <a href={`mailto:${site.email}`} className="hidden md:inline hover:text-[#ff5722]"><Icon name="envelope" className="text-[#ff5722] mr-1.5" /> {site.email}</a>
           </span>
         </div>
       </div>
@@ -62,9 +63,7 @@ export default function Header() {
               onClick={() => setMenuFor(menuOpen ? null : pathname)}
               className="lg:hidden p-2 text-gray-700"
             >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={menuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
-              </svg>
+              <Icon name={menuOpen ? "xmark" : "bars"} className="text-xl" />
             </button>
           </div>
 

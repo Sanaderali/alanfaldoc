@@ -24,10 +24,10 @@ export const site = {
   hours: ["Mon-Fri: 9:00AM - 6:30PM", "Saturday: 8:30AM - 3:30PM", "Sunday: Closed"],
   /** Put the real profile URLs here. "#" entries are ignored by schema `sameAs`. */
   social: [
-    { label: "Facebook", href: "#" },
-    { label: "X (Twitter)", href: "#" },
-    { label: "Instagram", href: "#" },
-    { label: "LinkedIn", href: "#" },
+    { label: "Facebook", href: "#", icon: "fa-brands fa-facebook-f" },
+    { label: "X (Twitter)", href: "#", icon: "fa-brands fa-x-twitter" },
+    { label: "Instagram", href: "#", icon: "fa-brands fa-instagram" },
+    { label: "LinkedIn", href: "#", icon: "fa-brands fa-linkedin-in" },
   ],
 };
 
@@ -68,3 +68,12 @@ export const stats = [
   { value: "200+", label: "Companies served" },
   { value: "6", label: "Countries covered" },
 ];
+
+/** Blog category -> Font Awesome icon (used on post covers). Add your own categories here. */
+export const categoryIcons: Record<string, string> = {
+  Visa: "passport",
+  Documents: "file-circle-check",
+  "Company Formation": "building",
+  Banking: "building-columns",
+  default: "newspaper",
+};

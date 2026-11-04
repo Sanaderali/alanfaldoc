@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Breadcrumb from "../components/Breadcrumb";
 import CTABanner from "../components/CTABanner";
+import Icon from "../components/Icon";
 import Reveal from "../components/Reveal";
 import { site, stats } from "@/data/site";
 import { getServices } from "@/lib/content";
@@ -14,10 +15,10 @@ export const metadata: Metadata = buildMetadata({
 });
 
 const values = [
-  { icon: "🎯", title: "Accuracy", text: "Every document is checked before submission so applications are right the first time." },
-  { icon: "⚡", title: "Speed", text: "Established relationships with authorities help us move files quickly." },
-  { icon: "🤝", title: "Transparency", text: "Clear timelines and clear pricing, with updates at every step." },
-  { icon: "🔒", title: "Confidentiality", text: "Your personal and business documents are handled with strict care." },
+  { icon: "bullseye", title: "Accuracy", text: "Every document is checked before submission so applications are right the first time." },
+  { icon: "bolt", title: "Speed", text: "Established relationships with authorities help us move files quickly." },
+  { icon: "handshake", title: "Transparency", text: "Clear timelines and clear pricing, with updates at every step." },
+  { icon: "lock", title: "Confidentiality", text: "Your personal and business documents are handled with strict care." },
 ];
 
 const steps = [
@@ -71,7 +72,7 @@ export default async function AboutPage() {
             {values.map((v, i) => (
               <Reveal key={v.title} delay={i * 80}>
                 <div className="h-full bg-white border border-gray-200 rounded-lg p-7 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-500">
-                  <div className="text-4xl mb-4" aria-hidden="true">{v.icon}</div>
+                  <div className="w-14 h-14 mb-4 rounded-full bg-orange-50 text-[#ff5722] flex items-center justify-center text-2xl"><Icon name={v.icon} /></div>
                   <h3 className="text-lg font-bold text-gray-900 mb-2">{v.title}</h3>
                   <p className="text-sm text-gray-600 leading-relaxed">{v.text}</p>
                 </div>
@@ -106,7 +107,7 @@ export default async function AboutPage() {
           <Reveal className="flex flex-wrap justify-center gap-3">
             {services.map((s) => (
               <Link key={s.slug} href={`/services/${s.slug}`} className="px-5 py-2.5 bg-white border border-gray-200 rounded-full text-sm font-medium text-gray-700 hover:border-[#ff5722] hover:text-[#ff5722] transition-colors">
-                {s.icon} {s.title}
+                <Icon name={s.icon} className="text-[#ff5722] mr-2" />{s.title}
               </Link>
             ))}
           </Reveal>

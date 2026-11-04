@@ -5,6 +5,7 @@ import Breadcrumb from "../../components/Breadcrumb";
 import ContentSections from "../../components/ContentSections";
 import CTABanner from "../../components/CTABanner";
 import FaqList from "../../components/FaqList";
+import Icon from "../../components/Icon";
 import JsonLd from "../../components/JsonLd";
 import Reveal from "../../components/Reveal";
 import { buildMetadata, faqLd, serviceLd } from "@/lib/seo";
@@ -36,7 +37,7 @@ export default async function ServicePage({ params }: Props) {
       <section className="py-12 md:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-3 gap-10 lg:gap-14">
           <article className="lg:col-span-2 min-w-0">
-            <div className="text-5xl mb-4 animate-fadeIn" aria-hidden="true">{service.icon}</div>
+            <div className="w-16 h-16 mb-4 rounded-full bg-orange-50 text-[#ff5722] flex items-center justify-center text-3xl animate-fadeIn"><Icon name={service.icon} /></div>
             <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-5 animate-fadeIn">{service.title}</h1>
             <p className="text-gray-600 leading-relaxed mb-6">{service.intro}</p>
             <Reveal>

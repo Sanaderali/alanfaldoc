@@ -58,6 +58,7 @@ export type Country = {
 export type Service = {
   slug: string;
   title: string;
+  /** Font Awesome icon: short name ("building") or full class ("fa-solid fa-building") */
   icon: string;
   summary: string;
   intro: string;

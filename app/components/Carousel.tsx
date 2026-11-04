@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, type ReactNode } from "react";
+import Icon from "./Icon";
 
 /** Lightweight CSS scroll-snap carousel with arrow buttons. Works with touch swipe natively. */
 export default function Carousel({ children }: { children: ReactNode }) {
@@ -15,8 +16,8 @@ export default function Carousel({ children }: { children: ReactNode }) {
         {children}
       </div>
       <div className="flex justify-center gap-3 mt-4">
-        <button type="button" aria-label="Previous" onClick={() => scrollBy(-1)} className="w-11 h-11 rounded-full border border-gray-300 text-[#3d4d6a] hover:bg-[#ff5722] hover:text-white hover:border-[#ff5722] transition-colors">←</button>
-        <button type="button" aria-label="Next" onClick={() => scrollBy(1)} className="w-11 h-11 rounded-full border border-gray-300 text-[#3d4d6a] hover:bg-[#ff5722] hover:text-white hover:border-[#ff5722] transition-colors">→</button>
+        <button type="button" aria-label="Previous" onClick={() => scrollBy(-1)} className="w-11 h-11 rounded-full border border-gray-300 text-[#3d4d6a] hover:bg-[#ff5722] hover:text-white hover:border-[#ff5722] transition-colors"><Icon name="arrow-left" /></button>
+        <button type="button" aria-label="Next" onClick={() => scrollBy(1)} className="w-11 h-11 rounded-full border border-gray-300 text-[#3d4d6a] hover:bg-[#ff5722] hover:text-white hover:border-[#ff5722] transition-colors"><Icon name="arrow-right" /></button>
       </div>
     </div>
   );

@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import Icon from "./Icon";
 
 export default function HomeClient() {
   const [mounted, setMounted] = useState(false);
@@ -13,12 +14,12 @@ export default function HomeClient() {
   }, []);
 
   const services = [
-    { icon: "🎓", title: "Company Formation", desc: "Complete mainland and free zone company setup solutions in Dubai and UAE" },
-    { icon: "💼", title: "Business Immigration", desc: "Golden visa, residence permits, and work visa processing for business owners" },
-    { icon: "✈️", title: "PRO Services", desc: "Professional government documentation and liaison services for all departments" },
-    { icon: "👨‍👩‍👧", title: "Document Clearing", desc: "Fast-track approval and attestation services for business documents" },
-    { icon: "🏖️", title: "Trade License", desc: "New trade license issuance and annual renewal services across UAE" },
-    { icon: "📚", title: "Legal Translation", desc: "Certified translation and attestation for all business documents" },
+    { icon: "building", title: "Company Formation", desc: "Complete mainland and free zone company setup solutions in Dubai and UAE" },
+    { icon: "earth-americas", title: "Business Immigration", desc: "Golden visa, residence permits, and work visa processing for business owners" },
+    { icon: "clipboard-list", title: "PRO Services", desc: "Professional government documentation and liaison services for all departments" },
+    { icon: "file-circle-check", title: "Document Clearing", desc: "Fast-track approval and attestation services for business documents" },
+    { icon: "file-signature", title: "Trade License", desc: "New trade license issuance and annual renewal services across UAE" },
+    { icon: "language", title: "Legal Translation", desc: "Certified translation and attestation for all business documents" },
   ];
 
   const countries = [
@@ -55,9 +56,9 @@ export default function HomeClient() {
   ];
 
   const testimonials = [
-    { name: "Dan Hodges", role: "(USA Students Visa)", text: "An augue in cubilia laoreet undo magna suscipit egestas magna ipsum egestas vitae purus ipsum primis cubilia laoreet augue donec ultrice ligula egestas magna a vitae purus suscipit lectus gestas magna a viverra dolor neque est gravida", img: "👨" },
-    { name: "Amelie Peterson", role: "(France Working Visa)", text: "An orci nullam tempor sapien, gravida donec enim ipsum a porta. An augue in cubilia laoreet magna suscipit egestas magna isum vitae purus ipsum primis in cubilia laoreet augue ultrice at ligula egestas magna", img: "👩" },
-    { name: "Scott Boxer", role: "(Germany Travel Visa)", text: "An augue cubilia laoreet magna suscipit egestas magna ipsum vitae purus undo ipsum primis in cubilia laoreet augue ultrice ligula egestas magna at suscipit lectus gestas magna viverra dolor", img: "👨‍💼" },
+    { name: "Dan Hodges", role: "(USA Students Visa)", text: "An augue in cubilia laoreet undo magna suscipit egestas magna ipsum egestas vitae purus ipsum primis cubilia laoreet augue donec ultrice ligula egestas magna a vitae purus suscipit lectus gestas magna a viverra dolor neque est gravida", img: "fa-solid fa-user" },
+    { name: "Amelie Peterson", role: "(France Working Visa)", text: "An orci nullam tempor sapien, gravida donec enim ipsum a porta. An augue in cubilia laoreet magna suscipit egestas magna isum vitae purus ipsum primis in cubilia laoreet augue ultrice at ligula egestas magna", img: "fa-solid fa-user" },
+    { name: "Scott Boxer", role: "(Germany Travel Visa)", text: "An augue cubilia laoreet magna suscipit egestas magna ipsum vitae purus undo ipsum primis in cubilia laoreet augue ultrice ligula egestas magna at suscipit lectus gestas magna viverra dolor", img: "fa-solid fa-user-tie" },
   ];
 
   return (
@@ -76,21 +77,15 @@ export default function HomeClient() {
             </p>
             <div className="flex flex-wrap justify-center gap-4 sm:gap-8 text-xs sm:text-sm mb-10">
               <span className="flex items-center">
-                <svg className="w-4 h-4 sm:w-5 sm:h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                </svg>
+                <Icon name="circle-check" className="text-[#ff5722] mr-2" />
                 Goverment Approved
               </span>
               <span className="flex items-center">
-                <svg className="w-4 h-4 sm:w-5 sm:h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                </svg>
+                <Icon name="circle-check" className="text-[#ff5722] mr-2" />
                 No Hidden Costs
               </span>
               <span className="flex items-center">
-                <svg className="w-4 h-4 sm:w-5 sm:h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                </svg>
+                <Icon name="circle-check" className="text-[#ff5722] mr-2" />
                 Secure Online Form
               </span>
             </div>
@@ -125,9 +120,7 @@ export default function HomeClient() {
               <Image src="/hero-team.jpg" alt="About Us" fill className="object-cover transform group-hover:scale-110 transition-transform duration-700" />
               <div className="absolute inset-0 flex items-center justify-center group-hover:backdrop-blur-sm transition-all duration-500">
                 <div className="w-16 h-16 sm:w-20 sm:h-20 bg-white rounded-full flex items-center justify-center shadow-lg cursor-pointer hover:scale-125 hover:shadow-2xl transition-all duration-500 animate-pulse-slow group">
-                  <svg className="w-8 h-8 sm:w-10 sm:h-10 text-[#ff5722] ml-1 group-hover:scale-110 transition-transform duration-300" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
-                  </svg>
+                  <Icon name="play" className="text-2xl sm:text-3xl text-[#ff5722] ml-1 group-hover:scale-110 transition-transform duration-300" />
                 </div>
               </div>
             </div>
@@ -164,7 +157,7 @@ export default function HomeClient() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {services.map((service, index) => (
               <div key={index} className={`bg-white rounded-lg p-8 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 border border-gray-100 animate-slide-up stagger-${index + 1} group`}>
-                <div className="text-4xl mb-4 transform group-hover:scale-125 transition-transform duration-300">{service.icon}</div>
+                <div className="w-14 h-14 mb-4 rounded-full bg-orange-50 text-[#ff5722] flex items-center justify-center text-2xl transform group-hover:scale-110 group-hover:bg-[#ff5722] group-hover:text-white transition-all duration-300"><Icon name={service.icon} /></div>
                 <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-[#ff5722] transition-colors">{service.title}</h3>
                 <p className="text-gray-600 mb-4 leading-relaxed text-sm">{service.desc}</p>
                 <Link href="/services" className="text-gray-500 hover:text-[#ff5722] text-sm font-medium transition-all inline-flex items-center group-hover:gap-2">
@@ -228,22 +221,22 @@ export default function HomeClient() {
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
             <div className="text-center bg-white p-6 sm:p-8 rounded-lg shadow-sm hover:shadow-xl transform hover:scale-110 transition-all duration-500 animate-bounce-in stagger-1 group">
-              <div className="text-4xl sm:text-5xl mb-3 transform group-hover:rotate-12 transition-transform duration-300">🎓</div>
+              <div className="text-4xl sm:text-5xl mb-3 transform group-hover:rotate-12 transition-transform duration-300 text-[#ff5722]"><Icon name="graduation-cap" /></div>
               <div className="text-3xl sm:text-4xl font-bold text-[#ff5722] mb-2">820+</div>
               <div className="text-gray-600 text-sm">Students</div>
             </div>
             <div className="text-center bg-white p-6 sm:p-8 rounded-lg shadow-sm hover:shadow-xl transform hover:scale-110 transition-all duration-500 animate-bounce-in stagger-2 group">
-              <div className="text-4xl sm:text-5xl mb-3 transform group-hover:rotate-12 transition-transform duration-300">🏛️</div>
+              <div className="text-4xl sm:text-5xl mb-3 transform group-hover:rotate-12 transition-transform duration-300 text-[#ff5722]"><Icon name="building-columns" /></div>
               <div className="text-3xl sm:text-4xl font-bold text-[#ff5722] mb-2">127</div>
               <div className="text-gray-600 text-sm">Universities</div>
             </div>
             <div className="text-center bg-white p-6 sm:p-8 rounded-lg shadow-sm hover:shadow-xl transform hover:scale-110 transition-all duration-500 animate-bounce-in stagger-3 group">
-              <div className="text-4xl sm:text-5xl mb-3 transform group-hover:rotate-12 transition-transform duration-300">🌍</div>
+              <div className="text-4xl sm:text-5xl mb-3 transform group-hover:rotate-12 transition-transform duration-300 text-[#ff5722]"><Icon name="earth-americas" /></div>
               <div className="text-3xl sm:text-4xl font-bold text-[#ff5722] mb-2">81</div>
               <div className="text-gray-600 text-sm">Countries</div>
             </div>
             <div className="text-center bg-white p-6 sm:p-8 rounded-lg shadow-sm hover:shadow-xl transform hover:scale-110 transition-all duration-500 animate-bounce-in stagger-4 group">
-              <div className="text-4xl sm:text-5xl mb-3 transform group-hover:rotate-12 transition-transform duration-300">💼</div>
+              <div className="text-4xl sm:text-5xl mb-3 transform group-hover:rotate-12 transition-transform duration-300 text-[#ff5722]"><Icon name="people-arrows" /></div>
               <div className="text-3xl sm:text-4xl font-bold text-[#ff5722] mb-2">969</div>
               <div className="text-gray-600 text-sm">Immigrations</div>
             </div>
@@ -306,7 +299,7 @@ export default function HomeClient() {
             {testimonials.map((testimonial, index) => (
               <div key={index} className={`bg-white rounded-lg p-6 sm:p-8 shadow-sm border border-gray-100 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 animate-slide-up stagger-${index + 1} group`}>
                 <div className="flex items-center mb-4">
-                  <div className="w-14 h-14 bg-gradient-to-br from-[#ff5722] to-[#e64a19] rounded-full flex items-center justify-center text-2xl mr-4 transform group-hover:scale-110 transition-transform duration-300 shadow-md">{testimonial.img}</div>
+                  <div className="w-14 h-14 bg-gradient-to-br from-[#ff5722] to-[#e64a19] rounded-full flex items-center justify-center text-2xl mr-4 transform group-hover:scale-110 transition-transform duration-300 shadow-md text-white"><Icon name={testimonial.img} /></div>
                   <div>
                     <div className="font-bold text-gray-900 group-hover:text-[#ff5722] transition-colors">{testimonial.name}</div>
                     <div className="text-sm text-gray-500">{testimonial.role}</div>

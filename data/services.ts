@@ -5,7 +5,7 @@ export const services: Service[] = [
   {
     slug: "company-formation",
     title: "Company Formation",
-    icon: "🏢",
+    icon: "building",
     summary: "Mainland and free zone company setup in Dubai and the UAE with full legal support.",
     intro: "We guide you from choosing the right jurisdiction and legal structure to receiving your licence and opening your corporate account.",
     highlights: ["Mainland, free zone and offshore options", "Trade name reservation and initial approval", "Memorandum of association and licence issuance", "Support through to bank account and visas"],
@@ -23,7 +23,7 @@ export const services: Service[] = [
   {
     slug: "pro-services",
     title: "PRO Services",
-    icon: "📋",
+    icon: "clipboard-list",
     summary: "Professional government documentation and liaison services for all UAE departments.",
     intro: "Our PRO team handles submissions, renewals and approvals so you can stay focused on running your business.",
     highlights: ["Labour and immigration transactions", "Licence amendments and renewals", "Emirates ID and medical processing", "Contract and document typing"],
@@ -38,7 +38,7 @@ export const services: Service[] = [
   {
     slug: "visa-processing",
     title: "Visa Processing",
-    icon: "✈️",
+    icon: "passport",
     summary: "Employment, family, tourist and golden visa application services.",
     intro: "From residence visas to golden visa applications, we prepare the file correctly and track it until approval.",
     highlights: ["Employment and investor visas", "Family sponsorship", "Tourist and visit visas", "Golden visa applications"],
@@ -54,7 +54,7 @@ export const services: Service[] = [
   {
     slug: "document-clearing",
     title: "Document Clearing",
-    icon: "📄",
+    icon: "file-circle-check",
     summary: "Fast-track approval and attestation for all types of business and personal documents.",
     intro: "We take your documents through the required attestation chain quickly and keep you updated at every stage.",
     highlights: ["Ministry of Foreign Affairs attestation", "Embassy legalisation", "Educational and commercial documents", "Express options available"],
@@ -69,7 +69,7 @@ export const services: Service[] = [
   {
     slug: "trade-license",
     title: "Trade License",
-    icon: "🏛️",
+    icon: "file-signature",
     summary: "New trade licence issuance and annual renewals across all UAE emirates.",
     intro: "Commercial, professional, industrial or tourism, we help you pick the right licence type and keep it valid year after year.",
     highlights: ["New licence issuance", "Annual renewal reminders", "Activity additions and amendments", "Licence cancellation"],
@@ -84,7 +84,7 @@ export const services: Service[] = [
   {
     slug: "legal-translation",
     title: "Legal Translation",
-    icon: "⚖️",
+    icon: "language",
     summary: "Certified translation and attestation for legal and business documents.",
     intro: "Accurate, court-accepted translations between Arabic, English and other languages, ready for attestation.",
     highlights: ["Certified legal translators", "Arabic ⇄ English and more", "Notarisation and attestation", "Quick turnaround"],
@@ -99,7 +99,7 @@ export const services: Service[] = [
   {
     slug: "bank-account-opening",
     title: "Bank Account Opening",
-    icon: "🏦",
+    icon: "building-columns",
     summary: "Corporate and personal bank account opening assistance with major UAE banks.",
     intro: "We prepare your application and introduce you to the right bank for your business profile.",
     highlights: ["Bank selection advice", "Application and KYC preparation", "Follow-up until activation"],
@@ -114,7 +114,7 @@ export const services: Service[] = [
   {
     slug: "business-consulting",
     title: "Business Consulting",
-    icon: "💼",
+    icon: "user-tie",
     summary: "Expert guidance on UAE business regulations, compliance and growth.",
     intro: "Practical advice on structuring, compliance and expansion, tailored to your business and sector.",
     highlights: ["Regulatory and compliance guidance", "Jurisdiction comparison", "Market-entry planning"],
@@ -129,7 +129,7 @@ export const services: Service[] = [
   {
     slug: "business-immigration",
     title: "Business Immigration",
-    icon: "🌍",
+    icon: "earth-americas",
     summary: "Golden visa, residence permits and work visas for business owners and investors.",
     intro: "Residency routes for founders, investors and skilled professionals, with end-to-end documentation support.",
     highlights: ["Golden visa for investors", "Residence for company owners", "Work permits"],
