@@ -287,6 +287,9 @@ export function SeoPanel({ seo, onChange, errors, fallbackTitle, fallbackDescrip
       <Field label="Meta description" htmlFor="seo-desc" counter={<Counter value={s.description ?? ""} min={70} max={160} />} hint="120–160 characters works best. Leave empty to use the summary." error={errors["seo.description"]}>
         <TextArea id="seo-desc" rows={3} value={s.description ?? ""} onChange={(v) => set({ description: v })} />
       </Field>
+      <details className="rounded-md border border-gray-200">
+        <summary className="cursor-pointer px-4 py-2.5 text-sm font-medium text-gray-700">Advanced SEO options</summary>
+        <div className="p-4 pt-2 space-y-5 border-t border-gray-100">
       <Field label="Keywords" htmlFor="seo-kw" hint="Comma separated. Optional, search engines mostly ignore them but AI tools and internal search can use them.">
         <TextField id="seo-kw" value={keywords} onChange={(v) => set({ keywords: v.split(",").map((x) => x.trim()).filter(Boolean) })} />
       </Field>
@@ -295,6 +298,8 @@ export function SeoPanel({ seo, onChange, errors, fallbackTitle, fallbackDescrip
       </Field>
       <ImageField label="Social share image (Open Graph)" showAlt={false} src={s.image} alt="" onChange={(src) => set({ image: src })} />
       <Toggle checked={!!s.noindex} onChange={(v) => set({ noindex: v })} label="Hide from search engines (noindex)" hint="Also removes the page from the sitemap." />
+        </div>
+      </details>
     </div>
   );
 }

@@ -355,3 +355,27 @@ html, body { overflow-x: clip; }
   .reveal-left[data-reveal="below"],  .reveal-left[data-reveal="above"],  .reveal-left[data-reveal="ready"],
   .reveal-right[data-reveal="below"], .reveal-right[data-reveal="above"], .reveal-right[data-reveal="ready"] { transform: translateY(36px); }
 }
+
+/* ---------- Rich text (public pages + dashboard visual editor share these styles) ---------- */
+.rich-content { color: #374151; line-height: 1.75; font-size: 1rem; }
+.rich-content > :first-child { margin-top: 0; }
+.rich-content p { margin: 0 0 1.1rem; }
+.rich-content h2 { font-size: 1.6rem; line-height: 1.3; font-weight: 700; color: #111827; margin: 2rem 0 0.75rem; }
+.rich-content h3 { font-size: 1.25rem; line-height: 1.35; font-weight: 700; color: #111827; margin: 1.6rem 0 0.6rem; }
+.rich-content h4 { font-size: 1.05rem; font-weight: 700; color: #111827; margin: 1.3rem 0 0.5rem; }
+.rich-content ul, .rich-content ol { margin: 0 0 1.2rem; padding-left: 1.4rem; }
+.rich-content ul { list-style: disc; }
+.rich-content ol { list-style: decimal; }
+.rich-content li { margin: 0.3rem 0; padding-left: 0.2rem; }
+.rich-content li::marker { color: rgb(var(--brand-text)); }
+.rich-content a { color: rgb(var(--brand-text)); text-decoration: underline; text-underline-offset: 2px; }
+.rich-content a:hover { color: rgb(var(--brand-dark)); }
+.rich-content blockquote { margin: 1.4rem 0; padding: 0.4rem 0 0.4rem 1.1rem; border-left: 4px solid rgb(var(--brand-200)); color: #4b5563; font-style: italic; }
+.rich-content img { max-width: 100%; height: auto; border-radius: 0.5rem; margin: 1.5rem 0; display: block; }
+.rich-content hr { border: 0; border-top: 1px solid #e5e7eb; margin: 2rem 0; }
+.rich-content code { background: #f3f4f6; padding: 0.1rem 0.35rem; border-radius: 0.25rem; font-size: 0.9em; }
+.ProseMirror { outline: none; min-height: 22rem; }
+.ProseMirror p.is-editor-empty:first-child::before { content: attr(data-placeholder); color: #9ca3af; float: left; height: 0; pointer-events: none; }
+.ProseMirror img.ProseMirror-selectednode { outline: 3px solid rgb(var(--brand)); }
+.rich-content li > p { margin: 0; }
+.rich-content li > ul, .rich-content li > ol { margin: 0.3rem 0 0; }

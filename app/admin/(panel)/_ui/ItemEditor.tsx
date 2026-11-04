@@ -3,12 +3,12 @@
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import PostBody from "@/app/components/PostBody";
 import Icon from "@/app/components/Icon";
 import { articleLd, countryPageLd, faqLd, serviceLd } from "@/lib/seo";
 import { btnGhost, btnPrimary, inputCls } from "../../ui";
 import { saveItem, deleteItem, duplicateItem } from "../actions";
-import { CheckList, Counter, Field, FaqsEditor, ImageField, LinesField, PairsEditor, ParagraphsField, SchemaPanel, SectionsEditor, Section, SeoPanel, TextArea, TextField, Toggle, type Errors, type Form } from "./fields";
+import RichEditor from "./RichEditor";
+import { CheckList, Counter, Field, FaqsEditor, ImageField, PairsEditor, SchemaPanel, SeoPanel, TextArea, TextField, Toggle, type Errors, type Form } from "./fields";
 
 type Kind = "services" | "countries" | "posts";
 export type EditorContext = { siteUrl: string; siteName: string; services: { value: string; label: string }[]; categories: string[] };
@@ -18,6 +18,8 @@ const GRADIENTS = [
   "from-sky-100 via-blue-100 to-sky-200", "from-cyan-100 via-sky-100 to-blue-200", "from-lime-100 via-emerald-100 to-green-200",
   "from-amber-100 via-yellow-100 to-orange-200", "from-fuchsia-100 via-pink-100 to-purple-200", "from-gray-100 to-gray-200",
 ];
+const singular = { services: "service", countries: "country", posts: "post" } as const;
+const base = { services: "/services/", countries: "/countries/", posts: "/blog/" } as const;
 
 const toLocal = (iso?: string) => {
   if (!iso) return "";
@@ -28,10 +30,21 @@ const fromLocal = (v: string) => (v ? new Date(v).toISOString() : "");
 const slugify = (s: string) => s.toLowerCase().trim().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 80);
 
 function blank(kind: Kind): Form {
-  const base = { status: "draft", publishAt: "", slug: "", image: "", imageAlt: "", faqSchema: true, schemaCustom: "", seo: {}, faqs: [] };
-  if (kind === "services") return { ...base, title: "", icon: "briefcase", summary: "", intro: "", highlights: [], sections: [], relatedSlugs: [], serviceType: "" };
-  if (kind === "countries") return { ...base, name: "", flag: "", tagline: "", headline: "", summary: "", intro: "", facts: [], sections: [], gradient: GRADIENTS[0], categories: [], serviceSlugs: [], featured: false };
-  return { ...base, title: "", excerpt: "", category: "", author: "Al Anfal Doc Team", tags: [], body: [], readMinutes: "" };
+  const b = { status: "draft", publishAt: "", slug: "", image: "", imageAlt: "", faqSchema: true, schemaCustom: "", seo: {}, faqs: [], contentHtml: "" };
+  if (kind === "services") return { ...b, title: "", icon: "briefcase", summary: "", relatedSlugs: [], serviceType: "" };
+  if (kind === "countries") return { ...b, name: "", flag: "", tagline: "", headline: "", summary: "", facts: [], gradient: GRADIENTS[0], categories: [], serviceSlugs: [], featured: false };
+  return { ...b, title: "", excerpt: "", category: "", author: "Al Anfal Doc Team", tags: [], readMinutes: "" };
+}
+
+function Box({ title, children, open, className = "" }: { title: string; children: React.ReactNode; open?: boolean; className?: string }) {
+  return (
+    <details open={open ?? true} className={`group bg-white border border-gray-200 rounded-lg shadow-sm ${className}`}>
+      <summary className="flex items-center justify-between cursor-pointer list-none px-4 py-3 font-semibold text-sm select-none">
+        {title}<Icon name="chevron-down" className="text-gray-400 text-xs transition-transform group-open:rotate-180" />
+      </summary>
+      <div className="px-4 pb-4 pt-1 space-y-4 border-t border-gray-100">{children}</div>
+    </details>
+  );
 }
 
 export default function ItemEditor({ kind, id, initial, ctx }: { kind: Kind; id?: string; initial?: Form; ctx: EditorContext }) {
@@ -41,9 +54,8 @@ export default function ItemEditor({ kind, id, initial, ctx }: { kind: Kind; id?
   const [msg, setMsg] = useState<{ ok: boolean; text: string } | null>(null);
   const [dirty, setDirty] = useState(false);
   const [pending, start] = useTransition();
-  const [bodyPreview, setBodyPreview] = useState(false);
+  const [editSlug, setEditSlug] = useState(false);
   const slugTouched = useRef(!!id);
-  const bodyRef = useRef<HTMLTextAreaElement>(null);
 
   const titleKey = kind === "countries" ? "name" : "title";
   const set = (patch: Form) => { setF((p) => ({ ...p, ...patch })); setDirty(true); setMsg(null); };
@@ -56,29 +68,33 @@ export default function ItemEditor({ kind, id, initial, ctx }: { kind: Kind; id?
     return () => window.removeEventListener("beforeunload", warn);
   }, [dirty]);
 
-  const save = () => start(async () => {
-    const payload = { ...f, publishAt: fromLocal(f.publishAt) };
+  const future = !!f.publishAt && new Date(f.publishAt).getTime() > Date.now();
+  const save = (status: "draft" | "published") => start(async () => {
+    const payload = { ...f, status, publishAt: fromLocal(f.publishAt) };
     const r = await saveItem(kind, JSON.stringify(payload), id);
     setErrors(r.errors ?? {});
-    setMsg({ ok: r.ok, text: r.message ?? (r.ok ? "Saved" : "Could not save") });
     if (r.ok) {
+      setF((p) => ({ ...p, status }));
       setDirty(false);
+      setMsg({ ok: true, text: status === "draft" ? "Draft saved." : future ? "Scheduled." : id ? "Updated." : "Published." });
       if (!id && r.id) router.replace(`/admin/${kind}/${r.id}`);
       else router.refresh();
     } else {
-      document.querySelector('[role="alert"]')?.scrollIntoView({ behavior: "smooth", block: "center" });
+      setMsg({ ok: false, text: r.message ?? "Could not save" });
+      setTimeout(() => document.querySelector('p[role="alert"]')?.scrollIntoView({ behavior: "smooth", block: "center" }), 50);
     }
   });
 
   useEffect(() => {
-    const onKey = (e: KeyboardEvent) => { if ((e.ctrlKey || e.metaKey) && e.key === "s") { e.preventDefault(); save(); } };
+    const onKey = (e: KeyboardEvent) => { if ((e.ctrlKey || e.metaKey) && e.key === "s") { e.preventDefault(); save(f.status === "published" ? "published" : "draft"); } };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   });
 
-  const path = kind === "services" ? `/services/${f.slug || "…"}` : kind === "countries" ? `/countries/${f.slug || "…"}` : `/blog/${f.slug || "…"}`;
+  const path = `${base[kind]}${f.slug || "…"}`;
   const seoTitle = kind === "countries" ? f.headline || f.name : f.title;
-  const seoDesc = kind === "posts" ? f.excerpt : kind === "countries" ? f.intro : f.summary;
+  const seoDesc = kind === "posts" ? f.excerpt : f.summary;
+  const isLive = f.status === "published" && !future;
 
   const preview = useMemo(() => {
     const out: unknown[] = [];
@@ -91,177 +107,155 @@ export default function ItemEditor({ kind, id, initial, ctx }: { kind: Kind; id?
     return out;
   }, [f, kind]);
 
-  const insertAtCursor = (text: string) => {
-    const ta = bodyRef.current;
-    const cur = (f.body ?? []).join("\n\n");
-    if (!ta) return set({ body: [...(f.body ?? []), text] });
-    const pos = ta.selectionStart;
-    const next = cur.slice(0, pos) + (pos && !cur.slice(0, pos).endsWith("\n\n") ? "\n\n" : "") + text + "\n\n" + cur.slice(pos);
-    set({ body: next.split(/\n{2,}/).map((p) => p.trim()).filter(Boolean) });
-  };
-
-  const isLive = f.status === "published" && (!f.publishAt || new Date(f.publishAt).getTime() <= Date.now());
+  const errorList = Object.entries(errors).filter(([, v]) => v);
 
   return (
-    <div className="pb-24">
-      <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
-        <div className="xl:col-span-2 space-y-6 min-w-0">
-          <Section title="Content">
-            <Field label={kind === "countries" ? "Country name" : "Title"} htmlFor="title" error={errors[titleKey]}>
-              <TextField id="title" value={f[titleKey]} onChange={setTitle} />
-            </Field>
-
-            {kind === "services" && (
-              <>
-                <Field label="Summary" htmlFor="summary" error={errors.summary} counter={<Counter value={f.summary} max={160} />} hint="Shown on cards and used as the default meta description.">
-                  <TextArea id="summary" rows={2} value={f.summary} onChange={(v) => set({ summary: v })} />
-                </Field>
-                <Field label="Introduction" htmlFor="intro"><TextArea id="intro" rows={4} value={f.intro} onChange={(v) => set({ intro: v })} /></Field>
-                <div className="grid sm:grid-cols-2 gap-4">
-                  <Field label="Icon (Font Awesome)" htmlFor="icon" error={errors.icon} hint="Name from fontawesome.com, e.g. passport, building, language">
-                    <div className="flex gap-2 items-center"><span className="w-10 h-10 shrink-0 rounded-full bg-brand-50 text-brand-text flex items-center justify-center"><Icon name={f.icon || "briefcase"} /></span><TextField id="icon" value={f.icon} onChange={(v) => set({ icon: v })} /></div>
-                  </Field>
-                  <Field label="Schema service type" htmlFor="stype" hint="Optional, e.g. Company formation. Defaults to the title."><TextField id="stype" value={f.serviceType ?? ""} onChange={(v) => set({ serviceType: v })} /></Field>
-                </div>
-                <Field label="Key points (bullets)" hint="One per line" htmlFor="hl"><LinesField id="hl" rows={4} value={f.highlights} onChange={(v) => set({ highlights: v })} /></Field>
-              </>
+    <div className="grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_320px] gap-6 items-start">
+      {/* ------------ main column ------------ */}
+      <div className="space-y-5 min-w-0">
+        <div>
+          <input
+            value={f[titleKey]}
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder={kind === "countries" ? "Country name" : "Add title"}
+            aria-label="Title"
+            className="w-full px-4 py-3 text-2xl sm:text-3xl font-bold bg-white border border-gray-300 rounded-lg placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-brand/40"
+          />
+          {errors[titleKey] && <p role="alert" className="text-xs text-red-600 mt-1">{errors[titleKey]}</p>}
+          <p className="mt-2 text-sm text-gray-500 flex flex-wrap items-center gap-2">
+            <span>Link:</span>
+            {editSlug ? (
+              <span className="inline-flex items-center gap-1">{base[kind]}<input aria-label="URL slug" value={f.slug} onChange={(e) => { slugTouched.current = true; set({ slug: slugify(e.target.value) }); }} className="px-2 py-1 text-sm border border-gray-300 rounded" /><button type="button" className="text-brand-text font-medium" onClick={() => setEditSlug(false)}>OK</button></span>
+            ) : (
+              <><span className="text-gray-800">{ctx.siteUrl.replace(/^https?:\/\//, "")}{path}</span><button type="button" onClick={() => setEditSlug(true)} className="text-brand-text font-medium hover:underline">Edit</button></>
             )}
-
-            {kind === "countries" && (
-              <>
-                <div className="grid sm:grid-cols-3 gap-4">
-                  <Field label="Flag emoji" htmlFor="flag"><TextField id="flag" value={f.flag} onChange={(v) => set({ flag: v })} placeholder="🇦🇺" /></Field>
-                  <div className="sm:col-span-2"><Field label="Tagline" htmlFor="tagline"><TextField id="tagline" value={f.tagline} onChange={(v) => set({ tagline: v })} placeholder="Great Destination to Study and Live" /></Field></div>
-                </div>
-                <Field label="Page headline" htmlFor="headline"><TextField id="headline" value={f.headline} onChange={(v) => set({ headline: v })} placeholder="Study. Work. Live in Australia" /></Field>
-                <Field label="Card summary" htmlFor="summary" error={errors.summary}><TextArea id="summary" rows={2} value={f.summary} onChange={(v) => set({ summary: v })} /></Field>
-                <Field label="Introduction" htmlFor="intro" hint="Also the default meta description."><TextArea id="intro" rows={4} value={f.intro} onChange={(v) => set({ intro: v })} /></Field>
-                <Field label="Key facts (shown as a bulleted list)"><PairsEditor value={f.facts} onChange={(v) => set({ facts: v })} a="label" b="value" addLabel="Add fact" aPlace="Capital" bPlace="Canberra" /></Field>
-                <Field label="Banner colour (used when there is no cover image)">
-                  <div className="flex flex-wrap gap-2">
-                    {GRADIENTS.map((g) => (
-                      <button key={g} type="button" aria-label={g} onClick={() => set({ gradient: g })} className={`w-12 h-8 rounded bg-gradient-to-br ${g} border ${f.gradient === g ? "ring-2 ring-brand border-brand" : "border-gray-200"}`} />
-                    ))}
-                  </div>
-                </Field>
-                <Toggle checked={!!f.featured} onChange={(v) => set({ featured: v })} label="Featured country" hint="Shown first in 'Popular countries'." />
-              </>
-            )}
-
-            {kind === "posts" && (
-              <>
-                <Field label="Excerpt" htmlFor="excerpt" error={errors.excerpt} counter={<Counter value={f.excerpt} max={160} />} hint="Shown in listings and used as the default meta description.">
-                  <TextArea id="excerpt" rows={2} value={f.excerpt} onChange={(v) => set({ excerpt: v })} />
-                </Field>
-                <div className="grid sm:grid-cols-3 gap-4">
-                  <Field label="Category" htmlFor="category" error={errors.category}>
-                    <input id="category" list="cats" value={f.category} onChange={(e) => set({ category: e.target.value })} className={inputCls} />
-                    <datalist id="cats">{ctx.categories.map((c) => <option key={c} value={c} />)}</datalist>
-                  </Field>
-                  <Field label="Author" htmlFor="author"><TextField id="author" value={f.author ?? ""} onChange={(v) => set({ author: v })} /></Field>
-                  <Field label="Reading time (min)" htmlFor="rm" hint="Empty = automatic"><TextField id="rm" type="number" value={String(f.readMinutes ?? "")} onChange={(v) => set({ readMinutes: v })} /></Field>
-                </div>
-                <Field label="Tags" htmlFor="tags" hint="Comma separated"><TextField id="tags" value={(f.tags ?? []).join(", ")} onChange={(v) => set({ tags: v.split(",").map((x) => x.trim()).filter(Boolean) })} /></Field>
-                <Field label="Article body" htmlFor="body" error={errors.body} hint="Separate paragraphs with a blank line. A line starting with “## ” is a heading. Lines starting with “- ” make a bullet list.">
-                  <div className="flex gap-2 mb-2">
-                    <button type="button" className={btnGhost} onClick={() => insertAtCursor("## Heading")}><Icon name="heading" />Heading</button>
-                    <button type="button" className={btnGhost} onClick={() => insertAtCursor("- First point\n- Second point")}><Icon name="list-ul" />Bullets</button>
-                    <button type="button" className={`${btnGhost} ml-auto`} onClick={() => setBodyPreview((v) => !v)}><Icon name={bodyPreview ? "pen" : "eye"} />{bodyPreview ? "Edit" : "Preview"}</button>
-                  </div>
-                  {bodyPreview ? (
-                    <div className="border border-gray-200 rounded-md p-4 min-h-[16rem] bg-white"><PostBody body={f.body ?? []} /></div>
-                  ) : (
-                    <textarea id="body" ref={bodyRef} rows={16} value={(f.body ?? []).join("\n\n")} onChange={(e) => set({ body: e.target.value.split(/\n{2,}/).map((p: string) => p.trim()).filter(Boolean) })} className={`${inputCls} resize-y`} />
-                  )}
-                </Field>
-              </>
-            )}
-          </Section>
-
-          {kind !== "posts" && (
-            <Section title="Page sections" hint="Extra headings, paragraphs and bullet lists shown below the introduction.">
-              <SectionsEditor value={f.sections} onChange={(v) => set({ sections: v })} />
-            </Section>
-          )}
-
-          {kind === "countries" && (
-            <Section title="Sidebar & related services">
-              <Field label="Visa categories (sidebar links)" hint="Leave empty to list the related services instead.">
-                <PairsEditor value={f.categories ?? []} onChange={(v) => set({ categories: v })} a="title" b="href" addLabel="Add link" aPlace="Study Visa in Australia" bPlace="/services/visa-processing" />
-              </Field>
-              <Field label="Related services"><CheckList options={ctx.services} value={f.serviceSlugs} onChange={(v) => set({ serviceSlugs: v })} /></Field>
-            </Section>
-          )}
-          {kind === "services" && (
-            <Section title="Related services">
-              <CheckList options={ctx.services.filter((s) => s.value !== f.slug)} value={f.relatedSlugs} onChange={(v) => set({ relatedSlugs: v })} />
-            </Section>
-          )}
-
-          {kind !== "posts" && (
-            <Section title="FAQs" hint={`Shown on the ${kind === "services" ? "service" : "country"} page. Each answer should be short and factual.`}>
-              <FaqsEditor value={f.faqs} onChange={(v) => set({ faqs: v })} />
-            </Section>
-          )}
-
-          <Section title="SEO & social" hint="Meta tags that control how this page looks in Google and when shared.">
-            <SeoPanel seo={f.seo} onChange={(s) => set({ seo: s })} errors={errors} fallbackTitle={seoTitle} fallbackDescription={seoDesc} path={path} siteUrl={ctx.siteUrl} siteName={ctx.siteName} />
-          </Section>
-
-          <Section title="Schema (structured data)">
-            <SchemaPanel faqSchema={f.faqSchema} onFaqSchema={(v) => set({ faqSchema: v })} custom={f.schemaCustom} onCustom={(v) => set({ schemaCustom: v })} error={errors.schemaCustom} preview={preview} hasFaqs={kind !== "posts"} />
-          </Section>
+          </p>
+          {errors.slug && <p role="alert" className="text-xs text-red-600 mt-1">{errors.slug}</p>}
         </div>
 
-        <div className="space-y-6">
-          <Section title="Publish">
-            <Field label="Status" htmlFor="status">
-              <select id="status" value={f.status} onChange={(e) => set({ status: e.target.value })} className={inputCls}>
-                <option value="draft">Draft (hidden)</option>
-                <option value="published">Published</option>
-              </select>
-            </Field>
-            <Field label="Publish date & time" htmlFor="publishAt" error={errors.publishAt} hint="Optional. A future date schedules the page: it goes live automatically.">
+        {kind === "countries" && (
+          <Box title="Quick facts" className="!bg-white">
+            <p className="text-xs text-gray-500">Short facts shown as a list at the top of the page (capital, language, currency…).</p>
+            <PairsEditor value={f.facts} onChange={(v) => set({ facts: v })} a="label" b="value" addLabel="Add fact" aPlace="Capital" bPlace="Canberra" />
+          </Box>
+        )}
+
+        <div>
+          <RichEditor value={f.contentHtml} onChange={(html) => set({ contentHtml: html })} placeholder="Write your content here. Use the toolbar for headings, lists, links and images." />
+          {errors.contentHtml && <p role="alert" className="text-xs text-red-600 mt-1">{errors.contentHtml}</p>}
+        </div>
+
+        <Box title={kind === "posts" ? "Excerpt" : "Short description"}>
+          <Field label="" htmlFor="desc" error={errors.summary || errors.excerpt} counter={<Counter value={seoDesc ?? ""} max={160} />} hint="Shown on cards and in lists. Also used as the search-engine description unless you write one below.">
+            <TextArea id="desc" rows={3} value={seoDesc ?? ""} onChange={(v) => set(kind === "posts" ? { excerpt: v } : { summary: v })} />
+          </Field>
+        </Box>
+
+        {kind !== "posts" && (
+          <Box title="FAQs (optional)" open={(f.faqs?.length ?? 0) > 0}>
+            <p className="text-xs text-gray-500">Questions and answers shown on the page. They also help you appear in Google&apos;s FAQ results.</p>
+            <FaqsEditor value={f.faqs} onChange={(v) => set({ faqs: v })} />
+          </Box>
+        )}
+
+        <Box title="Search engine listing (SEO)" open={false}>
+          <SeoPanel seo={f.seo} onChange={(s) => set({ seo: s })} errors={errors} fallbackTitle={seoTitle} fallbackDescription={seoDesc ?? ""} path={path} siteUrl={ctx.siteUrl} siteName={ctx.siteName} />
+          <details className="rounded-md border border-gray-200">
+            <summary className="cursor-pointer px-4 py-2.5 text-sm font-medium text-gray-700">Structured data (schema)</summary>
+            <div className="p-4 border-t border-gray-100">
+              <SchemaPanel faqSchema={f.faqSchema} onFaqSchema={(v) => set({ faqSchema: v })} custom={f.schemaCustom} onCustom={(v) => set({ schemaCustom: v })} error={errors.schemaCustom} preview={preview} hasFaqs={kind !== "posts"} />
+            </div>
+          </details>
+        </Box>
+      </div>
+
+      {/* ------------ sidebar ------------ */}
+      <aside className="space-y-5 xl:sticky xl:top-4">
+        <section className="bg-white border border-gray-200 rounded-lg shadow-sm">
+          <h2 className="px-4 py-3 font-semibold text-sm border-b border-gray-100">Publish</h2>
+          <div className="p-4 space-y-4">
+            <p className="text-sm flex items-center gap-2">
+              <span className="text-gray-500">Status:</span>
+              <span className={`font-medium ${isLive ? "text-emerald-700" : future ? "text-amber-700" : "text-gray-700"}`}>{f.status === "draft" ? "Draft" : future ? "Scheduled" : "Published"}</span>
+            </p>
+            <Field label="Publish date" htmlFor="publishAt" error={errors.publishAt} hint={future ? "Goes live automatically on this date." : "Leave empty to publish immediately. Pick a future date to schedule."}>
               <input id="publishAt" type="datetime-local" value={f.publishAt} onChange={(e) => set({ publishAt: e.target.value })} className={inputCls} />
             </Field>
-            <Field label="URL slug" htmlFor="slug" error={errors.slug} hint={`${ctx.siteUrl}${path}`}>
-              <TextField id="slug" value={f.slug} onChange={(v) => { slugTouched.current = true; set({ slug: slugify(v) }); }} />
-            </Field>
-            <div className="text-xs text-gray-500 space-y-1">
-              {initial?.createdAt && <p>Created {new Date(initial.createdAt).toLocaleString("en-GB")}</p>}
-              {initial?.updatedAt && <p>Last updated {new Date(initial.updatedAt).toLocaleString("en-GB")}</p>}
-              <p>{f.status === "draft" ? "Not visible on the website." : isLive ? "Visible on the website." : "Scheduled: not visible yet."}</p>
+            {id && initial?.updatedAt && <p className="text-xs text-gray-400">Last updated {new Date(initial.updatedAt).toLocaleString("en-GB")}</p>}
+
+            {msg && <p role={msg.ok ? "status" : "alert"} className={`text-sm rounded-md px-3 py-2 ${msg.ok ? "bg-emerald-50 text-emerald-800" : "bg-red-50 text-red-700"}`}>{msg.text}{!msg.ok && errorList.length > 1 && " (see the highlighted fields)"}</p>}
+            {!msg && dirty && <p className="text-xs text-amber-700">You have unsaved changes.</p>}
+
+            <div className="flex flex-col gap-2">
+              {f.status === "published" ? (
+                <>
+                  <button type="button" disabled={pending} onClick={() => save("published")} className={`${btnPrimary} w-full`}>{pending ? "Saving…" : "Update"}</button>
+                  <button type="button" disabled={pending} onClick={() => save("draft")} className={`${btnGhost} w-full`}>Switch to draft</button>
+                </>
+              ) : (
+                <>
+                  <button type="button" disabled={pending} onClick={() => save("published")} className={`${btnPrimary} w-full`}>{pending ? "Saving…" : future ? "Schedule" : "Publish"}</button>
+                  <button type="button" disabled={pending} onClick={() => save("draft")} className={`${btnGhost} w-full`}>Save draft</button>
+                </>
+              )}
+              {id && isLive && <Link href={path} target="_blank" className="text-center text-sm text-brand-text hover:underline">View on website ↗</Link>}
             </div>
-            {id && isLive && <Link href={path} target="_blank" className={`${btnGhost} w-full`}><Icon name="arrow-up-right-from-square" />View live page</Link>}
-          </Section>
-
-          <Section title="Image">
-            <ImageField src={f.image} alt={f.imageAlt} error={errors.imageAlt} onChange={(src, alt) => set({ image: src, imageAlt: alt })} label={kind === "posts" ? "Cover image" : "Banner / cover image"} />
-          </Section>
-
-          {id && (
-            <Section title="Danger zone">
-              <form action={duplicateItem.bind(null, kind, id)}><button className={`${btnGhost} w-full`}><Icon name="copy" />Duplicate as draft</button></form>
-              <form action={deleteItem.bind(null, kind, id)} onSubmit={(e) => { if (!confirm("Delete this item permanently? This cannot be undone.")) e.preventDefault(); }}>
-                <button className="w-full inline-flex items-center justify-center gap-2 px-3 py-2 border border-red-200 text-red-600 text-sm font-medium rounded-md hover:bg-red-50"><Icon name="trash-can" />Delete</button>
-              </form>
-            </Section>
-          )}
-        </div>
-      </div>
-
-      {/* sticky save bar */}
-      <div className="fixed bottom-0 left-0 right-0 lg:left-64 z-30 bg-white/95 backdrop-blur border-t border-gray-200">
-        <div className="max-w-[1400px] px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between gap-4">
-          <p role="status" className={`text-sm ${msg ? (msg.ok ? "text-emerald-700" : "text-red-600") : "text-gray-500"}`}>
-            {msg ? msg.text : dirty ? "Unsaved changes (Ctrl+S to save)" : "All changes saved"}
-          </p>
-          <div className="flex gap-2">
-            <Link href={`/admin/${kind}`} className={btnGhost}>Back to list</Link>
-            <button type="button" onClick={save} disabled={pending} className={btnPrimary}>{pending ? "Saving…" : id ? "Save changes" : "Create"}</button>
           </div>
-        </div>
-      </div>
+        </section>
+
+        <Box title="Featured image">
+          <ImageField src={f.image} alt={f.imageAlt} error={errors.imageAlt} onChange={(src, alt) => set({ image: src, imageAlt: alt })} label="" />
+        </Box>
+
+        {kind === "posts" && (
+          <Box title="Post details">
+            <Field label="Category" htmlFor="category" error={errors.category}>
+              <input id="category" list="cats" value={f.category} onChange={(e) => set({ category: e.target.value })} className={inputCls} />
+              <datalist id="cats">{ctx.categories.map((c) => <option key={c} value={c} />)}</datalist>
+            </Field>
+            <Field label="Tags" htmlFor="tags" hint="Separate with commas"><TextField id="tags" value={(f.tags ?? []).join(", ")} onChange={(v) => set({ tags: v.split(",").map((x: string) => x.trim()).filter(Boolean) })} /></Field>
+            <Field label="Author" htmlFor="author"><TextField id="author" value={f.author ?? ""} onChange={(v) => set({ author: v })} /></Field>
+          </Box>
+        )}
+
+        {kind === "services" && (
+          <Box title="Service details">
+            <Field label="Icon" htmlFor="icon" error={errors.icon} hint="A Font Awesome name, e.g. passport, building, language">
+              <div className="flex gap-2 items-center"><span className="w-10 h-10 shrink-0 rounded-full bg-brand-50 text-brand-text flex items-center justify-center"><Icon name={f.icon || "briefcase"} /></span><TextField id="icon" value={f.icon} onChange={(v) => set({ icon: v })} /></div>
+            </Field>
+            <details><summary className="cursor-pointer text-sm font-medium text-gray-700">Related services</summary><div className="pt-3"><CheckList options={ctx.services.filter((s) => s.value !== f.slug)} value={f.relatedSlugs} onChange={(v) => set({ relatedSlugs: v })} /></div></details>
+          </Box>
+        )}
+
+        {kind === "countries" && (
+          <Box title="Country details">
+            <div className="grid grid-cols-3 gap-3">
+              <Field label="Flag" htmlFor="flag"><TextField id="flag" value={f.flag} onChange={(v) => set({ flag: v })} placeholder="🇦🇺" /></Field>
+              <div className="col-span-2"><Field label="Headline" htmlFor="headline"><TextField id="headline" value={f.headline} onChange={(v) => set({ headline: v })} placeholder="Study. Work. Live in…" /></Field></div>
+            </div>
+            <Field label="Tagline" htmlFor="tagline"><TextField id="tagline" value={f.tagline} onChange={(v) => set({ tagline: v })} /></Field>
+            <Field label="Banner colour (when there is no image)">
+              <div className="flex flex-wrap gap-2">{GRADIENTS.map((g) => <button key={g} type="button" aria-label={g} onClick={() => set({ gradient: g })} className={`w-9 h-7 rounded bg-gradient-to-br ${g} border ${f.gradient === g ? "ring-2 ring-brand border-brand" : "border-gray-200"}`} />)}</div>
+            </Field>
+            <Toggle checked={!!f.featured} onChange={(v) => set({ featured: v })} label="Featured country" />
+            <details><summary className="cursor-pointer text-sm font-medium text-gray-700">Sidebar links & related services</summary>
+              <div className="pt-3 space-y-4">
+                <Field label="Visa categories (links)" hint="Leave empty to list the related services."><PairsEditor value={f.categories ?? []} onChange={(v) => set({ categories: v })} a="title" b="href" addLabel="Add link" aPlace="Study Visa" bPlace="/services/visa-processing" /></Field>
+                <Field label="Related services"><CheckList options={ctx.services} value={f.serviceSlugs} onChange={(v) => set({ serviceSlugs: v })} /></Field>
+              </div>
+            </details>
+          </Box>
+        )}
+
+        {id && (
+          <Box title="More actions" open={false}>
+            <form action={duplicateItem.bind(null, kind, id)}><button className={`${btnGhost} w-full`}><Icon name="copy" />Duplicate as draft</button></form>
+            <form action={deleteItem.bind(null, kind, id)} onSubmit={(e) => { if (!confirm(`Delete this ${singular[kind]} permanently? This cannot be undone.`)) e.preventDefault(); }}>
+              <button className="w-full inline-flex items-center justify-center gap-2 px-3 py-2 border border-red-200 text-red-600 text-sm font-medium rounded-md hover:bg-red-50"><Icon name="trash-can" />Move to trash (delete)</button>
+            </form>
+          </Box>
+        )}
+      </aside>
     </div>
   );
 }

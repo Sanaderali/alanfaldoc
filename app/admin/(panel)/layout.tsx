@@ -9,10 +9,10 @@ const nav = [
   { group: "Content" },
   { href: "/admin/services", label: "Services", icon: "briefcase" },
   { href: "/admin/countries", label: "Countries", icon: "earth-americas" },
-  { href: "/admin/posts", label: "Blog posts", icon: "newspaper" },
+  { href: "/admin/posts", label: "Posts", icon: "newspaper" },
   { href: "/admin/faqs", label: "FAQs", icon: "circle-question" },
-  { group: "Site" },
-  { href: "/admin/pages", label: "Pages & SEO", icon: "magnifying-glass-chart" },
+  { group: "Settings" },
+  { href: "/admin/pages", label: "Page SEO", icon: "magnifying-glass-chart" },
   { href: "/admin/media", label: "Media library", icon: "images" },
 ] as const;
 
@@ -34,6 +34,7 @@ export default async function PanelLayout({ children }: { children: React.ReactN
   const footer = (
     <div className="space-y-1 pt-4 border-t border-gray-200">
       <a href="/" target="_blank" rel="noopener" className="flex items-center gap-3 px-3 py-2 rounded-md text-sm text-gray-600 hover:bg-gray-100"><Icon name="arrow-up-right-from-square" className="text-gray-400 w-4" />View website</a>
+      <a href="/admin/api/export" download className="flex items-center gap-3 px-3 py-2 rounded-md text-sm text-gray-600 hover:bg-gray-100"><Icon name="download" className="text-gray-400 w-4" />Download backup</a>
       <form action={logout}><button className="w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm text-gray-600 hover:bg-gray-100"><Icon name="right-from-bracket" className="text-gray-400 w-4" />Sign out</button></form>
     </div>
   );

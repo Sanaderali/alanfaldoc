@@ -37,7 +37,7 @@ export function auditItem(item: Auditable, kind: "service" | "country" | "post" 
 }
 
 export const auditService = (s: Service) => auditItem(s, "service", s.summary);
-export const auditCountry = (c: Country) => auditItem({ ...c, title: c.headline }, "country", c.intro);
+export const auditCountry = (c: Country) => auditItem({ ...c, title: c.headline }, "country", c.intro || c.summary);
 export const auditPost = (p: Post) => auditItem(p, "post", p.excerpt);
 export const auditPage = (p: PageSettings) => auditItem({ title: p.name, seo: p.seo, schemaCustom: p.schemaCustom }, "page", "");
 export const auditFaqGroup = (g: FaqGroup): Issue[] => (g.faqs.length ? [] : [{ level: "warn", text: "Group has no questions" }]);

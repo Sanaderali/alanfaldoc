@@ -155,7 +155,7 @@ export function countryPageLd(c: Country) {
     "@id": `${abs(`/countries/${c.slug}`)}#webpage`,
     url: abs(`/countries/${c.slug}`),
     name: c.headline,
-    description: c.intro,
+    description: c.intro || c.summary,
     isPartOf: { "@id": `${abs("/")}#website` },
     about: { "@type": "Country", name: c.name },
     publisher: { "@id": orgId() },

@@ -36,7 +36,7 @@ export async function saveItem(kind: Kind, payload: string, id?: string): Promis
     savedId = prev?.id ?? randomUUID();
     const next = { ...(prev ?? {}), ...item, id: savedId, createdAt: prev?.createdAt ?? now(), updatedAt: now() } as CollectionMap[Kind];
     // fields the editor can clear must really be cleared
-    for (const k of ["image", "imageAlt", "publishAt", "schemaCustom", "seo", "serviceType", "categories", "author", "readMinutes"] as const) {
+    for (const k of ["image", "imageAlt", "publishAt", "schemaCustom", "seo", "serviceType", "categories", "author", "readMinutes", "contentHtml"] as const) {
       if (!(k in item)) delete (next as Record<string, unknown>)[k];
     }
     if (kind === "posts" && prev) (next as { updated?: string }).updated = now().slice(0, 10);

@@ -2,7 +2,7 @@ import Link from "next/link";
 import Icon from "@/app/components/Icon";
 import { auditCountry, auditPost, auditService, score, visibility } from "@/lib/audit";
 import { readAll } from "@/lib/store";
-import { Badge, btnGhost, Card, Empty, fmtDate, LinkButton, PageHeader, StatusBadge } from "../../ui";
+import { btnGhost, Card, Empty, fmtDate, LinkButton, PageHeader, StatusBadge } from "../../ui";
 import { setStatus } from "../actions";
 
 type Kind = "services" | "countries" | "posts";
@@ -28,7 +28,7 @@ export default async function ResourceList({ kind, searchParams }: { kind: Kind;
 
   return (
     <>
-      <PageHeader title={m.title} subtitle={m.sub} actions={<LinkButton href={`/admin/${kind}/new`} primary>Add {m.singular}</LinkButton>} />
+      <PageHeader title={m.title} subtitle={m.sub} actions={<LinkButton href={`/admin/${kind}/new`} primary>Add new {m.singular}</LinkButton>} />
 
       <Card>
         <div className="flex flex-wrap items-center justify-between gap-3 px-5 py-4 border-b border-gray-200">
@@ -46,16 +46,14 @@ export default async function ResourceList({ kind, searchParams }: { kind: Kind;
           </form>
         </div>
 
-        {rows.length === 0 ? <Empty>Nothing found.</Empty> : (
+        {rows.length === 0 ? <Empty>Nothing found. <Link href={`/admin/${kind}/new`} className="text-brand-text hover:underline">Add one</Link></Empty> : (
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead className="text-left text-xs text-gray-500 bg-gray-50">
                 <tr>
                   <th className="px-5 py-2.5 font-medium">Title</th>
                   <th className="px-3 py-2.5 font-medium">Status</th>
-                  <th className="px-3 py-2.5 font-medium">{kind === "posts" ? "Publish date" : "Updated"}</th>
-                  <th className="px-3 py-2.5 font-medium">SEO</th>
-                  <th className="px-5 py-2.5 font-medium text-right">Actions</th>
+                  <th className="px-5 py-2.5 font-medium whitespace-nowrap">{kind === "posts" ? "Date" : "Last updated"}</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100">
@@ -64,26 +62,24 @@ export default async function ResourceList({ kind, searchParams }: { kind: Kind;
                   const sc = score(issues);
                   const live = visibility(x) === "live";
                   return (
-                    <tr key={x.id} className="hover:bg-gray-50/60">
+                    <tr key={x.id} className="group hover:bg-gray-50/60 align-top">
                       <td className="px-5 py-3">
-                        <Link href={`/admin/${kind}/${x.id}`} className="font-medium text-gray-900 hover:text-brand-text">{x.title ?? x.name}</Link>
-                        <p className="text-xs text-gray-400">{m.pub}/{x.slug}{x.category ? ` · ${x.category}` : ""}</p>
-                      </td>
-                      <td className="px-3 py-3"><StatusBadge item={x} /></td>
-                      <td className="px-3 py-3 text-gray-500 whitespace-nowrap">{fmtDate(kind === "posts" ? x.date : x.updatedAt)}</td>
-                      <td className="px-3 py-3">
-                        <span title={issues.map((i) => i.text).join("\n") || "No issues"}><Badge tone={sc >= 85 ? "ok" : sc >= 65 ? "warn" : "error"}>{sc}</Badge></span>
-                        {issues.some((i) => i.level === "error") && <span className="ml-1.5 text-xs text-red-600">alt text</span>}
-                      </td>
-                      <td className="px-5 py-3">
-                        <div className="flex justify-end items-center gap-1.5">
-                          {live && <Link href={`${m.pub}/${x.slug}`} target="_blank" className="p-2 text-gray-400 hover:text-gray-700" aria-label="View live"><Icon name="arrow-up-right-from-square" /></Link>}
+                        <Link href={`/admin/${kind}/${x.id}`} className="font-semibold text-gray-900 hover:text-brand-text">{x.title ?? x.name}</Link>
+                        {x.status === "draft" && <span className="text-gray-500"> — Draft</span>}
+                        <p className="text-xs text-gray-400">{x.category ? `${x.category} · ` : ""}{m.pub}/{x.slug}</p>
+                        <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs opacity-100 lg:opacity-0 lg:group-hover:opacity-100 lg:focus-within:opacity-100 transition-opacity">
+                          <Link href={`/admin/${kind}/${x.id}`} className="text-brand-text hover:underline">Edit</Link>
+                          {live && <Link href={`${m.pub}/${x.slug}`} target="_blank" className="text-brand-text hover:underline">View</Link>}
                           <form action={setStatus.bind(null, kind, x.id!, x.status === "draft" ? "published" : "draft")}>
-                            <button className="px-2.5 py-1.5 text-xs border border-gray-300 rounded-md hover:bg-gray-50">{x.status === "draft" ? "Publish" : "Unpublish"}</button>
+                            <button className="text-brand-text hover:underline">{x.status === "draft" ? "Publish" : "Switch to draft"}</button>
                           </form>
-                          <Link href={`/admin/${kind}/${x.id}`} className="px-2.5 py-1.5 text-xs bg-gray-900 text-white rounded-md hover:bg-gray-700">Edit</Link>
                         </div>
                       </td>
+                      <td className="px-3 py-3 whitespace-nowrap">
+                        <StatusBadge item={x} />
+                        {sc < 85 && <p className="mt-1 text-xs text-amber-700" title={issues.map((i) => i.text).join("\n")}>SEO could be better</p>}
+                      </td>
+                      <td className="px-5 py-3 text-gray-500 whitespace-nowrap">{fmtDate(kind === "posts" ? x.date : x.updatedAt)}</td>
                     </tr>
                   );
                 })}

@@ -8,6 +8,7 @@ import FaqList from "@/app/components/FaqList";
 import Icon from "@/app/components/Icon";
 import JsonLd from "@/app/components/JsonLd";
 import Reveal from "@/app/components/Reveal";
+import RichContent from "@/app/components/RichContent";
 import Image from "next/image";
 import { buildMetadata, customLd, faqLd, serviceLd } from "@/lib/seo";
 import { formatDate, getCountries, getPosts, getService, getServices } from "@/lib/content";
@@ -45,6 +46,10 @@ export default async function ServicePage({ params }: Props) {
             )}
             <div className="w-16 h-16 mb-4 rounded-full bg-brand-50 text-brand-text flex items-center justify-center text-3xl animate-fadeIn"><Icon name={service.icon} /></div>
             <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-5 animate-fadeIn">{service.title}</h1>
+            {service.contentHtml ? (
+              <Reveal><RichContent html={service.contentHtml} /></Reveal>
+            ) : (
+              <>
             <p className="text-gray-600 leading-relaxed mb-6">{service.intro}</p>
             <Reveal>
               <ul className="space-y-3 mb-10">
@@ -58,6 +63,8 @@ export default async function ServicePage({ params }: Props) {
             {service.sections.map((s, i) => (
               <Reveal key={i}><ContentSections sections={[s]} /></Reveal>
             ))}
+              </>
+            )}
           </article>
 
           <aside className="space-y-8">

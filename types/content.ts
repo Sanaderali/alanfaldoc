@@ -16,6 +16,8 @@ export type Managed = {
   updatedAt?: string;
   /** alt text for `image` (accessibility + image SEO) */
   imageAlt?: string;
+  /** Rich-text article written in the dashboard visual editor (sanitised HTML). When set it replaces the structured sections/body on the page. */
+  contentHtml?: string;
   /** emit FAQPage JSON-LD for this item's FAQs (default true) */
   faqSchema?: boolean;
   /** extra JSON-LD (raw JSON) rendered on the page next to the generated schema */

@@ -8,6 +8,7 @@ import CTABanner from "@/app/components/CTABanner";
 import Icon from "@/app/components/Icon";
 import JsonLd from "@/app/components/JsonLd";
 import PostBody from "@/app/components/PostBody";
+import RichContent from "@/app/components/RichContent";
 import PostImage from "@/app/components/PostImage";
 import Reveal from "@/app/components/Reveal";
 import { formatDate, getPost, getPosts, readingMinutes, slugify } from "@/lib/content";
@@ -63,7 +64,7 @@ export default async function PostPage({ params }: Props) {
             </div>
 
             <p className="text-lg text-gray-600 leading-relaxed mb-6">{post.excerpt}</p>
-            <PostBody body={post.body} />
+            {post.contentHtml ? <RichContent html={post.contentHtml} /> : <PostBody body={post.body} />}
 
             {post.tags && post.tags.length > 0 && (
               <Reveal className="mt-10 flex flex-wrap items-center gap-2">

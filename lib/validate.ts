@@ -1,3 +1,4 @@
+import { cleanRichHtml, htmlToText } from "@/lib/html";
 import type { ContentSection, Country, Faq, PageSettings, Post, Seo, Service } from "@/types/content";
 
 /** Server-side cleaning + validation of everything the dashboard saves. Never trust the browser. */
@@ -95,6 +96,13 @@ function common(o: Record<string, unknown>, errors: Errors): Common {
   return { status, publishAt, image: image || undefined, imageAlt: imageAlt || undefined, faqSchema: bool(o.faqSchema, true), schemaCustom: cleanSchemaCustom(o.schemaCustom, errors), seo: Object.keys(seo).length ? seo : undefined };
 }
 
+/** When the visual editor sent HTML it replaces the old structured fields; otherwise keep them. */
+function htmlOrLegacy<T extends object>(o: Record<string, unknown>, legacy: T): T | Record<string, unknown> {
+  const html = cleanRichHtml(o.contentHtml);
+  if (htmlToText(html) || /<img/.test(html)) return { contentHtml: html, intro: "", sections: [], ...("highlights" in legacy ? { highlights: [] } : {}) };
+  return legacy;
+}
+
 function slugField(o: Record<string, unknown>, fallbackFrom: string, errors: Errors, reserved: string[] = []) {
   const slug = str(o.slug, 80) || slugify(fallbackFrom);
   if (!SLUG_RE.test(slug)) errors.slug = "Use lowercase letters, numbers and hyphens only";
@@ -119,9 +127,7 @@ export function cleanService(o: Record<string, unknown>): { item: Omit<Service, 
       title,
       icon,
       summary,
-      intro: str(o.intro, 3000),
-      highlights: strList(o.highlights, 300),
-      sections: cleanSections(o.sections),
+      ...htmlOrLegacy(o, { intro: str(o.intro, 3000), highlights: strList(o.highlights, 300), sections: cleanSections(o.sections) }),
       faqs: cleanFaqs(o.faqs),
       relatedSlugs: strList(o.relatedSlugs, 80, 12),
       serviceType: str(o.serviceType, 120) || undefined,
@@ -150,9 +156,8 @@ export function cleanCountry(o: Record<string, unknown>): { item: Omit<Country, 
       tagline: str(o.tagline, 200),
       headline: str(o.headline, 200) || name,
       summary,
-      intro: str(o.intro, 3000),
+      ...htmlOrLegacy(o, { intro: str(o.intro, 3000), sections: cleanSections(o.sections) }),
       facts,
-      sections: cleanSections(o.sections),
       gradient: str(o.gradient, 120) || "from-gray-100 to-gray-200",
       categories: categories.length ? categories : undefined,
       serviceSlugs: strList(o.serviceSlugs, 80, 20),
@@ -168,8 +173,9 @@ export function cleanPost(o: Record<string, unknown>): { item: Omit<Post, "creat
   if (!title) errors.title = "Title is required";
   const excerpt = str(o.excerpt, 500);
   if (!excerpt) errors.excerpt = "Excerpt is required";
-  const body = strList(o.body, 8000, 400);
-  if (!body.length) errors.body = "Write the article body";
+  const contentHtml = cleanRichHtml(o.contentHtml);
+  const legacyBody = strList(o.body, 8000, 400);
+  if (!htmlToText(contentHtml) && !legacyBody.length) errors.contentHtml = "Write the article";
   const category = str(o.category, 80);
   if (!category) errors.category = "Category is required";
   const c = common(o, errors);
@@ -187,7 +193,8 @@ export function cleanPost(o: Record<string, unknown>): { item: Omit<Post, "creat
       author: str(o.author, 80) || undefined,
       tags: strList(typeof o.tags === "string" ? (o.tags as string).split(",") : o.tags, 40, 20),
       readMinutes: Number.isFinite(rm) && rm > 0 ? Math.min(120, Math.round(rm)) : undefined,
-      body,
+      contentHtml: contentHtml || undefined,
+      body: contentHtml ? [] : legacyBody,
     } as never,
   };
 }

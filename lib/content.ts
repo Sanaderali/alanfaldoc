@@ -1,5 +1,6 @@
 import type { Country, FaqGroup, PageKey, Post, Seo, Service } from "@/types/content";
 import { readAll } from "@/lib/store";
+import { htmlToText } from "@/lib/html";
 
 /**
  * Single data-access layer for the PUBLIC website.
@@ -38,7 +39,7 @@ export const slugify = (s: string) => s.toLowerCase().trim().replace(/[^a-z0-9]+
 
 export function readingMinutes(p: Post): number {
   if (p.readMinutes) return p.readMinutes;
-  const words = (p.title + " " + p.body.join(" ")).split(/\s+/).length;
+  const words = (p.title + " " + (p.contentHtml ? htmlToText(p.contentHtml) : p.body.join(" "))).split(/\s+/).length;
   return Math.max(1, Math.round(words / 200));
 }
 

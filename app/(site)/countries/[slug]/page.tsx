@@ -10,6 +10,7 @@ import CTABanner from "@/app/components/CTABanner";
 import FaqList from "@/app/components/FaqList";
 import JsonLd from "@/app/components/JsonLd";
 import Reveal from "@/app/components/Reveal";
+import RichContent from "@/app/components/RichContent";
 import { buildMetadata, countryPageLd, customLd, faqLd } from "@/lib/seo";
 import { getCountries, getCountry, getServices } from "@/lib/content";
 
@@ -22,7 +23,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const country = await getCountry((await params).slug);
   if (!country) return {};
-  return buildMetadata({ title: country.headline, description: country.intro, path: `/countries/${country.slug}`, seo: country.seo, image: country.image });
+  return buildMetadata({ title: country.headline, description: country.intro || country.summary, path: `/countries/${country.slug}`, seo: country.seo, image: country.image });
 }
 
 export default async function CountryPage({ params }: Props) {
@@ -58,7 +59,7 @@ export default async function CountryPage({ params }: Props) {
             </div>
 
             <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-5 animate-fadeIn">{country.headline}</h1>
-            <p className="text-gray-600 leading-relaxed mb-6">{country.intro}</p>
+            {country.intro && <p className="text-gray-600 leading-relaxed mb-6">{country.intro}</p>}
 
             <Reveal>
               <ul className="space-y-2 mb-10">
@@ -71,11 +72,15 @@ export default async function CountryPage({ params }: Props) {
               </ul>
             </Reveal>
 
-            {country.sections.map((s, i) => (
-              <Reveal key={i}>
-                <ContentSections sections={[s]} />
-              </Reveal>
-            ))}
+            {country.contentHtml ? (
+              <Reveal><RichContent html={country.contentHtml} /></Reveal>
+            ) : (
+              country.sections.map((s, i) => (
+                <Reveal key={i}>
+                  <ContentSections sections={[s]} />
+                </Reveal>
+              ))
+            )}
           </article>
 
           {/* Sidebar */}
