@@ -10,7 +10,7 @@ export default function CountryCard({ country }: { country: Country }) {
     >
       <div className={`relative h-36 sm:h-40 bg-gradient-to-br ${country.gradient} overflow-hidden`}>
         {country.image && (
-          <Image src={country.image} alt={country.name} fill sizes="(min-width:1024px) 25vw, (min-width:640px) 50vw, 100vw" className="object-cover group-hover:scale-105 transition-transform duration-700" />
+          <Image src={country.image} alt={country.imageAlt ?? country.name} fill sizes="(min-width:1024px) 25vw, (min-width:640px) 50vw, 100vw" className="object-cover group-hover:scale-105 transition-transform duration-700" />
         )}
         <span className="absolute right-3 bottom-3 text-4xl drop-shadow-lg" aria-hidden="true">{country.flag}</span>
       </div>

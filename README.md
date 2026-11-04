@@ -116,3 +116,28 @@ Ready-made options taken from the logo:
 | Refined red (default) | `220 38 38` | `185 28 28` | `185 28 28` | `254 242 242` | `254 226 226` | `254 202 202` |
 | Deep green | `5 150 105` | `4 120 87` | `4 120 87` | `236 253 245` | `209 250 229` | `167 243 208` |
 | Charcoal | `31 41 55` | `17 24 39` | `31 41 55` | `249 250 251` | `243 244 246` | `229 231 235` |
+
+## Dashboard (`/admin`)
+
+A private dashboard to manage **services, countries, blog posts, FAQs, page meta tags, schema, images and alt text**, with draft / published / scheduled status and dates. No database needed.
+
+**Set up (cPanel → Setup Node.js App → Environment variables), then restart:**
+
+| Variable | Purpose |
+|---|---|
+| `ADMIN_PASSWORD` | **Required**, min 8 characters. The dashboard is disabled until it is set |
+| `ADMIN_USER` | Login name (default `admin`) |
+| `ADMIN_SECRET` | Long random string that signs login sessions (recommended) |
+| `CONTENT_DIR` | Optional. Folder for content + uploaded images (default `./content`). Best kept **outside** the app folder |
+
+Log in at `https://yourdomain.com/admin`. See `.env.example`.
+
+**How it works**
+- Content is stored as JSON in `content/` (git-ignored, never overwritten by deployments) and images in `content/uploads`. On first start it is seeded from the sample content in `data/*.ts`; after that the dashboard is the source of truth.
+- Public pages stay **static**: saving in the dashboard refreshes them, and scheduled items go live within 15 minutes automatically. Visitors never wait on the dashboard or a database.
+- Images are validated, resized to 1600px and converted to WebP on upload. Alt text is mandatory. SVG is refused.
+- Each item has: meta title, meta description (live Google preview + character counters), keywords, canonical, noindex, share image, FAQ schema switch, custom JSON-LD, status, publish date/time, slug. The "Needs attention" panel flags missing alt text, bad meta lengths, missing FAQs and invalid schema.
+- **Backups:** Dashboard → *Download backup* (all content as JSON). Also copy the `uploads` folder.
+- Security: signed HttpOnly session cookie, login throttling (5 tries / 15 min), every admin page and API re-checks the session, `/admin` is `noindex` and blocked in `robots.txt`. Use HTTPS in production.
+
+**Limits to know about:** single admin login; the home page body, header/footer and contact details are still edited in code (`app/components/HomeClient.tsx`, `data/site.ts`). If the host runs several Node processes, a save refreshes the process that handled it immediately and the others within 15 minutes.

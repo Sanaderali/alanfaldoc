@@ -31,7 +31,7 @@ export function buildMetadata({ title, description, path, seo, image, type = "we
     title: t,
     description: d,
     keywords: seo?.keywords,
-    alternates: { canonical: abs(path) },
+    alternates: { canonical: seo?.canonical ?? abs(path) },
     robots: seo?.noindex ? { index: false, follow: false } : undefined,
     openGraph: {
       type,
@@ -178,4 +178,15 @@ export function articleLd(p: Post) {
     ...(p.tags?.length ? { keywords: p.tags.join(", ") } : {}),
     ...(p.image ? { image: p.image.startsWith("http") ? p.image : abs(p.image) } : {}),
   };
+}
+
+/** Parse the optional hand-written JSON-LD saved in the dashboard (invalid JSON is ignored, never breaks the page). */
+export function customLd(raw?: string): object | null {
+  if (!raw) return null;
+  try {
+    const v = JSON.parse(raw);
+    return typeof v === "object" && v !== null ? v : null;
+  } catch {
+    return null;
+  }
 }

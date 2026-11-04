@@ -1,13 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 import "./globals.css";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
-import JsonLd from "./components/JsonLd";
 import { site } from "@/data/site";
-import { getServices } from "@/lib/content";
-import { organizationLd, websiteLd } from "@/lib/seo";
 
+/** Root layout: only what every route (site + admin) needs. Header/footer live in app/(site)/layout.tsx. */
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: { default: `${site.name} - ${site.tagline}`, template: `%s | ${site.name}` },
@@ -25,8 +21,7 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = { themeColor: "#ffffff", width: "device-width", initialScale: 1 };
 
-export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  const services = await getServices();
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
@@ -38,11 +33,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
       <body className="antialiased" suppressHydrationWarning>
         {/* Font Awesome Free kit */}
         <Script src={`https://kit.fontawesome.com/${process.env.NEXT_PUBLIC_FA_KIT ?? "1b8091c28c"}.js`} crossOrigin="anonymous" strategy="afterInteractive" />
-        <JsonLd data={[organizationLd(services), websiteLd()]} />
-        <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[100] focus:bg-white focus:px-4 focus:py-2 focus:rounded">Skip to content</a>
-        <Header />
-        <main id="main">{children}</main>
-        <Footer />
+        {children}
       </body>
     </html>
   );

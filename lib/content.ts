@@ -1,35 +1,37 @@
-import type { Country, FaqGroup, Post, Service } from "@/types/content";
-import { faqGroups } from "@/data/faqs";
-import { countries } from "@/data/countries";
-import { posts } from "@/data/posts";
-import { services } from "@/data/services";
+import type { Country, FaqGroup, PageKey, Post, Seo, Service } from "@/types/content";
+import { readAll } from "@/lib/store";
 
 /**
- * Single data-access layer for the whole site.
+ * Single data-access layer for the PUBLIC website.
  *
- * Pages ONLY call these functions. Today they read local files in /data.
- * To move to a CMS / database / REST API later, change the bodies below
- * (e.g. `fetch(process.env.CMS_URL + "/countries")`) and keep the return types.
- * No page or component needs to be touched.
+ * Content is managed in the dashboard (/admin) and stored by lib/store.ts.
+ * Pages only call these functions and only ever see published items
+ * (status "published" and publishAt not in the future).
  */
 
+type Gated = { status?: string; publishAt?: string };
+/** is this item visible on the public site right now? */
+export const isLive = (x: Gated, at = Date.now()) => (x.status ?? "published") === "published" && (!x.publishAt || new Date(x.publishAt).getTime() <= at);
+const live = <T extends Gated>(items: T[]) => items.filter((i) => isLive(i));
+
 export async function getCountries(): Promise<Country[]> {
-  return countries;
+  return live(await readAll("countries"));
 }
 export async function getCountry(slug: string): Promise<Country | undefined> {
   return (await getCountries()).find((c) => c.slug === slug);
 }
 
 export async function getServices(): Promise<Service[]> {
-  return services;
+  return live(await readAll("services"));
 }
 export async function getService(slug: string): Promise<Service | undefined> {
   return (await getServices()).find((s) => s.slug === slug);
 }
 
 export async function getPosts(): Promise<Post[]> {
-  return [...posts].sort((a, b) => b.date.localeCompare(a.date));
+  return live(await readAll("posts")).sort((a, b) => b.date.localeCompare(a.date));
 }
+
 export const POSTS_PER_PAGE = 4;
 
 export const slugify = (s: string) => s.toLowerCase().trim().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
@@ -69,7 +71,13 @@ export async function getPost(slug: string): Promise<Post | undefined> {
 }
 
 export async function getFaqGroups(): Promise<FaqGroup[]> {
-  return faqGroups;
+  return live(await readAll("faqs"));
+}
+
+/** SEO overrides edited in the dashboard for the fixed pages (home, about, ...) */
+export async function getPageSeo(key: PageKey): Promise<{ seo?: Seo; faqSchema: boolean; schemaCustom?: string }> {
+  const p = (await readAll("pages")).find((x) => x.key === key);
+  return { seo: p?.seo, faqSchema: p?.faqSchema !== false, schemaCustom: p?.schemaCustom };
 }
 
 export function formatDate(iso: string): string {

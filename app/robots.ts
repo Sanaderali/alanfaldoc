@@ -7,8 +7,8 @@ export default function robots(): MetadataRoute.Robots {
   if (process.env.SITE_INDEXING === "off") return { rules: { userAgent: "*", disallow: "/" } };
 
   const rules: MetadataRoute.Robots["rules"] = [
-    { userAgent: "*", ...(crawlers.search ? { allow: "/" } : { disallow: "/" }) },
-    ...Object.entries(crawlers.ai).map(([userAgent, allowed]) => ({ userAgent, ...(allowed ? { allow: "/" } : { disallow: "/" }) })),
+    { userAgent: "*", ...(crawlers.search ? { allow: "/", disallow: ["/admin", "/admin/"] } : { disallow: "/" }) },
+    ...Object.entries(crawlers.ai).map(([userAgent, allowed]) => ({ userAgent, ...(allowed ? { allow: "/", disallow: ["/admin", "/admin/"] } : { disallow: "/" }) })),
   ];
   return { rules, sitemap: abs("/sitemap.xml"), host: site.url };
 }

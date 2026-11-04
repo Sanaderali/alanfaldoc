@@ -18,7 +18,7 @@ export default function PostImage({ post, className = "h-52 sm:h-64", priority =
   return (
     <div className={`relative w-full overflow-hidden rounded-lg bg-gradient-to-br ${palette[hash(post.slug) % palette.length]} ${className}`}>
       {post.image ? (
-        <Image src={post.image} alt={post.title} fill priority={priority} sizes="(min-width:1024px) 66vw, 100vw" className="object-cover" />
+        <Image src={post.image} alt={post.imageAlt ?? post.title} fill priority={priority} sizes="(min-width:1024px) 66vw, 100vw" className="object-cover" />
       ) : (
         <span className="absolute inset-0 flex items-center justify-center text-5xl sm:text-6xl text-brand-text/70"><Icon name={categoryIcons[post.category] ?? categoryIcons.default} /></span>
       )}

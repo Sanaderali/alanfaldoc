@@ -147,3 +147,7 @@ vite.config.ts.timestamp-*
 
 # Turbo Repo
 .turbo
+
+# Dashboard content store + uploaded images (persist on the server, never commit)
+/content/
+.env*.local

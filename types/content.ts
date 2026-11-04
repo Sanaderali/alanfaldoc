@@ -4,6 +4,24 @@
  * (local files today, a CMS / database / API later) can change freely.
  */
 
+/** Publishing + audit fields shared by everything managed in the dashboard (filled in by lib/store.ts). */
+export type Status = "draft" | "published";
+export type Managed = {
+  id?: string;
+  /** missing = published (keeps hand-written data/*.ts content working) */
+  status?: Status;
+  /** ISO datetime. status "published" + a future date = scheduled, goes live automatically */
+  publishAt?: string;
+  createdAt?: string;
+  updatedAt?: string;
+  /** alt text for `image` (accessibility + image SEO) */
+  imageAlt?: string;
+  /** emit FAQPage JSON-LD for this item's FAQs (default true) */
+  faqSchema?: boolean;
+  /** extra JSON-LD (raw JSON) rendered on the page next to the generated schema */
+  schemaCustom?: string;
+};
+
 export type Fact = { label: string; value: string };
 
 export type ContentSection = {
@@ -17,7 +35,7 @@ export type ContentSection = {
 };
 
 export type Faq = { question: string; answer: string };
-export type FaqGroup = { title: string; faqs: Faq[] };
+export type FaqGroup = Managed & { title: string; faqs: Faq[] };
 
 /** Optional per-page SEO overrides. Leave empty to fall back to the page's own title/summary. */
 export type Seo = {
@@ -26,10 +44,12 @@ export type Seo = {
   keywords?: string[];
   /** absolute or /public path used for og:image */
   image?: string;
+  /** overrides the canonical URL (default: the page URL) */
+  canonical?: string;
   noindex?: boolean;
 };
 
-export type Country = {
+export type Country = Managed & {
   slug: string;
   name: string;
   flag: string;
@@ -55,7 +75,7 @@ export type Country = {
   seo?: Seo;
 };
 
-export type Service = {
+export type Service = Managed & {
   slug: string;
   title: string;
   /** Font Awesome icon: short name ("building") or full class ("fa-solid fa-building") */
@@ -72,7 +92,7 @@ export type Service = {
   seo?: Seo;
 };
 
-export type Post = {
+export type Post = Managed & {
   slug: string;
   title: string;
   excerpt: string;
@@ -95,3 +115,23 @@ export type Post = {
 };
 
 export type NavItem = { label: string; href: string };
+
+/** SEO + schema settings for the fixed pages (home, about, services list…). */
+export type PageKey = "home" | "about" | "services" | "countries" | "blog" | "faqs" | "contact";
+export type PageSettings = Managed & {
+  key: PageKey;
+  name: string;
+  path: string;
+  seo?: Seo;
+};
+
+export type MediaItem = {
+  id: string;
+  file: string; // stored filename, served at /uploads/<file>
+  alt: string;
+  caption?: string;
+  width: number;
+  height: number;
+  bytes: number;
+  createdAt: string;
+};
