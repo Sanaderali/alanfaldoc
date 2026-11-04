@@ -16,7 +16,7 @@ export default function ContentSections({ sections }: { sections: ContentSection
               <ul className={`space-y-2 ${s.twoColumns ? "sm:columns-2 sm:gap-8" : ""}`}>
                 {s.list.map((item, j) => (
                   <li key={j} className="flex items-start text-gray-700 break-inside-avoid">
-                    <span className="text-[#ff5722] mr-2" aria-hidden="true">•</span>
+                    <span className="text-brand-text mr-2" aria-hidden="true">•</span>
                     <span>{item}</span>
                   </li>
                 ))}

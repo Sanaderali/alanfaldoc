@@ -7,7 +7,7 @@ import Icon from "./Icon";
 export default async function Footer() {
   const services = await getServices();
   const h = "text-lg font-bold mb-5 text-gray-900";
-  const a = "hover:text-[#ff5722] transition-colors";
+  const a = "hover:text-brand-text transition-colors";
   return (
     <footer className="bg-gray-50 border-t border-gray-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
@@ -21,9 +21,9 @@ export default async function Footer() {
         <div>
           <h3 className={h}>Contact Details</h3>
           <ul className="space-y-3 text-gray-600 text-sm">
-            <li><Icon name="location-dot" className="text-[#ff5722] mr-2" />{site.address}</li>
-            <li><Icon name="phone" className="text-[#ff5722] mr-2" /><a href={`tel:${site.phone.replace(/\s/g, "")}`} className={a}>{site.phone}</a></li>
-            <li><Icon name="envelope" className="text-[#ff5722] mr-2" /><a href={`mailto:${site.email}`} className={a}>{site.email}</a></li>
+            <li><Icon name="location-dot" className="text-brand-text mr-2" />{site.address}</li>
+            <li><Icon name="phone" className="text-brand-text mr-2" /><a href={`tel:${site.phone.replace(/\s/g, "")}`} className={a}>{site.phone}</a></li>
+            <li><Icon name="envelope" className="text-brand-text mr-2" /><a href={`mailto:${site.email}`} className={a}>{site.email}</a></li>
             <li className="pt-2">{site.hours.map((x) => <span key={x} className="block">{x}</span>)}</li>
           </ul>
         </div>
@@ -56,7 +56,7 @@ export default async function Footer() {
           <ul className="flex gap-4">
             {site.social.map((s) => (
               <li key={s.label}>
-                <a href={s.href} aria-label={s.label} className="text-gray-400 hover:text-[#ff5722] transition-colors">
+                <a href={s.href} aria-label={s.label} className="text-gray-400 hover:text-brand-text transition-colors">
                   <Icon name={s.icon} className="text-lg" />
                 </a>
               </li>

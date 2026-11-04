@@ -37,14 +37,14 @@ export default async function ServicePage({ params }: Props) {
       <section className="py-12 md:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-3 gap-10 lg:gap-14">
           <article className="lg:col-span-2 min-w-0">
-            <div className="w-16 h-16 mb-4 rounded-full bg-orange-50 text-[#ff5722] flex items-center justify-center text-3xl animate-fadeIn"><Icon name={service.icon} /></div>
+            <div className="w-16 h-16 mb-4 rounded-full bg-brand-50 text-brand-text flex items-center justify-center text-3xl animate-fadeIn"><Icon name={service.icon} /></div>
             <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-5 animate-fadeIn">{service.title}</h1>
             <p className="text-gray-600 leading-relaxed mb-6">{service.intro}</p>
             <Reveal>
               <ul className="space-y-3 mb-10">
                 {service.highlights.map((h) => (
                   <li key={h} className="flex items-start text-gray-700">
-                    <span className="text-[#ff5722] mr-2" aria-hidden="true">•</span>{h}
+                    <span className="text-brand-text mr-2" aria-hidden="true">•</span>{h}
                   </li>
                 ))}
               </ul>
@@ -60,8 +60,8 @@ export default async function ServicePage({ params }: Props) {
               <ul>
                 {services.map((s) => (
                   <li key={s.slug} className="border-b border-dotted border-gray-300 last:border-0">
-                    <Link href={`/services/${s.slug}`} className={`group flex items-center py-2.5 text-sm transition-colors hover:text-[#ff5722] ${s.slug === service.slug ? "text-[#ff5722] font-semibold" : "text-gray-700"}`}>
-                      <span className="text-[#ff5722] mr-2 group-hover:translate-x-1 transition-transform" aria-hidden="true">»</span>{s.title}
+                    <Link href={`/services/${s.slug}`} className={`group flex items-center py-2.5 text-sm transition-colors hover:text-brand-text ${s.slug === service.slug ? "text-brand-text font-semibold" : "text-gray-700"}`}>
+                      <span className="text-brand-text mr-2 group-hover:translate-x-1 transition-transform" aria-hidden="true">»</span>{s.title}
                     </Link>
                   </li>
                 ))}
@@ -73,7 +73,7 @@ export default async function ServicePage({ params }: Props) {
               <ul className="space-y-3">
                 {countries.slice(0, 4).map((c) => (
                   <li key={c.slug}>
-                    <Link href={`/countries/${c.slug}`} className="flex items-center gap-3 text-gray-700 hover:text-[#ff5722] transition-colors">
+                    <Link href={`/countries/${c.slug}`} className="flex items-center gap-3 text-gray-700 hover:text-brand-text transition-colors">
                       <span className="text-2xl" aria-hidden="true">{c.flag}</span>{c.name}
                     </Link>
                   </li>
@@ -87,7 +87,7 @@ export default async function ServicePage({ params }: Props) {
                 {posts.slice(0, 3).map((p) => (
                   <li key={p.slug}>
                     <p className="text-xs text-gray-500 mb-1">{formatDate(p.date)} · {p.category}</p>
-                    <Link href={`/blog/${p.slug}`} className="font-bold text-gray-900 hover:text-[#ff5722] transition-colors">{p.title}</Link>
+                    <Link href={`/blog/${p.slug}`} className="font-bold text-gray-900 hover:text-brand-text transition-colors">{p.title}</Link>
                   </li>
                 ))}
               </ul>
@@ -104,7 +104,7 @@ export default async function ServicePage({ params }: Props) {
               {related.map((s, i) => (
                 <Reveal key={s.slug} delay={i * 80}>
                   <Link href={`/services/${s.slug}`} className="group block h-full bg-white border border-gray-200 rounded-lg p-7 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-500">
-                    <h3 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-[#ff5722] transition-colors">{s.title}</h3>
+                    <h3 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-brand-text transition-colors">{s.title}</h3>
                     <p className="text-sm text-gray-600 leading-relaxed">{s.summary}</p>
                   </Link>
                 </Reveal>

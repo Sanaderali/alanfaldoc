@@ -23,16 +23,16 @@ export default function Header() {
 
   const isActive = (href: string) => (href === "/" ? pathname === "/" : pathname.startsWith(href));
   const link = (href: string) =>
-    `text-sm font-medium transition-colors hover:text-[#ff5722] ${isActive(href) ? "text-[#ff5722]" : "text-gray-800"}`;
+    `text-sm font-medium transition-colors hover:text-brand-text ${isActive(href) ? "text-brand-text" : "text-gray-800"}`;
 
   return (
     <>
       <div className="hidden sm:block bg-gray-50 border-b border-gray-200 text-xs sm:text-sm text-gray-600">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 flex justify-between items-center gap-4">
-          <span><Icon name="location-dot" className="text-[#ff5722] mr-1.5" /> {site.address}</span>
+          <span><Icon name="location-dot" className="text-brand-text mr-1.5" /> {site.address}</span>
           <span className="flex items-center gap-5">
-            <a href={`tel:${site.phone.replace(/\s/g, "")}`} className="hover:text-[#ff5722]"><Icon name="phone" className="text-[#ff5722] mr-1.5" /> {site.phone}</a>
-            <a href={`mailto:${site.email}`} className="hidden md:inline hover:text-[#ff5722]"><Icon name="envelope" className="text-[#ff5722] mr-1.5" /> {site.email}</a>
+            <a href={`tel:${site.phone.replace(/\s/g, "")}`} className="hover:text-brand-text"><Icon name="phone" className="text-brand-text mr-1.5" /> {site.phone}</a>
+            <a href={`mailto:${site.email}`} className="hidden md:inline hover:text-brand-text"><Icon name="envelope" className="text-brand-text mr-1.5" /> {site.email}</a>
           </span>
         </div>
       </div>
@@ -50,7 +50,7 @@ export default function Header() {
               {mainNav.map((n) => (
                 <Link key={n.href} href={n.href} className={`${link(n.href)} uppercase`}>{n.label}</Link>
               ))}
-              <Link href="/contact" className="px-5 py-2.5 bg-[#ff5722] text-white text-sm font-semibold rounded uppercase hover:bg-[#e64a19] hover:shadow-lg hover:scale-105 transition-all duration-300">
+              <Link href="/contact" className="px-5 py-2.5 bg-brand text-gray-900 text-sm font-semibold rounded uppercase hover:bg-brand-dark hover:shadow-lg hover:scale-105 transition-all duration-300">
                 Get Consultation
               </Link>
             </nav>
@@ -73,7 +73,7 @@ export default function Header() {
                 {mainNav.map((n) => (
                   <Link key={n.href} href={n.href} className={`${link(n.href)} uppercase py-3 border-b border-gray-100`}>{n.label}</Link>
                 ))}
-                <Link href="/contact" className="mt-4 px-5 py-3 bg-[#ff5722] text-white font-semibold rounded text-center uppercase text-sm">
+                <Link href="/contact" className="mt-4 px-5 py-3 bg-brand text-gray-900 font-semibold rounded text-center uppercase text-sm">
                   Get Consultation
                 </Link>
               </div>

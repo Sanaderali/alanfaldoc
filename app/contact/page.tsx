@@ -31,7 +31,7 @@ export default function ContactPage() {
       <section className="bg-gray-100 text-gray-700 border-b border-gray-200 py-4">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center text-sm">
-            <Link href="/" className="hover:text-[#ff5722] transition-colors">
+            <Link href="/" className="hover:text-brand-text transition-colors">
               [ Home ]
             </Link>
             <span className="mx-2">»</span>
@@ -61,7 +61,7 @@ export default function ContactPage() {
               <div className="bg-white rounded-lg p-8 shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100">
                 <div className="flex items-start">
                   <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center flex-shrink-0 mr-6">
-                    <Icon name="location-dot" className="text-2xl text-[#ff5722]" />
+                    <Icon name="location-dot" className="text-2xl text-brand-text" />
                   </div>
                   <div>
                     <h3 className="text-xl font-bold text-gray-900 mb-2">
@@ -77,7 +77,7 @@ export default function ContactPage() {
               <div className="bg-white rounded-lg p-8 shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100">
                 <div className="flex items-start">
                   <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center flex-shrink-0 mr-6">
-                    <Icon name="phone" className="text-2xl text-[#ff5722]" />
+                    <Icon name="phone" className="text-2xl text-brand-text" />
                   </div>
                   <div>
                     <h3 className="text-xl font-bold text-gray-900 mb-2">
@@ -93,12 +93,12 @@ export default function ContactPage() {
               <div className="bg-white rounded-lg p-8 shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100">
                 <div className="flex items-start">
                   <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center flex-shrink-0 mr-6">
-                    <Icon name="envelope" className="text-2xl text-[#ff5722]" />
+                    <Icon name="envelope" className="text-2xl text-brand-text" />
                   </div>
                   <div>
                     <h3 className="text-xl font-bold text-gray-900 mb-2">
-                      <a href="mailto:hello@domain.com" className="hover:text-[#ff5722] transition-colors">hello@domain.com</a><br />
-                      <a href="mailto:career@domain.com" className="hover:text-[#ff5722] transition-colors">career@domain.com</a>
+                      <a href="mailto:hello@domain.com" className="hover:text-brand-text transition-colors">hello@domain.com</a><br />
+                      <a href="mailto:career@domain.com" className="hover:text-brand-text transition-colors">career@domain.com</a>
                     </h3>
                     <p className="text-gray-500 text-sm">Drop a Line</p>
                   </div>
@@ -117,7 +117,7 @@ export default function ContactPage() {
                     value={formData.name}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded focus:ring-2 focus:ring-[#ff5722] focus:border-transparent transition-all text-gray-900"
+                    className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded focus:ring-2 focus:ring-brand focus:border-transparent transition-all text-gray-900"
                   />
                 </div>
 
@@ -129,7 +129,7 @@ export default function ContactPage() {
                     value={formData.email}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded focus:ring-2 focus:ring-[#ff5722] focus:border-transparent transition-all text-gray-900"
+                    className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded focus:ring-2 focus:ring-brand focus:border-transparent transition-all text-gray-900"
                   />
                 </div>
 
@@ -138,7 +138,7 @@ export default function ContactPage() {
                     name="question"
                     value={formData.question}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded focus:ring-2 focus:ring-[#ff5722] focus:border-transparent transition-all text-gray-700"
+                    className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded focus:ring-2 focus:ring-brand focus:border-transparent transition-all text-gray-700"
                   >
                     <option value="">Your Question About..</option>
                     <option value="company-formation">Company Formation</option>
@@ -157,13 +157,13 @@ export default function ContactPage() {
                     value={formData.message}
                     onChange={handleChange}
                     rows={6}
-                    className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded focus:ring-2 focus:ring-[#ff5722] focus:border-transparent transition-all text-gray-900 resize-none"
+                    className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded focus:ring-2 focus:ring-brand focus:border-transparent transition-all text-gray-900 resize-none"
                   ></textarea>
                 </div>
 
                 <button
                   type="submit"
-                  className="w-full px-8 py-4 bg-[#ff5722] text-white font-semibold rounded hover:bg-[#e64a19] hover:shadow-lg hover:scale-105 transition-all duration-300 uppercase text-sm"
+                  className="w-full px-8 py-4 bg-brand text-gray-900 font-semibold rounded hover:bg-brand-dark hover:shadow-lg hover:scale-105 transition-all duration-300 uppercase text-sm"
                 >
                   SEND YOUR MESSAGE
                 </button>
@@ -177,7 +177,7 @@ export default function ContactPage() {
       <section className="h-96 md:h-[500px] relative">
         <div className="absolute inset-0 bg-gray-200 flex items-center justify-center">
           <div className="text-center">
-            <div className="text-6xl mb-4 text-[#ff5722]"><Icon name="map-location-dot" /></div>
+            <div className="text-6xl mb-4 text-brand-text"><Icon name="map-location-dot" /></div>
             <p className="text-gray-600 font-semibold text-lg">Interactive Map</p>
             <p className="text-gray-500 text-sm mt-2">
               121 King St, Melbourne, VIC 3000 Australia
@@ -215,9 +215,9 @@ export default function ContactPage() {
                   <input
                     type="email"
                     placeholder="Your email address"
-                    className="flex-1 px-4 py-3 bg-gray-50 border border-gray-200 rounded focus:ring-2 focus:ring-[#ff5722] focus:border-transparent transition-all text-gray-900"
+                    className="flex-1 px-4 py-3 bg-gray-50 border border-gray-200 rounded focus:ring-2 focus:ring-brand focus:border-transparent transition-all text-gray-900"
                   />
-                  <button className="px-6 sm:px-8 py-3 bg-[#ff5722] text-white font-semibold rounded hover:bg-[#e64a19] hover:shadow-lg transition-all duration-300 uppercase text-sm whitespace-nowrap">
+                  <button className="px-6 sm:px-8 py-3 bg-brand text-gray-900 font-semibold rounded hover:bg-brand-dark hover:shadow-lg transition-all duration-300 uppercase text-sm whitespace-nowrap">
                     SUBSCRIBE
                   </button>
                 </div>

@@ -8,7 +8,7 @@ export default function PostBody({ body }: { body: string[] }) {
           return (
             <ul key={i} className="space-y-2 my-4">
               {b.split("\n").map((l, j) => (
-                <li key={j} className="flex items-start"><span className="text-[#ff5722] mr-2" aria-hidden="true">•</span><span>{l.replace(/^-\s*/, "")}</span></li>
+                <li key={j} className="flex items-start"><span className="text-brand-text mr-2" aria-hidden="true">•</span><span>{l.replace(/^-\s*/, "")}</span></li>
               ))}
             </ul>
           );

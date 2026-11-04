@@ -52,7 +52,7 @@ export default async function PostPage({ params }: Props) {
             <div className="animate-fadeIn">
               <PostImage post={post} priority className="h-56 sm:h-80" />
               <p className="mt-6 text-xs text-gray-500">
-                <Link href={`/blog/category/${slugify(post.category)}`} className="font-semibold text-gray-600 hover:text-[#ff5722]">{post.category}</Link>
+                <Link href={`/blog/category/${slugify(post.category)}`} className="font-semibold text-gray-600 hover:text-brand-text">{post.category}</Link>
                 {" "}· {readingMinutes(post)} min read
               </p>
               <h1 className="mt-2 text-3xl md:text-4xl font-bold text-[#2b3a55] leading-tight">{post.title}</h1>
@@ -69,7 +69,7 @@ export default async function PostPage({ params }: Props) {
               <Reveal className="mt-10 flex flex-wrap items-center gap-2">
                 <span className="text-sm font-semibold text-gray-900 mr-1">Tags:</span>
                 {post.tags.map((t) => (
-                  <Link key={t} href={`/blog/tag/${slugify(t)}`} className="px-3 py-1.5 bg-gray-100 text-gray-500 text-xs rounded hover:bg-[#ff5722] hover:text-white transition-colors">{t}</Link>
+                  <Link key={t} href={`/blog/tag/${slugify(t)}`} className="px-3 py-1.5 bg-gray-100 text-gray-500 text-xs rounded hover:bg-brand hover:text-gray-900 transition-colors">{t}</Link>
                 ))}
               </Reveal>
             )}
@@ -77,12 +77,12 @@ export default async function PostPage({ params }: Props) {
             <Reveal className="mt-6 flex flex-wrap items-center gap-3 py-5 border-y border-gray-200">
               <span className="text-sm font-semibold text-gray-900">Share:</span>
               {share.map((s) => (
-                <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" className="px-3 py-1.5 border border-gray-200 rounded text-xs text-gray-600 hover:border-[#ff5722] hover:text-[#ff5722] transition-colors"><Icon name={s.icon} className="mr-1.5" />{s.label}</a>
+                <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" className="px-3 py-1.5 border border-gray-200 rounded text-xs text-gray-600 hover:border-brand hover:text-brand-text transition-colors"><Icon name={s.icon} className="mr-1.5" />{s.label}</a>
               ))}
             </Reveal>
 
             <Reveal className="mt-8 flex gap-4 items-center bg-gray-50 border border-gray-200 rounded-lg p-5">
-              <div className="w-14 h-14 shrink-0 rounded-full bg-orange-100 text-[#ff5722] flex items-center justify-center font-bold text-xl" aria-hidden="true">{(post.author ?? "A")[0]}</div>
+              <div className="w-14 h-14 shrink-0 rounded-full bg-brand-100 text-brand-text flex items-center justify-center font-bold text-xl" aria-hidden="true">{(post.author ?? "A")[0]}</div>
               <div>
                 <p className="font-semibold text-gray-900">{post.author ?? "Al Anfal Doc Team"}</p>
                 <p className="text-sm text-gray-600">Practical guidance on company setup, visas and documents in Dubai and the UAE.</p>
@@ -92,15 +92,15 @@ export default async function PostPage({ params }: Props) {
             {(newer || older) && (
               <nav aria-label="More articles" className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {older ? (
-                  <Link href={`/blog/${older.slug}`} rel="prev" className="group border border-gray-200 rounded-lg p-4 hover:border-[#ff5722] transition-colors">
+                  <Link href={`/blog/${older.slug}`} rel="prev" className="group border border-gray-200 rounded-lg p-4 hover:border-brand transition-colors">
                     <span className="text-xs text-gray-400"><Icon name="arrow-left" className="mr-1" />Previous article</span>
-                    <span className="block font-medium text-gray-900 group-hover:text-[#ff5722] transition-colors">{older.title}</span>
+                    <span className="block font-medium text-gray-900 group-hover:text-brand-text transition-colors">{older.title}</span>
                   </Link>
                 ) : <span />}
                 {newer && (
-                  <Link href={`/blog/${newer.slug}`} rel="next" className="group border border-gray-200 rounded-lg p-4 hover:border-[#ff5722] transition-colors sm:text-right">
+                  <Link href={`/blog/${newer.slug}`} rel="next" className="group border border-gray-200 rounded-lg p-4 hover:border-brand transition-colors sm:text-right">
                     <span className="text-xs text-gray-400">Next article<Icon name="arrow-right" className="ml-1" /></span>
-                    <span className="block font-medium text-gray-900 group-hover:text-[#ff5722] transition-colors">{newer.title}</span>
+                    <span className="block font-medium text-gray-900 group-hover:text-brand-text transition-colors">{newer.title}</span>
                   </Link>
                 )}
               </nav>

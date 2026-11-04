@@ -64,7 +64,7 @@ export default async function CountryPage({ params }: Props) {
               <ul className="space-y-2 mb-10">
                 {country.facts.map((f) => (
                   <li key={f.label} className="flex items-start text-gray-700">
-                    <span className="text-[#ff5722] mr-2" aria-hidden="true">•</span>
+                    <span className="text-brand-text mr-2" aria-hidden="true">•</span>
                     <span><strong className="text-gray-900">{f.label}:</strong> {f.value}</span>
                   </li>
                 ))}
@@ -85,8 +85,8 @@ export default async function CountryPage({ params }: Props) {
               <ul>
                 {sideLinks.map((l) => (
                   <li key={l.title} className="border-b border-dotted border-gray-300">
-                    <Link href={l.href} className="group flex items-center py-3 text-gray-700 hover:text-[#ff5722] transition-colors">
-                      <span className="text-[#ff5722] mr-2 font-bold group-hover:translate-x-1 transition-transform" aria-hidden="true">»</span>
+                    <Link href={l.href} className="group flex items-center py-3 text-gray-700 hover:text-brand-text transition-colors">
+                      <span className="text-brand-text mr-2 font-bold group-hover:translate-x-1 transition-transform" aria-hidden="true">»</span>
                       {l.title}
                     </Link>
                   </li>
@@ -103,7 +103,7 @@ export default async function CountryPage({ params }: Props) {
                       {c.image && <Image src={c.image} alt="" fill sizes="(min-width:1024px) 33vw, 100vw" className="object-cover" />}
                       <span className="relative text-5xl group-hover:scale-110 transition-transform duration-500" aria-hidden="true">{c.flag}</span>
                     </div>
-                    <p className="mt-2 font-semibold text-gray-900 group-hover:text-[#ff5722] transition-colors">{c.name}</p>
+                    <p className="mt-2 font-semibold text-gray-900 group-hover:text-brand-text transition-colors">{c.name}</p>
                   </Link>
                 ))}
               </div>

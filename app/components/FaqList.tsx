@@ -11,7 +11,7 @@ export default function FaqList({ faqs, defaultOpen = 0 }: { faqs: Faq[]; defaul
       {faqs.map((f, i) => {
         const isOpen = open === i;
         return (
-          <div key={i} className="bg-gray-50 rounded border border-gray-200 hover:border-[#ff5722] transition-colors">
+          <div key={i} className="bg-gray-50 rounded border border-gray-200 hover:border-brand transition-colors">
             <button
               type="button"
               aria-expanded={isOpen}

@@ -24,7 +24,7 @@ export default function BlogListing({ crumbs, heading, posts, page, pages, intro
               </div>
             )}
             {posts.length === 0 && (
-              <p className="text-gray-600">No articles yet. <Link href="/blog" className="text-[#ff5722] hover:underline">Back to all articles</Link></p>
+              <p className="text-gray-600">No articles yet. <Link href="/blog" className="text-brand-text hover:underline">Back to all articles</Link></p>
             )}
             <div className="space-y-12">
               {posts.map((p, i) => (

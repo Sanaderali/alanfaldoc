@@ -9,8 +9,8 @@ export const contentType = "image/png";
 export default function OpengraphImage() {
   return new ImageResponse(
     (
-      <div style={{ width: "100%", height: "100%", display: "flex", flexDirection: "column", justifyContent: "center", padding: 80, background: "linear-gradient(135deg,#fff7f2,#f3f4f6)", color: "#111827" }}>
-        <div style={{ fontSize: 30, color: "#ff5722", fontWeight: 700, letterSpacing: 4 }}>DUBAI · UAE</div>
+      <div style={{ width: "100%", height: "100%", display: "flex", flexDirection: "column", justifyContent: "center", padding: 80, background: "linear-gradient(135deg,#effcf5,#f3f4f6)", color: "#111827" }}>
+        <div style={{ fontSize: 30, color: "#039a50", fontWeight: 700, letterSpacing: 4 }}>DUBAI · UAE</div>
         <div style={{ fontSize: 86, fontWeight: 800, marginTop: 16 }}>{site.name}</div>
         <div style={{ fontSize: 40, marginTop: 20, color: "#4b5563" }}>{site.tagline}</div>
       </div>

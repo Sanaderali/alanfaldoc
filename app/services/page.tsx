@@ -28,10 +28,10 @@ export default async function ServicesPage() {
             {services.map((s, i) => (
               <Reveal key={s.slug} delay={(i % 3) * 80}>
                 <Link href={`/services/${s.slug}`} className="group block h-full bg-white border border-gray-200 rounded-lg p-7 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-500">
-                  <div className="w-14 h-14 mb-4 rounded-full bg-orange-50 text-[#ff5722] flex items-center justify-center text-2xl group-hover:bg-[#ff5722] group-hover:text-white transition-colors duration-300"><Icon name={s.icon} /></div>
-                  <h2 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-[#ff5722] transition-colors">{s.title}</h2>
+                  <div className="w-14 h-14 mb-4 rounded-full bg-brand-50 text-brand-text flex items-center justify-center text-2xl group-hover:bg-brand group-hover:text-gray-900 transition-colors duration-300"><Icon name={s.icon} /></div>
+                  <h2 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-brand-text transition-colors">{s.title}</h2>
                   <p className="text-gray-600 text-sm leading-relaxed mb-5">{s.summary}</p>
-                  <span className="text-xs font-semibold uppercase text-gray-400 group-hover:text-[#ff5722] transition-colors">
+                  <span className="text-xs font-semibold uppercase text-gray-400 group-hover:text-brand-text transition-colors">
                     Read more <span className="inline-block group-hover:translate-x-1 transition-transform">›</span>
                   </span>
                 </Link>

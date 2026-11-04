@@ -104,3 +104,7 @@ The kit is loaded once in `app/layout.tsx` (override with `NEXT_PUBLIC_FA_KIT=<y
 ```
 
 Service icons are the `icon` field in `data/services.ts`; blog category icons are `categoryIcons` and social icons are `social[].icon` in `data/site.ts`. Find names at https://fontawesome.com/search?o=r&m=free (free set only). In the Font Awesome kit settings, add your site's domain(s) to **Allowed Domains** (including `localhost` for development), otherwise the icons will not load.
+
+## Theme colours
+
+Brand colours come from the logo and live in one place: `tailwind.config.ts` → `colors.brand` (green `#04c366`) and `colors.accent` (red `#f2030b`). Use `bg-brand`, `text-brand-text`, `hover:bg-brand-dark`, `bg-brand-50` etc. Change the values there to re-theme the whole site.

@@ -38,13 +38,13 @@ export default function BlogSearch() {
         autoComplete="off"
         onFocus={load}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full px-4 py-3 bg-gray-100 rounded text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#ff5722]"
+        className="w-full px-4 py-3 bg-gray-100 rounded text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-brand"
       />
       {q.trim() && (
         <ul className="absolute z-20 left-0 right-0 mt-1 bg-white border border-gray-200 rounded shadow-lg overflow-hidden">
           {items.length ? items.map((i) => (
             <li key={i.slug}>
-              <Link href={`/blog/${i.slug}`} className="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#ff5722]">
+              <Link href={`/blog/${i.slug}`} className="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-text">
                 {i.title}<span className="block text-xs text-gray-400">{i.category}</span>
               </Link>
             </li>
