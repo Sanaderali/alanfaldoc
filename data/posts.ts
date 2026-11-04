@@ -7,6 +7,10 @@ import type { Post } from "@/types/content";
 export const posts: Post[] = [
   {
     slug: "mainland-vs-free-zone",
+    answer: "A mainland licence lets you trade across the UAE and with government entities, while a free zone licence offers a simpler setup and full foreign ownership within the zone. The right choice depends on where your customers are, the activity you need and your budget.",
+    takeaways: ["Mainland: trade anywhere in the UAE and bid for government contracts", "Free zone: faster setup, often 100% foreign ownership inside the zone", "Office requirements differ between the two", "Choose based on customers, activity and budget"],
+    summaryTable: [{"label": "Mainland", "value": "Trade across the UAE, work with government, office usually required"}, {"label": "Free zone", "value": "Simple incorporation, often 100% ownership, trading outside the zone usually needs a distributor"}, {"label": "Best when", "value": "Mainland: UAE-wide customers. Free zone: international or zone-based business"}],
+    sources: [{"title": "UAE Government Portal (u.ae)", "url": "https://u.ae/en"}],
     title: "Mainland vs Free Zone: Which Is Right for Your Business?",
     excerpt: "A quick comparison of ownership, trading rights and costs to help you choose a jurisdiction.",
     date: "2026-10-28",
@@ -27,6 +31,10 @@ export const posts: Post[] = [
   },
   {
     slug: "golden-visa-basics",
+    answer: "The UAE golden visa is a long-term residence visa for eligible investors, entrepreneurs and certain skilled professionals. Eligibility depends on the category, so confirm the current criteria and prepare complete, attested documents before applying.",
+    takeaways: ["Long-term residence for eligible investors, entrepreneurs and professionals", "Eligibility depends on the category", "Complete, attested documents prevent delays"],
+    summaryTable: [{"label": "Who can apply", "value": "Eligible investors, entrepreneurs and certain skilled professionals"}, {"label": "Decision made by", "value": "UAE immigration authorities"}, {"label": "Before you apply", "value": "Confirm current criteria and prepare attested documents"}],
+    sources: [{"title": "UAE Government Portal (u.ae)", "url": "https://u.ae/en"}, {"title": "Federal Authority for Identity, Citizenship, Customs & Port Security", "url": "https://icp.gov.ae"}],
     title: "UAE Golden Visa: The Basics",
     excerpt: "Who can apply, what documents to prepare and how long the visa lasts.",
     date: "2026-10-15",
@@ -43,6 +51,10 @@ export const posts: Post[] = [
   },
   {
     slug: "document-attestation-guide",
+    answer: "Most foreign documents must be attested before UAE authorities accept them. The usual chain is the issuing authority, the foreign ministry, the UAE embassy and the UAE Ministry of Foreign Affairs, and each step has its own requirements and timing.",
+    takeaways: ["Attestation is required for most foreign documents", "Four steps: issuing authority, foreign ministry, UAE embassy, UAE MOFA", "Each step has its own rules and timing"],
+    summaryTable: [{"label": "Step 1", "value": "Issuing authority in the home country"}, {"label": "Step 2", "value": "Foreign ministry attestation"}, {"label": "Step 3", "value": "UAE embassy legalisation"}, {"label": "Step 4", "value": "UAE Ministry of Foreign Affairs"}],
+    sources: [{"title": "UAE Ministry of Foreign Affairs", "url": "https://www.mofa.gov.ae"}],
     title: "Document Attestation: A Step-by-Step Guide",
     excerpt: "How documents move from issuing authority to legalised use in the UAE.",
     date: "2026-10-02",
@@ -58,6 +70,10 @@ export const posts: Post[] = [
   },
   {
     slug: "trade-license-renewal-checklist",
+    answer: "Renew your trade licence before its expiry date to avoid fines and keep your visas valid. Check the expiry date, confirm your lease or office agreement is valid, settle outstanding fees and gather updated shareholder documents before you start.",
+    takeaways: ["Renew before expiry to avoid fines", "Check the lease or office agreement is valid", "Settle outstanding fees first", "Gather updated shareholder documents"],
+    summaryTable: [{"label": "Check first", "value": "Licence expiry date"}, {"label": "Also needed", "value": "Valid lease or office agreement"}, {"label": "Before filing", "value": "Clear outstanding fees"}, {"label": "Documents", "value": "Updated shareholder documents"}],
+    sources: [{"title": "UAE Government Portal (u.ae)", "url": "https://u.ae/en"}],
     title: "Trade Licence Renewal: A Simple Checklist",
     excerpt: "What to prepare before your licence expires so you avoid fines and delays.",
     date: "2026-09-20",
@@ -73,6 +89,10 @@ export const posts: Post[] = [
   },
   {
     slug: "visa-rejection-reasons",
+    answer: "Most visa delays come from incomplete or inconsistent documents, not from the applicant's eligibility. Common problems include missing attestation, names spelled differently across documents, an expired passport or medical result, and choosing the wrong visa category.",
+    takeaways: ["Most delays are caused by paperwork, not eligibility", "Check names match across every document", "Make sure passports and medical results are valid", "Pick the correct visa category before applying"],
+    summaryTable: [{"label": "Common problem", "value": "Missing or unattested documents"}, {"label": "Common problem", "value": "Names spelled differently across documents"}, {"label": "Common problem", "value": "Expired passport or medical result"}, {"label": "Common problem", "value": "Wrong visa category"}],
+    sources: [{"title": "Federal Authority for Identity, Citizenship, Customs & Port Security", "url": "https://icp.gov.ae"}],
     title: "Top Reasons Visa Applications Get Delayed or Rejected",
     excerpt: "Common mistakes in visa files and how to avoid them with better preparation.",
     date: "2026-09-05",
@@ -88,6 +108,10 @@ export const posts: Post[] = [
   },
   {
     slug: "opening-a-corporate-bank-account",
+    answer: "Banks decide on corporate account applications using their own compliance rules, so a clear and complete file matters. Typically a bank asks for the trade licence, memorandum of association, shareholder and manager IDs, proof of address and a short business profile.",
+    takeaways: ["Banks apply their own compliance rules", "A complete file with a clear business profile helps", "Requirements differ by bank"],
+    summaryTable: [{"label": "Usually required", "value": "Trade licence and memorandum of association"}, {"label": "Also required", "value": "Shareholder and manager IDs"}, {"label": "Also required", "value": "Proof of address"}, {"label": "Also required", "value": "A short business profile"}],
+    sources: [{"title": "Central Bank of the UAE", "url": "https://www.centralbank.ae"}],
     title: "Opening a Corporate Bank Account in the UAE",
     excerpt: "What banks look for and how to prepare a strong application.",
     date: "2026-08-18",

@@ -1,4 +1,5 @@
-import { checkCredentials, clearFailures, clientIp, recordFailure, startSession, throttled } from "@/lib/auth";
+import { authenticate, clearFailures, clientIp, recordFailure, startSession, throttled } from "@/lib/auth";
+import { landingPath } from "@/lib/rbac";
 
 export const dynamic = "force-dynamic";
 
@@ -18,12 +19,12 @@ export async function POST(req: Request) {
   if (throttled(ip)) return to("/admin/login?e=throttle");
 
   const form = await req.formData();
-  const ok = checkCredentials(String(form.get("user") ?? ""), String(form.get("password") ?? ""));
-  if (!ok) {
+  const user = await authenticate(String(form.get("user") ?? ""), String(form.get("password") ?? ""));
+  if (!user) {
     recordFailure(ip);
     return to("/admin/login?e=bad");
   }
   clearFailures(ip);
-  await startSession();
-  return to("/admin");
+  await startSession(user.id);
+  return to(landingPath(user));
 }

@@ -26,7 +26,7 @@ export default async function ServicesPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {services.map((s, i) => (
               <Reveal key={s.slug} delay={(i % 3) * 80}>
-                <Link href={`/services/${s.slug}`} className="group block h-full bg-white border border-gray-200 rounded-lg p-7 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-500">
+                <Link href={`/services/${s.slug}`} className="group block h-full bg-white border border-gray-200/80 rounded-2xl shadow-[0_2px_14px_rgba(15,23,42,.05)] p-7 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-500">
                   <div className="w-14 h-14 mb-4 rounded-full bg-brand-50 text-brand-text flex items-center justify-center text-2xl group-hover:bg-brand group-hover:text-white transition-colors duration-300"><Icon name={s.icon} /></div>
                   <h2 className="text-xl font-bold text-ink mb-3 group-hover:text-brand-text transition-colors">{s.title}</h2>
                   <p className="text-gray-600 text-sm leading-relaxed mb-5">{s.summary}</p>

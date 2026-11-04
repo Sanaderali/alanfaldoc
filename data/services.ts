@@ -4,6 +4,10 @@ import type { Service } from "@/types/content";
 export const services: Service[] = [
   {
     slug: "company-formation",
+    answer: "Company formation in the UAE means registering a legal business entity either on the mainland or in a free zone. Most business activities now allow 100% foreign ownership. The process covers choosing a jurisdiction and legal structure, reserving a trade name, obtaining approvals, signing the incorporation documents and receiving the trade licence.",
+    takeaways: ["Mainland and free zone are the two main routes, each with different trading rights", "Most activities allow 100% foreign ownership", "The trade licence is issued after name approval and incorporation documents", "Residence visas and a corporate bank account normally follow the licence"],
+    summaryTable: [{"label": "Who it is for", "value": "Founders, investors and foreign companies"}, {"label": "Main options", "value": "Mainland, free zone, offshore"}, {"label": "Typical steps", "value": "Name reservation, approvals, licence, visas, bank account"}, {"label": "Timeline", "value": "Depends on jurisdiction and activity. We confirm it after reviewing your file"}],
+    sources: [{"title": "UAE Government Portal (u.ae)", "url": "https://u.ae/en"}],
     title: "Company Formation",
     icon: "building",
     summary: "Mainland and free zone company setup in Dubai and the UAE with full legal support.",
@@ -22,6 +26,10 @@ export const services: Service[] = [
   },
   {
     slug: "pro-services",
+    answer: "PRO services are professional government-relations services. A Public Relations Officer submits and tracks your paperwork with UAE authorities, including visas, labour cards, licence renewals, approvals and attestations, so you avoid queues and processing mistakes. They suit companies that want compliance handled by a dedicated team.",
+    takeaways: ["Handles visas, labour cards, renewals and approvals on your behalf", "Reduces delays caused by incomplete or incorrect paperwork", "Renewal dates are tracked so licences and visas never lapse", "Works across immigration, labour, free zone and municipal departments"],
+    summaryTable: [{"label": "Who it is for", "value": "Companies and individuals with ongoing government paperwork"}, {"label": "Typical tasks", "value": "Employee visas, labour cards, licence renewals, attestations"}, {"label": "Departments", "value": "Immigration, labour, free zones, municipalities, chambers"}, {"label": "Format", "value": "One-off transactions or an ongoing PRO arrangement"}],
+    sources: [{"title": "UAE Government Portal (u.ae)", "url": "https://u.ae/en"}, {"title": "Ministry of Human Resources & Emiratisation (MOHRE)", "url": "https://www.mohre.gov.ae"}],
     title: "PRO Services",
     icon: "clipboard-list",
     summary: "Professional government documentation and liaison services for all UAE departments.",
@@ -37,6 +45,10 @@ export const services: Service[] = [
   },
   {
     slug: "visa-processing",
+    answer: "Visa processing in the UAE covers employment, investor, family, tourist and golden visa applications. Each visa type has its own eligibility rules and documents, and decisions are made only by the authorities. A complete, correctly attested file reduces delays and avoidable rejections, which is where a professional service helps most.",
+    takeaways: ["Employment, investor, family, tourist and golden visas are the main categories", "Approval is decided by the authorities, never guaranteed by a service provider", "A complete, attested document set is the best way to avoid delays", "Renewals and cancellations should be tracked ahead of expiry"],
+    summaryTable: [{"label": "Visa types", "value": "Employment, investor, family, tourist, golden"}, {"label": "Typical documents", "value": "Passport, photo, sponsor or company file, medical fitness result"}, {"label": "Decision made by", "value": "UAE immigration authorities"}, {"label": "Timeline", "value": "Varies by visa type and authority"}],
+    sources: [{"title": "UAE Government Portal (u.ae)", "url": "https://u.ae/en"}, {"title": "Federal Authority for Identity, Citizenship, Customs & Port Security", "url": "https://icp.gov.ae"}],
     title: "Visa Processing",
     icon: "passport",
     summary: "Employment, family, tourist and golden visa application services.",
@@ -53,6 +65,10 @@ export const services: Service[] = [
   },
   {
     slug: "document-clearing",
+    answer: "Document clearing, also called attestation or legalisation, is the official verification of a document so authorities in another country accept it. Documents usually pass through the issuing country's authorities, the UAE embassy and the UAE Ministry of Foreign Affairs. Each step has its own requirements, so the order and completeness of the chain matter.",
+    takeaways: ["Attestation makes foreign documents valid for official use in the UAE", "The usual chain: issuing authority, foreign ministry, UAE embassy, UAE MOFA", "Educational, personal and commercial documents all follow similar steps", "Express options exist for many document types"],
+    summaryTable: [{"label": "Common documents", "value": "Degree certificates, marriage and birth certificates, powers of attorney, commercial agreements"}, {"label": "Typical chain", "value": "Issuing authority, foreign ministry, UAE embassy, UAE MOFA"}, {"label": "Often needed with", "value": "Certified translation"}, {"label": "Timeline", "value": "Depends on the document and the authority"}],
+    sources: [{"title": "UAE Ministry of Foreign Affairs", "url": "https://www.mofa.gov.ae"}, {"title": "UAE Government Portal (u.ae)", "url": "https://u.ae/en"}],
     title: "Document Clearing",
     icon: "file-circle-check",
     summary: "Fast-track approval and attestation for all types of business and personal documents.",
@@ -68,6 +84,10 @@ export const services: Service[] = [
   },
   {
     slug: "trade-license",
+    answer: "A trade licence is the official permit that allows a business to operate in a UAE emirate. The main categories are commercial, professional, industrial and tourism licences, and the right one depends on your business activity. Licences must be renewed every year before expiry to avoid fines and keep related visas valid.",
+    takeaways: ["Commercial, professional, industrial and tourism are the main licence types", "The correct licence depends on your business activity", "Renew before the expiry date to avoid fines", "Activities can often be added later through an amendment"],
+    summaryTable: [{"label": "Licence types", "value": "Commercial, professional, industrial, tourism"}, {"label": "Validity", "value": "Renewed annually"}, {"label": "Common changes", "value": "Add or remove activities, change address or shareholders"}, {"label": "Issued by", "value": "The licensing authority of your emirate or free zone"}],
+    sources: [{"title": "UAE Government Portal (u.ae)", "url": "https://u.ae/en"}],
     title: "Trade License",
     icon: "file-signature",
     summary: "New trade licence issuance and annual renewals across all UAE emirates.",
@@ -83,6 +103,10 @@ export const services: Service[] = [
   },
   {
     slug: "legal-translation",
+    answer: "A legal translation is a certified rendering of a document by an approved translator, accepted by courts and government bodies. In the UAE, Arabic and English are the most common pairs. Translations are often combined with notarisation or attestation so the document can be used officially.",
+    takeaways: ["Certified translators stamp the translation as accurate", "Arabic and English are the most requested language pairs", "Often combined with notarisation or attestation", "Used for contracts, court papers, company documents and certificates"],
+    summaryTable: [{"label": "Common languages", "value": "Arabic, English, other languages on request"}, {"label": "Typical documents", "value": "Contracts, court documents, incorporation papers, certificates"}, {"label": "Often combined with", "value": "Notarisation and attestation"}, {"label": "Accepted by", "value": "Courts, ministries, embassies and licensing authorities"}],
+    sources: [{"title": "UAE Government Portal (u.ae)", "url": "https://u.ae/en"}, {"title": "UAE Ministry of Foreign Affairs", "url": "https://www.mofa.gov.ae"}],
     title: "Legal Translation",
     icon: "language",
     summary: "Certified translation and attestation for legal and business documents.",
@@ -98,6 +122,10 @@ export const services: Service[] = [
   },
   {
     slug: "bank-account-opening",
+    answer: "Opening a corporate bank account in the UAE requires a complete application and passing the bank's own compliance checks. Banks typically ask for the trade licence, incorporation documents, shareholder and manager IDs, proof of address and a business profile. Approval is the bank's decision, so a clear, complete file improves your chances.",
+    takeaways: ["Banks make their own compliance decisions, so approval is never guaranteed", "A complete application with a clear business profile helps", "Requirements differ by bank and by business type", "Some banks allow part of the process remotely"],
+    summaryTable: [{"label": "Typical documents", "value": "Trade licence, memorandum of association, shareholder IDs, proof of address, business profile"}, {"label": "Decision made by", "value": "The bank's compliance team"}, {"label": "Our role", "value": "Prepare the file and introduce suitable banks"}, {"label": "Timeline", "value": "Varies by bank and profile"}],
+    sources: [{"title": "Central Bank of the UAE", "url": "https://www.centralbank.ae"}],
     title: "Bank Account Opening",
     icon: "building-columns",
     summary: "Corporate and personal bank account opening assistance with major UAE banks.",
@@ -113,6 +141,10 @@ export const services: Service[] = [
   },
   {
     slug: "business-consulting",
+    answer: "Business consulting gives practical guidance on structuring, regulation and growth for companies operating in or entering the UAE. It helps founders and investors compare jurisdictions, understand compliance obligations and plan market entry. It complements, but does not replace, formal legal or tax advice from a licensed professional.",
+    takeaways: ["Compare mainland, free zone and other structures before you commit", "Understand licensing, compliance and renewal obligations early", "Plan market entry and expansion with realistic timelines", "Coordinate with licensed legal or tax advisers where needed"],
+    summaryTable: [{"label": "Who it is for", "value": "Start-ups, foreign investors and established companies expanding to the UAE"}, {"label": "Topics", "value": "Jurisdiction choice, structure, compliance, market entry"}, {"label": "Not included", "value": "Formal legal or tax opinions"}, {"label": "Format", "value": "Consultation and written recommendations"}],
+    sources: [{"title": "UAE Government Portal (u.ae)", "url": "https://u.ae/en"}],
     title: "Business Consulting",
     icon: "user-tie",
     summary: "Expert guidance on UAE business regulations, compliance and growth.",
@@ -128,6 +160,10 @@ export const services: Service[] = [
   },
   {
     slug: "business-immigration",
+    answer: "Business immigration covers residence routes for company owners, investors and skilled professionals in the UAE, including the golden visa and residence linked to a company licence. Eligibility depends on the category and on current rules, so documents should be prepared and checked carefully before applying.",
+    takeaways: ["Golden visa, investor and company-owner residence are the main routes", "Eligibility depends on category and current rules", "Family members can usually be sponsored by eligible residents", "Careful document preparation reduces delays"],
+    summaryTable: [{"label": "Routes", "value": "Golden visa, investor visa, entrepreneur visa, company-linked residence"}, {"label": "Typical documents", "value": "Passport, company or investment evidence, medical result, Emirates ID steps"}, {"label": "Decision made by", "value": "UAE immigration authorities"}, {"label": "Family", "value": "Eligible residents can usually sponsor family members"}],
+    sources: [{"title": "UAE Government Portal (u.ae)", "url": "https://u.ae/en"}, {"title": "Federal Authority for Identity, Citizenship, Customs & Port Security", "url": "https://icp.gov.ae"}],
     title: "Business Immigration",
     icon: "earth-americas",
     summary: "Golden visa, residence permits and work visas for business owners and investors.",

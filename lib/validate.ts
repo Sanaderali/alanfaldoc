@@ -82,7 +82,19 @@ export function cleanSections(v: unknown): ContentSection[] {
     .slice(0, 40);
 }
 
-type Common = { id?: string; status: "draft" | "published"; publishAt?: string; image?: string; imageAlt?: string; faqSchema: boolean; schemaCustom?: string; seo?: Seo };
+export function cleanGeo(o: Record<string, unknown>, errors: Errors) {
+  const answer = str(o.answer, 700);
+  const takeaways = strList(o.takeaways, 300, 12);
+  const table = Array.isArray(o.summaryTable) ? (o.summaryTable as { label?: string; value?: string }[]).map((r) => ({ label: str(r?.label, 80), value: str(r?.value, 300) })).filter((r) => r.label && r.value).slice(0, 20) : [];
+  const sources = Array.isArray(o.sources)
+    ? (o.sources as { title?: string; url?: string }[]).map((r) => ({ title: str(r?.title, 160), url: str(r?.url, 500) })).filter((r) => r.title && r.url).slice(0, 20)
+    : [];
+  if (sources.some((r) => !/^https:\/\/[^\s]+$/.test(r.url))) errors.sources = "Every source needs a full https:// link";
+  const author = str(o.author, 80);
+  return { ...(answer ? { answer } : {}), ...(takeaways.length ? { takeaways } : {}), ...(table.length ? { summaryTable: table } : {}), ...(sources.length ? { sources } : {}), ...(author ? { author } : {}) };
+}
+
+type Common = { id?: string; status: "draft" | "published"; publishAt?: string; image?: string; imageAlt?: string; faqSchema: boolean; schemaCustom?: string; seo?: Seo; answer?: string; takeaways?: string[]; summaryTable?: { label: string; value: string }[]; sources?: { title: string; url: string }[]; author?: string };
 
 function common(o: Record<string, unknown>, errors: Errors): Common {
   const status = o.status === "published" ? "published" : "draft";
@@ -93,7 +105,7 @@ function common(o: Record<string, unknown>, errors: Errors): Common {
   const imageAlt = str(o.imageAlt, 300);
   if (image && !imageAlt) errors.imageAlt = "Describe the image (alt text) for accessibility and image SEO";
   const seo = cleanSeo(o.seo, errors);
-  return { status, publishAt, image: image || undefined, imageAlt: imageAlt || undefined, faqSchema: bool(o.faqSchema, true), schemaCustom: cleanSchemaCustom(o.schemaCustom, errors), seo: Object.keys(seo).length ? seo : undefined };
+  return { status, publishAt, image: image || undefined, imageAlt: imageAlt || undefined, faqSchema: bool(o.faqSchema, true), schemaCustom: cleanSchemaCustom(o.schemaCustom, errors), seo: Object.keys(seo).length ? seo : undefined, ...cleanGeo(o, errors) };
 }
 
 /** When the visual editor sent HTML it replaces the old structured fields; otherwise keep them. */

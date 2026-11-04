@@ -29,9 +29,9 @@ export default function PageSeoEditor({ pageKey, name, path, initial, siteUrl, s
       <Section title="Schema (structured data)">
         <SchemaPanel faqSchema={f.faqSchema} onFaqSchema={(v) => set({ faqSchema: v })} custom={f.schemaCustom} onCustom={(v) => set({ schemaCustom: v })} error={errors.schemaCustom} hasFaqs={isFaq} preview={isFaq ? faqLd(faqs as never) : { note: "Breadcrumb + site-wide Organization / WebSite schema are generated automatically." }} />
       </Section>
-      <div className="fixed bottom-0 left-0 right-0 lg:left-64 z-30 bg-white/95 backdrop-blur border-t border-gray-200">
+      <div className="fixed bottom-0 left-0 right-0 lg:left-64 z-30 bg-a-surface/95 backdrop-blur border-t border-a-line">
         <div className="max-w-[1400px] px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between gap-4">
-          <p role="status" className={`text-sm ${msg ? (msg.ok ? "text-emerald-700" : "text-red-600") : "text-gray-500"}`}>{msg?.text ?? ""}</p>
+          <p role="status" className={`text-sm ${msg ? (msg.ok ? "text-brand" : "text-a-red") : "text-a-muted"}`}>{msg?.text ?? ""}</p>
           <div className="flex gap-2"><Link href="/admin/pages" className={btnGhost}>Back</Link><button type="button" onClick={save} disabled={pending} className={btnPrimary}>{pending ? "Saving…" : "Save"}</button></div>
         </div>
       </div>

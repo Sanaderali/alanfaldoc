@@ -44,7 +44,7 @@ export default async function AboutPage() {
             <p className="text-gray-600 leading-relaxed mb-8">
               With over 20 years of experience, our team removes the complexity from government procedures so you can focus on what matters: your business and your family.
             </p>
-            <Link href="/contact" className="inline-block px-8 py-3.5 bg-accent text-white font-semibold rounded uppercase text-sm hover:bg-accent-dark hover:shadow-lg hover:scale-105 transition-all duration-300">
+            <Link href="/contact" className="btn btn-cta inline-block">
               Get Consultation
             </Link>
           </div>
@@ -70,7 +70,7 @@ export default async function AboutPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {values.map((v, i) => (
               <Reveal key={v.title} delay={i * 80}>
-                <div className="h-full bg-white border border-gray-200 rounded-lg p-7 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-500">
+                <div className="h-full bg-white border border-gray-200/80 rounded-2xl shadow-[0_2px_14px_rgba(15,23,42,.05)] p-7 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-500">
                   <div className="w-14 h-14 mb-4 rounded-full bg-brand-50 text-brand-text flex items-center justify-center text-2xl"><Icon name={v.icon} /></div>
                   <h3 className="text-lg font-bold text-ink mb-2">{v.title}</h3>
                   <p className="text-sm text-gray-600 leading-relaxed">{v.text}</p>

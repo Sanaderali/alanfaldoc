@@ -14,6 +14,10 @@ type Auditable = {
   faqSchema?: boolean;
   schemaCustom?: string;
   faqs?: { question: string; answer: string }[];
+  answer?: string;
+  takeaways?: string[];
+  summaryTable?: { label: string; value: string }[];
+  sources?: { title: string; url: string }[];
   seo?: { title?: string; description?: string; image?: string; canonical?: string };
 };
 
@@ -29,6 +33,13 @@ export function auditItem(item: Auditable, kind: "service" | "country" | "post" 
   if (item.image && !len(item.imageAlt)) out.push({ level: "error", text: "Image has no alt text" });
   if (kind !== "page" && !item.image) out.push({ level: "info", text: "No cover image" });
   if ((kind === "service" || kind === "country") && !(item.faqs && item.faqs.length)) out.push({ level: "info", text: "No FAQs (FAQ rich results need at least one)" });
+  const words = (item.answer ?? "").trim().split(/\s+/).filter(Boolean).length;
+  if (kind !== "page") {
+    if (!words) out.push({ level: "warn", text: "No answer-first summary (AI assistants quote these)" });
+    else if (words < 25 || words > 80) out.push({ level: "info", text: `Answer-first summary is ${words} words (aim for 40-70)` });
+    if (!(item.takeaways && item.takeaways.length)) out.push({ level: "info", text: "No key takeaways" });
+    if (!(item.sources && item.sources.length)) out.push({ level: "info", text: "No sources / references (trust signal)" });
+  }
   if (item.faqSchema === false && item.faqs?.length) out.push({ level: "info", text: "FAQ schema is switched off" });
   if (item.schemaCustom) {
     try { JSON.parse(item.schemaCustom); } catch { out.push({ level: "error", text: "Custom schema is not valid JSON" }); }

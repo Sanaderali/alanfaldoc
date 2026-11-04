@@ -39,9 +39,9 @@ export default function Header() {
 
       <header className={`bg-white border-b border-gray-200 sticky top-0 z-50 transition-shadow duration-300 ${scrolled ? "shadow-lg" : "shadow-sm"}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className={`flex justify-between items-center transition-all duration-300 ${scrolled ? "h-14" : "h-16 sm:h-20"}`}>
+          <div className="flex justify-between items-center h-16 sm:h-20">
             <Link href="/" aria-label={`${site.name} home`} className="flex items-center">
-              <div className={`relative transition-all duration-300 ${scrolled ? "w-28 h-9" : "w-32 h-10 sm:w-36 sm:h-12"}`}>
+              <div className={`relative w-32 h-10 sm:w-36 sm:h-12 origin-left transition-transform duration-300 ${scrolled ? "scale-90" : "scale-100"}`}>
                 <Image src="/logo-black.png" alt={site.name} fill sizes="150px" className="object-contain" priority />
               </div>
             </Link>
@@ -50,7 +50,7 @@ export default function Header() {
               {mainNav.map((n) => (
                 <Link key={n.href} href={n.href} className={`${link(n.href)} uppercase`}>{n.label}</Link>
               ))}
-              <Link href="/contact" className="px-5 py-2.5 bg-accent text-white text-sm font-semibold rounded uppercase hover:bg-accent-dark hover:shadow-lg hover:scale-105 transition-all duration-300">
+              <Link href="/contact" className="btn btn-cta btn-sm">
                 Get Consultation
               </Link>
             </nav>
@@ -73,7 +73,7 @@ export default function Header() {
                 {mainNav.map((n) => (
                   <Link key={n.href} href={n.href} className={`${link(n.href)} uppercase py-3 border-b border-gray-100`}>{n.label}</Link>
                 ))}
-                <Link href="/contact" className="mt-4 px-5 py-3 bg-accent text-white font-semibold rounded text-center uppercase text-sm">
+                <Link href="/contact" className="btn btn-cta mt-4 text-center">
                   Get Consultation
                 </Link>
               </div>

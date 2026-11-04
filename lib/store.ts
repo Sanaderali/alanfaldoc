@@ -2,7 +2,7 @@ import "server-only";
 import fs from "node:fs/promises";
 import path from "node:path";
 import { randomUUID } from "node:crypto";
-import type { Country, FaqGroup, MediaItem, PageSettings, Post, Service, Term } from "@/types/content";
+import type { Chat, Country, FaqGroup, MediaItem, PageSettings, Post, Service, Term, Ticket, User } from "@/types/content";
 import { countries as seedCountries } from "@/data/countries";
 import { services as seedServices } from "@/data/services";
 import { posts as seedPosts } from "@/data/posts";
@@ -27,6 +27,9 @@ export type CollectionMap = {
   pages: PageSettings;
   media: MediaItem;
   terms: Term;
+  users: User;
+  tickets: Ticket;
+  chats: Chat;
 };
 export type CollectionName = keyof CollectionMap;
 
@@ -62,12 +65,34 @@ function seed<K extends CollectionName>(name: K): CollectionMap[K][] {
     pages: seedPages(),
     media: [],
     terms: [],
+    users: [],
+    tickets: [],
+    chats: [],
   };
   return data[name] as CollectionMap[K][];
 }
 
 const file = (n: CollectionName) => path.join(CONTENT_DIR, `${n}.json`);
 const locks = new Map<string, Promise<unknown>>();
+
+/**
+ * One-time upgrade: items stored before the GEO fields existed receive the sample answer/takeaways/table/sources
+ * from the built-in content (matched by slug). Each item is marked (geoV) so it never runs twice and never
+ * overwrites anything you edit or clear later.
+ */
+const GEO_KEYS = ["answer", "takeaways", "summaryTable", "sources"] as const;
+function backfillGeo<T extends { slug: string; geoV?: number }>(items: T[], seedItems: T[]): { items: T[]; changed: boolean } {
+  let changed = false;
+  const out = items.map((it) => {
+    if (it.geoV) return it;
+    changed = true;
+    const seedItem = seedItems.find((x) => x.slug === it.slug) as Record<string, unknown> | undefined;
+    const patch: Record<string, unknown> = { geoV: 1 };
+    if (seedItem) for (const k of GEO_KEYS) if (seedItem[k] !== undefined && (it as Record<string, unknown>)[k] === undefined) patch[k] = seedItem[k];
+    return { ...it, ...patch };
+  });
+  return { items: out, changed };
+}
 
 /** Built-in fixed pages added in later versions are merged into an existing pages.json automatically. */
 function withMissingPages(items: PageSettings[]): PageSettings[] {
@@ -76,10 +101,28 @@ function withMissingPages(items: PageSettings[]): PageSettings[] {
   return missing.length ? [...items, ...missing] : items;
 }
 
+/** parsed JSON is cached until the file changes (cheap stat), so frequent polling (chat) stays fast */
+const cache = new Map<string, { sig: string; data: unknown }>();
+
 export async function readAll<K extends CollectionName>(name: K): Promise<CollectionMap[K][]> {
   try {
+    const st = await fs.stat(file(name));
+    const sig = `${st.mtimeMs}:${st.size}`;
+    const hit = cache.get(name);
+    if (hit && hit.sig === sig) return structuredClone(hit.data) as CollectionMap[K][];
     const data = JSON.parse(await fs.readFile(file(name), "utf8"));
-    return (name === "pages" ? withMissingPages(data) : data) as CollectionMap[K][];
+    let out = (name === "pages" ? withMissingPages(data) : data) as CollectionMap[K][];
+    if (name === "services" || name === "countries" || name === "posts") {
+      const seedItems = (name === "services" ? seedServices : name === "countries" ? seedCountries : seedPosts) as unknown as { slug: string; geoV?: number }[];
+      const r = backfillGeo(out as unknown as { slug: string; geoV?: number }[], seedItems);
+      if (r.changed) {
+        out = r.items as unknown as CollectionMap[K][];
+        try { await writeAll(name, out); } catch { /* read-only disk: served from memory */ }
+        return out;
+      }
+    }
+    cache.set(name, { sig, data: structuredClone(out) });
+    return out;
   } catch (e) {
     if ((e as NodeJS.ErrnoException).code !== "ENOENT") throw e;
     const data = seed(name);

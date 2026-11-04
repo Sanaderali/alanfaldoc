@@ -12,10 +12,23 @@ export default function ContactPage() {
     message: "",
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [state, setState] = useState<{ sending: boolean; ok?: number; error?: string }>({ sending: false });
+  const [trap, setTrap] = useState("");
+
+  /** Sends the message to /api/contact, where it becomes a support ticket for the team. */
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
-    // Handle form submission
+    setState({ sending: true });
+    const topics: Record<string, string> = { "company-formation": "Company Formation", "visa-services": "Visa Services", "pro-services": "PRO Services", "document-clearing": "Document Clearing", "trade-license": "Trade License", other: "Other Services" };
+    try {
+      const r = await fetch("/api/contact", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...formData, question: topics[formData.question] ?? "General enquiry", website: trap }) });
+      const d = await r.json();
+      if (!r.ok) throw new Error(d.error ?? "Something went wrong. Please try again.");
+      setState({ sending: false, ok: d.number });
+      setFormData({ name: "", email: "", question: "", message: "" });
+    } catch (x) {
+      setState({ sending: false, error: (x as Error).message });
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
@@ -26,7 +39,7 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-canvas">
       {/* Breadcrumb */}
       <section className="bg-brand text-white py-4">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -109,6 +122,9 @@ export default function ContactPage() {
             {/* Contact Form */}
             <div className="bg-white rounded-lg p-8 shadow-md border border-gray-100">
               <form onSubmit={handleSubmit} className="space-y-6">
+                <input type="text" name="website" tabIndex={-1} autoComplete="off" value={trap} onChange={(e) => setTrap(e.target.value)} className="hidden" aria-hidden="true" />
+                {state.ok && <p role="status" className="p-4 rounded-xl bg-brand-50 border border-brand-200 text-brand-text text-sm font-medium">Thank you! Your message was sent (ticket #{state.ok}). We will reply by email shortly.</p>}
+                {state.error && <p role="alert" className="p-4 rounded-xl bg-accent-50 border border-accent-100 text-accent text-sm font-medium">{state.error}</p>}
                 <div>
                   <input
                     type="text"
@@ -163,7 +179,7 @@ export default function ContactPage() {
 
                 <button
                   type="submit"
-                  className="w-full px-8 py-4 bg-brand text-white font-semibold rounded hover:bg-brand-dark hover:shadow-lg hover:scale-105 transition-all duration-300 uppercase text-sm"
+                  className="btn btn-primary btn-lg w-full"
                 >
                   SEND YOUR MESSAGE
                 </button>
@@ -217,7 +233,7 @@ export default function ContactPage() {
                     placeholder="Your email address"
                     className="flex-1 px-4 py-3 bg-canvas border border-gray-200 rounded focus:ring-2 focus:ring-brand focus:border-transparent transition-all text-ink"
                   />
-                  <button className="px-6 sm:px-8 py-3 bg-brand text-white font-semibold rounded hover:bg-brand-dark hover:shadow-lg transition-all duration-300 uppercase text-sm whitespace-nowrap">
+                  <button className="btn btn-primary">
                     SUBSCRIBE
                   </button>
                 </div>

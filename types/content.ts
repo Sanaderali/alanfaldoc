@@ -18,6 +18,18 @@ export type Managed = {
   imageAlt?: string;
   /** Rich-text article written in the dashboard visual editor (sanitised HTML). When set it replaces the structured sections/body on the page. */
   contentHtml?: string;
+  /** internal: content version marker used by one-time upgrades (do not edit) */
+  geoV?: number;
+  /** GEO: "answer-first" summary (40-70 words) that AI assistants can quote directly */
+  answer?: string;
+  /** GEO: scannable key takeaways (bullets) */
+  takeaways?: string[];
+  /** GEO: "at a glance" summary table rows */
+  summaryTable?: { label: string; value: string }[];
+  /** GEO: references / sources shown at the bottom and emitted as schema citations */
+  sources?: { title: string; url: string }[];
+  /** GEO: named author for trust (defaults to the editorial team) */
+  author?: string;
   /** emit FAQPage JSON-LD for this item's FAQs (default true) */
   faqSchema?: boolean;
   /** extra JSON-LD (raw JSON) rendered on the page next to the generated schema */
@@ -141,4 +153,67 @@ export type MediaItem = {
   height: number;
   bytes: number;
   createdAt: string;
+};
+
+/* ---------------- staff accounts, tickets, live chat ---------------- */
+export type Role = "super_admin" | "administrator" | "manager" | "support_agent" | "content_editor";
+
+export type User = {
+  id: string;
+  name: string;
+  username: string;
+  email: string;
+  /** scrypt$salt$hash (never the plain password) */
+  passwordHash: string;
+  role: Role;
+  /** extra permissions granted on top of the role (granular overrides set by the Super Admin) */
+  extraPermissions?: string[];
+  active: boolean;
+  createdAt: string;
+  updatedAt: string;
+  lastLoginAt?: string;
+};
+
+export type TicketReply = { id: string; by: "customer" | "staff"; staffName?: string; body: string; at: string };
+export type Ticket = {
+  id: string;
+  number: number;
+  name: string;
+  email: string;
+  phone?: string;
+  subject: string;
+  message: string;
+  status: "open" | "pending" | "closed";
+  source: "contact" | "chat";
+  createdAt: string;
+  updatedAt: string;
+  ip?: string;
+  replies: TicketReply[];
+  unreadStaff: boolean;
+};
+
+export type ChatMessage = { id: string; from: "visitor" | "staff" | "system"; name?: string; text: string; at: string };
+export type Chat = {
+  id: string;
+  /** sha256 of the visitor's secret token (the token itself lives only in the visitor's browser) */
+  tokenHash: string;
+  phone: string;
+  name?: string;
+  status: "open" | "closed";
+  createdAt: string;
+  updatedAt: string;
+  lastMessageAt: string;
+  ip?: string;
+  country?: string;
+  city?: string;
+  page?: string;
+  referrer?: string;
+  userAgent?: string;
+  language?: string;
+  messages: ChatMessage[];
+  /** messages from the visitor that staff have not seen yet */
+  unreadStaff: number;
+  /** staff replies the visitor has not seen yet */
+  unreadVisitor: number;
+  assignedTo?: string;
 };

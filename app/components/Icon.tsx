@@ -6,5 +6,5 @@
  */
 export default function Icon({ name, className = "", fixedWidth = true }: { name: string; className?: string; fixedWidth?: boolean }) {
   const cls = name.includes(" ") ? name : `fa-solid fa-${name}`;
-  return <i className={`${cls} ${fixedWidth ? "fa-fw" : ""} ${className}`} aria-hidden="true" />;
+  return <i className={`${cls} ${fixedWidth ? "fa-fw" : ""} ${className}`} style={fixedWidth ? { display: "inline-block", width: "1.25em", textAlign: "center" } : undefined} aria-hidden="true" />;
 }

@@ -1,4 +1,4 @@
-import { requireAdmin } from "@/lib/auth";
+import { requirePerm } from "@/lib/auth";
 import { adminTags } from "@/lib/taxonomy";
 import { PageHeader } from "../../../ui";
 import TermManager from "../../_ui/TermManager";
@@ -6,7 +6,7 @@ import TermManager from "../../_ui/TermManager";
 export const dynamic = "force-dynamic";
 
 export default async function Page() {
-  await requireAdmin();
+  await requirePerm("taxonomy.manage");
   return (
     <>
       <PageHeader title="Tags" />

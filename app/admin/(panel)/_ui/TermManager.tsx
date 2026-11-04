@@ -27,20 +27,20 @@ export default function TermManager({ type, rows }: { type: "category" | "tag"; 
           <div>
             <label htmlFor="term-name" className="block text-[13px] font-semibold mb-1">Name</label>
             <input id="term-name" value={name} onChange={(e) => setName(e.target.value)} className={inputCls} />
-            <p className="text-xs text-[#646970] mt-1">The name is how it appears on your site.</p>
+            <p className="text-xs text-a-muted mt-1">The name is how it appears on your site.</p>
           </div>
-          {msg && <p role="alert" className="text-sm text-red-600">{msg}</p>}
+          {msg && <p role="alert" className="text-sm text-a-red">{msg}</p>}
           <button type="submit" disabled={pending || !name.trim()} className={btnPrimary}>Add New {label}</button>
         </form>
       </section>
 
-      <section className="bg-white border border-[#c3c4c7] shadow-[0_1px_1px_rgba(0,0,0,.04)] overflow-x-auto">
+      <section className="bg-a-surface border border-a-line shadow-[0_1px_1px_rgba(0,0,0,.04)] overflow-x-auto">
         <table className="w-full text-[13px]">
-          <thead><tr className="text-left border-b border-[#c3c4c7]"><th className="px-3 py-2.5 font-normal">Name</th><th className="px-3 py-2.5 font-normal">Slug</th><th className="px-3 py-2.5 font-normal text-right">Count</th></tr></thead>
+          <thead><tr className="text-left border-b border-a-line"><th className="px-3 py-2.5 font-normal">Name</th><th className="px-3 py-2.5 font-normal">Slug</th><th className="px-3 py-2.5 font-normal text-right">Count</th></tr></thead>
           <tbody>
-            {rows.length === 0 && <tr><td colSpan={3} className="px-3 py-8 text-center text-[#50575e]">No {label.toLowerCase()}s found.</td></tr>}
+            {rows.length === 0 && <tr><td colSpan={3} className="px-3 py-8 text-center text-a-muted">No {label.toLowerCase()}s found.</td></tr>}
             {rows.map((r, n) => (
-              <tr key={r.name} className={`group align-top ${n % 2 ? "bg-white" : "bg-[#f6f7f7]"}`}>
+              <tr key={r.name} className={`group align-top ${n % 2 ? "bg-a-surface" : "bg-a-raised"}`}>
                 <td className="px-3 py-2.5">
                   {editing === r.name ? (
                     <form onSubmit={(e) => { e.preventDefault(); run(() => renameTerm(type, r.name, draft), () => setEditing(null)); }} className="flex gap-2">
@@ -52,14 +52,14 @@ export default function TermManager({ type, rows }: { type: "category" | "tag"; 
                     <>
                       <span className="font-semibold text-[14px] text-brand-text">{r.name}</span>
                       <div className="mt-1 flex gap-1.5 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 lg:focus-within:opacity-100 transition-opacity">
-                        <button type="button" onClick={() => { setEditing(r.name); setDraft(r.name); }} className="text-brand-text hover:underline">Edit</button><span className="text-[#a7aaad]">|</span>
-                        <button type="button" onClick={() => confirm(`Delete "${r.name}"? ${type === "category" ? "Its posts move to Uncategorized." : "It is removed from its posts."}`) && run(() => deleteTerm(type, r.name))} className="text-red-600 hover:underline">Delete</button><span className="text-[#a7aaad]">|</span>
+                        <button type="button" onClick={() => { setEditing(r.name); setDraft(r.name); }} className="text-brand-text hover:underline">Edit</button><span className="text-a-subtle">|</span>
+                        <button type="button" onClick={() => confirm(`Delete "${r.name}"? ${type === "category" ? "Its posts move to Uncategorized." : "It is removed from its posts."}`) && run(() => deleteTerm(type, r.name))} className="text-a-red hover:underline">Delete</button><span className="text-a-subtle">|</span>
                         <Link href={type === "category" ? `/admin/posts?cat=${r.slug}` : `/admin/posts?q=${encodeURIComponent(r.name)}`} className="text-brand-text hover:underline">View posts</Link>
                       </div>
                     </>
                   )}
                 </td>
-                <td className="px-3 py-2.5 text-[#50575e]">{r.slug}</td>
+                <td className="px-3 py-2.5 text-a-muted">{r.slug}</td>
                 <td className="px-3 py-2.5 text-right text-brand-text">{r.count}</td>
               </tr>
             ))}

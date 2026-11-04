@@ -148,3 +148,37 @@ Log in at `https://yourdomain.com/admin`. See `.env.example`.
 - Security: signed HttpOnly session cookie, login throttling (5 tries / 15 min), every admin page and API re-checks the session, `/admin` is `noindex` and blocked in `robots.txt`. Use HTTPS in production.
 
 **Limits to know about:** single admin login; the home page body, header/footer and contact details are still edited in code (`app/components/HomeClient.tsx`, `data/site.ts`). If the host runs several Node processes, a save refreshes the process that handled it immediately and the others within 15 minutes.
+
+
+## Team, roles & permissions (Super Admin)
+
+Dashboard -> **Team** (Super Admin only) creates, edits and **deactivates** team members and assigns one of five roles. Deactivating someone signs them out immediately. You can also tick **extra permissions** for a person beyond their role.
+
+| Role | Can do |
+|---|---|
+| **Super Admin** | Everything, including managing team members |
+| **Administrator** | Everything except managing team members |
+| **Manager** | Content, SEO, media, FAQs, live chat and tickets |
+| **Content Editor** | Write/publish content, FAQs, SEO and media. No deleting, chat, tickets or backups |
+| **Support Agent** | **Only** live chat and tickets. Cannot open any content or admin screen |
+
+The full permission matrix is shown on the Team page. First run: logging in with `ADMIN_USER` / `ADMIN_PASSWORD` creates the first Super Admin; after that accounts are managed in the dashboard (passwords are stored as salted scrypt hashes). There must always be at least one active Super Admin, and you cannot deactivate yourself.
+
+## Live chat (no login for visitors) and tickets
+
+- **Visitors:** a floating "Chat with us" button (bottom right). They enter only a **phone number** (name optional), no account or password. The chat panel loads only when clicked, so it costs nothing at page load.
+- **Dashboard -> Live Chat:** real-time inbox (updates every 2 seconds) with chat history, visitor phone, IP, location, page, device and language. Every new chat or message plays a **sound**, shows a **toast**, flashes the browser tab and adds an unread **badge** on the menu on any dashboard page. Use the "Sound on/off" button; browsers may ask once to allow notifications.
+- **Location:** uses Cloudflare/Vercel country headers automatically; optionally set `GEOIP_URL`.
+- **Tickets:** the contact form creates a ticket (Dashboard -> Tickets) that agents can reply to and close.
+- **Protection:** per-visitor secret token, rate limits, hidden spam-trap field, input cleaning. Real-time uses short polling, which works on any shared hosting (no WebSocket server needed).
+
+## Email (placeholders, not connected)
+
+All emails are wired in code (`lib/notify.ts`): welcome email for new team members, lead alert for new chats and tickets, chat transcript when a chat is closed, ticket acknowledgement and ticket replies. They all go through `lib/mail.ts`, which **sends nothing until you connect a provider** (HTTP mail API or SMTP, both documented in that file and in `.env.example`) and logs "[mail] not configured, skipped" instead.
+
+## GEO (generative engine optimisation)
+
+- **Content blocks for AI extraction:** every service, country and article can have an **answer-first summary**, **key takeaways**, an **at-a-glance table**, **sources & references**, an **author** and an automatic **"Last updated"** date. Edit them in the editor under "AI search & trust signals". FAQs render as an H2 with each question an H3.
+- **Schema:** Organization/LocalBusiness (with contact point), WebSite, BreadcrumbList, Service, WebPage (dateModified, speakable, citations), FAQPage, BlogPosting (author, citations).
+- **Crawlers:** `robots.txt` allows GPTBot, OAI-SearchBot, ChatGPT-User, PerplexityBot, Google-Extended, ClaudeBot and others (toggle in `data/site.ts`); `/llms.txt` and `/llms-full.txt` give AI assistants a clean summary of every page. `/admin`, `/api` and previews are `noindex` and disallowed.
+- **Technical:** dynamic `sitemap.xml` with last-modified dates and images, canonical tags, security headers, and Core Web Vitals work (no layout shift: measured CLS 0.000; the home page is server-rendered; the chat widget is lazy-loaded).

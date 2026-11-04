@@ -28,6 +28,7 @@ export async function GET() {
     `- [FAQs](${abs("/faqs")}): ${faqs.flatMap((g) => g.faqs).length} answered questions`,
     `- [Contact](${abs("/contact")})`,
     `- [Sitemap](${abs("/sitemap")})`,
+    `- [Full content for AI assistants](${abs("/llms-full.txt")}): every page's key facts, FAQs and sources in one file`,
     "",
   ];
   return new Response(lines.join("\n"), { headers: { "Content-Type": "text/plain; charset=utf-8" } });

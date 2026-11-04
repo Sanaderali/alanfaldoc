@@ -8,8 +8,9 @@ import Flag from "@/app/components/Flag";
 import JsonLd from "@/app/components/JsonLd";
 import Reveal from "@/app/components/Reveal";
 import RichContent from "@/app/components/RichContent";
+import { Byline, GeoBlock, Sources } from "@/app/components/GeoBlock";
 import Image from "next/image";
-import { buildMetadata, customLd, faqLd, serviceLd } from "@/lib/seo";
+import { buildMetadata, customLd, faqLd, serviceLd, servicePageLd } from "@/lib/seo";
 import { formatDate, getCountries, getPosts, getService, getServices } from "@/lib/content";
 import type { Service } from "@/types/content";
 
@@ -22,7 +23,7 @@ export default async function ServiceView({ service }: { service: Service }) {
   return (
     <>
       <Breadcrumb items={[{ label: "Services", href: "/services" }, { label: service.title }]} />
-      <JsonLd data={[serviceLd(service), ...(service.faqs.length && service.faqSchema !== false ? [faqLd(service.faqs)] : []), ...(customLd(service.schemaCustom) ? [customLd(service.schemaCustom)!] : [])]} />
+      <JsonLd data={[serviceLd(service), servicePageLd(service), ...(service.faqs.length && service.faqSchema !== false ? [faqLd(service.faqs)] : []), ...(customLd(service.schemaCustom) ? [customLd(service.schemaCustom)!] : [])]} />
 
       <section className="py-12 md:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-3 gap-10 lg:gap-14">
@@ -33,7 +34,9 @@ export default async function ServiceView({ service }: { service: Service }) {
               </div>
             )}
             <div className="w-16 h-16 mb-4 rounded-full bg-brand-50 text-brand-text flex items-center justify-center text-3xl animate-fadeIn"><Icon name={service.icon} /></div>
-            <h1 className="text-3xl md:text-4xl font-bold text-ink mb-5 animate-fadeIn">{service.title}</h1>
+            <h1 className="text-3xl md:text-4xl font-bold text-ink mb-3 animate-fadeIn">{service.title}</h1>
+            <Byline author={service.author} updated={service.updatedAt} published={service.createdAt} className="mb-6" />
+            <GeoBlock item={service} />
             {service.contentHtml ? (
               <Reveal><RichContent html={service.contentHtml} /></Reveal>
             ) : (
@@ -53,6 +56,7 @@ export default async function ServiceView({ service }: { service: Service }) {
             ))}
               </>
             )}
+            <Sources sources={service.sources} />
           </article>
 
           <aside className="space-y-8">
@@ -104,7 +108,7 @@ export default async function ServiceView({ service }: { service: Service }) {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {related.map((s, i) => (
                 <Reveal key={s.slug} delay={i * 80}>
-                  <Link href={`/services/${s.slug}`} className="group block h-full bg-white border border-gray-200 rounded-lg p-7 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-500">
+                  <Link href={`/services/${s.slug}`} className="group block h-full bg-white border border-gray-200/80 rounded-2xl shadow-[0_2px_14px_rgba(15,23,42,.05)] p-7 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-500">
                     <h3 className="text-lg font-bold text-ink mb-2 group-hover:text-brand-text transition-colors">{s.title}</h3>
                     <p className="text-sm text-gray-600 leading-relaxed">{s.summary}</p>
                   </Link>
@@ -118,7 +122,7 @@ export default async function ServiceView({ service }: { service: Service }) {
       {service.faqs.length > 0 && (
         <section className="py-14">
           <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-            <Reveal className="text-center mb-8"><h2 className="text-3xl font-bold text-ink">Have Questions? Look Here</h2></Reveal>
+            <Reveal className="text-center mb-8"><h2 className="text-3xl font-bold text-ink">Frequently asked questions about {service.title}</h2></Reveal>
             <Reveal><FaqList faqs={service.faqs} /></Reveal>
           </div>
         </section>

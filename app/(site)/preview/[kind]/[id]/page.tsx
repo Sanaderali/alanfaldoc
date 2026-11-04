@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { requireAdmin } from "@/lib/auth";
+import { requirePerm } from "@/lib/auth";
 import { readAll, readPreview } from "@/lib/store";
 import { cleanRichHtml } from "@/lib/html";
 import CountryView from "../../../_views/CountryView";
@@ -17,7 +17,7 @@ const kinds = { services: "service", countries: "country", posts: "post" } as co
 
 /** Admin-only preview of the page exactly as the website renders it, including drafts and unsaved edits. */
 export default async function PreviewPage({ params }: { params: Promise<{ kind: string; id: string }> }) {
-  await requireAdmin();
+  await requirePerm("content.view");
   const { kind, id } = await params;
 
   let view: React.ReactNode;

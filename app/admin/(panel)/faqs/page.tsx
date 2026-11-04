@@ -1,4 +1,4 @@
-import { requireAdmin } from "@/lib/auth";
+import { requirePerm } from "@/lib/auth";
 import { readAll } from "@/lib/store";
 import { PageHeader } from "../../ui";
 import FaqManager from "../_ui/FaqManager";
@@ -6,7 +6,7 @@ import FaqManager from "../_ui/FaqManager";
 export const dynamic = "force-dynamic";
 
 export default async function Page() {
-  await requireAdmin();
+  await requirePerm("faqs.manage");
   const groups = await readAll("faqs");
   return (
     <>

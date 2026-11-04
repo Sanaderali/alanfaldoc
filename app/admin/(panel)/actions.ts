@@ -4,7 +4,9 @@ import { randomUUID } from "node:crypto";
 import fs from "node:fs/promises";
 import path from "node:path";
 import { redirect } from "next/navigation";
-import { requireAdmin } from "@/lib/auth";
+import { getCurrentUser, requirePerm } from "@/lib/auth";
+import { can } from "@/lib/rbac";
+import type { Permission } from "@/lib/rbac";
 import { mutate, readAll, now, UPLOAD_DIR, writePreview, removePreview, type CollectionMap } from "@/lib/store";
 import { refreshSite } from "@/lib/revalidate";
 import { cleanCountry, cleanPage, cleanPost, cleanService, str, cleanFaqs, type Errors } from "@/lib/validate";
@@ -18,10 +20,13 @@ const adminPath = (k: Kind) => `/admin/${k}`;
 
 /** Create or update a service / country / post. `payload` is JSON from the editor. */
 export async function saveItem(kind: Kind, payload: string, id?: string): Promise<SaveResult> {
-  await requireAdmin();
+  await requirePerm("content.edit");
   let raw: Record<string, unknown>;
   try { raw = JSON.parse(payload); } catch { return { ok: false, message: "Invalid data" }; }
   const { item, errors } = cleaners[kind](raw) as { item: CollectionMap[Kind]; errors: Errors };
+  // only people who may publish can publish or schedule; others always save as draft
+  const me = await getCurrentUser();
+  if ((item as { status?: string }).status === "published" && !can(me, "content.publish")) (item as { status?: string }).status = "draft";
 
   const all = await readAll(kind);
   const clash = all.find((x) => x.slug === (item as { slug: string }).slug && x.id !== id);
@@ -34,9 +39,9 @@ export async function saveItem(kind: Kind, payload: string, id?: string): Promis
     if (id && i === -1) throw new Error("Item not found");
     const prev = i >= 0 ? items[i] : undefined;
     savedId = prev?.id ?? randomUUID();
-    const next = { ...(prev ?? {}), ...item, id: savedId, createdAt: prev?.createdAt ?? now(), updatedAt: now() } as CollectionMap[Kind];
+    const next = { ...(prev ?? {}), ...item, id: savedId, geoV: 1, createdAt: prev?.createdAt ?? now(), updatedAt: now() } as CollectionMap[Kind];
     // fields the editor can clear must really be cleared
-    for (const k of ["image", "imageAlt", "publishAt", "schemaCustom", "seo", "serviceType", "categories", "author", "readMinutes", "contentHtml", "flagImage"] as const) {
+    for (const k of ["image", "imageAlt", "publishAt", "schemaCustom", "seo", "serviceType", "categories", "author", "readMinutes", "contentHtml", "flagImage", "answer", "takeaways", "summaryTable", "sources"] as const) {
       if (!(k in item)) delete (next as Record<string, unknown>)[k];
     }
     if (kind === "posts" && prev) (next as { updated?: string }).updated = now().slice(0, 10);
@@ -48,14 +53,14 @@ export async function saveItem(kind: Kind, payload: string, id?: string): Promis
 }
 
 export async function deleteItem(kind: Kind, id: string) {
-  await requireAdmin();
+  await requirePerm("content.delete");
   await mutate(kind, (items) => items.filter((x) => x.id !== id));
   refreshSite();
   redirect(adminPath(kind));
 }
 
 export async function duplicateItem(kind: Kind, id: string) {
-  await requireAdmin();
+  await requirePerm("content.edit");
   let newId = "";
   await mutate(kind, (items) => {
     const src = items.find((x) => x.id === id);
@@ -73,7 +78,7 @@ export async function duplicateItem(kind: Kind, id: string) {
 }
 
 export async function setStatus(kind: Kind, id: string, status: "draft" | "published") {
-  await requireAdmin();
+  await requirePerm("content.publish");
   await mutate(kind, (items) => items.map((x) => (x.id === id && x.status !== "trash" ? { ...x, status, updatedAt: now() } : x)));
   refreshSite();
   redirect(adminPath(kind));
@@ -81,7 +86,7 @@ export async function setStatus(kind: Kind, id: string, status: "draft" | "publi
 
 /* ---------------- FAQ groups (page /faqs) ---------------- */
 export async function saveFaqGroups(payload: string): Promise<SaveResult> {
-  await requireAdmin();
+  await requirePerm("faqs.manage");
   let raw: unknown;
   try { raw = JSON.parse(payload); } catch { return { ok: false, message: "Invalid data" }; }
   if (!Array.isArray(raw)) return { ok: false, message: "Invalid data" };
@@ -101,7 +106,7 @@ export async function saveFaqGroups(payload: string): Promise<SaveResult> {
 
 /* ---------------- fixed pages SEO ---------------- */
 export async function savePage(key: string, payload: string): Promise<SaveResult> {
-  await requireAdmin();
+  await requirePerm("seo.manage");
   let raw: Record<string, unknown>;
   try { raw = JSON.parse(payload); } catch { return { ok: false, message: "Invalid data" }; }
   const pages = await readAll("pages");
@@ -116,7 +121,7 @@ export async function savePage(key: string, payload: string): Promise<SaveResult
 
 /* ---------------- media ---------------- */
 export async function updateMedia(id: string, alt: string, caption: string): Promise<SaveResult> {
-  await requireAdmin();
+  await requirePerm("media.manage");
   const a = str(alt, 300);
   if (!a) return { ok: false, errors: { alt: "Alt text is required" }, message: "Alt text is required" };
   await mutate("media", (items) => items.map((m) => (m.id === id ? { ...m, alt: a, caption: str(caption, 300) || undefined } : m)));
@@ -133,7 +138,7 @@ export async function updateMedia(id: string, alt: string, caption: string): Pro
 }
 
 export async function deleteMedia(id: string): Promise<SaveResult> {
-  await requireAdmin();
+  await requirePerm("media.manage");
   const media = (await readAll("media")).find((m) => m.id === id);
   if (!media) return { ok: false, message: "Not found" };
   const url = `/uploads/${media.file}`;
@@ -153,7 +158,7 @@ export async function deleteMedia(id: string): Promise<SaveResult> {
  * without changing the live site. Validation problems are ignored here (a preview can be incomplete).
  */
 export async function savePreview(kind: Kind | "faqs", payload: string, id?: string): Promise<{ ok: boolean; id?: string; message?: string }> {
-  await requireAdmin();
+  await requirePerm("content.edit");
   let raw: unknown;
   try { raw = JSON.parse(payload); } catch { return { ok: false, message: "Invalid data" }; }
   if (kind === "faqs") {
@@ -172,19 +177,19 @@ export async function savePreview(kind: Kind | "faqs", payload: string, id?: str
 const back = (kind: Kind, qs = "") => redirect(`${adminPath(kind)}${qs}`);
 
 export async function trashItem(kind: Kind, id: string) {
-  await requireAdmin();
+  await requirePerm("content.delete");
   await mutate(kind, (items) => items.map((x) => (x.id === id ? { ...x, status: "trash", updatedAt: now() } : x)));
   refreshSite();
   back(kind);
 }
 export async function restoreItem(kind: Kind, id: string) {
-  await requireAdmin();
+  await requirePerm("content.delete");
   await mutate(kind, (items) => items.map((x) => (x.id === id ? { ...x, status: "draft", updatedAt: now() } : x)));
   refreshSite();
   back(kind, "?status=trash");
 }
 export async function deletePermanently(kind: Kind, id: string) {
-  await requireAdmin();
+  await requirePerm("content.delete");
   await mutate(kind, (items) => items.filter((x) => !(x.id === id && x.status === "trash")));
   await removePreview(id);
   refreshSite();
@@ -193,10 +198,12 @@ export async function deletePermanently(kind: Kind, id: string) {
 
 /** Bulk actions from the list tables. Form fields: kind, action, ids[] */
 export async function bulkAction(formData: FormData) {
-  await requireAdmin();
+  await requirePerm("content.edit");
   const kind = String(formData.get("kind")) as Kind;
   if (!["services", "countries", "posts"].includes(kind)) return;
   const action = String(formData.get("action") ?? "");
+  if (action === "publish") await requirePerm("content.publish");
+  if (["trash", "restore", "delete"].includes(action)) await requirePerm("content.delete");
   const ids = new Set(formData.getAll("ids").map(String));
   if (!ids.size || !action) return back(kind);
   await mutate(kind, (items) => {
@@ -210,7 +217,7 @@ export async function bulkAction(formData: FormData) {
 }
 
 export async function emptyTrash(kind: Kind) {
-  await requireAdmin();
+  await requirePerm("content.delete");
   await mutate(kind, (items) => items.filter((x) => x.status !== "trash"));
   refreshSite();
   back(kind, "?status=all");
@@ -221,7 +228,7 @@ export type TermResult = { ok: boolean; message?: string };
 const cleanName = (v: unknown) => str(v, 60);
 
 export async function addTerm(type: "category" | "tag", name: string): Promise<TermResult> {
-  await requireAdmin();
+  await requirePerm("taxonomy.manage");
   const n = cleanName(name);
   if (!n) return { ok: false, message: "Enter a name" };
   await mutate("terms", (items) => (items.some((t) => t.type === type && t.name.toLowerCase() === n.toLowerCase()) ? items : [...items, { id: randomUUID(), type, name: n, createdAt: now() }]));
@@ -229,7 +236,7 @@ export async function addTerm(type: "category" | "tag", name: string): Promise<T
 }
 
 export async function renameTerm(type: "category" | "tag", oldName: string, newName: string): Promise<TermResult> {
-  await requireAdmin();
+  await requirePerm("taxonomy.manage");
   const n = cleanName(newName);
   if (!n) return { ok: false, message: "Enter a name" };
   await mutate("terms", (items) => {
@@ -245,7 +252,7 @@ export async function renameTerm(type: "category" | "tag", oldName: string, newN
 }
 
 export async function deleteTerm(type: "category" | "tag", name: string): Promise<TermResult> {
-  await requireAdmin();
+  await requirePerm("taxonomy.manage");
   await mutate("terms", (items) => items.filter((t) => !(t.type === type && t.name === name)));
   await mutate("posts", (posts) =>
     posts.map((p) => (type === "category" ? (p.category === name ? { ...p, category: "Uncategorized", updatedAt: now() } : p) : p.tags?.includes(name) ? { ...p, tags: p.tags.filter((t) => t !== name), updatedAt: now() } : p))

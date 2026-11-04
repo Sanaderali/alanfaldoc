@@ -4,39 +4,39 @@ import { visibility } from "@/lib/audit";
 
 /** UI kit for the dashboard. Flat, WordPress-like: square-ish controls, #c3c4c7 borders, gray canvas. */
 
-export const inputCls = "w-full px-2.5 py-1.5 bg-white border border-[#8c8f94] rounded-[3px] text-sm text-[#2c3338] placeholder-gray-400 shadow-[inset_0_1px_2px_rgba(0,0,0,.07)] focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand";
-export const btnPrimary = "inline-flex items-center justify-center gap-2 px-3.5 py-1.5 bg-brand text-white text-[13px] font-medium border border-brand-dark rounded-[3px] hover:bg-brand-dark transition-colors disabled:opacity-60 min-h-[30px]";
-export const btnGhost = "inline-flex items-center justify-center gap-2 px-3 py-1.5 bg-[#f6f7f7] text-brand-text text-[13px] font-medium border border-brand/70 rounded-[3px] hover:bg-white hover:border-brand-dark transition-colors disabled:opacity-60 min-h-[30px]";
+export const inputCls = "w-full px-2.5 py-1.5 bg-a-surface border border-a-line2 rounded-[3px] text-sm text-a-text placeholder-a-subtle shadow-[inset_0_1px_2px_rgba(0,0,0,.07)] focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand";
+export const btnPrimary = "inline-flex items-center justify-center gap-2 px-3.5 py-1.5 bg-brand text-a-on text-[13px] font-medium border border-brand-dark rounded-[3px] hover:bg-brand-dark transition-colors disabled:opacity-60 min-h-[30px]";
+export const btnGhost = "inline-flex items-center justify-center gap-2 px-3 py-1.5 bg-a-raised text-brand-text text-[13px] font-medium border border-brand/70 rounded-[3px] hover:bg-a-raised hover:border-brand-dark transition-colors disabled:opacity-60 min-h-[30px]";
 /** WordPress "Add New" outlined button next to page titles */
-export const btnAddNew = "inline-flex items-center px-2.5 py-1 text-[13px] font-medium text-brand-text border border-brand/70 rounded-[3px] bg-[#f6f7f7] hover:bg-white hover:border-brand-dark align-middle";
+export const btnAddNew = "inline-flex items-center px-2.5 py-1 text-[13px] font-medium text-brand-text border border-brand/70 rounded-[3px] bg-a-raised hover:bg-a-raised hover:border-brand-dark align-middle";
 
 export function PageHeader({ title, subtitle, actions, addNew }: { title: string; subtitle?: string; actions?: ReactNode; addNew?: { href: string; label: string } }) {
   return (
     <div className="mb-5">
       <div className="flex flex-wrap items-center gap-3">
-        <h1 className="text-[23px] leading-tight font-normal text-[#1d2327]">{title}</h1>
+        <h1 className="text-[23px] leading-tight font-normal text-a-text">{title}</h1>
         {addNew && <Link href={addNew.href} className={btnAddNew}>{addNew.label}</Link>}
         {actions && <div className="flex gap-2">{actions}</div>}
       </div>
-      {subtitle && <p className="text-[13px] text-[#50575e] mt-1.5">{subtitle}</p>}
+      {subtitle && <p className="text-[13px] text-a-muted mt-1.5">{subtitle}</p>}
     </div>
   );
 }
 
 /** WordPress "postbox" */
 export function Card({ children, className = "" }: { children: ReactNode; className?: string }) {
-  return <div className={`bg-white border border-[#c3c4c7] shadow-[0_1px_1px_rgba(0,0,0,.04)] ${className}`}>{children}</div>;
+  return <div className={`bg-a-surface border border-a-line shadow-[0_1px_1px_rgba(0,0,0,.04)] ${className}`}>{children}</div>;
 }
 
 const badgeTone = {
-  live: "text-emerald-700",
-  draft: "text-[#50575e]",
-  scheduled: "text-amber-700",
-  trash: "text-red-700",
-  error: "bg-red-50 text-red-700 ring-1 ring-inset ring-red-600/20 px-2 py-0.5 rounded-full",
-  warn: "bg-amber-50 text-amber-700 ring-1 ring-inset ring-amber-600/20 px-2 py-0.5 rounded-full",
-  info: "bg-sky-50 text-sky-700 ring-1 ring-inset ring-sky-600/20 px-2 py-0.5 rounded-full",
-  ok: "bg-emerald-50 text-emerald-700 ring-1 ring-inset ring-emerald-600/20 px-2 py-0.5 rounded-full",
+  live: "text-brand",
+  draft: "text-a-muted",
+  scheduled: "text-amber-300",
+  trash: "text-a-red",
+  error: "bg-a-red/10 text-a-red ring-1 ring-inset ring-a-red/30 px-2 py-0.5 rounded-full",
+  warn: "bg-amber-400/10 text-amber-300 ring-1 ring-inset ring-amber-400/30 px-2 py-0.5 rounded-full",
+  info: "bg-sky-400/10 text-sky-300 ring-1 ring-inset ring-sky-400/30 px-2 py-0.5 rounded-full",
+  ok: "bg-brand/10 text-brand ring-1 ring-inset ring-brand/30 px-2 py-0.5 rounded-full",
 };
 export function Badge({ tone, children }: { tone: keyof typeof badgeTone; children: ReactNode }) {
   return <span className={`inline-flex items-center text-xs font-medium ${badgeTone[tone]}`}>{children}</span>;
@@ -49,7 +49,7 @@ export function StatusBadge({ item }: { item: { status?: string; publishAt?: str
 }
 
 export function Empty({ children }: { children: ReactNode }) {
-  return <div className="text-center text-sm text-[#50575e] py-10">{children}</div>;
+  return <div className="text-center text-sm text-a-muted py-10">{children}</div>;
 }
 
 export const fmtDate = (iso?: string) => (iso ? new Date(iso).toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" }) : "-");

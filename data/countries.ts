@@ -7,6 +7,10 @@ import type { Country } from "@/types/content";
 export const countries: Country[] = [
   {
     slug: "united-arab-emirates",
+    answer: "The UAE is a leading destination for starting and running a business thanks to up to 100% foreign ownership in many activities, no personal income tax and a central location between Europe, Asia and Africa. Company licensing, residence visas and document attestation are handled by separate authorities, which is why many investors use a local partner.",
+    takeaways: ["Up to 100% foreign ownership in many business activities", "Mainland and free zone licences suit different business models", "Residence visas are available to owners, employees and families", "No personal income tax for individuals"],
+    summaryTable: [{"label": "Capital", "value": "Abu Dhabi"}, {"label": "Largest city", "value": "Dubai"}, {"label": "Currency", "value": "UAE Dirham (AED)"}, {"label": "Emirates", "value": "7"}, {"label": "Main languages", "value": "Arabic, English widely used"}],
+    sources: [{"title": "UAE Government Portal (u.ae)", "url": "https://u.ae/en"}],
     name: "United Arab Emirates",
     flag: "🇦🇪",
     tagline: "Great Destination to Start a Business and Live",
@@ -52,6 +56,10 @@ export const countries: Country[] = [
   },
   {
     slug: "canada",
+    answer: "Canada offers several economic immigration streams, internationally recognised education and a strong job market. Applications are decided by the Canadian immigration authorities, while a professional service can prepare, attest and translate the supporting documents so that your file is complete and consistent.",
+    takeaways: ["Multiple economic immigration and study pathways exist", "Decisions are made by the Canadian authorities", "Documents often need attestation and certified translation", "Complete, consistent files reduce processing delays"],
+    summaryTable: [{"label": "Capital", "value": "Ottawa"}, {"label": "Largest city", "value": "Toronto"}, {"label": "Official languages", "value": "English, French"}, {"label": "Currency", "value": "Canadian Dollar (CAD)"}],
+    sources: [{"title": "Immigration, Refugees and Citizenship Canada", "url": "https://www.canada.ca/en/immigration-refugees-citizenship.html"}],
     name: "Canada",
     flag: "🇨🇦",
     tagline: "Great Destination to Study and Live",
@@ -92,6 +100,10 @@ export const countries: Country[] = [
   },
   {
     slug: "united-kingdom",
+    answer: "The United Kingdom pairs world-ranked universities with a global business hub, with routes for students, skilled workers and visitors. Visa decisions are made by UK authorities. Careful preparation of financial evidence and attested, translated documents helps applications proceed smoothly.",
+    takeaways: ["Student, skilled worker and visitor routes are the most common", "Decisions are made by UK authorities", "Financial evidence and attested documents are key", "Start preparing early because attestation takes time"],
+    summaryTable: [{"label": "Capital", "value": "London"}, {"label": "Main language", "value": "English"}, {"label": "Currency", "value": "Pound Sterling (GBP)"}, {"label": "Visa decisions", "value": "UK Visas and Immigration"}],
+    sources: [{"title": "GOV.UK: Visas and immigration", "url": "https://www.gov.uk/browse/visas-immigration"}],
     name: "United Kingdom",
     flag: "🇬🇧",
     tagline: "Great Destination for Study, Work and Business",
@@ -123,6 +135,10 @@ export const countries: Country[] = [
   },
   {
     slug: "united-states",
+    answer: "The United States offers visitor, student and business visa categories, each with its own requirements and an interview process run by US authorities. A professional service can help assemble accurate, properly attested documentation, but it cannot influence the decision.",
+    takeaways: ["Visitor, student and business visas are the most common categories", "Interviews and decisions are handled by US authorities", "Accurate, attested documents are essential", "Allow time for attestation before your appointment"],
+    summaryTable: [{"label": "Capital", "value": "Washington, D.C."}, {"label": "Largest city", "value": "New York City"}, {"label": "Currency", "value": "US Dollar (USD)"}, {"label": "Visa decisions", "value": "US Department of State and DHS"}],
+    sources: [{"title": "U.S. Department of State: Visas", "url": "https://travel.state.gov/content/travel/en/us-visas.html"}],
     name: "United States of America",
     flag: "🇺🇸",
     tagline: "Great Destination for Business and Study",
@@ -151,6 +167,10 @@ export const countries: Country[] = [
   },
   {
     slug: "australia",
+    answer: "Australia offers student, skilled and visitor visa pathways alongside globally recognised qualifications and a high standard of living. Applications are decided by the Australian authorities. Preparing, attesting and translating documents correctly helps your application stay complete and on time.",
+    takeaways: ["Student, skilled and visitor pathways are the main routes", "Decisions are made by the Australian authorities", "Documents not in English usually need certified translation", "Many student visas allow limited work, with conditions"],
+    summaryTable: [{"label": "Capital", "value": "Canberra"}, {"label": "Largest city", "value": "Sydney"}, {"label": "Currency", "value": "Australian Dollar (AUD)"}, {"label": "Area", "value": "7.7 million sq km"}],
+    sources: [{"title": "Australian Department of Home Affairs", "url": "https://immi.homeaffairs.gov.au"}],
     name: "Australia",
     flag: "🇦🇺",
     tagline: "Great Destination to Study and Live",
@@ -231,6 +251,10 @@ export const countries: Country[] = [
   },
   {
     slug: "saudi-arabia",
+    answer: "Saudi Arabia is a fast-growing market where Vision 2030 is opening many sectors to foreign investment. UAE companies expanding there typically need attested and Arabic-translated documents for commercial registration and licensing, which can be prepared before filing.",
+    takeaways: ["Vision 2030 is opening new sectors to international companies", "Commercial registration needs attested corporate documents", "Many authorities require Arabic translations", "Market-entry planning reduces costly rework"],
+    summaryTable: [{"label": "Capital", "value": "Riyadh"}, {"label": "Main language", "value": "Arabic"}, {"label": "Currency", "value": "Saudi Riyal (SAR)"}, {"label": "Typical needs", "value": "Attestation, Arabic translation, licensing documents"}],
+    sources: [{"title": "Saudi National Portal", "url": "https://www.my.gov.sa"}],
     name: "Saudi Arabia",
     flag: "🇸🇦",
     tagline: "A Fast-Growing Market on Your Doorstep",

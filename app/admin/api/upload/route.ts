@@ -3,6 +3,7 @@ import path from "node:path";
 import { createHash, randomUUID } from "node:crypto";
 import sharp from "sharp";
 import { assertAdminRequest } from "@/lib/auth";
+import { can } from "@/lib/rbac";
 import { mutate, now, UPLOAD_DIR } from "@/lib/store";
 import { slugify } from "@/lib/validate";
 
@@ -15,8 +16,9 @@ const MAX_BYTES = 8 * 1024 * 1024;
  * Images are auto-rotated, limited to 1600px wide and stored as WebP for page speed.
  */
 export async function POST(req: Request) {
-  const denied = await assertAdminRequest(req);
-  if (denied) return denied;
+  const auth = await assertAdminRequest(req);
+  if ("error" in auth) return auth.error;
+  if (!can(auth.user, "media.manage") && !can(auth.user, "content.edit")) return new Response("Forbidden", { status: 403 });
 
   const form = await req.formData();
   const file = form.get("file");

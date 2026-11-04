@@ -11,7 +11,7 @@ import { CategoryBox, TagBox } from "./TaxonomyBoxes";
 import RichEditor from "./RichEditor";
 import Flag from "@/app/components/Flag";
 import { BUILTIN_FLAGS, builtinFlag, emojiToCode } from "@/lib/flags";
-import { CheckList, Counter, Field, FaqsEditor, ImageField, PairsEditor, SchemaPanel, SeoPanel, TextArea, TextField, Toggle, type Errors, type Form } from "./fields";
+import { CheckList, Counter, Field, FaqsEditor, ImageField, LinesField, PairsEditor, SchemaPanel, SeoPanel, TextArea, TextField, Toggle, type Errors, type Form } from "./fields";
 
 type Kind = "services" | "countries" | "posts";
 export type EditorContext = { siteUrl: string; siteName: string; services: { value: string; label: string }[]; categories: { name: string; count: number }[]; tags: { name: string; count: number }[] };
@@ -33,17 +33,23 @@ const fromLocal = (v: string) => (v ? new Date(v).toISOString() : "");
 const slugify = (s: string) => s.toLowerCase().trim().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 80);
 
 function blank(kind: Kind): Form {
-  const b = { status: "draft", publishAt: "", slug: "", image: "", imageAlt: "", faqSchema: true, schemaCustom: "", seo: {}, faqs: [], contentHtml: "" };
+  const b = { status: "draft", publishAt: "", slug: "", image: "", imageAlt: "", faqSchema: true, schemaCustom: "", seo: {}, faqs: [], contentHtml: "", answer: "", takeaways: [], summaryTable: [], sources: [] };
   if (kind === "services") return { ...b, title: "", icon: "briefcase", summary: "", relatedSlugs: [], serviceType: "" };
   if (kind === "countries") return { ...b, name: "", flag: "", flagImage: "", tagline: "", headline: "", summary: "", facts: [], gradient: GRADIENTS[0], categories: [], serviceSlugs: [], featured: false };
   return { ...b, title: "", excerpt: "", category: "", author: "Al Anfal Doc Team", tags: [], readMinutes: "" };
 }
 
+function WordCount({ value, min, max }: { value: string; min: number; max: number }) {
+  const n = value.trim().split(/\s+/).filter(Boolean).length;
+  const tone = n === 0 ? "text-a-subtle" : n < min || n > max ? "text-amber-300" : "text-brand";
+  return <span className={`text-xs tabular-nums ${tone}`}>{n} words · aim for {min}-{max}</span>;
+}
+
 function Box({ title, children, open, className = "" }: { title: string; children: React.ReactNode; open?: boolean; className?: string }) {
   return (
-    <details open={open ?? true} className={`group bg-white border border-[#c3c4c7] shadow-[0_1px_1px_rgba(0,0,0,.04)] ${className}`}>
-      <summary className="flex items-center justify-between cursor-pointer list-none px-3 py-2.5 font-semibold text-[14px] text-[#1d2327] select-none group-open:border-b border-[#c3c4c7]">
-        {title}<Icon name="caret-up" className="text-[#787c82] text-xs transition-transform group-open:rotate-0 rotate-180" />
+    <details open={open ?? true} className={`group bg-a-surface border border-a-line shadow-[0_1px_1px_rgba(0,0,0,.04)] ${className}`}>
+      <summary className="flex items-center justify-between cursor-pointer list-none px-3 py-2.5 font-semibold text-[14px] text-a-text select-none group-open:border-b border-a-line">
+        {title}<Icon name="caret-up" className="text-a-subtle text-xs transition-transform group-open:rotate-0 rotate-180" />
       </summary>
       <div className="p-3 space-y-3">{children}</div>
     </details>
@@ -138,18 +144,18 @@ export default function ItemEditor({ kind, id, initial, ctx }: { kind: Kind; id?
             onChange={(e) => setTitle(e.target.value)}
             placeholder={kind === "countries" ? "Enter country name" : "Enter title here"}
             aria-label="Title"
-            className="w-full px-3 py-1.5 text-[1.55rem] leading-snug bg-white border border-[#8c8f94] rounded-[3px] placeholder-[#a7aaad] shadow-[inset_0_1px_2px_rgba(0,0,0,.07)] focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand"
+            className="w-full px-3 py-1.5 text-[1.55rem] leading-snug bg-a-surface border border-a-line2 rounded-[3px] placeholder-[#a7aaad] shadow-[inset_0_1px_2px_rgba(0,0,0,.07)] focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand"
           />
-          {errors[titleKey] && <p role="alert" className="text-xs text-red-600 mt-1">{errors[titleKey]}</p>}
-          <p className="mt-2 text-[13px] text-[#50575e] flex flex-wrap items-center gap-x-1.5 gap-y-1 break-all">
+          {errors[titleKey] && <p role="alert" className="text-xs text-a-red mt-1">{errors[titleKey]}</p>}
+          <p className="mt-2 text-[13px] text-a-muted flex flex-wrap items-center gap-x-1.5 gap-y-1 break-all">
             <strong>Permalink:</strong>
             {editSlug ? (
-              <span className="inline-flex items-center gap-1.5">{ctx.siteUrl.replace(/^https?:\/\//, "")}{base[kind]}<input aria-label="URL slug" value={f.slug} onChange={(e) => { slugTouched.current = true; set({ slug: slugify(e.target.value) }); }} className="px-1.5 py-0.5 border border-[#8c8f94] rounded-[3px]" /><button type="button" className={btnGhost} onClick={() => setEditSlug(false)}>OK</button></span>
+              <span className="inline-flex items-center gap-1.5">{ctx.siteUrl.replace(/^https?:\/\//, "")}{base[kind]}<input aria-label="URL slug" value={f.slug} onChange={(e) => { slugTouched.current = true; set({ slug: slugify(e.target.value) }); }} className="px-1.5 py-0.5 border border-a-line2 rounded-[3px]" /><button type="button" className={btnGhost} onClick={() => setEditSlug(false)}>OK</button></span>
             ) : (
               <><span className="text-brand-text">{ctx.siteUrl.replace(/^https?:\/\//, "")}{path}</span><button type="button" onClick={() => setEditSlug(true)} className={btnGhost}>Edit</button></>
             )}
           </p>
-          {errors.slug && <p role="alert" className="text-xs text-red-600 mt-1">{errors.slug}</p>}
+          {errors.slug && <p role="alert" className="text-xs text-a-red mt-1">{errors.slug}</p>}
         </div>
 
         {kind === "posts" && (
@@ -159,15 +165,15 @@ export default function ItemEditor({ kind, id, initial, ctx }: { kind: Kind; id?
         )}
 
         {kind === "countries" && (
-          <Box title="Quick facts" className="!bg-white">
-            <p className="text-xs text-gray-500">Short facts shown as a list at the top of the page (capital, language, currency…).</p>
+          <Box title="Quick facts" className="!bg-a-surface">
+            <p className="text-xs text-a-muted">Short facts shown as a list at the top of the page (capital, language, currency…).</p>
             <PairsEditor value={f.facts} onChange={(v) => set({ facts: v })} a="label" b="value" addLabel="Add fact" aPlace="Capital" bPlace="Canberra" />
           </Box>
         )}
 
         <div>
           <RichEditor value={f.contentHtml} onChange={(html) => set({ contentHtml: html })} placeholder="Write your content here. Use the toolbar for headings, lists, links and images." />
-          {errors.contentHtml && <p role="alert" className="text-xs text-red-600 mt-1">{errors.contentHtml}</p>}
+          {errors.contentHtml && <p role="alert" className="text-xs text-a-red mt-1">{errors.contentHtml}</p>}
         </div>
 
         <Box title={kind === "posts" ? "Excerpt" : "Short description"}>
@@ -178,16 +184,27 @@ export default function ItemEditor({ kind, id, initial, ctx }: { kind: Kind; id?
 
         {kind !== "posts" && (
           <Box title="FAQs (optional)" open={(f.faqs?.length ?? 0) > 0}>
-            <p className="text-xs text-gray-500">Questions and answers shown on the page. They also help you appear in Google&apos;s FAQ results.</p>
+            <p className="text-xs text-a-muted">Questions and answers shown on the page. They also help you appear in Google&apos;s FAQ results.</p>
             <FaqsEditor value={f.faqs} onChange={(v) => set({ faqs: v })} />
           </Box>
         )}
 
+        <Box title="AI search & trust signals (GEO)" open={!!(f.answer || f.takeaways?.length || f.summaryTable?.length || f.sources?.length)}>
+          <p className="text-xs text-a-muted">AI assistants (ChatGPT, Gemini, Perplexity) and Google quote pages that answer the question first, in short, well-structured blocks. Fill these in and they appear at the top of the page, with matching structured data.</p>
+          <Field label="Answer-first summary" htmlFor="answer" counter={<WordCount value={f.answer ?? ""} min={40} max={70} />} hint="One direct paragraph that answers the main question. Shown first on the page as “Quick answer”.">
+            <TextArea id="answer" rows={3} value={f.answer ?? ""} onChange={(v) => set({ answer: v })} />
+          </Field>
+          <Field label="Key takeaways" htmlFor="takeaways" hint="One bullet per line, 3 to 6 short points."><LinesField id="takeaways" rows={4} value={f.takeaways ?? []} onChange={(v) => set({ takeaways: v })} /></Field>
+          <Field label="At-a-glance table" hint="Short facts as label / value rows (e.g. Who it is for · Typical timeline · Documents needed)."><PairsEditor value={f.summaryTable ?? []} onChange={(v) => set({ summaryTable: v })} a="label" b="value" addLabel="Add row" aPlace="Typical timeline" bPlace="Usually 2-3 working days" /></Field>
+          <Field label="Sources & references" error={errors.sources} hint="Official pages you relied on. Shown at the bottom and added to the page's structured data as citations."><PairsEditor value={f.sources ?? []} onChange={(v) => set({ sources: v })} a="title" b="url" addLabel="Add source" aPlace="UAE Government Portal" bPlace="https://u.ae/en" /></Field>
+          {kind !== "posts" && <Field label="Author / reviewer" htmlFor="geo-author" hint="Shown as “Written by …”. Leave empty for the default editorial team."><TextField id="geo-author" value={f.author ?? ""} onChange={(v) => set({ author: v })} placeholder="Al Anfal Doc Team" /></Field>}
+        </Box>
+
         <Box title="Search engine listing (SEO)" open={false}>
           <SeoPanel seo={f.seo} onChange={(s) => set({ seo: s })} errors={errors} fallbackTitle={seoTitle} fallbackDescription={seoDesc ?? ""} path={path} siteUrl={ctx.siteUrl} siteName={ctx.siteName} />
-          <details className="rounded-md border border-gray-200">
-            <summary className="cursor-pointer px-4 py-2.5 text-sm font-medium text-gray-700">Structured data (schema)</summary>
-            <div className="p-4 border-t border-gray-100">
+          <details className="rounded-md border border-a-line">
+            <summary className="cursor-pointer px-4 py-2.5 text-sm font-medium text-a-muted">Structured data (schema)</summary>
+            <div className="p-4 border-t border-a-line">
               <SchemaPanel faqSchema={f.faqSchema} onFaqSchema={(v) => set({ faqSchema: v })} custom={f.schemaCustom} onCustom={(v) => set({ schemaCustom: v })} error={errors.schemaCustom} preview={preview} hasFaqs={kind !== "posts"} />
             </div>
           </details>
@@ -202,46 +219,46 @@ export default function ItemEditor({ kind, id, initial, ctx }: { kind: Kind; id?
           </Box>
         )}
 
-        <section className="bg-white border border-[#c3c4c7] shadow-[0_1px_1px_rgba(0,0,0,.04)]">
-          <h2 className="px-3 py-2.5 font-semibold text-[14px] border-b border-[#c3c4c7]">Publish</h2>
+        <section className="bg-a-surface border border-a-line shadow-[0_1px_1px_rgba(0,0,0,.04)]">
+          <h2 className="px-3 py-2.5 font-semibold text-[14px] border-b border-a-line">Publish</h2>
           <div className="p-3 space-y-3">
             <div className="flex items-center justify-between gap-2">
               <button type="button" disabled={pending || f.status === "published"} onClick={() => save("draft")} className={btnGhost}>Save Draft</button>
               <button type="button" disabled={previewing} onClick={openPreview} className={btnGhost}>Preview</button>
             </div>
-            <ul className="text-[13px] space-y-2.5 text-[#1d2327]">
+            <ul className="text-[13px] space-y-2.5 text-a-text">
               <li className="flex flex-wrap items-center gap-1.5">
-                <Icon name="thumbtack" className="text-[#787c82]" />Status: <strong>{f.status === "draft" ? "Draft" : future ? "Scheduled" : "Published"}</strong>
+                <Icon name="thumbtack" className="text-a-subtle" />Status: <strong>{f.status === "draft" ? "Draft" : future ? "Scheduled" : "Published"}</strong>
                 {editStatus ? (
                   <span className="inline-flex items-center gap-1.5 w-full pl-6">
-                    <select aria-label="Status" value={f.status} onChange={(e) => set({ status: e.target.value })} className="px-1.5 py-1 border border-[#8c8f94] rounded-[3px] bg-white"><option value="draft">Draft</option><option value="published">Published</option></select>
+                    <select aria-label="Status" value={f.status} onChange={(e) => set({ status: e.target.value })} className="px-1.5 py-1 border border-a-line2 rounded-[3px] bg-a-surface"><option value="draft">Draft</option><option value="published">Published</option></select>
                     <button type="button" className={btnGhost} onClick={() => setEditStatus(false)}>OK</button>
                   </span>
                 ) : <button type="button" onClick={() => setEditStatus(true)} className="text-brand-text underline">Edit</button>}
               </li>
               <li className="flex flex-wrap items-center gap-1.5">
-                <Icon name="calendar" className="text-[#787c82]" />
+                <Icon name="calendar" className="text-a-subtle" />
                 {f.publishAt ? <>{future ? "Schedule for" : "Published on"}: <strong>{new Date(f.publishAt).toLocaleString("en-GB", { day: "2-digit", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" })}</strong></> : <strong>Publish immediately</strong>}
                 {editDate ? (
                   <span className="inline-flex flex-col gap-1.5 w-full pl-6">
                     <input id="publishAt" type="datetime-local" aria-label="Publish date" value={f.publishAt} onChange={(e) => set({ publishAt: e.target.value })} className={inputCls} />
                     <span className="flex gap-1.5"><button type="button" className={btnGhost} onClick={() => setEditDate(false)}>OK</button><button type="button" className="text-brand-text underline" onClick={() => { set({ publishAt: "" }); setEditDate(false); }}>Publish immediately</button></span>
-                    {errors.publishAt && <span role="alert" className="text-xs text-red-600">{errors.publishAt}</span>}
+                    {errors.publishAt && <span role="alert" className="text-xs text-a-red">{errors.publishAt}</span>}
                   </span>
                 ) : <button type="button" onClick={() => setEditDate(true)} className="text-brand-text underline">Edit</button>}
               </li>
             </ul>
-            {id && initial?.updatedAt && <p className="text-xs text-[#646970]">Last edited {new Date(initial.updatedAt).toLocaleString("en-GB")}</p>}
-            {msg && <p role={msg.ok ? "status" : "alert"} className={`text-[13px] px-2.5 py-1.5 border-l-4 ${msg.ok ? "bg-white border-emerald-600 text-emerald-800" : "bg-white border-red-600 text-red-700"}`}>{msg.text}{!msg.ok && errorList.length > 1 && " (see the highlighted fields)"}</p>}
-            {!msg && dirty && <p className="text-xs text-amber-700">You have unsaved changes.</p>}
+            {id && initial?.updatedAt && <p className="text-xs text-a-muted">Last edited {new Date(initial.updatedAt).toLocaleString("en-GB")}</p>}
+            {msg && <p role={msg.ok ? "status" : "alert"} className={`text-[13px] px-2.5 py-1.5 border-l-4 ${msg.ok ? "bg-a-surface border-brand text-brand" : "bg-a-surface border-a-red text-a-red"}`}>{msg.text}{!msg.ok && errorList.length > 1 && " (see the highlighted fields)"}</p>}
+            {!msg && dirty && <p className="text-xs text-amber-300">You have unsaved changes.</p>}
           </div>
-          <div className="flex items-center justify-between gap-2 px-3 py-2.5 bg-[#f6f7f7] border-t border-[#dcdcde]">
+          <div className="flex items-center justify-between gap-2 px-3 py-2.5 bg-a-raised border-t border-a-line">
             {id ? (
-              <form action={trashItem.bind(null, kind, id)}><button className="text-[13px] text-red-600 underline hover:text-red-800">Move to Trash</button></form>
+              <form action={trashItem.bind(null, kind, id)}><button className="text-[13px] text-a-red underline hover:text-a-red/80">Move to Trash</button></form>
             ) : <span />}
             <button type="button" disabled={pending} onClick={() => save("published")} className={btnPrimary}>{pending ? "Saving…" : f.status === "published" ? (future ? "Schedule" : "Update") : future ? "Schedule" : "Publish"}</button>
           </div>
-          {id && isLive && <p className="px-3 py-2 text-[13px] border-t border-[#dcdcde]"><Link href={path} target="_blank" className="text-brand-text underline">View on website ↗</Link></p>}
+          {id && isLive && <p className="px-3 py-2 text-[13px] border-t border-a-line"><Link href={path} target="_blank" className="text-brand-text underline">View on website ↗</Link></p>}
         </section>
 
         {kind === "posts" && (
@@ -257,16 +274,16 @@ export default function ItemEditor({ kind, id, initial, ctx }: { kind: Kind; id?
             <Field label="Icon" htmlFor="icon" error={errors.icon} hint="A Font Awesome name, e.g. passport, building, language">
               <div className="flex gap-2 items-center"><span className="w-10 h-10 shrink-0 rounded-full bg-brand-50 text-brand-text flex items-center justify-center"><Icon name={f.icon || "briefcase"} /></span><TextField id="icon" value={f.icon} onChange={(v) => set({ icon: v })} /></div>
             </Field>
-            <details><summary className="cursor-pointer text-sm font-medium text-gray-700">Related services</summary><div className="pt-3"><CheckList options={ctx.services.filter((s) => s.value !== f.slug)} value={f.relatedSlugs} onChange={(v) => set({ relatedSlugs: v })} /></div></details>
+            <details><summary className="cursor-pointer text-sm font-medium text-a-muted">Related services</summary><div className="pt-3"><CheckList options={ctx.services.filter((s) => s.value !== f.slug)} value={f.relatedSlugs} onChange={(v) => set({ relatedSlugs: v })} /></div></details>
           </Box>
         )}
 
         {kind === "countries" && (
           <Box title="Country details">
-            <div className="rounded-md border border-gray-200 p-3 space-y-3">
+            <div className="rounded-md border border-a-line p-3 space-y-3">
               <div className="flex items-center gap-3">
-                <span className="w-16 h-12 rounded bg-gray-50 border border-gray-200 flex items-center justify-center text-2xl"><Flag country={f as never} size={44} /></span>
-                <div className="text-sm"><p className="font-medium">Flag</p><p className="text-xs text-gray-500">{f.flagImage ? "Using your uploaded image" : builtinFlag(emojiToCode(f.flag)) ? "Using the built-in flag" : "No flag image yet"}</p></div>
+                <span className="w-16 h-12 rounded bg-a-raised border border-a-line flex items-center justify-center text-2xl"><Flag country={f as never} size={44} /></span>
+                <div className="text-sm"><p className="font-medium">Flag</p><p className="text-xs text-a-muted">{f.flagImage ? "Using your uploaded image" : builtinFlag(emojiToCode(f.flag)) ? "Using the built-in flag" : "No flag image yet"}</p></div>
               </div>
               <Field label="Pick a built-in flag" htmlFor="flagpick">
                 <select id="flagpick" value={f.flagImage?.startsWith("/flags/") ? f.flagImage : ""} onChange={(e) => set({ flagImage: e.target.value })} className={inputCls}>
@@ -280,10 +297,10 @@ export default function ItemEditor({ kind, id, initial, ctx }: { kind: Kind; id?
             <Field label="Headline" htmlFor="headline"><TextField id="headline" value={f.headline} onChange={(v) => set({ headline: v })} placeholder="Study. Work. Live in…" /></Field>
             <Field label="Tagline" htmlFor="tagline"><TextField id="tagline" value={f.tagline} onChange={(v) => set({ tagline: v })} /></Field>
             <Field label="Banner colour (when there is no image)">
-              <div className="flex flex-wrap gap-2">{GRADIENTS.map((g) => <button key={g} type="button" aria-label={g} onClick={() => set({ gradient: g })} className={`w-9 h-7 rounded bg-gradient-to-br ${g} border ${f.gradient === g ? "ring-2 ring-brand border-brand" : "border-gray-200"}`} />)}</div>
+              <div className="flex flex-wrap gap-2">{GRADIENTS.map((g) => <button key={g} type="button" aria-label={g} onClick={() => set({ gradient: g })} className={`w-9 h-7 rounded bg-gradient-to-br ${g} border ${f.gradient === g ? "ring-2 ring-brand border-brand" : "border-a-line"}`} />)}</div>
             </Field>
             <Toggle checked={!!f.featured} onChange={(v) => set({ featured: v })} label="Featured country" />
-            <details><summary className="cursor-pointer text-sm font-medium text-gray-700">Sidebar links & related services</summary>
+            <details><summary className="cursor-pointer text-sm font-medium text-a-muted">Sidebar links & related services</summary>
               <div className="pt-3 space-y-4">
                 <Field label="Visa categories (links)" hint="Leave empty to list the related services."><PairsEditor value={f.categories ?? []} onChange={(v) => set({ categories: v })} a="title" b="href" addLabel="Add link" aPlace="Study Visa" bPlace="/services/visa-processing" /></Field>
                 <Field label="Related services"><CheckList options={ctx.services} value={f.serviceSlugs} onChange={(v) => set({ serviceSlugs: v })} /></Field>

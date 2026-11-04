@@ -12,6 +12,12 @@ export const abs = (path = "/") => new URL(path, site.url).toString();
 const orgId = () => `${abs("/")}#organization`;
 const cleanSocial = () => site.social.map((s) => s.href).filter((h) => h.startsWith("http"));
 
+const speakable = { "@type": "SpeakableSpecification", cssSelector: [".geo-answer", "h1"] };
+const citations = (sources?: { title: string; url: string }[]) =>
+  sources?.length ? { citation: sources.map((s) => ({ "@type": "CreativeWork", name: s.title, url: s.url })) } : {};
+const authorEntity = (name?: string) =>
+  name && name !== site.defaultAuthor && !name.toLowerCase().includes("team") ? { "@type": "Person", name, url: abs("/about"), worksFor: { "@id": orgId() } } : { "@id": orgId() };
+
 type MetaInput = {
   title: string;
   description: string;
@@ -32,7 +38,10 @@ export function buildMetadata({ title, description, path, seo, image, type = "we
     description: d,
     keywords: seo?.keywords,
     alternates: { canonical: seo?.canonical ?? abs(path) },
-    robots: seo?.noindex ? { index: false, follow: false } : undefined,
+    // explicit on every page (a page-level `undefined` would wipe the site-wide setting): full snippets + large images for search and AI answers
+    robots: seo?.noindex
+      ? { index: false, follow: false }
+      : { index: true, follow: true, googleBot: { index: true, follow: true, "max-snippet": -1, "max-image-preview": "large", "max-video-preview": -1 } },
     openGraph: {
       type,
       url: abs(path),
@@ -78,6 +87,7 @@ export function organizationLd(services: Service[] = []) {
       closes: h.closes,
     })),
     areaServed: site.areaServed.map((n) => ({ "@type": "Place", name: n })),
+    contactPoint: [{ "@type": "ContactPoint", contactType: "customer service", telephone: site.phone, email: site.email, areaServed: "AE", availableLanguage: ["English", "Arabic"] }],
     sameAs: cleanSocial(),
     ...(services.length
       ? {
@@ -148,6 +158,29 @@ export function serviceLd(s: Service) {
   };
 }
 
+/** The service page itself: freshness, authorship, citations and speakable answer for AI assistants */
+export function servicePageLd(s: Service) {
+  const url = abs(`/services/${s.slug}`);
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": `${url}#webpage`,
+    url,
+    name: s.seo?.title ?? s.title,
+    description: s.answer ?? s.summary,
+    inLanguage: "en",
+    isPartOf: { "@id": `${abs("/")}#website` },
+    about: { "@id": `${url}#service` },
+    mainEntity: { "@id": `${url}#service` },
+    ...(s.createdAt ? { datePublished: s.createdAt } : {}),
+    ...(s.updatedAt ? { dateModified: s.updatedAt, lastReviewed: s.updatedAt } : {}),
+    author: authorEntity(s.author),
+    publisher: { "@id": orgId() },
+    speakable,
+    ...citations(s.sources),
+  };
+}
+
 export function countryPageLd(c: Country) {
   return {
     "@context": "https://schema.org",
@@ -158,7 +191,13 @@ export function countryPageLd(c: Country) {
     description: c.intro || c.summary,
     isPartOf: { "@id": `${abs("/")}#website` },
     about: { "@type": "Country", name: c.name },
+    inLanguage: "en",
+    ...(c.createdAt ? { datePublished: c.createdAt } : {}),
+    ...(c.updatedAt ? { dateModified: c.updatedAt, lastReviewed: c.updatedAt } : {}),
+    author: authorEntity(c.author),
     publisher: { "@id": orgId() },
+    speakable,
+    ...citations(c.sources),
   };
 }
 
@@ -171,10 +210,14 @@ export function articleLd(p: Post) {
     url: abs(`/blog/${p.slug}`),
     mainEntityOfPage: abs(`/blog/${p.slug}`),
     datePublished: p.date,
-    dateModified: p.updated ?? p.date,
+    dateModified: p.updatedAt ?? p.updated ?? p.date,
     articleSection: p.category,
-    author: p.author && p.author !== site.name && !p.author.includes("Team") ? { "@type": "Person", name: p.author } : { "@id": orgId() },
+    inLanguage: "en",
+    isAccessibleForFree: true,
+    author: authorEntity(p.author),
     publisher: { "@id": orgId() },
+    speakable,
+    ...citations(p.sources),
     ...(p.tags?.length ? { keywords: p.tags.join(", ") } : {}),
     ...(p.image ? { image: p.image.startsWith("http") ? p.image : abs(p.image) } : {}),
   };

@@ -7,6 +7,7 @@ import Icon from "@/app/components/Icon";
 import JsonLd from "@/app/components/JsonLd";
 import PostBody from "@/app/components/PostBody";
 import RichContent from "@/app/components/RichContent";
+import { Byline, GeoBlock, Sources } from "@/app/components/GeoBlock";
 import PostImage from "@/app/components/PostImage";
 import Reveal from "@/app/components/Reveal";
 import { formatDate, getPost, getPosts, readingMinutes, slugify } from "@/lib/content";
@@ -44,13 +45,11 @@ export default async function PostView({ post }: { post: Post }) {
                 {" "}· {readingMinutes(post)} min read
               </p>
               <h1 className="mt-2 text-3xl md:text-4xl font-bold text-brand-text leading-tight">{post.title}</h1>
-              <p className="mt-3 mb-8 text-sm text-gray-500">
-                By <strong className="text-ink">{post.author ?? "Al Anfal Doc Team"}</strong> · <time dateTime={post.date}>{formatDate(post.date)}</time>
-                {post.updated && post.updated !== post.date && <> · Updated <time dateTime={post.updated}>{formatDate(post.updated)}</time></>}
-              </p>
+              <Byline author={post.author} updated={post.updatedAt ?? (post.updated ? `${post.updated}T00:00:00.000Z` : undefined)} published={`${post.date}T00:00:00.000Z`} className="mt-3 mb-8" />
             </div>
 
             <p className="text-lg text-gray-600 leading-relaxed mb-6">{post.excerpt}</p>
+            <GeoBlock item={post} />
             {post.contentHtml ? <RichContent html={post.contentHtml} /> : <PostBody body={post.body} />}
 
             {post.tags && post.tags.length > 0 && (
@@ -76,6 +75,8 @@ export default async function PostView({ post }: { post: Post }) {
                 <p className="text-sm text-gray-600">Practical guidance on company setup, visas and documents in Dubai and the UAE.</p>
               </div>
             </Reveal>
+
+            <Sources sources={post.sources} />
 
             {(newer || older) && (
               <nav aria-label="More articles" className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">

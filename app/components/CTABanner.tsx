@@ -14,7 +14,7 @@ export default function CTABanner({
         </div>
         <Link
           href="/contact"
-          className="px-8 py-4 bg-accent text-white font-semibold rounded uppercase text-sm hover:bg-accent-dark hover:shadow-lg hover:scale-105 transition-all duration-300 whitespace-nowrap"
+          className="btn btn-cta btn-lg"
         >
           Get Consultation
         </Link>

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import HomeClient from "@/app/components/HomeClient";
+import HomeSections from "@/app/components/HomeSections";
 import JsonLd from "@/app/components/JsonLd";
 import { site } from "@/data/site";
 import { getPageSeo } from "@/lib/content";
@@ -19,7 +19,7 @@ export default async function Home() {
   return (
     <>
       {extra && <JsonLd data={extra} />}
-      <HomeClient />
+      <HomeSections />
     </>
   );
 }

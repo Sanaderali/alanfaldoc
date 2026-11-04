@@ -85,12 +85,12 @@ export default async function ResourceList({ kind, params }: { kind: Kind; param
   const issues = (x: Item) => (kind === "services" ? auditService(x as never) : kind === "countries" ? auditCountry(x as never) : auditPost(x as never));
   const pagination = (
     <div className="flex items-center gap-1 text-[13px]">
-      <span className="text-[#50575e] mr-1">{rows.length} item{rows.length === 1 ? "" : "s"}</span>
+      <span className="text-a-muted mr-1">{rows.length} item{rows.length === 1 ? "" : "s"}</span>
       {pages > 1 && (
         <>
-          {[["«", 1], ["‹", page - 1]].map(([l, p]) => (page > 1 ? <Link key={String(l)} href={href({ paged: String(p) })} className="w-7 h-7 flex items-center justify-center border border-[#c3c4c7] bg-[#f6f7f7] rounded-[3px] text-brand-text">{l}</Link> : <span key={String(l)} className="w-7 h-7 flex items-center justify-center border border-[#dcdcde] bg-[#f6f7f7] rounded-[3px] text-[#a7aaad]">{l}</span>))}
+          {[["«", 1], ["‹", page - 1]].map(([l, p]) => (page > 1 ? <Link key={String(l)} href={href({ paged: String(p) })} className="w-7 h-7 flex items-center justify-center border border-a-line bg-a-raised rounded-[3px] text-brand-text">{l}</Link> : <span key={String(l)} className="w-7 h-7 flex items-center justify-center border border-a-line bg-a-raised rounded-[3px] text-a-subtle">{l}</span>))}
           <span className="px-2">{page} of {pages}</span>
-          {[["›", page + 1], ["»", pages]].map(([l, p]) => (page < pages ? <Link key={String(l)} href={href({ paged: String(p) })} className="w-7 h-7 flex items-center justify-center border border-[#c3c4c7] bg-[#f6f7f7] rounded-[3px] text-brand-text">{l}</Link> : <span key={String(l)} className="w-7 h-7 flex items-center justify-center border border-[#dcdcde] bg-[#f6f7f7] rounded-[3px] text-[#a7aaad]">{l}</span>))}
+          {[["›", page + 1], ["»", pages]].map(([l, p]) => (page < pages ? <Link key={String(l)} href={href({ paged: String(p) })} className="w-7 h-7 flex items-center justify-center border border-a-line bg-a-raised rounded-[3px] text-brand-text">{l}</Link> : <span key={String(l)} className="w-7 h-7 flex items-center justify-center border border-a-line bg-a-raised rounded-[3px] text-a-subtle">{l}</span>))}
         </>
       )}
     </div>
@@ -102,19 +102,19 @@ export default async function ResourceList({ kind, params }: { kind: Kind; param
 
       {/* filter links + search */}
       <div className="flex flex-wrap items-center justify-between gap-3 mb-3">
-        <ul className="flex flex-wrap items-center gap-1 text-[13px] text-[#50575e]">
+        <ul className="flex flex-wrap items-center gap-1 text-[13px] text-a-muted">
           {tabs.map((t, i) => (
             <li key={t.key} className="flex items-center gap-1">
-              {i > 0 && <span className="text-[#a7aaad]">|</span>}
-              <Link href={`/admin/${kind}${t.key === "all" ? "" : `?status=${t.key}`}`} aria-current={status === t.key ? "page" : undefined} className={`hover:text-brand-text ${status === t.key ? "font-semibold text-[#1d2327]" : "text-brand-text"}`}>
-                {t.label} <span className="text-[#50575e] font-normal">({t.n})</span>
+              {i > 0 && <span className="text-a-subtle">|</span>}
+              <Link href={`/admin/${kind}${t.key === "all" ? "" : `?status=${t.key}`}`} aria-current={status === t.key ? "page" : undefined} className={`hover:text-brand-text ${status === t.key ? "font-semibold text-a-text" : "text-brand-text"}`}>
+                {t.label} <span className="text-a-muted font-normal">({t.n})</span>
               </Link>
             </li>
           ))}
         </ul>
         <form role="search" className="flex gap-1.5">
           <input type="hidden" name="status" value={status === "all" ? "" : status} />
-          <input name="q" defaultValue={params.q ?? ""} aria-label={`Search ${m.plural}`} className="px-2 py-1 text-[13px] border border-[#8c8f94] rounded-[3px] w-48 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand" />
+          <input name="q" defaultValue={params.q ?? ""} aria-label={`Search ${m.plural}`} className="px-2 py-1 text-[13px] border border-a-line2 rounded-[3px] w-48 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand" />
           <button className={btnGhost}>Search {m.plural}</button>
         </form>
       </div>
@@ -127,7 +127,7 @@ export default async function ResourceList({ kind, params }: { kind: Kind; param
       <div className="flex flex-wrap items-center justify-between gap-3 mb-2">
         <div className="flex flex-wrap items-center gap-2">
           <div className="flex items-center gap-1.5">
-            <select name="action" form="bulk" aria-label="Bulk actions" className="px-2 py-1 text-[13px] border border-[#8c8f94] rounded-[3px] bg-white">
+            <select name="action" form="bulk" aria-label="Bulk actions" className="px-2 py-1 text-[13px] border border-a-line2 rounded-[3px] bg-a-surface">
               <option value="">Bulk actions</option>
               {inTrash ? (<><option value="restore">Restore</option><option value="delete">Delete Permanently</option></>) : (<><option value="publish">Publish</option><option value="draft">Move to Draft</option><option value="trash">Move to Trash</option></>)}
             </select>
@@ -136,12 +136,12 @@ export default async function ResourceList({ kind, params }: { kind: Kind; param
           <form className="flex items-center gap-1.5">
             <input type="hidden" name="status" value={status === "all" ? "" : status} />
             <input type="hidden" name="q" value={params.q ?? ""} />
-            <select name="m" defaultValue={mo} aria-label="Filter by date" className="px-2 py-1 text-[13px] border border-[#8c8f94] rounded-[3px] bg-white">
+            <select name="m" defaultValue={mo} aria-label="Filter by date" className="px-2 py-1 text-[13px] border border-a-line2 rounded-[3px] bg-a-surface">
               <option value="">All dates</option>
               {months.map((x) => <option key={x} value={x}>{new Date(`${x}-01T00:00:00Z`).toLocaleDateString("en-GB", { month: "long", year: "numeric", timeZone: "UTC" })}</option>)}
             </select>
             {kind === "posts" && (
-              <select name="cat" defaultValue={cat} aria-label="Filter by category" className="px-2 py-1 text-[13px] border border-[#8c8f94] rounded-[3px] bg-white">
+              <select name="cat" defaultValue={cat} aria-label="Filter by category" className="px-2 py-1 text-[13px] border border-a-line2 rounded-[3px] bg-a-surface">
                 <option value="">All Categories</option>
                 {cats.map((c) => <option key={c} value={slugify(c)}>{c}</option>)}
               </select>
@@ -153,11 +153,11 @@ export default async function ResourceList({ kind, params }: { kind: Kind; param
         {pagination}
       </div>
 
-      <div className="bg-white border border-[#c3c4c7] shadow-[0_1px_1px_rgba(0,0,0,.04)] overflow-x-auto">
+      <div className="bg-a-surface border border-a-line shadow-[0_1px_1px_rgba(0,0,0,.04)] overflow-x-auto">
         {shown.length === 0 ? <Empty>No {m.plural.toLowerCase()} found.</Empty> : (
           <table className="w-full text-[13px]">
             <thead>
-              <tr className="text-left border-b border-[#c3c4c7]">
+              <tr className="text-left border-b border-a-line">
                 <td className="w-10 px-3 py-2.5"><SelectAll /></td>
                 <th className="px-3 py-2.5 font-normal"><Link href={sortHref("title")} className="text-brand-text hover:text-brand-dark">Title{arrow("title")}</Link></th>
                 {kind === "posts" && <><th className="px-3 py-2.5 font-normal">Author</th><th className="px-3 py-2.5 font-normal">Categories</th><th className="px-3 py-2.5 font-normal">Tags</th></>}
@@ -172,28 +172,28 @@ export default async function ResourceList({ kind, params }: { kind: Kind; param
                 const editHref = `/admin/${kind}/${x.id}`;
                 const viewHref = v === "live" ? `${m.pub}/${x.slug}` : `/preview/${kind}/${x.id}`;
                 return (
-                  <tr key={x.id} className={`group align-top ${n % 2 ? "bg-white" : "bg-[#f6f7f7]"}`}>
-                    <th scope="row" className="px-3 py-2.5 font-normal"><input type="checkbox" name="ids" value={x.id} form="bulk" aria-label={`Select ${title(x)}`} className="rounded-[3px] border-[#8c8f94] text-brand focus:ring-brand" /></th>
+                  <tr key={x.id} className={`group align-top ${n % 2 ? "bg-a-surface" : "bg-a-raised"}`}>
+                    <th scope="row" className="px-3 py-2.5 font-normal"><input type="checkbox" name="ids" value={x.id} form="bulk" aria-label={`Select ${title(x)}`} className="rounded-[3px] border-a-line2 text-brand focus:ring-brand" /></th>
                     <td className="px-3 py-2.5 min-w-[14rem]">
                       <div className="flex items-center gap-2">
                         {kind === "countries" && <Flag country={x as never} size={22} />}
-                        {kind === "services" && x.icon && <Icon name={x.icon} className="text-[#a7aaad]" />}
+                        {kind === "services" && x.icon && <Icon name={x.icon} className="text-a-subtle" />}
                         <Link href={inTrash ? "#" : editHref} className="font-semibold text-[14px] text-brand-text hover:text-brand-dark">{title(x)}</Link>
-                        {v === "draft" && <span className="font-semibold text-[#50575e]"> — Draft</span>}
-                        {v === "scheduled" && <span className="font-semibold text-amber-700"> — Scheduled</span>}
+                        {v === "draft" && <span className="font-semibold text-a-muted"> — Draft</span>}
+                        {v === "scheduled" && <span className="font-semibold text-amber-300"> — Scheduled</span>}
                       </div>
                       <div className="mt-1 flex flex-wrap items-center gap-1.5 text-[13px] opacity-100 lg:opacity-0 lg:group-hover:opacity-100 lg:focus-within:opacity-100 transition-opacity">
                         {inTrash ? (
                           <>
                             <form action={restoreItem.bind(null, kind, x.id!)}><button className={linkBtn}>Restore</button></form>
-                            <span className="text-[#a7aaad]">|</span>
-                            <form action={deletePermanently.bind(null, kind, x.id!)}><button className="text-red-600 hover:text-red-800 hover:underline">Delete Permanently</button></form>
+                            <span className="text-a-subtle">|</span>
+                            <form action={deletePermanently.bind(null, kind, x.id!)}><button className="text-a-red hover:text-a-red/80 hover:underline">Delete Permanently</button></form>
                           </>
                         ) : (
                           <>
-                            <Link href={editHref} className={linkBtn}>Edit</Link><span className="text-[#a7aaad]">|</span>
-                            <form action={duplicateItem.bind(null, kind, x.id!)}><button className={linkBtn}>Duplicate</button></form><span className="text-[#a7aaad]">|</span>
-                            <form action={trashItem.bind(null, kind, x.id!)}><button className="text-red-600 hover:text-red-800 hover:underline">Trash</button></form><span className="text-[#a7aaad]">|</span>
+                            <Link href={editHref} className={linkBtn}>Edit</Link><span className="text-a-subtle">|</span>
+                            <form action={duplicateItem.bind(null, kind, x.id!)}><button className={linkBtn}>Duplicate</button></form><span className="text-a-subtle">|</span>
+                            <form action={trashItem.bind(null, kind, x.id!)}><button className="text-a-red hover:text-a-red/80 hover:underline">Trash</button></form><span className="text-a-subtle">|</span>
                             <Link href={viewHref} target="_blank" className={linkBtn}>{v === "live" ? "View" : "Preview"}</Link>
                           </>
                         )}
@@ -203,16 +203,16 @@ export default async function ResourceList({ kind, params }: { kind: Kind; param
                       <>
                         <td className="px-3 py-2.5 text-brand-text">{x.author ?? "-"}</td>
                         <td className="px-3 py-2.5">{x.category ? <Link href={`/admin/posts?cat=${slugify(x.category)}`} className="text-brand-text hover:underline">{x.category}</Link> : "—"}</td>
-                        <td className="px-3 py-2.5 text-brand-text">{(x.tags ?? []).length ? x.tags!.join(", ") : <span className="text-[#50575e]">—</span>}</td>
+                        <td className="px-3 py-2.5 text-brand-text">{(x.tags ?? []).length ? x.tags!.join(", ") : <span className="text-a-muted">—</span>}</td>
                       </>
                     )}
                     {kind !== "posts" && (
                       <>
-                        <td className="px-3 py-2.5 text-[#50575e]">{m.pub}/{x.slug}</td>
+                        <td className="px-3 py-2.5 text-a-muted">{m.pub}/{x.slug}</td>
                         <td className="px-3 py-2.5" title={issues(x).map((i) => i.text).join("\n") || "No issues"}><Badge tone={sc >= 85 ? "ok" : sc >= 65 ? "warn" : "error"}>{sc}</Badge></td>
                       </>
                     )}
-                    <td className="px-3 py-2.5 whitespace-nowrap text-[#50575e]">
+                    <td className="px-3 py-2.5 whitespace-nowrap text-a-muted">
                       {v === "live" ? (kind === "posts" ? "Published" : "Last Modified") : v === "scheduled" ? "Scheduled" : v === "trash" ? "Last Modified" : "Last Modified"}
                       <br />{wpDate(when(x))}
                     </td>
@@ -221,7 +221,7 @@ export default async function ResourceList({ kind, params }: { kind: Kind; param
               })}
             </tbody>
             <tfoot>
-              <tr className="text-left border-t border-[#c3c4c7]">
+              <tr className="text-left border-t border-a-line">
                 <td className="px-3 py-2.5"><SelectAll label="Select all (bottom)" /></td>
                 <th className="px-3 py-2.5 font-normal text-brand-text">Title</th>
                 {kind === "posts" ? <><th className="px-3 py-2.5 font-normal">Author</th><th className="px-3 py-2.5 font-normal">Categories</th><th className="px-3 py-2.5 font-normal">Tags</th></> : <><th className="px-3 py-2.5 font-normal">URL</th><th className="px-3 py-2.5 font-normal">SEO</th></>}

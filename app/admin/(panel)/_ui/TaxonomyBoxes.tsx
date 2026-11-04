@@ -16,18 +16,18 @@ export function CategoryBox({ value, onChange, options, error }: { value: string
 
   return (
     <div>
-      <div className="flex text-[13px] border-b border-[#c3c4c7]" role="tablist">
+      <div className="flex text-[13px] border-b border-a-line" role="tablist">
         {([["all", "All Categories"], ["used", "Most Used"]] as const).map(([k, l]) => (
-          <button key={k} type="button" role="tab" aria-selected={tab === k} onClick={() => setTab(k)} className={`px-2.5 py-1.5 -mb-px border ${tab === k ? "border-[#c3c4c7] border-b-white bg-white font-medium" : "border-transparent text-brand-text"}`}>{l}</button>
+          <button key={k} type="button" role="tab" aria-selected={tab === k} onClick={() => setTab(k)} className={`px-2.5 py-1.5 -mb-px border ${tab === k ? "border-a-line border-b-white bg-a-surface font-medium" : "border-transparent text-brand-text"}`}>{l}</button>
         ))}
       </div>
-      <ul className="max-h-40 overflow-y-auto border border-t-0 border-[#c3c4c7] p-2 space-y-1.5 text-[13px]">
-        {list.length === 0 && <li className="text-[#50575e]">No categories yet.</li>}
+      <ul className="max-h-40 overflow-y-auto border border-t-0 border-a-line p-2 space-y-1.5 text-[13px]">
+        {list.length === 0 && <li className="text-a-muted">No categories yet.</li>}
         {list.map((n) => (
           <li key={n}><label className="flex items-center gap-2 cursor-pointer"><input type="radio" name="post-category" checked={value === n} onChange={() => onChange(n)} className="text-brand focus:ring-brand" />{n}</label></li>
         ))}
       </ul>
-      {error && <p role="alert" className="text-xs text-red-600 mt-1">{error}</p>}
+      {error && <p role="alert" className="text-xs text-a-red mt-1">{error}</p>}
       {adding ? (
         <div className="mt-2 flex gap-2">
           <input autoFocus value={draft} onChange={(e) => setDraft(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); const n = draft.trim(); if (n) { setExtra((x) => [...x, n]); onChange(n); setDraft(""); setAdding(false); } } }} placeholder="New category name" aria-label="New category name" className={inputCls} />
@@ -56,12 +56,12 @@ export function TagBox({ value, onChange, options }: { value: string[]; onChange
         <input value={draft} onChange={(e) => setDraft(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter" || e.key === ",") { e.preventDefault(); add(draft); } }} aria-label="Add tag" className={inputCls} />
         <button type="button" onClick={() => add(draft)} className={btnGhost}>Add</button>
       </div>
-      <p className="text-xs italic text-[#646970]">Separate tags with commas</p>
+      <p className="text-xs italic text-a-muted">Separate tags with commas</p>
       {value.length > 0 && (
         <ul className="flex flex-wrap gap-1.5">
           {value.map((t) => (
-            <li key={t} className="inline-flex items-center gap-1 text-[13px] bg-[#f0f0f1] border border-[#dcdcde] rounded-[3px] pl-2 pr-1 py-0.5">
-              {t}<button type="button" aria-label={`Remove ${t}`} onClick={() => onChange(value.filter((x) => x !== t))} className="w-4 h-4 leading-none text-[#50575e] hover:text-red-600">×</button>
+            <li key={t} className="inline-flex items-center gap-1 text-[13px] bg-a-canvas border border-a-line rounded-[3px] pl-2 pr-1 py-0.5">
+              {t}<button type="button" aria-label={`Remove ${t}`} onClick={() => onChange(value.filter((x) => x !== t))} className="w-4 h-4 leading-none text-a-muted hover:text-a-red">×</button>
             </li>
           ))}
         </ul>
@@ -69,7 +69,7 @@ export function TagBox({ value, onChange, options }: { value: string[]; onChange
       <button type="button" onClick={() => setCloud((c) => !c)} className="text-[13px] text-brand-text underline">Choose from the most used tags</button>
       {cloud && (
         <ul className="flex flex-wrap gap-x-2.5 gap-y-1 text-[13px]">
-          {popular.length === 0 && <li className="text-[#50575e]">No tags yet.</li>}
+          {popular.length === 0 && <li className="text-a-muted">No tags yet.</li>}
           {popular.map((o) => <li key={o.name}><button type="button" onClick={() => add(o.name)} className="text-brand-text hover:underline">{o.name}</button></li>)}
         </ul>
       )}

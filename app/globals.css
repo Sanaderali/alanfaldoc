@@ -39,7 +39,7 @@ html {
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: 'Roboto', 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
 }
 
 * {
@@ -337,7 +337,8 @@ html { scroll-behavior: smooth; scroll-padding-top: 5rem; }
   from { opacity: 0; transform: translateY(14px); }
   to   { opacity: 1; transform: none; }
 }
-.page-enter { animation: pageEnter 0.5s cubic-bezier(0.22, 1, 0.36, 1) both; }
+/* "backwards" (not "both"): once finished no transform is left on the wrapper, which would otherwise break position:fixed descendants (chat widget, preview bar) */
+.page-enter { animation: pageEnter 0.5s cubic-bezier(0.22, 1, 0.36, 1) backwards; }
 
 /* scroll reveal, works scrolling down AND up (see components/Reveal.tsx) */
 .reveal { transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1); will-change: opacity, transform; }
@@ -389,12 +390,94 @@ html, body { overflow-x: clip; }
 .rich-content li > p { margin: 0; }
 .rich-content li > ul, .rich-content li > ol { margin: 0.3rem 0 0; }
 
-/* Dashboard palette: WordPress blue, independent of the public site's theme (scoped to /admin) */
+/* Dashboard palette: modern dark slate, independent of the public site theme (scoped to /admin) */
 .admin-theme {
-  --brand: 34 113 177;       /* #2271b1 */
-  --brand-dark: 19 94 150;   /* #135e96 */
-  --brand-text: 34 113 177;
-  --brand-50: 240 246 252;
-  --brand-100: 220 234 247;
-  --brand-200: 184 214 240;
+  color-scheme: dark;
+  --a-bar: 22 29 27;        /* #161D1B sidebar + top bar */
+  --a-bar2: 31 41 38;       /* #1F2926 submenu / hover on the bars */
+  --a-canvas: 11 15 14;     /* #0B0F0E main canvas */
+  --a-surface: 26 34 32;    /* #1A2220 cards / containers */
+  --a-raised: 33 43 40;     /* #212B28 striped rows, toolbars, hover */
+  --a-line: 44 56 52;       /* #2C3834 borders */
+  --a-line2: 62 76 71;      /* #3E4C47 input borders */
+  --a-text: 245 245 247;    /* #F5F5F7 primary text */
+  --a-muted: 168 178 175;   /* secondary text */
+  --a-subtle: 122 134 130;  /* tertiary text / icons */
+  --a-red: 255 23 68;       /* #FF1744 secondary accent: status badges, alerts */
+  --a-on: 3 33 15;          /* dark text used on the green accent */
+  --brand: 0 200 83;        /* #00C853 primary accent: buttons, active tabs */
+  --brand-dark: 0 224 98;   /* hover: slightly lighter on dark */
+  --brand-text: 0 200 83;
+  --brand-50: 10 44 28;
+  --brand-100: 13 62 37;
+  --brand-200: 17 84 49;
+  --accent: 255 23 68;
 }
+/* editor + rich text inside the dashboard */
+.admin-theme .rich-content { color: #F5F5F7; }
+.admin-theme .rich-content h2, .admin-theme .rich-content h3, .admin-theme .rich-content h4 { color: #F5F5F7; }
+.admin-theme .rich-content a { color: rgb(var(--brand)); }
+.admin-theme .rich-content blockquote { color: rgb(var(--a-muted)); border-left-color: rgb(var(--brand-200)); }
+.admin-theme .rich-content code { background: rgb(var(--a-raised)); }
+.admin-theme .rich-content hr { border-top-color: rgb(var(--a-line)); }
+.admin-theme .ProseMirror p.is-editor-empty:first-child::before { color: rgb(var(--a-subtle)); }
+.admin-theme ::selection { background: rgb(var(--brand) / 0.3); }
+.admin-theme input[type="checkbox"], .admin-theme input[type="radio"] { background-color: rgb(var(--a-canvas)); }
+.admin-theme ::-webkit-scrollbar { width: 10px; height: 10px; }
+.admin-theme ::-webkit-scrollbar-thumb { background: rgb(var(--a-line2)); border-radius: 8px; }
+.admin-theme ::-webkit-scrollbar-track { background: transparent; }
+
+/* =====================================================================
+   Button system (public site). Padding 12px 28px, rounded, soft shadows,
+   hover lift (translateY(-2px)) and a glowing active state.
+   .btn-primary  solid green      .btn-cta  solid red (calls to action)
+   .btn-secondary glass / outlined   sizes: .btn-sm .btn-lg
+   ===================================================================== */
+@layer components {
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 0.55rem;
+    padding: 12px 28px; border-radius: 12px; border: 1.5px solid transparent;
+    font-weight: 600; font-size: 0.9375rem; line-height: 1.2; letter-spacing: 0.01em; white-space: nowrap;
+    cursor: pointer; text-decoration: none; -webkit-tap-highlight-color: transparent;
+    transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    --ring: var(--brand);
+  }
+  .btn:focus-visible { outline: none; box-shadow: 0 0 0 4px rgb(var(--ring) / 0.35); }
+  .btn:disabled, .btn[aria-disabled="true"] { opacity: 0.6; cursor: not-allowed; transform: none; }
+  .btn-sm { padding: 9px 22px; font-size: 0.875rem; border-radius: 10px; }
+  .btn-lg { padding: 15px 36px; font-size: 1rem; border-radius: 14px; }
+
+  .btn-primary { background: rgb(var(--brand)); color: #fff; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08), 0 8px 20px -8px rgb(var(--brand) / 0.55); }
+  .btn-primary:hover:not(:disabled) { transform: translateY(-2px); background: rgb(var(--brand-dark)); box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08), 0 14px 28px -10px rgb(var(--brand) / 0.6); }
+  .btn-primary:active:not(:disabled) { transform: translateY(0) scale(0.985); box-shadow: 0 0 0 4px rgb(var(--brand) / 0.22), 0 0 26px rgb(var(--brand) / 0.55); }
+
+  .btn-cta { --ring: var(--accent); background: rgb(var(--accent)); color: #fff; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08), 0 8px 20px -8px rgb(var(--accent) / 0.55); }
+  .btn-cta:hover:not(:disabled) { transform: translateY(-2px); background: rgb(var(--accent-dark)); box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08), 0 14px 28px -10px rgb(var(--accent) / 0.6); }
+  .btn-cta:active:not(:disabled) { transform: translateY(0) scale(0.985); box-shadow: 0 0 0 4px rgb(var(--accent) / 0.22), 0 0 26px rgb(var(--accent) / 0.55); }
+
+  /* glass / outlined */
+  .btn-secondary { background: rgba(255, 255, 255, 0.6); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border-color: rgb(var(--brand) / 0.4); color: rgb(var(--brand-text)); box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04); }
+  .btn-secondary:hover:not(:disabled) { transform: translateY(-2px); background: rgba(255, 255, 255, 0.95); border-color: rgb(var(--brand)); box-shadow: 0 10px 24px -12px rgb(var(--brand) / 0.45); }
+  .btn-secondary:active:not(:disabled) { transform: translateY(0) scale(0.985); box-shadow: 0 0 0 4px rgb(var(--brand) / 0.18), 0 0 22px rgb(var(--brand) / 0.35); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .btn, .btn:hover, .btn:active { transition: none; transform: none; }
+  }
+}
+
+/* crisp typography + soft surfaces */
+body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; font-feature-settings: "cv11", "ss01"; }
+h1, h2, h3 { letter-spacing: -0.015em; text-wrap: balance; }
+h1 { letter-spacing: -0.025em; }
+p { text-wrap: pretty; }
+::selection { background: rgb(var(--brand) / 0.2); }
+
+/* dark form controls everywhere in the dashboard */
+.admin-theme input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="hidden"]),
+.admin-theme select,
+.admin-theme textarea { background-color: rgb(var(--a-canvas)); color: rgb(var(--a-text)); }
+.admin-theme select option { background-color: rgb(var(--a-surface)); color: rgb(var(--a-text)); }
+.admin-theme input::placeholder, .admin-theme textarea::placeholder { color: rgb(var(--a-subtle)); }
+.admin-theme input:focus, .admin-theme select:focus, .admin-theme textarea:focus { border-color: rgb(var(--brand)) !important; box-shadow: 0 0 0 1px rgb(var(--brand)); outline: none; }
+.admin-theme input[type="datetime-local"]::-webkit-calendar-picker-indicator { filter: invert(0.8); }
+.admin-theme a { transition: color 0.15s ease; }

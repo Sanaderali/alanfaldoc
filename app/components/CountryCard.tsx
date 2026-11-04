@@ -7,7 +7,7 @@ export default function CountryCard({ country }: { country: Country }) {
   return (
     <Link
       href={`/countries/${country.slug}`}
-      className="group block h-full bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-xl hover:-translate-y-1.5 transition-all duration-500"
+      className="group block h-full bg-white border border-gray-200/80 rounded-2xl shadow-[0_2px_14px_rgba(15,23,42,.05)] overflow-hidden hover:shadow-xl hover:-translate-y-1.5 transition-all duration-500"
     >
       <div className={`relative h-36 sm:h-40 bg-gradient-to-br ${country.gradient} overflow-hidden`}>
         {country.image && (

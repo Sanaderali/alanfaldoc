@@ -10,6 +10,7 @@ import FaqList from "@/app/components/FaqList";
 import JsonLd from "@/app/components/JsonLd";
 import Reveal from "@/app/components/Reveal";
 import RichContent from "@/app/components/RichContent";
+import { Byline, GeoBlock, Sources } from "@/app/components/GeoBlock";
 import { buildMetadata, countryPageLd, customLd, faqLd } from "@/lib/seo";
 import { getCountries, getCountry, getServices } from "@/lib/content";
 import type { Country } from "@/types/content";
@@ -45,7 +46,9 @@ export default async function CountryView({ country }: { country: Country }) {
               </div>
             </div>
 
-            <h1 className="text-3xl md:text-4xl font-bold text-ink mb-5 animate-fadeIn">{country.headline}</h1>
+            <h1 className="text-3xl md:text-4xl font-bold text-ink mb-3 animate-fadeIn">{country.headline}</h1>
+            <Byline author={country.author} updated={country.updatedAt} published={country.createdAt} className="mb-6" />
+            <GeoBlock item={country} tableTitle={`${country.name} at a glance`} />
             {country.intro && <p className="text-gray-600 leading-relaxed mb-6">{country.intro}</p>}
 
             <Reveal>
@@ -68,6 +71,7 @@ export default async function CountryView({ country }: { country: Country }) {
                 </Reveal>
               ))
             )}
+            <Sources sources={country.sources} />
           </article>
 
           {/* Sidebar */}

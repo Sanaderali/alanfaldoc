@@ -13,10 +13,10 @@ export type Form = Record<string, any>;
 
 export function Section({ title, hint, children, id }: { title: string; hint?: string; children: ReactNode; id?: string }) {
   return (
-    <section id={id} className="bg-white border border-[#c3c4c7] shadow-[0_1px_1px_rgba(0,0,0,.04)]">
-      <div className="px-5 py-4 border-b border-gray-200">
+    <section id={id} className="bg-a-surface border border-a-line shadow-[0_1px_1px_rgba(0,0,0,.04)]">
+      <div className="px-5 py-4 border-b border-a-line">
         <h2 className="font-semibold">{title}</h2>
-        {hint && <p className="text-xs text-gray-500 mt-0.5">{hint}</p>}
+        {hint && <p className="text-xs text-a-muted mt-0.5">{hint}</p>}
       </div>
       <div className="p-5 space-y-5">{children}</div>
     </section>
@@ -27,12 +27,12 @@ export function Field({ label, hint, error, children, htmlFor, counter }: { labe
   return (
     <div>
       <div className="flex items-baseline justify-between gap-2 mb-1.5">
-        <label htmlFor={htmlFor} className="text-sm font-medium text-gray-800">{label}</label>
+        <label htmlFor={htmlFor} className="text-sm font-medium text-a-text">{label}</label>
         {counter}
       </div>
       {children}
-      {hint && !error && <p className="text-xs text-gray-500 mt-1">{hint}</p>}
-      {error && <p role="alert" className="text-xs text-red-600 mt-1">{error}</p>}
+      {hint && !error && <p className="text-xs text-a-muted mt-1">{hint}</p>}
+      {error && <p role="alert" className="text-xs text-a-red mt-1">{error}</p>}
     </div>
   );
 }
@@ -40,7 +40,7 @@ export function Field({ label, hint, error, children, htmlFor, counter }: { labe
 /** "123 / 160" counter that turns amber/red outside the recommended range */
 export function Counter({ value, min, max }: { value: string; min?: number; max: number }) {
   const n = value.trim().length;
-  const tone = n > max ? "text-red-600" : min && n > 0 && n < min ? "text-amber-600" : "text-gray-400";
+  const tone = n > max ? "text-a-red" : min && n > 0 && n < min ? "text-amber-300" : "text-a-subtle";
   return <span className={`text-xs tabular-nums ${tone}`}>{n} / {max}</span>;
 }
 
@@ -56,9 +56,9 @@ export function Toggle({ checked, onChange, label, hint }: { checked: boolean; o
   return (
     <label className="flex items-start gap-3 cursor-pointer">
       <button type="button" role="switch" aria-checked={checked} onClick={() => onChange(!checked)} className={`relative mt-0.5 w-10 h-6 rounded-full transition-colors shrink-0 ${checked ? "bg-brand" : "bg-gray-300"}`}>
-        <span className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform ${checked ? "translate-x-4" : ""}`} />
+        <span className={`absolute top-0.5 left-0.5 w-5 h-5 bg-a-surface rounded-full shadow transition-transform ${checked ? "translate-x-4" : ""}`} />
       </button>
-      <span><span className="text-sm font-medium text-gray-800">{label}</span>{hint && <span className="block text-xs text-gray-500">{hint}</span>}</span>
+      <span><span className="text-sm font-medium text-a-text">{label}</span>{hint && <span className="block text-xs text-a-muted">{hint}</span>}</span>
     </label>
   );
 }
@@ -71,13 +71,13 @@ export function LinesField({ id, value, onChange, rows = 4, placeholder }: { id:
 
 function Row({ children, onRemove, onUp, onDown, index }: { children: ReactNode; onRemove: () => void; onUp?: () => void; onDown?: () => void; index: number }) {
   return (
-    <div className="border border-gray-200 rounded-md p-3 bg-gray-50/50">
+    <div className="border border-a-line rounded-md p-3 bg-a-raised/50">
       <div className="flex items-center justify-between mb-2">
-        <span className="text-xs font-semibold text-gray-400">#{index + 1}</span>
+        <span className="text-xs font-semibold text-a-subtle">#{index + 1}</span>
         <div className="flex gap-1">
-          {onUp && <button type="button" onClick={onUp} aria-label="Move up" className="px-2 py-1 text-gray-500 hover:text-gray-900"><Icon name="arrow-up" /></button>}
-          {onDown && <button type="button" onClick={onDown} aria-label="Move down" className="px-2 py-1 text-gray-500 hover:text-gray-900"><Icon name="arrow-down" /></button>}
-          <button type="button" onClick={onRemove} aria-label="Remove" className="px-2 py-1 text-red-500 hover:text-red-700"><Icon name="trash-can" /></button>
+          {onUp && <button type="button" onClick={onUp} aria-label="Move up" className="px-2 py-1 text-a-muted hover:text-a-text"><Icon name="arrow-up" /></button>}
+          {onDown && <button type="button" onClick={onDown} aria-label="Move down" className="px-2 py-1 text-a-muted hover:text-a-text"><Icon name="arrow-down" /></button>}
+          <button type="button" onClick={onRemove} aria-label="Remove" className="px-2 py-1 text-a-red hover:text-a-red/80"><Icon name="trash-can" /></button>
         </div>
       </div>
       {children}
@@ -97,7 +97,7 @@ export function Repeater<T>({ items, onChange, render, empty, addLabel, blank }:
   const list = items ?? [];
   return (
     <div className="space-y-3">
-      {list.length === 0 && blank && <p className="text-sm text-gray-500">{blank}</p>}
+      {list.length === 0 && blank && <p className="text-sm text-a-muted">{blank}</p>}
       {list.map((it, i) => (
         <Row key={i} index={i} onRemove={() => onChange(list.filter((_, n) => n !== i))} onUp={i > 0 ? () => onChange(move(list, i, -1)) : undefined} onDown={i < list.length - 1 ? () => onChange(move(list, i, 1)) : undefined}>
           {render(it, (patch) => onChange(list.map((x, n) => (n === i ? { ...x, ...patch } : x))), i)}
@@ -117,25 +117,25 @@ export function FaqsEditor({ value, onChange }: { value: Faq[]; onChange: (v: Fa
   const swap = (i: number, d: number) => { const j = i + d; if (j < 0 || j >= list.length) return; const c = [...list]; [c[i], c[j]] = [c[j], c[i]]; onChange(c); setOpen(j); };
   return (
     <div className="space-y-2">
-      {list.length === 0 && <p className="text-sm text-gray-500">No questions yet.</p>}
+      {list.length === 0 && <p className="text-sm text-a-muted">No questions yet.</p>}
       {list.map((f, i) => {
         const isOpen = open === i;
         return (
-          <div key={i} className={`border rounded-md ${isOpen ? "border-brand/50 bg-white" : "border-gray-200 bg-gray-50/60"}`}>
+          <div key={i} className={`border rounded-md ${isOpen ? "border-brand/50 bg-a-surface" : "border-a-line bg-a-raised/60"}`}>
             <div className="flex items-center">
               <button type="button" aria-expanded={isOpen} onClick={() => setOpen(isOpen ? null : i)} className="flex-1 min-w-0 flex items-center gap-3 px-3 py-2.5 text-left">
-                <Icon name="chevron-right" className={`text-xs text-gray-400 transition-transform ${isOpen ? "rotate-90" : ""}`} />
-                <span className="text-xs font-semibold text-gray-400">{i + 1}</span>
-                <span className="truncate text-sm font-medium text-gray-800">{f.question || <em className="text-gray-400">New question</em>}</span>
+                <Icon name="chevron-right" className={`text-xs text-a-subtle transition-transform ${isOpen ? "rotate-90" : ""}`} />
+                <span className="text-xs font-semibold text-a-subtle">{i + 1}</span>
+                <span className="truncate text-sm font-medium text-a-text">{f.question || <em className="text-a-subtle">New question</em>}</span>
               </button>
               <div className="flex pr-1">
-                <button type="button" onClick={() => swap(i, -1)} disabled={i === 0} aria-label="Move up" className="px-2 py-1 text-gray-400 hover:text-gray-900 disabled:opacity-20"><Icon name="arrow-up" /></button>
-                <button type="button" onClick={() => swap(i, 1)} disabled={i === list.length - 1} aria-label="Move down" className="px-2 py-1 text-gray-400 hover:text-gray-900 disabled:opacity-20"><Icon name="arrow-down" /></button>
-                <button type="button" onClick={() => { onChange(list.filter((_, n) => n !== i)); setOpen(null); }} aria-label="Remove question" className="px-2 py-1 text-red-400 hover:text-red-700"><Icon name="trash-can" /></button>
+                <button type="button" onClick={() => swap(i, -1)} disabled={i === 0} aria-label="Move up" className="px-2 py-1 text-a-subtle hover:text-a-text disabled:opacity-20"><Icon name="arrow-up" /></button>
+                <button type="button" onClick={() => swap(i, 1)} disabled={i === list.length - 1} aria-label="Move down" className="px-2 py-1 text-a-subtle hover:text-a-text disabled:opacity-20"><Icon name="arrow-down" /></button>
+                <button type="button" onClick={() => { onChange(list.filter((_, n) => n !== i)); setOpen(null); }} aria-label="Remove question" className="px-2 py-1 text-a-red hover:text-a-red/80"><Icon name="trash-can" /></button>
               </div>
             </div>
             {isOpen && (
-              <div className="px-3 pb-3 pt-1 space-y-3 border-t border-gray-100">
+              <div className="px-3 pb-3 pt-1 space-y-3 border-t border-a-line">
                 <Field label="Question" htmlFor={`fq${i}`}><TextField id={`fq${i}`} value={f.question} onChange={(v) => patch(i, { question: v })} placeholder="e.g. How long does it take?" /></Field>
                 <Field label="Answer" htmlFor={`fa${i}`}><TextArea id={`fa${i}`} rows={3} value={f.answer} onChange={(v) => patch(i, { answer: v })} /></Field>
               </div>
@@ -191,7 +191,7 @@ export function CheckList({ options, value, onChange }: { options: { value: stri
     <div className="grid sm:grid-cols-2 gap-2 max-h-56 overflow-y-auto p-1">
       {options.map((o) => (
         <label key={o.value} className="flex items-center gap-2 text-sm cursor-pointer">
-          <input type="checkbox" checked={set.has(o.value)} onChange={(e) => { const n = new Set(set); e.target.checked ? n.add(o.value) : n.delete(o.value); onChange([...n]); }} className="rounded border-gray-300 text-brand focus:ring-brand" />
+          <input type="checkbox" checked={set.has(o.value)} onChange={(e) => { const n = new Set(set); e.target.checked ? n.add(o.value) : n.delete(o.value); onChange([...n]); }} className="rounded border-a-line2 text-brand focus:ring-brand" />
           {o.label}
         </label>
       ))}
@@ -230,12 +230,12 @@ export function MediaPicker({ open, onClose, onPick }: { open: boolean; onClose:
 
   return (
     <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-label="Choose an image">
-      <div className="bg-white rounded-xl shadow-xl w-full max-w-3xl max-h-[90vh] flex flex-col">
-        <div className="flex items-center justify-between px-5 py-4 border-b border-gray-200">
+      <div className="bg-a-surface rounded-xl shadow-xl w-full max-w-3xl max-h-[90vh] flex flex-col">
+        <div className="flex items-center justify-between px-5 py-4 border-b border-a-line">
           <h3 className="font-semibold">Choose an image</h3>
-          <button type="button" onClick={onClose} aria-label="Close" className="text-gray-500 hover:text-gray-900"><Icon name="xmark" /></button>
+          <button type="button" onClick={onClose} aria-label="Close" className="text-a-muted hover:text-a-text"><Icon name="xmark" /></button>
         </div>
-        <div className="p-5 border-b border-gray-200 bg-gray-50 space-y-2">
+        <div className="p-5 border-b border-a-line bg-a-raised space-y-2">
           <p className="text-sm font-medium">Upload a new image</p>
           <div className="flex flex-col sm:flex-row gap-2">
             <input value={alt} onChange={(e) => setAlt(e.target.value)} placeholder="Alt text: describe the image (required)" className={inputCls} />
@@ -244,18 +244,18 @@ export function MediaPicker({ open, onClose, onPick }: { open: boolean; onClose:
               <input type="file" accept="image/jpeg,image/png,image/webp,image/gif" hidden disabled={busy} onChange={(e) => e.target.files?.[0] && upload(e.target.files[0])} />
             </label>
           </div>
-          {err && <p role="alert" className="text-xs text-red-600">{err}</p>}
-          <p className="text-xs text-gray-500">JPG, PNG, WebP or GIF up to 8 MB. Resized to 1600px and converted to WebP automatically.</p>
+          {err && <p role="alert" className="text-xs text-a-red">{err}</p>}
+          <p className="text-xs text-a-muted">JPG, PNG, WebP or GIF up to 8 MB. Resized to 1600px and converted to WebP automatically.</p>
         </div>
         <div className="p-5 overflow-y-auto">
-          {!items ? <p className="text-sm text-gray-500">Loading…</p> : items.length === 0 ? <p className="text-sm text-gray-500">No images yet. Upload one above.</p> : (
+          {!items ? <p className="text-sm text-a-muted">Loading…</p> : items.length === 0 ? <p className="text-sm text-a-muted">No images yet. Upload one above.</p> : (
             <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
               {items.map((m) => (
                 <li key={m.id}>
-                  <button type="button" onClick={() => { onPick(m); onClose(); }} className="group block w-full text-left border border-gray-200 rounded-lg overflow-hidden hover:border-brand focus:outline-none focus:ring-2 focus:ring-brand">
+                  <button type="button" onClick={() => { onPick(m); onClose(); }} className="group block w-full text-left border border-a-line rounded-lg overflow-hidden hover:border-brand focus:outline-none focus:ring-2 focus:ring-brand">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={`/uploads/${m.file}`} alt={m.alt} loading="lazy" className="w-full h-24 object-cover bg-gray-100" />
-                    <span className="block px-2 py-1.5 text-xs text-gray-600 truncate">{m.alt}</span>
+                    <img src={`/uploads/${m.file}`} alt={m.alt} loading="lazy" className="w-full h-24 object-cover bg-a-line" />
+                    <span className="block px-2 py-1.5 text-xs text-a-muted truncate">{m.alt}</span>
                   </button>
                 </li>
               ))}
@@ -271,12 +271,12 @@ export function ImageField({ src, alt, onChange, error, label = "Cover image", s
   const [open, setOpen] = useState(false);
   return (
     <div className="space-y-3">
-      <p className="text-sm font-medium text-gray-800">{label}</p>
+      <p className="text-sm font-medium text-a-text">{label}</p>
       {src ? (
         // eslint-disable-next-line @next/next/no-img-element
-        <img src={src} alt={alt || ""} className="w-full h-36 object-cover rounded-md border border-gray-200 bg-gray-100" />
+        <img src={src} alt={alt || ""} className="w-full h-36 object-cover rounded-md border border-a-line bg-a-line" />
       ) : (
-        <div className="h-24 rounded-md border border-dashed border-gray-300 flex items-center justify-center text-sm text-gray-400">No image</div>
+        <div className="h-24 rounded-md border border-dashed border-a-line2 flex items-center justify-center text-sm text-a-subtle">No image</div>
       )}
       <div className="flex gap-2">
         <button type="button" onClick={() => setOpen(true)} className={btnGhost}><Icon name="image" />{src ? "Change" : "Choose"}</button>
@@ -302,11 +302,11 @@ export function SeoPanel({ seo, onChange, errors, fallbackTitle, fallbackDescrip
   const keywords = Array.isArray(s.keywords) ? s.keywords.join(", ") : s.keywords ?? "";
   return (
     <div className="space-y-5">
-      <div className="rounded-md border border-gray-200 bg-white p-4">
-        <p className="text-xs text-gray-500 mb-2">Google preview</p>
-        <p className="text-xs text-gray-600 truncate">{siteUrl.replace(/^https?:\/\//, "")}{path}</p>
-        <p className="text-lg leading-snug text-[#1a0dab] truncate">{title.length > 60 ? title.slice(0, 57) + "…" : title} | {siteName}</p>
-        <p className="text-sm text-gray-600 line-clamp-2">{desc.length > 160 ? desc.slice(0, 157) + "…" : desc || "No description. Search engines will pick text from the page."}</p>
+      <div className="rounded-md border border-a-line bg-a-surface p-4">
+        <p className="text-xs text-a-muted mb-2">Google preview</p>
+        <p className="text-xs text-a-muted truncate">{siteUrl.replace(/^https?:\/\//, "")}{path}</p>
+        <p className="text-lg leading-snug text-[#8ab4f8] truncate">{title.length > 60 ? title.slice(0, 57) + "…" : title} | {siteName}</p>
+        <p className="text-sm text-a-muted line-clamp-2">{desc.length > 160 ? desc.slice(0, 157) + "…" : desc || "No description. Search engines will pick text from the page."}</p>
       </div>
       <Field label="Meta title" htmlFor="seo-title" counter={<Counter value={s.title ?? ""} min={15} max={60} />} hint={`Leave empty to use "${fallbackTitle}"`}>
         <TextField id="seo-title" value={s.title ?? ""} onChange={(v) => set({ title: v })} />
@@ -314,9 +314,9 @@ export function SeoPanel({ seo, onChange, errors, fallbackTitle, fallbackDescrip
       <Field label="Meta description" htmlFor="seo-desc" counter={<Counter value={s.description ?? ""} min={70} max={160} />} hint="120–160 characters works best. Leave empty to use the summary." error={errors["seo.description"]}>
         <TextArea id="seo-desc" rows={3} value={s.description ?? ""} onChange={(v) => set({ description: v })} />
       </Field>
-      <details className="rounded-md border border-gray-200">
-        <summary className="cursor-pointer px-4 py-2.5 text-sm font-medium text-gray-700">Advanced SEO options</summary>
-        <div className="p-4 pt-2 space-y-5 border-t border-gray-100">
+      <details className="rounded-md border border-a-line">
+        <summary className="cursor-pointer px-4 py-2.5 text-sm font-medium text-a-muted">Advanced SEO options</summary>
+        <div className="p-4 pt-2 space-y-5 border-t border-a-line">
       <Field label="Keywords" htmlFor="seo-kw" hint="Comma separated. Optional, search engines mostly ignore them but AI tools and internal search can use them.">
         <TextField id="seo-kw" value={keywords} onChange={(v) => set({ keywords: v.split(",").map((x) => x.trim()).filter(Boolean) })} />
       </Field>
@@ -335,7 +335,7 @@ export function SchemaPanel({ faqSchema, onFaqSchema, custom, onCustom, error, p
   return (
     <div className="space-y-5">
       {hasFaqs !== false && <Toggle checked={faqSchema} onChange={onFaqSchema} label="FAQ schema (FAQPage)" hint="Adds structured data so Google and AI assistants can show these questions as rich answers. Always generated from the visible FAQs." />}
-      <details className="rounded-md border border-gray-200 bg-gray-50">
+      <details className="rounded-md border border-a-line bg-a-raised">
         <summary className="cursor-pointer px-4 py-2.5 text-sm font-medium">Generated schema (automatic, read-only)</summary>
         <pre className="px-4 pb-4 text-xs overflow-auto max-h-80">{JSON.stringify(preview, null, 2)}</pre>
       </details>

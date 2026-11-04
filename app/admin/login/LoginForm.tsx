@@ -10,7 +10,7 @@ export default function LoginForm({ error }: { error?: string }) {
   return (
     <form method="post" action="/admin/api/login" className="space-y-4">
       <div>
-        <label htmlFor="user" className="block text-sm font-medium mb-1">Username</label>
+        <label htmlFor="user" className="block text-sm font-medium mb-1">Username or email</label>
         <input id="user" name="user" autoComplete="username" required className={inputCls} defaultValue="admin" />
       </div>
       <div>
@@ -23,13 +23,13 @@ export default function LoginForm({ error }: { error?: string }) {
             aria-label={show ? "Hide password" : "Show password"}
             aria-pressed={show}
             title={show ? "Hide password" : "Show password"}
-            className="absolute inset-y-0 right-0 w-11 flex items-center justify-center text-gray-500 hover:text-gray-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/40 rounded-r-md"
+            className="absolute inset-y-0 right-0 w-11 flex items-center justify-center text-a-muted hover:text-a-text focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/40 rounded-r-md"
           >
             <Icon name={show ? "eye-slash" : "eye"} />
           </button>
         </div>
       </div>
-      {error && <p role="alert" className="text-sm text-red-600">{error}</p>}
+      {error && <p role="alert" className="text-sm text-a-red">{error}</p>}
       <button type="submit" className={`${btnPrimary} w-full`}>Sign in</button>
     </form>
   );

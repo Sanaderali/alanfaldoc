@@ -1,0 +1,68 @@
+"use client";
+
+import { useEffect, useState, useTransition } from "react";
+import { useRouter } from "next/navigation";
+import type { Ticket } from "@/types/content";
+import { btnGhost, btnPrimary, inputCls, wpDate } from "../../ui";
+import { markTicketRead, replyTicket, setTicketStatus } from "../tickets-actions";
+
+export default function TicketThread({ ticket, canReply }: { ticket: Ticket; canReply: boolean }) {
+  const router = useRouter();
+  const [text, setText] = useState("");
+  const [msg, setMsg] = useState<{ ok: boolean; text: string } | null>(null);
+  const [pending, start] = useTransition();
+
+  useEffect(() => { if (ticket.unreadStaff) markTicketRead(ticket.id).then(() => router.refresh()); }, [ticket.id, ticket.unreadStaff, router]);
+
+  const send = (close: boolean) => start(async () => {
+    const r = await replyTicket(ticket.id, text, close);
+    setMsg({ ok: r.ok, text: r.message ?? "" });
+    if (r.ok) { setText(""); router.refresh(); }
+  });
+  const bubble = (who: "customer" | "staff") => `border px-3.5 py-3 text-[13px] leading-relaxed whitespace-pre-wrap ${who === "staff" ? "bg-brand-50 border-brand-200" : "bg-a-surface border-a-line"}`;
+
+  return (
+    <div className="grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_300px] gap-5 items-start">
+      <div className="space-y-3 min-w-0">
+        <div className={bubble("customer")}>
+          <p className="text-xs text-a-muted mb-1.5"><strong className="text-a-text">{ticket.name}</strong> · {wpDate(ticket.createdAt)}</p>
+          {ticket.message}
+        </div>
+        {ticket.replies.map((r) => (
+          <div key={r.id} className={bubble(r.by)}>
+            <p className="text-xs text-a-muted mb-1.5"><strong className="text-a-text">{r.by === "staff" ? r.staffName || "Support" : ticket.name}</strong> · {wpDate(r.at)}</p>
+            {r.body}
+          </div>
+        ))}
+        {canReply && (
+          <section className="bg-a-surface border border-a-line p-3 space-y-3">
+            <label htmlFor="reply" className="text-[13px] font-semibold">Reply to {ticket.name}</label>
+            <textarea id="reply" rows={6} value={text} onChange={(e) => setText(e.target.value)} className={inputCls} placeholder="Write your reply. It is emailed to the customer when email is connected." />
+            {msg && <p role={msg.ok ? "status" : "alert"} className={`text-[13px] px-2.5 py-1.5 border-l-4 ${msg.ok ? "border-brand text-brand" : "border-a-red text-a-red"}`}>{msg.text}</p>}
+            <div className="flex gap-2"><button type="button" disabled={pending || !text.trim()} onClick={() => send(false)} className={btnPrimary}>Send reply</button><button type="button" disabled={pending || !text.trim()} onClick={() => send(true)} className={btnGhost}>Reply & close</button></div>
+          </section>
+        )}
+      </div>
+      <aside className="space-y-5 xl:sticky xl:top-12">
+        <section className="bg-a-surface border border-a-line">
+          <h2 className="px-3 py-2.5 font-semibold text-[14px] border-b border-a-line">Details</h2>
+          <dl className="p-3 text-[13px] space-y-2">
+            <div><dt className="text-a-muted text-xs">Customer</dt><dd>{ticket.name}</dd></div>
+            <div><dt className="text-a-muted text-xs">Email</dt><dd><a className="text-brand-text underline" href={`mailto:${ticket.email}`}>{ticket.email}</a></dd></div>
+            {ticket.phone && <div><dt className="text-a-muted text-xs">Phone</dt><dd><a className="text-brand-text underline" href={`tel:${ticket.phone}`}>{ticket.phone}</a></dd></div>}
+            <div><dt className="text-a-muted text-xs">Opened</dt><dd>{wpDate(ticket.createdAt)}</dd></div>
+            {ticket.ip && <div><dt className="text-a-muted text-xs">IP address</dt><dd>{ticket.ip}</dd></div>}
+          </dl>
+          {canReply && (
+            <div className="px-3 pb-3">
+              <label htmlFor="tstatus" className="text-xs text-a-muted">Status</label>
+              <select id="tstatus" value={ticket.status} onChange={(e) => start(async () => { await setTicketStatus(ticket.id, e.target.value as Ticket["status"]); router.refresh(); })} className={`${inputCls} mt-1`}>
+                <option value="open">Open</option><option value="pending">Pending (waiting for customer)</option><option value="closed">Closed</option>
+              </select>
+            </div>
+          )}
+        </section>
+      </aside>
+    </div>
+  );
+}

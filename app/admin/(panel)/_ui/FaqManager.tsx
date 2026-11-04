@@ -60,15 +60,15 @@ export default function FaqManager({ initial }: { initial: Form[] }) {
         {groups.map((gr, i) => {
           const isOpen = open === i;
           return (
-            <section key={i} className={`bg-white border rounded-lg shadow-sm ${isOpen ? "border-brand/50" : "border-gray-200"}`}>
+            <section key={i} className={`bg-a-surface border rounded-lg shadow-sm ${isOpen ? "border-brand/50" : "border-a-line"}`}>
               <button type="button" aria-expanded={isOpen} onClick={() => setOpen(isOpen ? null : i)} className="w-full flex items-center gap-3 px-4 py-3.5 text-left">
-                <Icon name="chevron-right" className={`text-xs text-gray-400 transition-transform ${isOpen ? "rotate-90" : ""}`} />
-                <span className="flex-1 min-w-0 font-semibold truncate">{gr.title || <em className="text-gray-400">Untitled group</em>}</span>
-                <span className="text-xs text-gray-500 whitespace-nowrap">{gr.faqs?.length ?? 0} questions</span>
-                {gr.status === "draft" && <span className="text-xs px-2 py-0.5 rounded-full bg-gray-100 text-gray-600">Draft</span>}
+                <Icon name="chevron-right" className={`text-xs text-a-subtle transition-transform ${isOpen ? "rotate-90" : ""}`} />
+                <span className="flex-1 min-w-0 font-semibold truncate">{gr.title || <em className="text-a-subtle">Untitled group</em>}</span>
+                <span className="text-xs text-a-muted whitespace-nowrap">{gr.faqs?.length ?? 0} questions</span>
+                {gr.status === "draft" && <span className="text-xs px-2 py-0.5 rounded-full bg-a-line text-a-muted">Draft</span>}
               </button>
               {isOpen && (
-                <div className="px-4 pb-4 pt-2 border-t border-gray-100 space-y-4">
+                <div className="px-4 pb-4 pt-2 border-t border-a-line space-y-4">
                   <Field label="Group title" htmlFor={`gt${i}`}><TextField id={`gt${i}`} value={gr.title} onChange={(v) => patch(i, { title: v })} placeholder="e.g. Visa Processing" /></Field>
                   <FaqsEditor value={gr.faqs ?? []} onChange={(v) => patch(i, { faqs: v })} />
                 </div>
@@ -78,20 +78,20 @@ export default function FaqManager({ initial }: { initial: Form[] }) {
         })}
         <button type="button" onClick={() => { change([...groups, { title: "", status: "published", faqs: [] }]); setOpen(groups.length); }} className={btnGhost}><Icon name="plus" />Add group</button>
 
-        <details className="bg-white border border-[#c3c4c7] shadow-[0_1px_1px_rgba(0,0,0,.04)]">
+        <details className="bg-a-surface border border-a-line shadow-[0_1px_1px_rgba(0,0,0,.04)]">
           <summary className="cursor-pointer px-4 py-3 text-sm font-semibold">FAQ schema preview ({live.length} questions)</summary>
-          <pre className="px-4 pb-4 text-xs overflow-auto max-h-80 border-t border-gray-100 pt-3">{JSON.stringify(faqLd(live as never), null, 2)}</pre>
+          <pre className="px-4 pb-4 text-xs overflow-auto max-h-80 border-t border-a-line pt-3">{JSON.stringify(faqLd(live as never), null, 2)}</pre>
         </details>
       </div>
 
       {/* ---------- sidebar ---------- */}
       <aside className="space-y-5 xl:sticky xl:top-4">
-        <section className="bg-white border border-[#c3c4c7] shadow-[0_1px_1px_rgba(0,0,0,.04)]">
-          <h2 className="px-4 py-3 font-semibold text-sm border-b border-gray-100">Publish</h2>
+        <section className="bg-a-surface border border-a-line shadow-[0_1px_1px_rgba(0,0,0,.04)]">
+          <h2 className="px-4 py-3 font-semibold text-sm border-b border-a-line">Publish</h2>
           <div className="p-4 space-y-4">
-            <p className="text-sm text-gray-600">{groups.length} groups · {total} questions</p>
-            {msg && <p role={msg.ok ? "status" : "alert"} className={`text-sm rounded-md px-3 py-2 ${msg.ok ? "bg-emerald-50 text-emerald-800" : "bg-red-50 text-red-700"}`}>{msg.text}</p>}
-            {!msg && dirty && <p className="text-xs text-amber-700">You have unsaved changes.</p>}
+            <p className="text-sm text-a-muted">{groups.length} groups · {total} questions</p>
+            {msg && <p role={msg.ok ? "status" : "alert"} className={`text-sm rounded-md px-3 py-2 ${msg.ok ? "bg-brand/10 text-brand" : "bg-a-red/10 text-a-red"}`}>{msg.text}</p>}
+            {!msg && dirty && <p className="text-xs text-amber-300">You have unsaved changes.</p>}
             <div className="flex flex-col gap-2">
               <button type="button" disabled={pending} onClick={save} className={`${btnPrimary} w-full`}>{pending ? "Saving…" : "Save FAQs"}</button>
               <button type="button" disabled={previewing} onClick={preview} className={`${btnGhost} w-full`}><Icon name="eye" />Preview</button>
@@ -100,10 +100,10 @@ export default function FaqManager({ initial }: { initial: Form[] }) {
           </div>
         </section>
 
-        <section className="bg-white border border-[#c3c4c7] shadow-[0_1px_1px_rgba(0,0,0,.04)]">
-          <h2 className="px-4 py-3 font-semibold text-sm border-b border-gray-100">{g ? "Selected group" : "Group options"}</h2>
+        <section className="bg-a-surface border border-a-line shadow-[0_1px_1px_rgba(0,0,0,.04)]">
+          <h2 className="px-4 py-3 font-semibold text-sm border-b border-a-line">{g ? "Selected group" : "Group options"}</h2>
           <div className="p-4 space-y-4">
-            {!g || open === null ? <p className="text-sm text-gray-500">Open a group to change its status, order or delete it.</p> : (
+            {!g || open === null ? <p className="text-sm text-a-muted">Open a group to change its status, order or delete it.</p> : (
               <>
                 <p className="text-sm font-medium truncate">{g.title || "Untitled group"}</p>
                 <Field label="Status" htmlFor="gstatus">
@@ -115,14 +115,14 @@ export default function FaqManager({ initial }: { initial: Form[] }) {
                   <button type="button" onClick={() => move(open, -1)} disabled={open === 0} className={btnGhost}><Icon name="arrow-up" />Move up</button>
                   <button type="button" onClick={() => move(open, 1)} disabled={open === groups.length - 1} className={btnGhost}><Icon name="arrow-down" />Move down</button>
                 </div>
-                <button type="button" onClick={() => { if (confirm("Delete this group and all its questions?")) { change(groups.filter((_, n) => n !== open)); setOpen(null); } }} className="w-full inline-flex items-center justify-center gap-2 px-3 py-2 border border-red-200 text-red-600 text-sm font-medium rounded-md hover:bg-red-50"><Icon name="trash-can" />Delete group</button>
+                <button type="button" onClick={() => { if (confirm("Delete this group and all its questions?")) { change(groups.filter((_, n) => n !== open)); setOpen(null); } }} className="w-full inline-flex items-center justify-center gap-2 px-3 py-2 border border-a-red/40 text-a-red text-sm font-medium rounded-md hover:bg-a-red/10"><Icon name="trash-can" />Delete group</button>
               </>
             )}
           </div>
         </section>
 
-        <section className="bg-white border border-[#c3c4c7] shadow-[0_1px_1px_rgba(0,0,0,.04)]">
-          <h2 className="px-4 py-3 font-semibold text-sm border-b border-gray-100">Search engine</h2>
+        <section className="bg-a-surface border border-a-line shadow-[0_1px_1px_rgba(0,0,0,.04)]">
+          <h2 className="px-4 py-3 font-semibold text-sm border-b border-a-line">Search engine</h2>
           <div className="p-4"><Link href="/admin/pages/faqs" className={`${btnGhost} w-full`}>FAQ page SEO & schema</Link></div>
         </section>
       </aside>

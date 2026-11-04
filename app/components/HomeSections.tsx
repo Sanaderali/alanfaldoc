@@ -1,18 +1,10 @@
-"use client";
-
-import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Icon from "./Icon";
 import Flag from "./Flag";
+import FaqList from "./FaqList";
 
-export default function HomeClient() {
-  const [mounted, setMounted] = useState(false);
-  const [activeAccordion, setActiveAccordion] = useState<number | null>(0);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+export default function HomeSections() {
 
   const services = [
     { icon: "building", title: "Company Formation", desc: "Complete mainland and free zone company setup solutions in Dubai and UAE" },
@@ -105,7 +97,7 @@ export default function HomeClient() {
                 <option>Trade License</option>
                 <option>Document Clearing</option>
               </select>
-              <button type="submit" className="px-6 py-3 bg-brand text-white font-semibold rounded hover:bg-brand-dark hover:shadow-lg hover:scale-105 transition-all duration-300 uppercase text-sm">
+              <button type="submit" className="btn btn-primary">
                 SEND REQUEST
               </button>
             </form>
@@ -136,7 +128,7 @@ export default function HomeClient() {
               <p className="text-gray-600 mb-6 leading-relaxed">
                 Cursus risus laoreet auctor, varius augue. Nulla dolor and sapien risus nec, luctus mauris donec diam sapien neque in cubilia an ligula quaerat ipsum volute turpis sodales sapien vitae donec an ipsum porta justo integer at velna vitae auctor a magna risus
               </p>
-              <Link href="/about" className="inline-block px-8 py-3 border-2 border-brand text-brand-text font-semibold rounded hover:bg-brand hover:text-white hover:shadow-lg hover:scale-105 transition-all duration-300 uppercase text-sm">
+              <Link href="/about" className="btn btn-secondary inline-block">
                 DISCOVER MORE
               </Link>
             </div>
@@ -202,7 +194,7 @@ export default function HomeClient() {
               <h3 className="text-sm uppercase tracking-wide mb-2 text-accent font-semibold">CONSULTATIONS FOR PROSPECTIVE IMMIGRANTS</h3>
               <p className="text-gray-600 text-sm">Aliquam a augue suscipit, luctus neque purus ipsum neque dolor primis libero tempus, and blandit ligula varius</p>
             </div>
-            <Link href="/contact" className="px-8 py-3 bg-accent text-white font-semibold rounded hover:bg-accent-dark hover:shadow-lg transition-all uppercase text-sm whitespace-nowrap">
+            <Link href="/contact" className="btn btn-cta">
               GET CONSULTATION
             </Link>
           </div>
@@ -256,27 +248,7 @@ export default function HomeClient() {
               Cursus porta, feugiat primis in ultrice ligula risus auctor tempus dolor feugiat, felis lacinia risus interdum auctor id viverra dolor iaculis luctus placerat and massa
             </p>
           </div>
-          <div className="space-y-3">
-            {faqs.map((faq, index) => (
-              <div key={index} className="bg-canvas rounded overflow-hidden border border-gray-200 hover:border-brand hover:shadow-md transition-all duration-300">
-                <button
-                  onClick={() => setActiveAccordion(activeAccordion === index ? null : index)}
-                  className="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-100 transition-all duration-300 group"
-                >
-                  <span className="font-semibold text-ink text-sm sm:text-base pr-4 group-hover:text-brand-text transition-colors">{index + 1}. {faq.question}</span>
-                  <span className={`text-2xl text-gray-400 flex-shrink-0 transform group-hover:scale-125 group-hover:text-brand-text transition-all duration-500 ${activeAccordion === index ? 'rotate-180' : 'rotate-0'}`}>{activeAccordion === index ? '−' : '+'}</span>
-                </button>
-                <div className={`faq-content ${activeAccordion === index ? 'open' : ''} ${activeAccordion === index ? 'px-6 pb-4 pt-2' : 'px-6'}`}>
-                  <ul className="space-y-2 text-gray-600 text-sm leading-relaxed">
-                    <li className="flex items-start">
-                      <span className="mr-2 mt-1.5 w-1.5 h-1.5 rounded-full bg-brand flex-shrink-0"></span>
-                      <span>{faq.answer}</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            ))}
-          </div>
+          <FaqList faqs={faqs} />
           <div className="text-center mt-8">
             <p className="text-gray-600 text-sm">
               Still have a question? <Link href="/contact" className="text-brand-text hover:underline font-medium">Ask your question here</Link>
@@ -324,7 +296,7 @@ export default function HomeClient() {
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <span className="text-sm sm:text-base">Call : <span className="font-bold text-lg">+971 50 123 4567</span></span>
-            <Link href="/contact" className="px-8 py-3 bg-accent text-white font-semibold rounded hover:bg-accent-dark hover:shadow-lg hover:scale-105 transition-all duration-300 uppercase text-sm">
+            <Link href="/contact" className="btn btn-cta">
               GET CONSULTATION
             </Link>
           </div>

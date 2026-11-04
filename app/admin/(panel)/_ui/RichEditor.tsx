@@ -26,7 +26,7 @@ function Btn({ onClick, active, label, icon, disabled }: { onClick: () => void; 
       aria-label={label}
       title={label}
       aria-pressed={active}
-      className={`w-9 h-9 inline-flex items-center justify-center rounded-md text-sm transition-colors disabled:opacity-30 ${active ? "bg-brand-100 text-brand-text" : "text-gray-600 hover:bg-gray-100"}`}
+      className={`w-9 h-9 inline-flex items-center justify-center rounded-md text-sm transition-colors disabled:opacity-30 ${active ? "bg-brand-100 text-brand-text" : "text-a-muted hover:bg-a-raised"}`}
     >
       <Icon name={icon} />
     </button>
@@ -52,10 +52,10 @@ function Toolbar({ editor, onImage }: { editor: Editor; onImage: () => void }) {
   };
 
   return (
-    <div className="sticky top-8 z-20 bg-[#f6f7f7] border-b border-[#c3c4c7]">
+    <div className="sticky top-8 z-20 bg-a-raised border-b border-a-line">
       <div className="flex flex-wrap items-center gap-0.5 p-2">
-        <button type="button" onMouseDown={(e) => e.preventDefault()} onClick={onImage} className="mr-2 inline-flex items-center gap-1.5 h-9 px-3 text-[13px] font-medium text-brand-text bg-[#f6f7f7] border border-brand/70 rounded-[3px] hover:bg-white"><Icon name="photo-film" />Add Media</button>
-        <select value={block} onChange={(e) => setBlock(e.target.value)} aria-label="Text style" className="h-9 mr-1 px-2 text-sm border border-gray-300 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-brand/40">
+        <button type="button" onMouseDown={(e) => e.preventDefault()} onClick={onImage} className="mr-2 inline-flex items-center gap-1.5 h-9 px-3 text-[13px] font-medium text-brand-text bg-a-raised border border-brand/70 rounded-[3px] hover:bg-a-raised"><Icon name="photo-film" />Add Media</button>
+        <select value={block} onChange={(e) => setBlock(e.target.value)} aria-label="Text style" className="h-9 mr-1 px-2 text-sm border border-a-line2 rounded-md bg-a-surface focus:outline-none focus:ring-2 focus:ring-brand/40">
           <option value="p">Paragraph</option>
           <option value="h2">Heading</option>
           <option value="h3">Sub-heading</option>
@@ -63,23 +63,23 @@ function Toolbar({ editor, onImage }: { editor: Editor; onImage: () => void }) {
         <Btn label="Bold" icon="bold" active={editor.isActive("bold")} onClick={() => editor.chain().focus().toggleBold().run()} />
         <Btn label="Italic" icon="italic" active={editor.isActive("italic")} onClick={() => editor.chain().focus().toggleItalic().run()} />
         <Btn label="Underline" icon="underline" active={editor.isActive("underline")} onClick={() => editor.chain().focus().toggleUnderline().run()} />
-        <span className="w-px h-6 bg-gray-200 mx-1" />
+        <span className="w-px h-6 bg-a-line mx-1" />
         <Btn label="Bulleted list" icon="list-ul" active={editor.isActive("bulletList")} onClick={() => editor.chain().focus().toggleBulletList().run()} />
         <Btn label="Numbered list" icon="list-ol" active={editor.isActive("orderedList")} onClick={() => editor.chain().focus().toggleOrderedList().run()} />
         <Btn label="Quote" icon="quote-left" active={editor.isActive("blockquote")} onClick={() => editor.chain().focus().toggleBlockquote().run()} />
-        <span className="w-px h-6 bg-gray-200 mx-1" />
+        <span className="w-px h-6 bg-a-line mx-1" />
         <Btn label="Add link" icon="link" active={editor.isActive("link")} onClick={openLink} />
         <Btn label="Insert image" icon="image" onClick={onImage} />
         <Btn label="Divider line" icon="minus" onClick={() => editor.chain().focus().setHorizontalRule().run()} />
-        <span className="w-px h-6 bg-gray-200 mx-1" />
+        <span className="w-px h-6 bg-a-line mx-1" />
         <Btn label="Undo" icon="rotate-left" disabled={!editor.can().undo()} onClick={() => editor.chain().focus().undo().run()} />
         <Btn label="Redo" icon="rotate-right" disabled={!editor.can().redo()} onClick={() => editor.chain().focus().redo().run()} />
       </div>
       {linkOpen && (
         <div className="flex items-center gap-2 px-3 pb-3">
-          <input autoFocus value={url} onChange={(e) => setUrl(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); applyLink(); } if (e.key === "Escape") setLinkOpen(false); }} placeholder="Paste a link, e.g. https://… or /services/trade-license" aria-label="Link address" className="flex-1 px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand/40" />
+          <input autoFocus value={url} onChange={(e) => setUrl(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); applyLink(); } if (e.key === "Escape") setLinkOpen(false); }} placeholder="Paste a link, e.g. https://… or /services/trade-license" aria-label="Link address" className="flex-1 px-3 py-2 text-sm border border-a-line2 rounded-md focus:outline-none focus:ring-2 focus:ring-brand/40" />
           <button type="button" onClick={applyLink} className="px-3 py-2 text-sm font-medium bg-gray-900 text-white rounded-md">{url.trim() ? "Apply" : "Remove link"}</button>
-          <button type="button" onClick={() => setLinkOpen(false)} className="px-3 py-2 text-sm text-gray-600">Cancel</button>
+          <button type="button" onClick={() => setLinkOpen(false)} className="px-3 py-2 text-sm text-a-muted">Cancel</button>
         </div>
       )}
     </div>
@@ -97,9 +97,9 @@ export default function RichEditor({ value, onChange, placeholder = "Start writi
     onUpdate: ({ editor }) => onChange(editor.isEmpty ? "" : editor.getHTML()),
   });
 
-  if (!editor) return <div className="border border-[#c3c4c7] bg-white h-96 animate-pulse" aria-busy="true" />;
+  if (!editor) return <div className="border border-a-line bg-a-surface h-96 animate-pulse" aria-busy="true" />;
   return (
-    <div className="border border-[#c3c4c7] bg-white shadow-[0_1px_1px_rgba(0,0,0,.04)] focus-within:border-brand">
+    <div className="border border-a-line bg-a-surface shadow-[0_1px_1px_rgba(0,0,0,.04)] focus-within:border-brand">
       <Toolbar editor={editor} onImage={() => setPicker(true)} />
       <EditorContent editor={editor} />
       <MediaPicker

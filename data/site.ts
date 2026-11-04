@@ -8,6 +8,8 @@ export const site = {
     "Expert consultation for company formation, PRO services, visa processing and document clearing in Dubai & UAE.",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://alanfaldoc.com",
   legalName: "Al Anfal Doc",
+  /** default byline when an item has no named author */
+  defaultAuthor: "Al Anfal Doc Team",
   locale: "en_AE",
   address: "Business Bay, Dubai, UAE",
   /** structured address for schema.org. Add street / postal code / geo when known */

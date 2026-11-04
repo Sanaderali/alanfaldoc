@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { requireAdmin } from "@/lib/auth";
+import { requirePerm } from "@/lib/auth";
 import { readAll } from "@/lib/store";
 import { site } from "@/data/site";
 import { PageHeader } from "../../../ui";
@@ -8,7 +8,7 @@ import PageSeoEditor from "../../_ui/PageSeoEditor";
 export const dynamic = "force-dynamic";
 
 export default async function Page({ params }: { params: Promise<{ key: string }> }) {
-  await requireAdmin();
+  await requirePerm("seo.manage");
   const { key } = await params;
   const [pages, faqs] = await Promise.all([readAll("pages"), readAll("faqs")]);
   const p = pages.find((x) => x.key === key);

@@ -1,9 +1,9 @@
-import { requireAdmin } from "@/lib/auth";
+import { requirePerm } from "@/lib/auth";
 import ResourceList, { type ListParams } from "../_ui/ResourceList";
 
 export const dynamic = "force-dynamic";
 
 export default async function Page({ searchParams }: { searchParams: Promise<ListParams> }) {
-  await requireAdmin();
+  await requirePerm("content.view");
   return <ResourceList kind="services" params={await searchParams} />;
 }
