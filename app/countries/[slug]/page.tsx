@@ -42,12 +42,12 @@ export default async function CountryPage({ params }: Props) {
           {/* Main column */}
           <article className="lg:col-span-2 min-w-0">
             {/* Banner */}
-            <div className={`relative h-48 sm:h-64 rounded-lg overflow-hidden bg-gradient-to-br ${country.gradient} flex items-center justify-center text-center text-white mb-8 animate-fadeIn`}>
+            <div className={`relative h-48 sm:h-64 rounded-lg overflow-hidden bg-gradient-to-br ${country.gradient} flex items-center justify-center text-center text-gray-900 mb-8 animate-fadeIn`}>
               {country.image && <Image src={country.image} alt="" fill priority sizes="(min-width:1024px) 66vw, 100vw" className="object-cover" />}
               <div className="relative px-4">
                 <div className="text-6xl sm:text-7xl mb-2 drop-shadow-lg" aria-hidden="true">{country.flag}</div>
                 <p className="text-2xl sm:text-4xl font-extrabold uppercase tracking-wide">{country.name}</p>
-                <p className="text-sm sm:text-base text-white/90 mt-1">{country.tagline}</p>
+                <p className="text-sm sm:text-base text-gray-700 mt-1">{country.tagline}</p>
               </div>
             </div>
 

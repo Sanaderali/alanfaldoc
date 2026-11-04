@@ -41,7 +41,7 @@ export const countries: Country[] = [
         ],
       },
     ],
-    gradient: "from-emerald-700 via-green-800 to-gray-900",
+    gradient: "from-emerald-100 via-green-100 to-green-200",
     serviceSlugs: ["company-formation", "trade-license", "visa-processing", "pro-services"],
     featured: true,
   },
@@ -76,7 +76,7 @@ export const countries: Country[] = [
         twoColumns: true,
       },
     ],
-    gradient: "from-red-600 via-red-700 to-gray-900",
+    gradient: "from-red-100 via-rose-100 to-red-200",
     serviceSlugs: ["visa-processing", "document-clearing", "legal-translation"],
     featured: true,
   },
@@ -102,7 +102,7 @@ export const countries: Country[] = [
       },
       { heading: "Big Cities:", minor: true, paragraphs: ["London, Manchester, Birmingham, Edinburgh, Glasgow, Leeds"] },
     ],
-    gradient: "from-blue-800 via-indigo-900 to-gray-900",
+    gradient: "from-indigo-100 via-blue-100 to-indigo-200",
     serviceSlugs: ["visa-processing", "document-clearing", "legal-translation"],
     featured: true,
   },
@@ -126,7 +126,7 @@ export const countries: Country[] = [
       { heading: "Why Choose the USA?", paragraphs: ["The world's largest economy with leading universities and diverse opportunities across every industry."] },
       { heading: "Big Cities:", minor: true, paragraphs: ["New York, Los Angeles, Chicago, Houston, San Francisco, Miami"] },
     ],
-    gradient: "from-sky-700 via-blue-900 to-gray-900",
+    gradient: "from-sky-100 via-blue-100 to-sky-200",
     serviceSlugs: ["visa-processing", "document-clearing"],
   },
   {
@@ -149,7 +149,7 @@ export const countries: Country[] = [
       { heading: "Why Study In Australia?", paragraphs: ["Globally recognised qualifications, post-study work options and a high standard of living."] },
       { heading: "Big Cities:", minor: true, paragraphs: ["Sydney, Melbourne, Brisbane, Perth, Adelaide, Canberra"] },
     ],
-    gradient: "from-cyan-700 via-blue-800 to-gray-900",
+    gradient: "from-cyan-100 via-sky-100 to-blue-200",
     serviceSlugs: ["visa-processing", "document-clearing", "legal-translation"],
   },
   {
@@ -169,7 +169,7 @@ export const countries: Country[] = [
     sections: [
       { heading: "Why Saudi Arabia?", paragraphs: ["Large domestic market, major infrastructure investment and growing opportunities for international companies."] },
     ],
-    gradient: "from-green-700 via-emerald-900 to-gray-900",
+    gradient: "from-lime-100 via-emerald-100 to-green-200",
     serviceSlugs: ["document-clearing", "legal-translation", "business-consulting"],
   },
 ];

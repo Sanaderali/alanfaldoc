@@ -5,7 +5,7 @@ export type Crumb = { label: string; href?: string };
 export default function Breadcrumb({ items }: { items: Crumb[] }) {
   const all: Crumb[] = [{ label: "Home", href: "/" }, ...items];
   return (
-    <nav aria-label="Breadcrumb" className="bg-[#3d4d6a] text-white">
+    <nav aria-label="Breadcrumb" className="bg-gray-100 text-gray-700 border-b border-gray-200">
       <ol className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-wrap items-center gap-x-2 text-sm">
         {all.map((c, i) => (
           <li key={i} className="flex items-center gap-2">

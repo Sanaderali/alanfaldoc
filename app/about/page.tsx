@@ -47,11 +47,11 @@ export default async function AboutPage() {
             </Link>
           </div>
           <Reveal variant="right">
-            <div className="rounded-lg bg-gradient-to-br from-[#3d4d6a] to-blue-900 text-white p-8 sm:p-10 grid grid-cols-2 gap-6">
+            <div className="rounded-lg bg-gradient-to-br from-orange-50 to-gray-100 border border-gray-200 text-gray-900 p-8 sm:p-10 grid grid-cols-2 gap-6">
               {stats.map((s) => (
                 <div key={s.label}>
                   <div className="text-3xl sm:text-4xl font-bold text-[#ff5722]">{s.value}</div>
-                  <div className="text-sm text-blue-100 mt-1">{s.label}</div>
+                  <div className="text-sm text-gray-600 mt-1">{s.label}</div>
                 </div>
               ))}
             </div>

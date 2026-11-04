@@ -63,15 +63,15 @@ export default function Home() {
   return (
     <>
       {/* Hero Section */}
-      <section id="home" className="relative bg-gradient-to-r from-gray-900 to-gray-800 text-white py-16 sm:py-20 md:py-28">
-        <div className="absolute inset-0 bg-[url('/hero-team.jpg')] bg-cover bg-center opacity-40"></div>
+      <section id="home" className="relative bg-gradient-to-b from-orange-50 via-white to-[#f6f7f9] text-gray-900 py-16 sm:py-20 md:py-28">
+        <div className="absolute inset-0 bg-[url('/hero-team.jpg')] bg-cover bg-center opacity-[0.08]"></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8">
             <p className="text-sm sm:text-base mb-4">We have 20+ years experience in</p>
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
               IMMIGRATION AND<br />VISA CONSULTATION
             </h1>
-            <p className="text-sm sm:text-base text-gray-300 max-w-3xl mx-auto mb-8 px-4">
+            <p className="text-sm sm:text-base text-gray-600 max-w-3xl mx-auto mb-8 px-4">
               Feugiat primis ligula risus auctor egestas augue mauri viverra tortor in iaculis and placerat purus feugiat primis ultrice in ligula impedit magna purus pretium neque ligula an ipsum volute turpis quaerat auctor and rhoncus laoreet augue in cubilia augue
             </p>
             <div className="flex flex-wrap justify-center gap-4 sm:gap-8 text-xs sm:text-sm mb-10">
@@ -189,11 +189,10 @@ export default function Home() {
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
             {countries.slice(0, 7).map((country, index) => (
-              <Link href="/countries" key={index} className="relative block h-32 sm:h-40 rounded-lg overflow-hidden group cursor-pointer transform hover:scale-105 hover:shadow-xl transition-all duration-500">
-                <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/70 group-hover:to-black/85 transition-all duration-300"></div>
-                <div className="absolute inset-0 flex items-center justify-center text-5xl sm:text-6xl transform group-hover:scale-110 transition-transform duration-500">{country.img}</div>
+              <Link href="/countries" key={index} className="relative block h-32 sm:h-40 rounded-lg overflow-hidden bg-gradient-to-br from-gray-50 to-gray-200 border border-gray-200 group cursor-pointer transform hover:scale-105 hover:shadow-xl transition-all duration-500">
+                <div className="absolute inset-0 pb-6 flex items-center justify-center text-5xl sm:text-6xl transform group-hover:scale-110 transition-transform duration-500">{country.img}</div>
                 <div className="absolute bottom-4 left-0 right-0 text-center transform group-hover:translate-y-[-4px] transition-transform duration-300">
-                  <h3 className="text-white font-bold text-sm sm:text-base">{country.name}</h3>
+                  <h3 className="text-gray-900 font-bold text-sm sm:text-base">{country.name}</h3>
                 </div>
               </Link>
             ))}
@@ -202,14 +201,14 @@ export default function Home() {
       </section>
 
       {/* CTA Banner */}
-      <section className="py-12 md:py-16 bg-gradient-to-r from-blue-900 to-blue-800 text-white">
+      <section className="py-12 md:py-16 bg-gradient-to-r from-orange-50 to-orange-100 text-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-6">
             <div>
-              <h3 className="text-sm uppercase tracking-wide mb-2 text-blue-200">CONSULTATIONS FOR PROSPECTIVE IMMIGRANTS</h3>
-              <p className="text-gray-200 text-sm">Aliquam a augue suscipit, luctus neque purus ipsum neque dolor primis libero tempus, and blandit ligula varius</p>
+              <h3 className="text-sm uppercase tracking-wide mb-2 text-[#ff5722] font-semibold">CONSULTATIONS FOR PROSPECTIVE IMMIGRANTS</h3>
+              <p className="text-gray-600 text-sm">Aliquam a augue suscipit, luctus neque purus ipsum neque dolor primis libero tempus, and blandit ligula varius</p>
             </div>
-            <Link href="/contact" className="px-8 py-3 border-2 border-white text-white font-semibold hover:bg-white hover:text-blue-900 transition-all uppercase text-sm whitespace-nowrap">
+            <Link href="/contact" className="px-8 py-3 border-2 border-gray-900 text-gray-900 font-semibold hover:bg-gray-900 hover:text-white transition-all uppercase text-sm whitespace-nowrap">
               GET CONSULTATION
             </Link>
           </div>
@@ -321,12 +320,12 @@ export default function Home() {
       </section>
 
       {/* Final CTA */}
-      <section className="py-12 md:py-16 bg-gradient-to-r from-gray-900 to-gray-800 text-white">
+      <section className="py-12 md:py-16 bg-gradient-to-r from-gray-50 to-gray-100 text-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4">
             Free Immigration & Visa Consultation
           </h2>
-          <p className="text-gray-300 mb-6 max-w-3xl mx-auto text-sm sm:text-base">
+          <p className="text-gray-600 mb-6 max-w-3xl mx-auto text-sm sm:text-base">
             Aliquam a augue suscipit, luctus neque purus ipsum neque dolor primis libero tempus, and blandit posuere ligula varius magna congue cursus porta ultrice
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
