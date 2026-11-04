@@ -2,7 +2,7 @@ import "server-only";
 import fs from "node:fs/promises";
 import path from "node:path";
 import { randomUUID } from "node:crypto";
-import type { Chat, Country, FaqGroup, MediaItem, PageSettings, Post, Service, Term, Ticket, User } from "@/types/content";
+import type { Chat, Country, FaqGroup, MediaItem, PageSettings, Post, Review, Service, Term, Ticket, User } from "@/types/content";
 import { countries as seedCountries } from "@/data/countries";
 import { services as seedServices } from "@/data/services";
 import { posts as seedPosts } from "@/data/posts";
@@ -30,6 +30,7 @@ export type CollectionMap = {
   users: User;
   tickets: Ticket;
   chats: Chat;
+  reviews: Review;
 };
 export type CollectionName = keyof CollectionMap;
 
@@ -68,6 +69,7 @@ function seed<K extends CollectionName>(name: K): CollectionMap[K][] {
     users: [],
     tickets: [],
     chats: [],
+    reviews: [],
   };
   return data[name] as CollectionMap[K][];
 }

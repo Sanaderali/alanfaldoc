@@ -1,4 +1,4 @@
-import type { Country, FaqGroup, PageKey, Post, Seo, Service } from "@/types/content";
+import type { Country, FaqGroup, PageKey, Post, Review, Seo, Service } from "@/types/content";
 import { readAll } from "@/lib/store";
 import { htmlToText } from "@/lib/html";
 
@@ -88,4 +88,13 @@ export function formatDate(iso: string): string {
     year: "numeric",
     timeZone: "UTC",
   });
+}
+
+/** Home page: starred items first, then the rest (newest first) until `limit` is reached. */
+export function pickFeatured<T extends { featured?: boolean }>(items: T[], limit: number): T[] {
+  return [...items.filter((i) => i.featured), ...items.filter((i) => !i.featured)].slice(0, limit);
+}
+
+export async function getReviews(): Promise<Review[]> {
+  return live(await readAll("reviews"));
 }

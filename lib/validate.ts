@@ -143,6 +143,7 @@ export function cleanService(o: Record<string, unknown>): { item: Omit<Service, 
       faqs: cleanFaqs(o.faqs),
       relatedSlugs: strList(o.relatedSlugs, 80, 12),
       serviceType: str(o.serviceType, 120) || undefined,
+      featured: bool(o.featured),
     } as never,
   };
 }

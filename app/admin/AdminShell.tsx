@@ -18,6 +18,7 @@ const MENU: Item[] = [
     { label: "Categories", href: "/admin/posts/categories" }, { label: "Tags", href: "/admin/posts/tags" } ] },
   { label: "Services", href: "/admin/services", icon: "briefcase", perm: "content.view", children: [{ label: "All Services", href: "/admin/services" }, { label: "Add New", href: "/admin/services/new" }] },
   { label: "Countries", href: "/admin/countries", icon: "earth-americas", perm: "content.view", children: [{ label: "All Countries", href: "/admin/countries" }, { label: "Add New", href: "/admin/countries/new" }] },
+  { label: "Reviews", href: "/admin/reviews", icon: "star", perm: "content.view" },
   { label: "FAQs", href: "/admin/faqs", icon: "circle-question", perm: "faqs.manage" },
   { label: "Media", href: "/admin/media", icon: "images", perm: "media.manage" },
   { label: "Page SEO", href: "/admin/pages", icon: "magnifying-glass-chart", perm: "seo.manage" },

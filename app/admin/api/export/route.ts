@@ -13,6 +13,7 @@ export async function GET(req: Request) {
     countries: await readAll("countries"),
     posts: await readAll("posts"),
     faqs: await readAll("faqs"),
+    reviews: await readAll("reviews"),
     pages: await readAll("pages"),
     media: await readAll("media"),
     // tickets + chats include customer contact details: keep this file private. User accounts / password hashes are never exported.

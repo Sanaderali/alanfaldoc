@@ -106,7 +106,7 @@ export default function ChatPanel({ onClose }: { onClose: () => void }) {
           <p className="text-sm text-gray-600 leading-relaxed">Enter your phone number to start. No account or password needed. We only use it to reach you if the chat gets disconnected.</p>
           <div>
             <label htmlFor="chat-phone" className="block text-sm font-semibold text-ink mb-1.5">Phone number <span className="text-accent">*</span></label>
-            <input ref={input} id="chat-phone" type="tel" inputMode="tel" autoComplete="tel" required value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="+971 50 123 4567" className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-white text-ink focus:outline-none focus:ring-2 focus:ring-brand/40 focus:border-brand" />
+            <input ref={input} id="chat-phone" type="tel" inputMode="tel" autoComplete="tel" required value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="+971 5X XXX XXXX" className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-white text-ink focus:outline-none focus:ring-2 focus:ring-brand/40 focus:border-brand" />
           </div>
           <div>
             <label htmlFor="chat-name" className="block text-sm font-semibold text-ink mb-1.5">Name <span className="text-gray-400 font-normal">(optional)</span></label>

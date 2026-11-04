@@ -4,13 +4,14 @@ import { randomUUID } from "node:crypto";
 import fs from "node:fs/promises";
 import path from "node:path";
 import { redirect } from "next/navigation";
+import { refresh } from "next/cache";
 import { getCurrentUser, requirePerm } from "@/lib/auth";
 import { can } from "@/lib/rbac";
 import type { Permission } from "@/lib/rbac";
 import { mutate, readAll, now, UPLOAD_DIR, writePreview, removePreview, type CollectionMap } from "@/lib/store";
 import { refreshSite } from "@/lib/revalidate";
 import { cleanCountry, cleanPage, cleanPost, cleanService, str, cleanFaqs, type Errors } from "@/lib/validate";
-import type { FaqGroup } from "@/types/content";
+import type { FaqGroup, Review } from "@/types/content";
 
 export type SaveResult = { ok: boolean; id?: string; errors?: Errors; message?: string };
 type Kind = "services" | "countries" | "posts";
@@ -221,6 +222,38 @@ export async function emptyTrash(kind: Kind) {
   await mutate(kind, (items) => items.filter((x) => x.status !== "trash"));
   refreshSite();
   back(kind, "?status=all");
+}
+
+/** Star / un-star a service or country (featured items are listed first on the home page). */
+export async function toggleFeatured(kind: "services" | "countries", id: string) {
+  await requirePerm("content.edit");
+  await mutate(kind, (items) => items.map((x) => (x.id === id ? { ...x, featured: !(x as { featured?: boolean }).featured, updatedAt: now() } : x)));
+  refreshSite();
+  refresh();
+}
+
+/* ---------------- Reviews ("Our Success Stories" on the home page) ---------------- */
+export async function saveReviews(payload: string): Promise<SaveResult> {
+  await requirePerm("content.edit");
+  let raw: unknown;
+  try { raw = JSON.parse(payload); } catch { return { ok: false, message: "Invalid data" }; }
+  if (!Array.isArray(raw)) return { ok: false, message: "Invalid data" };
+  const errors: Errors = {};
+  const prev = await readAll("reviews");
+  const items: Review[] = raw.slice(0, 100).map((r: Record<string, unknown>, i) => {
+    const name = str(r.name, 80);
+    const text = str(r.text, 1200);
+    if (!name) errors[`r${i}`] = "Every review needs a name";
+    else if (!text) errors[`r${i}`] = "Every review needs the review text";
+    const old = prev.find((p) => p.id === r.id);
+    const rating = Math.min(5, Math.max(1, Math.round(Number(r.rating) || 5)));
+    const image = str(r.image, 300);
+    return { id: old?.id ?? randomUUID(), name, role: str(r.role, 120), text, rating, ...(image && /^(\/|https:\/\/)/.test(image) ? { image } : {}), status: r.status === "draft" ? "draft" : "published", createdAt: old?.createdAt ?? now(), updatedAt: now() } as Review;
+  });
+  if (Object.keys(errors).length) return { ok: false, errors, message: "Every review needs a name and the review text" };
+  await mutate("reviews", () => items);
+  refreshSite();
+  return { ok: true, message: "Reviews saved" };
 }
 
 /* ---------------- Categories & tags ---------------- */

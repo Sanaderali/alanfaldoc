@@ -105,6 +105,8 @@ export type Service = Managed & {
   image?: string;
   /** schema.org serviceType, defaults to the title */
   serviceType?: string;
+  /** starred in the dashboard: shown first in "Our Services" on the home page */
+  featured?: boolean;
   seo?: Seo;
 };
 
@@ -128,6 +130,18 @@ export type Post = Managed & {
   /** ISO date of last edit (used for schema + sitemap) */
   updated?: string;
   seo?: Seo;
+};
+
+/** Customer review / success story shown on the home page ("Our Success Stories"). Managed in Dashboard -> Reviews. */
+export type Review = Managed & {
+  name: string;
+  /** e.g. "Canada Study Visa" */
+  role: string;
+  text: string;
+  /** 1-5, shown as stars */
+  rating?: number;
+  /** optional photo (media library or /public path) */
+  image?: string;
 };
 
 export type NavItem = { label: string; href: string };

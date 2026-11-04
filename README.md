@@ -164,6 +164,12 @@ Dashboard -> **Team** (Super Admin only) creates, edits and **deactivates** team
 
 The full permission matrix is shown on the Team page. First run: logging in with `ADMIN_USER` / `ADMIN_PASSWORD` creates the first Super Admin; after that accounts are managed in the dashboard (passwords are stored as salted scrypt hashes). There must always be at least one active Super Admin, and you cannot deactivate yourself.
 
+### Home page content (Services, Countries, Reviews)
+
+- **Our Services** shows 6 services and **Countries We Cover** shows 8 countries. Click the **star** in *Services* / *Countries* (or switch on *Featured* inside the item) to pick which ones come first; if fewer are starred the rest are filled in automatically. Both sections end with a **More Services / More Countries** button.
+- **Our Success Stories** comes from **Dashboard -> Reviews** (add, reorder, hide, rating and photo). The section stays hidden until at least one review is published. Add only genuine reviews.
+- Phone, address and email for the whole site are in `data/site.ts` (header, footer, contact page, schema and `llms.txt` all read from there).
+
 ### Support Activity (manage your support team)
 
 **Team → Support Activity** (Super Admin / anyone with *Manage users*) shows, for each person who can reply to tickets or chat: which channels they can reply to, how many tickets they replied to, total replies, tickets currently open / pending that are assigned to them, tickets they closed, average first-response time and chats handled. Filter by 7 / 30 / 90 days or all time. A ticket is assigned to whoever replies first, or you can choose **Assigned to** on the ticket; the Tickets list has an *Assigned to* column.

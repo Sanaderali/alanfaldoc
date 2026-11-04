@@ -11,7 +11,7 @@ export const site = {
   /** default byline when an item has no named author */
   defaultAuthor: "Al Anfal Doc Team",
   locale: "en_AE",
-  address: "Business Bay, Dubai, UAE",
+  address: "Dubai, UAE",
   /** structured address for schema.org. Add street / postal code / geo when known */
   addressParts: { street: "", locality: "Dubai", region: "Dubai", country: "AE" },
   geo: null as null | { lat: number; lng: number },
@@ -21,7 +21,7 @@ export const site = {
   ],
   areaServed: ["United Arab Emirates", "Dubai", "Abu Dhabi", "Sharjah"],
   twitterHandle: "" as string, // e.g. "@alanfaldoc"
-  phone: "+971 50 123 4567",
+  phone: "+971 50 805 1192",
   email: "info@alanfaldoc.com",
   hours: ["Mon-Fri: 9:00AM - 6:30PM", "Saturday: 8:30AM - 3:30PM", "Sunday: Closed"],
   /** Put the real profile URLs here. "#" entries are ignored by schema `sameAs`. */

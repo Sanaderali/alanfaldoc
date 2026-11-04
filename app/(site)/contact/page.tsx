@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "@/app/components/SiteLink";
 import Icon from "@/app/components/Icon";
+import { site } from "@/data/site";
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -78,8 +79,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h3 className="text-xl font-bold text-ink mb-2">
-                      121 King St, Melbourne<br />
-                      VIC 3000 Australia
+                      {site.address}
                     </h3>
                     <p className="text-gray-500 text-sm">Our Location</p>
                   </div>
@@ -94,8 +94,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h3 className="text-xl font-bold text-ink mb-2">
-                      P: +12 3 3456 7890<br />
-                      F: +12 3 0987 6543
+                      <a href={`tel:${site.phone.replace(/\s/g, "")}`} className="hover:text-brand-text transition-colors">{site.phone}</a>
                     </h3>
                     <p className="text-gray-500 text-sm">Let's Talk</p>
                   </div>
@@ -110,8 +109,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h3 className="text-xl font-bold text-ink mb-2">
-                      <a href="mailto:hello@domain.com" className="hover:text-brand-text transition-colors">hello@domain.com</a><br />
-                      <a href="mailto:career@domain.com" className="hover:text-brand-text transition-colors">career@domain.com</a>
+                      <a href={`mailto:${site.email}`} className="hover:text-brand-text transition-colors">{site.email}</a>
                     </h3>
                     <p className="text-gray-500 text-sm">Drop a Line</p>
                   </div>
@@ -196,13 +194,13 @@ export default function ContactPage() {
             <div className="text-6xl mb-4 text-brand-text"><Icon name="map-location-dot" /></div>
             <p className="text-gray-600 font-semibold text-lg">Interactive Map</p>
             <p className="text-gray-500 text-sm mt-2">
-              121 King St, Melbourne, VIC 3000 Australia
+              {site.address}
             </p>
           </div>
         </div>
         {/* You can integrate Google Maps or other map service here */}
         <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3151.8385385572983!2d144.95373631531654!3d-37.81720997975171!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad65d4dd5a05d97%3A0x3e64f855a564844d!2s121%20King%20St%2C%20Melbourne%20VIC%203000%2C%20Australia!5e0!3m2!1sen!2s!4v1234567890123!5m2!1sen!2s"
+          src="https://www.google.com/maps?q=Dubai%2C%20United%20Arab%20Emirates&output=embed" title="Map of Dubai, UAE"
           width="100%"
           height="100%"
           style={{ border: 0 }}

@@ -5,7 +5,7 @@ import { auditCountry, auditPost, auditService, score, visibility } from "@/lib/
 import { readAll } from "@/lib/store";
 import { slugify } from "@/lib/validate";
 import { btnGhost, Badge, Empty, PageHeader, wpDate } from "../../ui";
-import { bulkAction, deletePermanently, duplicateItem, emptyTrash, restoreItem, trashItem } from "../actions";
+import { bulkAction, deletePermanently, duplicateItem, emptyTrash, restoreItem, toggleFeatured, trashItem } from "../actions";
 import SelectAll from "./SelectAll";
 
 type Kind = "services" | "countries" | "posts";
@@ -16,7 +16,7 @@ const meta = {
 } as const;
 
 export type ListParams = { q?: string; status?: string; orderby?: string; order?: string; paged?: string; m?: string; cat?: string };
-type Item = { id?: string; slug: string; status?: string; publishAt?: string; updatedAt?: string; createdAt?: string; date?: string; title?: string; name?: string; category?: string; tags?: string[]; author?: string; flag?: string; flagImage?: string; icon?: string };
+type Item = { id?: string; slug: string; status?: string; publishAt?: string; updatedAt?: string; createdAt?: string; date?: string; title?: string; name?: string; category?: string; tags?: string[]; author?: string; flag?: string; flagImage?: string; icon?: string; featured?: boolean };
 const PER_PAGE = 20;
 
 const linkBtn = "text-brand-text hover:text-brand-dark hover:underline";
@@ -161,7 +161,7 @@ export default async function ResourceList({ kind, params }: { kind: Kind; param
                 <td className="w-10 px-3 py-2.5"><SelectAll /></td>
                 <th className="px-3 py-2.5 font-normal"><Link href={sortHref("title")} className="text-brand-text hover:text-brand-dark">Title{arrow("title")}</Link></th>
                 {kind === "posts" && <><th className="px-3 py-2.5 font-normal">Author</th><th className="px-3 py-2.5 font-normal">Categories</th><th className="px-3 py-2.5 font-normal">Tags</th></>}
-                {kind !== "posts" && <><th className="px-3 py-2.5 font-normal">URL</th><th className="px-3 py-2.5 font-normal">SEO</th></>}
+                {kind !== "posts" && <><th className="px-3 py-2.5 font-normal" title="Starred items are shown first on the home page">Featured</th><th className="px-3 py-2.5 font-normal">URL</th><th className="px-3 py-2.5 font-normal">SEO</th></>}
                 <th className="px-3 py-2.5 font-normal whitespace-nowrap"><Link href={sortHref("date")} className="text-brand-text hover:text-brand-dark">Date{arrow("date")}</Link></th>
               </tr>
             </thead>
@@ -208,6 +208,13 @@ export default async function ResourceList({ kind, params }: { kind: Kind; param
                     )}
                     {kind !== "posts" && (
                       <>
+                        <td className="px-3 py-2.5">
+                          {inTrash ? null : (
+                            <form action={toggleFeatured.bind(null, kind as "services" | "countries", x.id!)}>
+                              <button aria-label={x.featured ? `Remove ${title(x)} from featured` : `Feature ${title(x)} on the home page`} title={x.featured ? "Featured on the home page. Click to remove" : "Click to feature on the home page"} className={`text-lg leading-none ${x.featured ? "text-amber-400" : "text-a-subtle hover:text-amber-300"}`}><Icon name={x.featured ? "fa-solid fa-star" : "fa-regular fa-star"} /></button>
+                            </form>
+                          )}
+                        </td>
                         <td className="px-3 py-2.5 text-a-muted">{m.pub}/{x.slug}</td>
                         <td className="px-3 py-2.5" title={issues(x).map((i) => i.text).join("\n") || "No issues"}><Badge tone={sc >= 85 ? "ok" : sc >= 65 ? "warn" : "error"}>{sc}</Badge></td>
                       </>
@@ -224,7 +231,7 @@ export default async function ResourceList({ kind, params }: { kind: Kind; param
               <tr className="text-left border-t border-a-line">
                 <td className="px-3 py-2.5"><SelectAll label="Select all (bottom)" /></td>
                 <th className="px-3 py-2.5 font-normal text-brand-text">Title</th>
-                {kind === "posts" ? <><th className="px-3 py-2.5 font-normal">Author</th><th className="px-3 py-2.5 font-normal">Categories</th><th className="px-3 py-2.5 font-normal">Tags</th></> : <><th className="px-3 py-2.5 font-normal">URL</th><th className="px-3 py-2.5 font-normal">SEO</th></>}
+                {kind === "posts" ? <><th className="px-3 py-2.5 font-normal">Author</th><th className="px-3 py-2.5 font-normal">Categories</th><th className="px-3 py-2.5 font-normal">Tags</th></> : <><th className="px-3 py-2.5 font-normal">Featured</th><th className="px-3 py-2.5 font-normal">URL</th><th className="px-3 py-2.5 font-normal">SEO</th></>}
                 <th className="px-3 py-2.5 font-normal text-brand-text">Date</th>
               </tr>
             </tfoot>

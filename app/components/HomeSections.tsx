@@ -3,27 +3,24 @@ import Link from "@/app/components/SiteLink";
 import Icon from "./Icon";
 import Flag from "./Flag";
 import FaqList from "./FaqList";
+import { site } from "@/data/site";
+import { getCountries, getReviews, getServices, pickFeatured } from "@/lib/content";
 
-export default function HomeSections() {
+const WHY = [
+  { icon: "shield-halved", title: "Government-approved process", text: "Every application follows the official UAE procedures, so your licence, visa or attestation is handled correctly the first time." },
+  { icon: "bolt", title: "Fast turnaround", text: "We prepare, check and submit your documents quickly and follow up with the authorities, so you spend less time waiting." },
+  { icon: "hand-holding-dollar", title: "Clear, upfront pricing", text: "You get a clear quote before we start. Government fees and our service fee are listed separately, with no hidden costs." },
+  { icon: "user-tie", title: "A dedicated case manager", text: "One person looks after your file from start to finish and updates you at every step, so you always know where you stand." },
+  { icon: "language", title: "Clear help in your language", text: "Our team explains each requirement in plain English and Arabic, and helps with certified translation when it is needed." },
+  { icon: "headset", title: "Support after approval", text: "We stay with you after the approval: renewals, amendments and reminders, so nothing expires unnoticed." },
+];
 
-  const services = [
-    { icon: "building", title: "Company Formation", desc: "Complete mainland and free zone company setup solutions in Dubai and UAE" },
-    { icon: "earth-americas", title: "Business Immigration", desc: "Golden visa, residence permits, and work visa processing for business owners" },
-    { icon: "clipboard-list", title: "PRO Services", desc: "Professional government documentation and liaison services for all departments" },
-    { icon: "file-circle-check", title: "Document Clearing", desc: "Fast-track approval and attestation services for business documents" },
-    { icon: "file-signature", title: "Trade License", desc: "New trade license issuance and annual renewal services across UAE" },
-    { icon: "language", title: "Legal Translation", desc: "Certified translation and attestation for all business documents" },
-  ];
+export default async function HomeSections() {
+  const [allServices, allCountries, allReviews] = await Promise.all([getServices(), getCountries(), getReviews()]);
+  const services = pickFeatured(allServices, 6);
+  const countries = pickFeatured(allCountries, 8);
+  const reviews = allReviews.filter((r) => r.name && r.text).slice(0, 6);
 
-  const countries = [
-    { name: "CANADA", img: "🇨🇦" },
-    { name: "AUSTRALIA", img: "🇦🇺" },
-    { name: "SINGAPORE", img: "🇸🇬" },
-    { name: "UNITED KINGDOM", img: "🇬🇧" },
-    { name: "USA", img: "🇺🇸" },
-    { name: "NEW ZEALAND", img: "🇳🇿" },
-    { name: "CHINA", img: "🇨🇳" },
-  ];
 
   const faqs = [
     {
@@ -48,11 +45,6 @@ export default function HomeSections() {
     },
   ];
 
-  const testimonials = [
-    { name: "Dan Hodges", role: "(USA Students Visa)", text: "An augue in cubilia laoreet undo magna suscipit egestas magna ipsum egestas vitae purus ipsum primis cubilia laoreet augue donec ultrice ligula egestas magna a vitae purus suscipit lectus gestas magna a viverra dolor neque est gravida", img: "fa-solid fa-user" },
-    { name: "Amelie Peterson", role: "(France Working Visa)", text: "An orci nullam tempor sapien, gravida donec enim ipsum a porta. An augue in cubilia laoreet magna suscipit egestas magna isum vitae purus ipsum primis in cubilia laoreet augue ultrice at ligula egestas magna", img: "fa-solid fa-user" },
-    { name: "Scott Boxer", role: "(Germany Travel Visa)", text: "An augue cubilia laoreet magna suscipit egestas magna ipsum vitae purus undo ipsum primis in cubilia laoreet augue ultrice ligula egestas magna at suscipit lectus gestas magna viverra dolor", img: "fa-solid fa-user-tie" },
-  ];
 
   return (
     <>
@@ -71,7 +63,7 @@ export default function HomeSections() {
             <div className="flex flex-wrap justify-center gap-4 sm:gap-8 text-xs sm:text-sm mb-10">
               <span className="flex items-center">
                 <Icon name="circle-check" className="text-brand-text mr-2" />
-                Goverment Approved
+                Government Approved
               </span>
               <span className="flex items-center">
                 <Icon name="circle-check" className="text-brand-text mr-2" />
@@ -144,20 +136,23 @@ export default function HomeSections() {
               Our Services
             </h2>
             <p className="text-gray-600 max-w-3xl mx-auto">
-              Cursus porta, feugiat primis in ultrice ligula risus auctor tempus dolor feugiat, felis lacinia risus interdum auctor id viverra dolor iaculis luctus placerat and massa
+              Company formation, PRO services, visas, trade licences and document clearing. Everything you need to set up and run a business in the UAE.
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {services.map((service, index) => (
-              <div key={index} className={`bg-white rounded-lg p-8 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 border border-gray-100 animate-slide-up stagger-${index + 1} group`}>
+              <div key={service.slug} className={`bg-white rounded-lg p-8 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 border border-gray-100 animate-slide-up stagger-${index + 1} group`}>
                 <div className="w-14 h-14 mb-4 rounded-full bg-brand-50 text-brand-text flex items-center justify-center text-2xl transform group-hover:scale-110 group-hover:bg-brand group-hover:text-white transition-all duration-300"><Icon name={service.icon} /></div>
                 <h3 className="text-xl font-bold text-ink mb-3 group-hover:text-brand-text transition-colors">{service.title}</h3>
-                <p className="text-gray-600 mb-4 leading-relaxed text-sm">{service.desc}</p>
-                <Link href="/services" className="text-gray-500 hover:text-brand-text text-sm font-medium transition-all inline-flex items-center group-hover:gap-2">
+                <p className="text-gray-600 mb-4 leading-relaxed text-sm line-clamp-3">{service.summary}</p>
+                <Link href={`/services/${service.slug}`} className="text-gray-500 hover:text-brand-text text-sm font-medium transition-all inline-flex items-center group-hover:gap-2">
                   READ MORE <span className="inline-block group-hover:translate-x-1 transition-transform">›</span>
                 </Link>
               </div>
             ))}
+          </div>
+          <div className="text-center mt-10">
+            <Link href="/services" className="btn btn-secondary inline-block">MORE SERVICES</Link>
           </div>
         </div>
       </section>
@@ -170,18 +165,21 @@ export default function HomeSections() {
               Countries We Cover
             </h2>
             <p className="text-gray-600 max-w-3xl mx-auto">
-              Cursus porta, feugiat primis in ultrice ligula risus auctor tempus dolor feugiat, felis lacinia risus interdum auctor id viverra dolor iaculis luctus placerat and massa
+              We guide applicants and investors for the countries below. Choose a country to see visa routes, requirements and how we can help.
             </p>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
-            {countries.slice(0, 7).map((country, index) => (
-              <Link href="/countries" key={index} className="relative block h-32 sm:h-40 rounded-lg overflow-hidden bg-gradient-to-br from-canvas to-gray-200 border border-gray-200 group cursor-pointer transform hover:scale-105 hover:shadow-xl transition-all duration-500">
-                <div className="absolute inset-0 pb-6 flex items-center justify-center text-5xl sm:text-6xl transform group-hover:scale-110 transition-transform duration-500"><Flag country={{ flag: country.img }} size={64} /></div>
+            {countries.map((country) => (
+              <Link href={`/countries/${country.slug}`} key={country.slug} className="relative block h-32 sm:h-40 rounded-lg overflow-hidden bg-gradient-to-br from-canvas to-gray-200 border border-gray-200 group cursor-pointer transform hover:scale-105 hover:shadow-xl transition-all duration-500">
+                <div className="absolute inset-0 pb-6 flex items-center justify-center text-5xl sm:text-6xl transform group-hover:scale-110 transition-transform duration-500"><Flag country={country} size={64} /></div>
                 <div className="absolute bottom-4 left-0 right-0 text-center transform group-hover:translate-y-[-4px] transition-transform duration-300">
-                  <h3 className="text-ink font-bold text-sm sm:text-base">{country.name}</h3>
+                  <h3 className="text-ink font-bold text-sm sm:text-base uppercase">{country.name}</h3>
                 </div>
               </Link>
             ))}
+          </div>
+          <div className="text-center mt-10">
+            <Link href="/countries" className="btn btn-secondary inline-block">MORE COUNTRIES</Link>
           </div>
         </div>
       </section>
@@ -209,30 +207,20 @@ export default function HomeSections() {
               Why Choose Al Anfal Doc?
             </h2>
             <p className="text-gray-600 max-w-3xl mx-auto">
-              Cursus porta, feugiat primis in ultrice ligula risus auctor tempus dolor feugiat, felis lacinia risus interdum auctor id viverra dolor iaculis luctus placerat and massa
+              Starting a company, renewing a licence or processing a visa in the UAE involves many offices and strict rules. We handle the paperwork and the government follow-up, so you can focus on your business and your family.
             </p>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
-            <div className="text-center bg-white p-6 sm:p-8 rounded-lg shadow-sm hover:shadow-xl transform hover:scale-110 transition-all duration-500 animate-bounce-in stagger-1 group">
-              <div className="text-4xl sm:text-5xl mb-3 transform group-hover:rotate-12 transition-transform duration-300 text-brand-text"><Icon name="graduation-cap" /></div>
-              <div className="text-3xl sm:text-4xl font-bold text-brand-text mb-2">820+</div>
-              <div className="text-gray-600 text-sm">Students</div>
-            </div>
-            <div className="text-center bg-white p-6 sm:p-8 rounded-lg shadow-sm hover:shadow-xl transform hover:scale-110 transition-all duration-500 animate-bounce-in stagger-2 group">
-              <div className="text-4xl sm:text-5xl mb-3 transform group-hover:rotate-12 transition-transform duration-300 text-brand-text"><Icon name="building-columns" /></div>
-              <div className="text-3xl sm:text-4xl font-bold text-brand-text mb-2">127</div>
-              <div className="text-gray-600 text-sm">Universities</div>
-            </div>
-            <div className="text-center bg-white p-6 sm:p-8 rounded-lg shadow-sm hover:shadow-xl transform hover:scale-110 transition-all duration-500 animate-bounce-in stagger-3 group">
-              <div className="text-4xl sm:text-5xl mb-3 transform group-hover:rotate-12 transition-transform duration-300 text-brand-text"><Icon name="earth-americas" /></div>
-              <div className="text-3xl sm:text-4xl font-bold text-brand-text mb-2">81</div>
-              <div className="text-gray-600 text-sm">Countries</div>
-            </div>
-            <div className="text-center bg-white p-6 sm:p-8 rounded-lg shadow-sm hover:shadow-xl transform hover:scale-110 transition-all duration-500 animate-bounce-in stagger-4 group">
-              <div className="text-4xl sm:text-5xl mb-3 transform group-hover:rotate-12 transition-transform duration-300 text-brand-text"><Icon name="people-arrows" /></div>
-              <div className="text-3xl sm:text-4xl font-bold text-brand-text mb-2">969</div>
-              <div className="text-gray-600 text-sm">Immigrations</div>
-            </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+            {WHY.map((w, i) => (
+              <div key={w.title} className={`bg-white p-6 sm:p-8 rounded-lg shadow-sm border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-500 animate-slide-up stagger-${(i % 6) + 1} group`}>
+                <div className="w-14 h-14 mb-4 rounded-full bg-brand-50 text-brand-text flex items-center justify-center text-2xl group-hover:bg-brand group-hover:text-white transition-all duration-300"><Icon name={w.icon} /></div>
+                <h3 className="text-lg font-bold text-ink mb-2 group-hover:text-brand-text transition-colors">{w.title}</h3>
+                <p className="text-gray-600 text-sm leading-relaxed">{w.text}</p>
+              </div>
+            ))}
+          </div>
+          <div className="text-center mt-10">
+            <Link href="/contact" className="btn btn-cta inline-block">TALK TO AN ADVISOR</Link>
           </div>
         </div>
       </section>
@@ -245,7 +233,7 @@ export default function HomeSections() {
               Have Questions? Look Here
             </h2>
             <p className="text-gray-600">
-              Cursus porta, feugiat primis in ultrice ligula risus auctor tempus dolor feugiat, felis lacinia risus interdum auctor id viverra dolor iaculis luctus placerat and massa
+              Straight answers to the questions we hear most. If yours is not here, our team will be happy to help.
             </p>
           </div>
           <FaqList faqs={faqs} />
@@ -257,33 +245,41 @@ export default function HomeSections() {
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section className="py-16 md:py-20 bg-canvas">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-ink mb-4">
-              Our Success Stories...
-            </h2>
-            <p className="text-gray-600 max-w-3xl mx-auto">
-              Cursus porta, feugiat primis in ultrice ligula risus auctor tempus dolor feugiat, felis lacinia risus interdum auctor id viverra dolor iaculis luctus placerat and massa
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, index) => (
-              <div key={index} className={`bg-white rounded-lg p-6 sm:p-8 shadow-sm border border-gray-100 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 animate-slide-up stagger-${index + 1} group`}>
-                <div className="flex items-center mb-4">
-                  <div className="w-14 h-14 bg-gradient-to-br from-brand to-brand-dark rounded-full flex items-center justify-center text-2xl mr-4 transform group-hover:scale-110 transition-transform duration-300 shadow-md text-white"><Icon name={testimonial.img} /></div>
-                  <div>
-                    <div className="font-bold text-ink group-hover:text-brand-text transition-colors">{testimonial.name}</div>
-                    <div className="text-sm text-gray-500">{testimonial.role}</div>
+      {/* Testimonials (managed in Dashboard -> Reviews; hidden until at least one review is published) */}
+      {reviews.length > 0 && (
+        <section id="reviews" className="py-16 md:py-20 bg-canvas">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold text-ink mb-4">
+                Our Success Stories
+              </h2>
+              <p className="text-gray-600 max-w-3xl mx-auto">
+                What our clients say about working with Al Anfal Doc.
+              </p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {reviews.map((r, index) => (
+                <figure key={r.id ?? index} className={`bg-white rounded-lg p-6 sm:p-8 shadow-sm border border-gray-100 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 animate-slide-up stagger-${(index % 6) + 1} group`}>
+                  <div className="flex items-center mb-4">
+                    {r.image ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img src={r.image} alt={r.name} width={56} height={56} loading="lazy" className="w-14 h-14 rounded-full object-cover mr-4 shadow-md" />
+                    ) : (
+                      <div aria-hidden="true" className="w-14 h-14 bg-gradient-to-br from-brand to-brand-dark rounded-full flex items-center justify-center text-xl font-bold mr-4 shadow-md text-white">{r.name.trim().charAt(0).toUpperCase()}</div>
+                    )}
+                    <figcaption>
+                      <div className="font-bold text-ink group-hover:text-brand-text transition-colors">{r.name}</div>
+                      {r.role && <div className="text-sm text-gray-500">{r.role}</div>}
+                    </figcaption>
                   </div>
-                </div>
-                <p className="text-gray-600 text-sm italic leading-relaxed">{testimonial.text}</p>
-              </div>
-            ))}
+                  <p className="text-amber-400 mb-3 text-sm" role="img" aria-label={`${r.rating ?? 5} out of 5 stars`}>{[1, 2, 3, 4, 5].map((n) => <Icon key={n} name={n <= (r.rating ?? 5) ? "fa-solid fa-star" : "fa-regular fa-star"} fixedWidth={false} className="mr-0.5" />)}</p>
+                  <blockquote className="text-gray-600 text-sm italic leading-relaxed">&ldquo;{r.text}&rdquo;</blockquote>
+                </figure>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* Final CTA */}
       <section className="py-12 md:py-16 bg-gradient-to-r from-canvas to-canvas text-ink">
@@ -295,7 +291,7 @@ export default function HomeSections() {
             Aliquam a augue suscipit, luctus neque purus ipsum neque dolor primis libero tempus, and blandit posuere ligula varius magna congue cursus porta ultrice
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <span className="text-sm sm:text-base">Call : <span className="font-bold text-lg">+971 50 123 4567</span></span>
+            <span className="text-sm sm:text-base">Call : <a href={`tel:${site.phone.replace(/\s/g, "")}`} className="font-bold text-lg hover:text-brand-text">{site.phone}</a></span>
             <Link href="/contact" className="btn btn-cta">
               GET CONSULTATION
             </Link>
