@@ -32,10 +32,11 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
       <head>
         <link rel="preconnect" href="https://kit.fontawesome.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://ka-f.fontawesome.com" crossOrigin="anonymous" />
+        {/* Font Awesome config, runs before the kit. "nest" keeps each <i> in place so React hydration is never disturbed */}
+        <script dangerouslySetInnerHTML={{ __html: "window.FontAwesomeConfig={autoReplaceSvg:'nest'};" }} />
       </head>
       <body className="antialiased" suppressHydrationWarning>
-        {/* Font Awesome Free kit. "nest" keeps the <i> element in place so React hydration is never disturbed */}
-        <Script id="fa-config" strategy="beforeInteractive">{"window.FontAwesomeConfig={autoReplaceSvg:'nest'};"}</Script>
+        {/* Font Awesome Free kit */}
         <Script src={`https://kit.fontawesome.com/${process.env.NEXT_PUBLIC_FA_KIT ?? "1b8091c28c"}.js`} crossOrigin="anonymous" strategy="afterInteractive" />
         <JsonLd data={[organizationLd(services), websiteLd()]} />
         <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[100] focus:bg-white focus:px-4 focus:py-2 focus:rounded">Skip to content</a>

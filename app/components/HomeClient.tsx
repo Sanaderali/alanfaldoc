@@ -117,7 +117,7 @@ export default function HomeClient() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="relative h-[300px] sm:h-[400px] rounded-lg overflow-hidden group">
-              <Image src="/hero-team.jpg" alt="About Us" fill className="object-cover transform group-hover:scale-110 transition-transform duration-700" />
+              <Image src="/hero-team.jpg" alt="About Us" fill sizes="(min-width:1024px) 50vw, 100vw" className="object-cover transform group-hover:scale-110 transition-transform duration-700" />
               <div className="absolute inset-0 flex items-center justify-center group-hover:backdrop-blur-sm transition-all duration-500">
                 <div className="w-16 h-16 sm:w-20 sm:h-20 bg-white rounded-full flex items-center justify-center shadow-lg cursor-pointer hover:scale-125 hover:shadow-2xl transition-all duration-500 animate-pulse-slow group">
                   <Icon name="play" className="text-2xl sm:text-3xl text-[#ff5722] ml-1 group-hover:scale-110 transition-transform duration-300" />
