@@ -18,7 +18,7 @@ export async function POST(req: Request) {
       if (c.id !== id) return c;
       found = true;
       if (c.messages.length >= MAX_MESSAGES_PER_CHAT) return c;
-      const m = msg("staff", text, auth.user.name || auth.user.username);
+      const m = msg("staff", text, auth.user.name || auth.user.username, auth.user.id);
       return { ...c, status: "open" as const, messages: [...c.messages, m], unreadStaff: 0, unreadVisitor: c.unreadVisitor + 1, lastMessageAt: m.at, updatedAt: now(), assignedTo: c.assignedTo ?? auth.user.id };
     })
   );

@@ -4,6 +4,7 @@ import { randomUUID } from "node:crypto";
 import { refresh } from "next/cache";
 import { requirePerm } from "@/lib/auth";
 import { cleanText } from "@/lib/chat";
+import { can } from "@/lib/rbac";
 import { notifyTicketReply } from "@/lib/notify";
 import { mutate, now, readAll } from "@/lib/store";
 import type { Ticket } from "@/types/content";
@@ -24,9 +25,9 @@ export async function replyTicket(id: string, text: string, closeAfter = false):
   const me = await requirePerm("tickets.reply");
   const body = cleanText(text, 5000);
   if (!body) return { ok: false, message: "Write a reply first" };
-  const reply = { id: randomUUID(), by: "staff" as const, staffName: me.name || me.username, body, at: now() };
+  const reply = { id: randomUUID(), by: "staff" as const, staffName: me.name || me.username, staffId: me.id, body, at: now() };
   let updated: Ticket | undefined;
-  await mutate("tickets", (all) => all.map((t) => (t.id === id ? (updated = { ...t, replies: [...t.replies, reply], status: closeAfter ? "closed" : "pending", unreadStaff: false, updatedAt: reply.at }) : t)));
+  await mutate("tickets", (all) => all.map((t) => (t.id === id ? (updated = { ...t, replies: [...t.replies, reply], status: closeAfter ? "closed" : "pending", unreadStaff: false, updatedAt: reply.at, assignedTo: t.assignedTo ?? me.id, firstResponseAt: t.firstResponseAt ?? reply.at, ...(closeAfter ? { closedBy: me.id, closedAt: reply.at } : {}) }) : t)));
   if (!updated) return { ok: false, message: "Ticket not found" };
   void notifyTicketReply(updated, reply);
   refreshView();
@@ -39,11 +40,25 @@ export async function changeTicketStatus(id: string, status: Ticket["status"]): 
 }
 
 export async function setTicketStatus(id: string, status: Ticket["status"]): Promise<TicketResult> {
-  await requirePerm("tickets.reply");
+  const me = await requirePerm("tickets.reply");
   if (!["open", "pending", "closed"].includes(status)) return { ok: false, message: "Invalid status" };
   const exists = (await readAll("tickets")).some((t) => t.id === id);
   if (!exists) return { ok: false, message: "Ticket not found" };
-  await mutate("tickets", (all) => all.map((t) => (t.id === id ? { ...t, status, updatedAt: now() } : t)));
+  await mutate("tickets", (all) => all.map((t) => (t.id === id ? { ...t, status, updatedAt: now(), ...(status === "closed" ? { closedBy: me.id, closedAt: now() } : { closedBy: undefined, closedAt: undefined }) } : t)));
+  refreshView();
+  return { ok: true };
+}
+
+/** Assign a ticket to a team member who can reply ("" = unassigned). */
+export async function assignTicket(id: string, userId: string): Promise<TicketResult> {
+  await requirePerm("tickets.reply");
+  if (userId) {
+    const u = (await readAll("users")).find((x) => x.id === userId && x.active);
+    if (!u || !can(u, "tickets.reply")) return { ok: false, message: "That person cannot reply to tickets" };
+  }
+  const exists = (await readAll("tickets")).some((t) => t.id === id);
+  if (!exists) return { ok: false, message: "Ticket not found" };
+  await mutate("tickets", (all) => all.map((t) => (t.id === id ? { ...t, assignedTo: userId || undefined, updatedAt: now() } : t)));
   refreshView();
   return { ok: true };
 }

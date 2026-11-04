@@ -164,6 +164,10 @@ Dashboard -> **Team** (Super Admin only) creates, edits and **deactivates** team
 
 The full permission matrix is shown on the Team page. First run: logging in with `ADMIN_USER` / `ADMIN_PASSWORD` creates the first Super Admin; after that accounts are managed in the dashboard (passwords are stored as salted scrypt hashes). There must always be at least one active Super Admin, and you cannot deactivate yourself.
 
+### Support Activity (manage your support team)
+
+**Team → Support Activity** (Super Admin / anyone with *Manage users*) shows, for each person who can reply to tickets or chat: which channels they can reply to, how many tickets they replied to, total replies, tickets currently open / pending that are assigned to them, tickets they closed, average first-response time and chats handled. Filter by 7 / 30 / 90 days or all time. A ticket is assigned to whoever replies first, or you can choose **Assigned to** on the ticket; the Tickets list has an *Assigned to* column.
+
 ## Live chat (no login for visitors) and tickets
 
 - **Visitors:** a floating "Chat with us" button (bottom right). They enter only a **phone number** (name optional), no account or password. The chat panel loads only when clicked, so it costs nothing at page load.

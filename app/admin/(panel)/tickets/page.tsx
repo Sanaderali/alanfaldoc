@@ -15,6 +15,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ s
   const { status = "all", q = "" } = await searchParams;
   const all = (await readAll("tickets")).sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
   const count = (s: string) => all.filter((t) => s === "all" || t.status === s).length;
+  const names = new Map((await readAll("users")).map((u) => [u.id, u.name]));
   const rows = all.filter((t) => (status === "all" || t.status === status) && (!q || `${t.name} ${t.email} ${t.subject} ${t.message} #${t.number}`.toLowerCase().includes(q.toLowerCase())));
   return (
     <>
@@ -38,7 +39,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ s
           </Empty>
         ) : (
           <table className="w-full text-[13px]">
-            <thead><tr className="text-left border-b border-a-line"><th className="px-3 py-2.5 font-normal">Ticket</th><th className="px-3 py-2.5 font-normal">From</th><th className="px-3 py-2.5 font-normal">Status</th><th className="px-3 py-2.5 font-normal">Replies</th><th className="px-3 py-2.5 font-normal">Updated</th></tr></thead>
+            <thead><tr className="text-left border-b border-a-line"><th className="px-3 py-2.5 font-normal">Ticket</th><th className="px-3 py-2.5 font-normal">From</th><th className="px-3 py-2.5 font-normal">Status</th><th className="px-3 py-2.5 font-normal">Assigned to</th><th className="px-3 py-2.5 font-normal">Replies</th><th className="px-3 py-2.5 font-normal">Updated</th></tr></thead>
             <tbody>
               {rows.map((t, n) => (
                 <tr key={t.id} className={`group align-top ${n % 2 ? "bg-a-surface" : "bg-a-raised"}`}>
@@ -53,6 +54,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ s
                     )}</td>
                   <td className="px-3 py-2.5">{t.name}<br /><span className="text-a-muted text-xs">{t.email}</span></td>
                   <td className="px-3 py-2.5"><Badge tone={tone[t.status]}>{t.status[0].toUpperCase() + t.status.slice(1)}</Badge></td>
+                  <td className="px-3 py-2.5">{t.assignedTo ? names.get(t.assignedTo) ?? "Removed user" : <span className="text-a-subtle">Unassigned</span>}</td>
                   <td className="px-3 py-2.5">{t.replies.length}</td>
                   <td className="px-3 py-2.5 whitespace-nowrap text-a-muted">{wpDate(t.updatedAt)}</td>
                 </tr>

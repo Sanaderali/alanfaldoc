@@ -3,9 +3,9 @@
 import { useEffect, useRef, useState, useTransition } from "react";
 import type { Ticket } from "@/types/content";
 import { btnGhost, btnPrimary, inputCls, wpDate } from "../../ui";
-import { markTicketRead, replyTicket, setTicketStatus } from "../tickets-actions";
+import { assignTicket, markTicketRead, replyTicket, setTicketStatus } from "../tickets-actions";
 
-export default function TicketThread({ ticket, canReply }: { ticket: Ticket; canReply: boolean }) {
+export default function TicketThread({ ticket, canReply, agents, names }: { ticket: Ticket; canReply: boolean; agents: { id: string; name: string }[]; names: Record<string, string> }) {
   const [text, setText] = useState("");
   const [msg, setMsg] = useState<{ ok: boolean; text: string } | null>(null);
   const [pending, start] = useTransition();
@@ -35,7 +35,7 @@ export default function TicketThread({ ticket, canReply }: { ticket: Ticket; can
         </div>
         {ticket.replies.map((r) => (
           <div key={r.id} className={bubble(r.by)}>
-            <p className="text-xs text-a-muted mb-1.5"><strong className="text-a-text">{r.by === "staff" ? r.staffName || "Support" : ticket.name}</strong> · {wpDate(r.at)}</p>
+            <p className="text-xs text-a-muted mb-1.5"><strong className="text-a-text">{r.by === "staff" ? (r.staffId && names[r.staffId]) || r.staffName || "Support" : ticket.name}</strong> · {wpDate(r.at)}</p>
             {r.body}
           </div>
         ))}
@@ -55,6 +55,7 @@ export default function TicketThread({ ticket, canReply }: { ticket: Ticket; can
             <div><dt className="text-a-muted text-xs">Customer</dt><dd>{ticket.name}</dd></div>
             <div><dt className="text-a-muted text-xs">Email</dt><dd><a className="text-brand-text underline" href={`mailto:${ticket.email}`}>{ticket.email}</a></dd></div>
             {ticket.phone && <div><dt className="text-a-muted text-xs">Phone</dt><dd><a className="text-brand-text underline" href={`tel:${ticket.phone}`}>{ticket.phone}</a></dd></div>}
+            <div><dt className="text-a-muted text-xs">Handled by</dt><dd>{ticket.assignedTo ? names[ticket.assignedTo] ?? "Removed user" : "Unassigned"}</dd></div>
             <div><dt className="text-a-muted text-xs">Opened</dt><dd>{wpDate(ticket.createdAt)}</dd></div>
             {ticket.ip && <div><dt className="text-a-muted text-xs">IP address</dt><dd>{ticket.ip}</dd></div>}
           </dl>
@@ -63,6 +64,15 @@ export default function TicketThread({ ticket, canReply }: { ticket: Ticket; can
               <label htmlFor="tstatus" className="text-xs text-a-muted">Status</label>
               <select id="tstatus" value={ticket.status} onChange={(e) => start(async () => { await setTicketStatus(ticket.id, e.target.value as Ticket["status"]); })} className={`${inputCls} mt-1`}>
                 <option value="open">Open</option><option value="pending">Pending (waiting for customer)</option><option value="closed">Closed</option>
+              </select>
+            </div>
+          )}
+          {canReply && (
+            <div className="px-3 pb-3">
+              <label htmlFor="tassign" className="text-xs text-a-muted">Assigned to</label>
+              <select id="tassign" value={ticket.assignedTo ?? ""} onChange={(e) => start(async () => { const r = await assignTicket(ticket.id, e.target.value); if (!r.ok) setMsg({ ok: false, text: r.message ?? "" }); })} className={`${inputCls} mt-1`}>
+                <option value="">Unassigned</option>
+                {agents.map((a) => <option key={a.id} value={a.id}>{a.name}</option>)}
               </select>
             </div>
           )}

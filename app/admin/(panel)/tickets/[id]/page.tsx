@@ -12,10 +12,13 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
   const { id } = await params;
   const t = (await readAll("tickets")).find((x) => x.id === id);
   if (!t) notFound();
+  const users = await readAll("users");
+  const agents = users.filter((u) => u.active && can(u, "tickets.reply")).map((u) => ({ id: u.id, name: u.name }));
+  const names = Object.fromEntries(users.map((u) => [u.id, u.name]));
   return (
     <>
       <PageHeader title={`Ticket #${t.number}`} subtitle={t.subject} />
-      <TicketThread ticket={JSON.parse(JSON.stringify(t))} canReply={can(me, "tickets.reply")} />
+      <TicketThread ticket={JSON.parse(JSON.stringify(t))} canReply={can(me, "tickets.reply")} agents={agents} names={names} />
     </>
   );
 }

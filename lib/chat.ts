@@ -9,7 +9,7 @@ export const MAX_MESSAGES_PER_CHAT = 500;
 
 export const newToken = () => randomBytes(24).toString("hex");
 export const hashToken = (t: string) => createHash("sha256").update(t).digest("hex");
-export const msg = (from: ChatMessage["from"], text: string, name?: string): ChatMessage => ({ id: randomUUID(), from, text, name, at: new Date().toISOString() });
+export const msg = (from: ChatMessage["from"], text: string, name?: string, staffId?: string): ChatMessage => ({ id: randomUUID(), from, text, name, ...(staffId ? { staffId } : {}), at: new Date().toISOString() });
 
 export const cleanText = (v: unknown, max = MAX_MESSAGE) => (typeof v === "string" ? v.replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f]/g, "").trim().slice(0, max) : "");
 

@@ -174,7 +174,7 @@ export type User = {
   lastLoginAt?: string;
 };
 
-export type TicketReply = { id: string; by: "customer" | "staff"; staffName?: string; body: string; at: string };
+export type TicketReply = { id: string; by: "customer" | "staff"; staffName?: string; staffId?: string; body: string; at: string };
 export type Ticket = {
   id: string;
   number: number;
@@ -190,9 +190,15 @@ export type Ticket = {
   ip?: string;
   replies: TicketReply[];
   unreadStaff: boolean;
+  /** team member responsible for this ticket (set on first reply, or assigned by staff) */
+  assignedTo?: string;
+  /** when the team first replied (used for response-time stats) */
+  firstResponseAt?: string;
+  closedBy?: string;
+  closedAt?: string;
 };
 
-export type ChatMessage = { id: string; from: "visitor" | "staff" | "system"; name?: string; text: string; at: string };
+export type ChatMessage = { id: string; from: "visitor" | "staff" | "system"; name?: string; staffId?: string; text: string; at: string };
 export type Chat = {
   id: string;
   /** sha256 of the visitor's secret token (the token itself lives only in the visitor's browser) */
