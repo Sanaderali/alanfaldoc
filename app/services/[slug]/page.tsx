@@ -5,7 +5,9 @@ import Breadcrumb from "../../components/Breadcrumb";
 import ContentSections from "../../components/ContentSections";
 import CTABanner from "../../components/CTABanner";
 import FaqList from "../../components/FaqList";
+import JsonLd from "../../components/JsonLd";
 import Reveal from "../../components/Reveal";
+import { buildMetadata, faqLd, serviceLd } from "@/lib/seo";
 import { formatDate, getCountries, getPosts, getService, getServices } from "@/lib/content";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -16,7 +18,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const s = await getService((await params).slug);
-  return s ? { title: s.title, description: s.summary } : {};
+  return s ? buildMetadata({ title: s.title, description: s.summary, path: `/services/${s.slug}`, seo: s.seo, image: s.image }) : {};
 }
 
 export default async function ServicePage({ params }: Props) {
@@ -29,6 +31,7 @@ export default async function ServicePage({ params }: Props) {
   return (
     <>
       <Breadcrumb items={[{ label: "Services", href: "/services" }, { label: service.title }]} />
+      <JsonLd data={[serviceLd(service), ...(service.faqs.length ? [faqLd(service.faqs)] : [])]} />
 
       <section className="py-12 md:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-3 gap-10 lg:gap-14">

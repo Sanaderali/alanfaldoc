@@ -1,4 +1,5 @@
-import type { Country, Post, Service } from "@/types/content";
+import type { Country, FaqGroup, Post, Service } from "@/types/content";
+import { faqGroups } from "@/data/faqs";
 import { countries } from "@/data/countries";
 import { posts } from "@/data/posts";
 import { services } from "@/data/services";
@@ -31,6 +32,10 @@ export async function getPosts(): Promise<Post[]> {
 }
 export async function getPost(slug: string): Promise<Post | undefined> {
   return (await getPosts()).find((p) => p.slug === slug);
+}
+
+export async function getFaqGroups(): Promise<FaqGroup[]> {
+  return faqGroups;
 }
 
 export function formatDate(iso: string): string {

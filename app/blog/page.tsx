@@ -4,8 +4,9 @@ import Breadcrumb from "../components/Breadcrumb";
 import CTABanner from "../components/CTABanner";
 import Reveal from "../components/Reveal";
 import { formatDate, getPosts } from "@/lib/content";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = { title: "Blog", description: "News and guides on Dubai business setup, visas and documents." };
+export const metadata: Metadata = buildMetadata({ title: "Blog", description: "News and guides on Dubai business setup, visas and documents.", path: "/blog" });
 
 export default async function BlogPage() {
   const posts = await getPosts();

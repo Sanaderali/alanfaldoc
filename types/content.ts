@@ -17,6 +17,17 @@ export type ContentSection = {
 };
 
 export type Faq = { question: string; answer: string };
+export type FaqGroup = { title: string; faqs: Faq[] };
+
+/** Optional per-page SEO overrides. Leave empty to fall back to the page's own title/summary. */
+export type Seo = {
+  title?: string;
+  description?: string;
+  keywords?: string[];
+  /** absolute or /public path used for og:image */
+  image?: string;
+  noindex?: boolean;
+};
 
 export type Country = {
   slug: string;
@@ -40,6 +51,8 @@ export type Country = {
   /** services most relevant to this country (slugs) */
   serviceSlugs?: string[];
   featured?: boolean;
+  faqs?: Faq[];
+  seo?: Seo;
 };
 
 export type Service = {
@@ -53,6 +66,9 @@ export type Service = {
   faqs: Faq[];
   relatedSlugs?: string[];
   image?: string;
+  /** schema.org serviceType, defaults to the title */
+  serviceType?: string;
+  seo?: Seo;
 };
 
 export type Post = {
@@ -64,6 +80,9 @@ export type Post = {
   category: string;
   body: string[];
   image?: string;
+  /** ISO date of last edit (used for schema + sitemap) */
+  updated?: string;
+  seo?: Seo;
 };
 
 export type NavItem = { label: string; href: string };

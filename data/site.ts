@@ -7,16 +7,49 @@ export const site = {
   description:
     "Expert consultation for company formation, PRO services, visa processing and document clearing in Dubai & UAE.",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://alanfaldoc.com",
+  legalName: "Al Anfal Doc",
+  locale: "en_AE",
   address: "Business Bay, Dubai, UAE",
+  /** structured address for schema.org. Add street / postal code / geo when known */
+  addressParts: { street: "", locality: "Dubai", region: "Dubai", country: "AE" },
+  geo: null as null | { lat: number; lng: number },
+  openingHours: [
+    { days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], opens: "09:00", closes: "18:30" },
+    { days: ["Saturday"], opens: "08:30", closes: "15:30" },
+  ],
+  areaServed: ["United Arab Emirates", "Dubai", "Abu Dhabi", "Sharjah"],
+  twitterHandle: "" as string, // e.g. "@alanfaldoc"
   phone: "+971 50 123 4567",
   email: "info@alanfaldoc.com",
   hours: ["Mon-Fri: 9:00AM - 6:30PM", "Saturday: 8:30AM - 3:30PM", "Sunday: Closed"],
+  /** Put the real profile URLs here. "#" entries are ignored by schema `sameAs`. */
   social: [
     { label: "Facebook", href: "#" },
     { label: "X (Twitter)", href: "#" },
     { label: "Instagram", href: "#" },
     { label: "LinkedIn", href: "#" },
   ],
+};
+
+/**
+ * Search + AI crawler policy. Flip a value to false to block that bot in robots.txt.
+ * Set SITE_INDEXING=off in the environment to block everything (staging / preview).
+ */
+export const crawlers = {
+  search: true,
+  ai: {
+    GPTBot: true,
+    "OAI-SearchBot": true,
+    "ChatGPT-User": true,
+    ClaudeBot: true,
+    "Claude-SearchBot": true,
+    "Claude-User": true,
+    PerplexityBot: true,
+    "Perplexity-User": true,
+    "Google-Extended": true,
+    "Applebot-Extended": true,
+    CCBot: false,
+  } as Record<string, boolean>,
 };
 
 export const mainNav: NavItem[] = [

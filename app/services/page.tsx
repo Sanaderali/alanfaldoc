@@ -4,11 +4,13 @@ import Breadcrumb from "../components/Breadcrumb";
 import CTABanner from "../components/CTABanner";
 import Reveal from "../components/Reveal";
 import { getServices } from "@/lib/content";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildMetadata({
   title: "Our Services",
   description: "Company formation, PRO services, visa processing, document clearing and more in Dubai & UAE.",
-};
+  path: "/services",
+});
 
 export default async function ServicesPage() {
   const services = await getServices();

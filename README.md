@@ -77,3 +77,19 @@ All content lives in `data/` (`countries.ts`, `services.ts`, `posts.ts`, `site.t
 - **Country photo:** set `image: "/countries/xyz.jpg"` (file in `public/`); without it a gradient + flag banner is used.
 - **Move to a CMS / database / API later:** change the function bodies in `lib/content.ts`. Pages and components stay untouched.
 - Site name, contact details, navigation and social links: `data/site.ts`.
+
+## SEO & AI-SEO (ready for the main domain)
+
+| What | Where |
+|---|---|
+| Domain, name, phone, address, hours, social URLs, area served | `data/site.ts` (set `NEXT_PUBLIC_SITE_URL=https://yourdomain.com` on the server) |
+| Per-page title / description / keywords / og:image / noindex | optional `seo: { ... }` on any country, service or post in `data/` |
+| Metadata + canonical + Open Graph + Twitter | `lib/seo.ts` → `buildMetadata()` |
+| Schema.org JSON-LD: Organization/LocalBusiness, WebSite, BreadcrumbList, Service, FAQPage, WebPage(Country), BlogPosting | `lib/seo.ts` + `app/components/JsonLd.tsx` |
+| FAQs (each service/country page + `/faqs`) | `faqs` on the item, or `data/faqs.ts`. FAQ schema is generated from the same text that is shown |
+| `robots.txt` incl. AI crawlers (GPTBot, ClaudeBot, PerplexityBot, Google-Extended…) | `app/robots.ts`, toggle bots in `crawlers` in `data/site.ts` |
+| `sitemap.xml`, `llms.txt` (AI-readable site summary), default share image | `app/sitemap.ts`, `app/llms.txt/route.ts`, `app/opengraph-image.tsx` |
+
+Environment variables (all optional): `NEXT_PUBLIC_SITE_URL`, `GOOGLE_SITE_VERIFICATION`, `BING_SITE_VERIFICATION`, `SITE_INDEXING=off` (blocks all crawlers on staging).
+
+Before launch: replace sample content/contact details, add real social URLs, address/geo, and submit `/sitemap.xml` in Google Search Console and Bing Webmaster Tools.

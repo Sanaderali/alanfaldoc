@@ -42,6 +42,11 @@ export const countries: Country[] = [
       },
     ],
     gradient: "from-emerald-100 via-green-100 to-green-200",
+    faqs: [
+      { question: "Can foreigners start a business in the UAE?", answer: "Yes. Foreign investors can set up mainland and free zone companies, and many activities allow 100% foreign ownership." },
+      { question: "Do I need a visa to set up a company?", answer: "You can usually start the licensing process before relocating. Residence visas for owners and staff are processed after the licence is issued." },
+      { question: "How can Al Anfal Doc help?", answer: "We handle licensing, visas, PRO paperwork, document attestation and bank account support from start to finish." },
+    ],
     serviceSlugs: ["company-formation", "trade-license", "visa-processing", "pro-services"],
     featured: true,
   },
@@ -77,6 +82,11 @@ export const countries: Country[] = [
       },
     ],
     gradient: "from-red-100 via-rose-100 to-red-200",
+    faqs: [
+      { question: "Can you help with a Canadian visa application?", answer: "We prepare, attest and translate the supporting documents. Decisions are always made by the Canadian immigration authorities." },
+      { question: "Do I need my documents attested for Canada?", answer: "Often yes, especially educational and civil documents. Requirements depend on the program, so we confirm them for your case." },
+      { question: "Are translations required?", answer: "Documents not in English or French usually need a certified translation. We can arrange this." },
+    ],
     serviceSlugs: ["visa-processing", "document-clearing", "legal-translation"],
     featured: true,
   },
@@ -103,6 +113,11 @@ export const countries: Country[] = [
       { heading: "Big Cities:", minor: true, paragraphs: ["London, Manchester, Birmingham, Edinburgh, Glasgow, Leeds"] },
     ],
     gradient: "from-indigo-100 via-blue-100 to-indigo-200",
+    faqs: [
+      { question: "What documents do UK visas usually need?", answer: "A valid passport, financial evidence and supporting documents that vary by visa type. We give you a checklist for your route." },
+      { question: "Can you attest UAE documents for UK use?", answer: "We guide the legalisation steps and handle the UAE-side attestation where applicable." },
+      { question: "Do you guarantee approval?", answer: "No. We make sure your documents are complete and correct, but the Home Office makes the final decision." },
+    ],
     serviceSlugs: ["visa-processing", "document-clearing", "legal-translation"],
     featured: true,
   },
@@ -127,6 +142,11 @@ export const countries: Country[] = [
       { heading: "Big Cities:", minor: true, paragraphs: ["New York, Los Angeles, Chicago, Houston, San Francisco, Miami"] },
     ],
     gradient: "from-sky-100 via-blue-100 to-sky-200",
+    faqs: [
+      { question: "Can you help with a US visitor or student visa?", answer: "We help prepare and attest supporting documents. Interviews and decisions are handled by the US authorities." },
+      { question: "How early should I start preparing documents?", answer: "As early as possible, because attestation and translation can take time before your appointment." },
+      { question: "Do you provide legal advice?", answer: "We provide documentation support. For legal opinions we can refer you to a licensed immigration attorney." },
+    ],
     serviceSlugs: ["visa-processing", "document-clearing"],
   },
   {
@@ -202,6 +222,11 @@ export const countries: Country[] = [
       { title: "Working Holiday Visas", href: "/services/visa-processing" },
     ],
     gradient: "from-cyan-100 via-sky-100 to-blue-200",
+    faqs: [
+      { question: "Can you help with an Australian student visa?", answer: "We prepare, attest and translate the supporting documents so your application is complete. Decisions are made by the Australian authorities." },
+      { question: "Do I need certified translations?", answer: "Documents not in English generally need a certified translation. We arrange this alongside attestation." },
+      { question: "Can I work while studying in Australia?", answer: "Many student visas allow limited work rights with conditions. Always confirm the current rules with the official immigration authority." },
+    ],
     serviceSlugs: ["visa-processing", "document-clearing", "legal-translation"],
   },
   {
@@ -222,6 +247,11 @@ export const countries: Country[] = [
       { heading: "Why Saudi Arabia?", paragraphs: ["Large domestic market, major infrastructure investment and growing opportunities for international companies."] },
     ],
     gradient: "from-lime-100 via-emerald-100 to-green-200",
+    faqs: [
+      { question: "Can UAE companies expand into Saudi Arabia?", answer: "Yes, many do. The documentation for commercial registration and licensing usually needs attestation and translation, which we can arrange." },
+      { question: "Do documents need Arabic translation?", answer: "Many Saudi authorities require Arabic documents. We provide certified legal translation." },
+      { question: "Can you advise on market entry?", answer: "Our business consulting service covers jurisdiction options and the steps to expand." },
+    ],
     serviceSlugs: ["document-clearing", "legal-translation", "business-consulting"],
   },
 ];

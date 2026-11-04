@@ -3,8 +3,8 @@
 import { useState } from "react";
 import type { Faq } from "@/types/content";
 
-export default function FaqList({ faqs }: { faqs: Faq[] }) {
-  const [open, setOpen] = useState<number | null>(0);
+export default function FaqList({ faqs, defaultOpen = 0 }: { faqs: Faq[]; defaultOpen?: number | null }) {
+  const [open, setOpen] = useState<number | null>(defaultOpen);
   return (
     <div className="space-y-3">
       {faqs.map((f, i) => {

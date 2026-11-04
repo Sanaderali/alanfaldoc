@@ -4,11 +4,13 @@ import CountryCard from "../components/CountryCard";
 import CTABanner from "../components/CTABanner";
 import Reveal from "../components/Reveal";
 import { getCountries } from "@/lib/content";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildMetadata({
   title: "Countries We Cover",
   description: "Explore the countries we support with company setup, visas and document services.",
-};
+  path: "/countries",
+});
 
 export default async function CountriesPage() {
   const countries = await getCountries();

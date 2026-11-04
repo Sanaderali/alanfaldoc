@@ -5,11 +5,13 @@ import CTABanner from "../components/CTABanner";
 import Reveal from "../components/Reveal";
 import { site, stats } from "@/data/site";
 import { getServices } from "@/lib/content";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildMetadata({
   title: "About Us",
   description: `Learn about ${site.name}: who we are, what we do and why clients trust us for Dubai business setup and document services.`,
-};
+  path: "/about",
+});
 
 const values = [
   { icon: "🎯", title: "Accuracy", text: "Every document is checked before submission so applications are right the first time." },

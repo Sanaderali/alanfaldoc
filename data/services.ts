@@ -1,11 +1,6 @@
 import type { Service } from "@/types/content";
 
 /** Sample content, replace with your own. Add an object to add a /services/<slug> page. */
-const docsFaq = {
-  question: "How long does the process take?",
-  answer: "It depends on the authority and the complexity of your case. We give you a clear timeline after reviewing your documents.",
-};
-
 export const services: Service[] = [
   {
     slug: "company-formation",
@@ -17,7 +12,12 @@ export const services: Service[] = [
     sections: [
       { heading: "Documents Usually Required", list: ["Passport copies of all shareholders", "Proposed company names", "Business activity details", "Proof of address", "Passport-size photographs"], twoColumns: true },
     ],
-    faqs: [docsFaq, { question: "Can I own 100% of my company?", answer: "In most activities, yes. We confirm eligibility for your specific activity before you commit." }],
+    faqs: [
+      { question: "Can a foreigner own 100% of a company in the UAE?", answer: "In most business activities, yes. Ownership rules depend on your activity and jurisdiction (mainland or free zone). We confirm eligibility for your specific activity before you commit." },
+      { question: "What is the difference between a mainland and a free zone company?", answer: "A mainland licence lets you trade across the UAE and with government entities, while a free zone licence offers a simpler setup and is usually limited to trading within the zone or internationally. We compare both against your business plan." },
+      { question: "How long does company formation take?", answer: "Timelines depend on the jurisdiction, the activity and how quickly documents are provided. After reviewing your file we give you a realistic timeline." },
+      { question: "Do I need a physical office?", answer: "Most licences require registered office space, but the type (flexi-desk, shared or dedicated) depends on the jurisdiction and activity. We advise on the lowest-cost compliant option." },
+    ],
     relatedSlugs: ["trade-license", "visa-processing", "bank-account-opening"],
   },
   {
@@ -28,7 +28,11 @@ export const services: Service[] = [
     intro: "Our PRO team handles submissions, renewals and approvals so you can stay focused on running your business.",
     highlights: ["Labour and immigration transactions", "Licence amendments and renewals", "Emirates ID and medical processing", "Contract and document typing"],
     sections: [{ heading: "What We Handle", list: ["Employee visa issuance and cancellation", "Establishment card renewals", "Chamber of Commerce documents", "Ministry and municipality approvals"], twoColumns: true }],
-    faqs: [docsFaq, { question: "Do you work with all emirates?", answer: "Yes, we support transactions across the UAE." }],
+    faqs: [
+      { question: "What does a PRO service do?", answer: "A PRO (Public Relations Officer) handles government paperwork on your behalf: visas, labour cards, licence renewals, approvals and attestations, so you do not have to queue at government offices." },
+      { question: "Which government departments do you deal with?", answer: "We handle transactions with immigration, labour, free zone authorities, municipalities, chambers of commerce and other UAE entities." },
+      { question: "Can you manage renewals for me?", answer: "Yes. We track expiry dates for licences, visas and cards and renew them ahead of time to avoid fines." },
+    ],
     relatedSlugs: ["visa-processing", "document-clearing", "trade-license"],
   },
   {
@@ -39,7 +43,12 @@ export const services: Service[] = [
     intro: "From residence visas to golden visa applications, we prepare the file correctly and track it until approval.",
     highlights: ["Employment and investor visas", "Family sponsorship", "Tourist and visit visas", "Golden visa applications"],
     sections: [{ heading: "Documents Usually Required", list: ["Valid passport", "Passport-size photo", "Emirates ID (if resident)", "Sponsor or company documents", "Medical fitness result"], twoColumns: true }],
-    faqs: [docsFaq, { question: "Can you help with visa renewals?", answer: "Yes, we track expiry dates and handle renewals ahead of time." }],
+    faqs: [
+      { question: "Which visas can you help with?", answer: "Employment, investor, family sponsorship, tourist and golden visa applications, as well as renewals and cancellations." },
+      { question: "Do you guarantee a visa approval?", answer: "No. Decisions are made by the authorities. What we do is prepare a complete, correct application, which reduces delays and avoidable rejections." },
+      { question: "How long does a visa application take?", answer: "Processing time depends on the visa type and the authority. We give you an estimate after reviewing your documents and keep you updated until a decision." },
+      { question: "What documents are usually required?", answer: "A valid passport, photo and supporting documents that vary by visa type, such as a sponsor or company file and a medical fitness result. We send you a checklist for your case." },
+    ],
     relatedSlugs: ["pro-services", "company-formation", "document-clearing"],
   },
   {
@@ -50,7 +59,11 @@ export const services: Service[] = [
     intro: "We take your documents through the required attestation chain quickly and keep you updated at every stage.",
     highlights: ["Ministry of Foreign Affairs attestation", "Embassy legalisation", "Educational and commercial documents", "Express options available"],
     sections: [{ heading: "Common Documents", list: ["Degree certificates", "Marriage and birth certificates", "Power of attorney", "Commercial invoices and agreements"], twoColumns: true }],
-    faqs: [docsFaq],
+    faqs: [
+      { question: "What is document attestation?", answer: "Attestation is the official verification of a document by the relevant authorities so it is accepted in another country, for example certificates, contracts or powers of attorney for use in the UAE." },
+      { question: "Which documents can you clear?", answer: "Educational, personal (marriage, birth) and commercial documents, powers of attorney and agreements. Contact us with your document and destination and we will confirm the steps." },
+      { question: "Do you offer express service?", answer: "Express options are available for many document types. Availability and timing depend on the authority involved." },
+    ],
     relatedSlugs: ["legal-translation", "pro-services", "visa-processing"],
   },
   {
@@ -61,7 +74,11 @@ export const services: Service[] = [
     intro: "Commercial, professional, industrial or tourism, we help you pick the right licence type and keep it valid year after year.",
     highlights: ["New licence issuance", "Annual renewal reminders", "Activity additions and amendments", "Licence cancellation"],
     sections: [{ heading: "Licence Types", list: ["Commercial", "Professional", "Industrial", "Tourism"], twoColumns: true }],
-    faqs: [docsFaq, { question: "When should I renew?", answer: "Start before the expiry date to avoid fines. We send reminders for every client." }],
+    faqs: [
+      { question: "What types of trade licence are there?", answer: "Commercial, professional, industrial and tourism licences are the main categories. The right one depends on your business activity." },
+      { question: "When should I renew my trade licence?", answer: "Renew before the expiry date to avoid fines. We send reminders and handle the renewal for you." },
+      { question: "Can I add a new activity to my licence?", answer: "In many cases yes, through an amendment. Approvals and fees depend on the authority. We check feasibility first." },
+    ],
     relatedSlugs: ["company-formation", "pro-services", "business-consulting"],
   },
   {
@@ -72,7 +89,11 @@ export const services: Service[] = [
     intro: "Accurate, court-accepted translations between Arabic, English and other languages, ready for attestation.",
     highlights: ["Certified legal translators", "Arabic ⇄ English and more", "Notarisation and attestation", "Quick turnaround"],
     sections: [{ heading: "Typical Documents", list: ["Contracts and agreements", "Court documents", "Company incorporation papers", "Certificates"], twoColumns: true }],
-    faqs: [docsFaq],
+    faqs: [
+      { question: "What is a certified legal translation?", answer: "A translation prepared by an approved translator and stamped as an accurate rendering, accepted by courts and government bodies." },
+      { question: "Which languages do you translate?", answer: "Arabic and English are the most common pairs, with other languages available on request." },
+      { question: "Can you translate and attest in one go?", answer: "Yes. We can handle the translation and the follow-on notarisation or attestation as one service." },
+    ],
     relatedSlugs: ["document-clearing", "business-consulting"],
   },
   {
@@ -83,7 +104,11 @@ export const services: Service[] = [
     intro: "We prepare your application and introduce you to the right bank for your business profile.",
     highlights: ["Bank selection advice", "Application and KYC preparation", "Follow-up until activation"],
     sections: [{ heading: "Documents Usually Required", list: ["Trade licence", "Memorandum of association", "Shareholder passports and Emirates IDs", "Business plan or profile"], twoColumns: true }],
-    faqs: [docsFaq],
+    faqs: [
+      { question: "Can you guarantee my bank account will be approved?", answer: "No. Banks make their own compliance decisions. We prepare a complete application and introduce you to banks that fit your profile to improve your chances." },
+      { question: "What documents are needed to open a corporate account?", answer: "Typically the trade licence, memorandum of association, shareholder and manager IDs, proof of address and a business profile. Requirements vary by bank." },
+      { question: "Do I need to be in the UAE to open an account?", answer: "Some banks require an in-person visit and others support remote steps. We confirm the process for your chosen bank." },
+    ],
     relatedSlugs: ["company-formation", "business-consulting"],
   },
   {
@@ -94,7 +119,11 @@ export const services: Service[] = [
     intro: "Practical advice on structuring, compliance and expansion, tailored to your business and sector.",
     highlights: ["Regulatory and compliance guidance", "Jurisdiction comparison", "Market-entry planning"],
     sections: [{ heading: "Who It's For", list: ["Start-ups and founders", "Foreign investors", "Established businesses expanding to the UAE"], twoColumns: true }],
-    faqs: [docsFaq],
+    faqs: [
+      { question: "Who is business consulting for?", answer: "Founders, investors and established companies that need guidance on structure, compliance or entering the UAE market." },
+      { question: "Do you give legal or tax advice?", answer: "We provide practical business and regulatory guidance. For formal legal or tax opinions we recommend a licensed adviser and can coordinate with one." },
+      { question: "How do I get started?", answer: "Book a consultation and tell us your goals. We recommend the best structure and the next steps." },
+    ],
     relatedSlugs: ["company-formation", "trade-license"],
   },
   {
@@ -105,7 +134,11 @@ export const services: Service[] = [
     intro: "Residency routes for founders, investors and skilled professionals, with end-to-end documentation support.",
     highlights: ["Golden visa for investors", "Residence for company owners", "Work permits"],
     sections: [{ heading: "Pathways", list: ["Investor visa", "Entrepreneur visa", "Skilled professional visa", "Property-linked residence"], twoColumns: true }],
-    faqs: [docsFaq],
+    faqs: [
+      { question: "What is the UAE golden visa?", answer: "A long-term residence visa for eligible investors, entrepreneurs and skilled professionals. Eligibility depends on the category and current rules." },
+      { question: "Can I get residence as a company owner?", answer: "Yes, owners and partners of a UAE company can usually apply for residence linked to the company. Requirements depend on the licence type." },
+      { question: "Can my family be included?", answer: "Eligible residents can generally sponsor family members. We prepare the documentation for each sponsored person." },
+    ],
     relatedSlugs: ["visa-processing", "company-formation"],
   },
 ];

@@ -7,7 +7,10 @@ import Carousel from "../../components/Carousel";
 import ContentSections from "../../components/ContentSections";
 import CountryCard from "../../components/CountryCard";
 import CTABanner from "../../components/CTABanner";
+import FaqList from "../../components/FaqList";
+import JsonLd from "../../components/JsonLd";
 import Reveal from "../../components/Reveal";
+import { buildMetadata, countryPageLd, faqLd } from "@/lib/seo";
 import { getCountries, getCountry, getServices } from "@/lib/content";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -19,7 +22,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const country = await getCountry((await params).slug);
   if (!country) return {};
-  return { title: country.headline, description: country.intro };
+  return buildMetadata({ title: country.headline, description: country.intro, path: `/countries/${country.slug}`, seo: country.seo, image: country.image });
 }
 
 export default async function CountryPage({ params }: Props) {
@@ -38,6 +41,7 @@ export default async function CountryPage({ params }: Props) {
   return (
     <>
       <Breadcrumb items={[{ label: "Country List", href: "/countries" }, { label: country.name }]} />
+      <JsonLd data={[countryPageLd(country), ...(country.faqs?.length ? [faqLd(country.faqs)] : [])]} />
 
       <section className="py-12 md:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-3 gap-10 lg:gap-14">
@@ -107,6 +111,15 @@ export default async function CountryPage({ params }: Props) {
           </aside>
         </div>
       </section>
+
+      {country.faqs && country.faqs.length > 0 && (
+        <section className="py-14 md:py-16 border-t border-dashed border-gray-200">
+          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <Reveal className="text-center mb-8"><h2 className="text-3xl font-bold text-gray-900">{country.name}: Frequently Asked Questions</h2></Reveal>
+            <Reveal><FaqList faqs={country.faqs} /></Reveal>
+          </div>
+        </section>
+      )}
 
       {/* Opportunities carousel */}
       {others.length > 0 && (
