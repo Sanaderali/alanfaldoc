@@ -23,11 +23,11 @@ export default function Header() {
 
   const isActive = (href: string) => (href === "/" ? pathname === "/" : pathname.startsWith(href));
   const link = (href: string) =>
-    `text-sm font-medium transition-colors hover:text-brand-text ${isActive(href) ? "text-brand-text" : "text-gray-800"}`;
+    `text-sm font-medium transition-colors hover:text-brand-text ${isActive(href) ? "text-brand-text" : "text-ink"}`;
 
   return (
     <>
-      <div className="hidden sm:block bg-gray-50 border-b border-gray-200 text-xs sm:text-sm text-gray-600">
+      <div className="hidden sm:block bg-canvas border-b border-gray-200 text-xs sm:text-sm text-gray-600">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 flex justify-between items-center gap-4">
           <span><Icon name="location-dot" className="text-brand-text mr-1.5" /> {site.address}</span>
           <span className="flex items-center gap-5">
@@ -50,7 +50,7 @@ export default function Header() {
               {mainNav.map((n) => (
                 <Link key={n.href} href={n.href} className={`${link(n.href)} uppercase`}>{n.label}</Link>
               ))}
-              <Link href="/contact" className="px-5 py-2.5 bg-brand text-white text-sm font-semibold rounded uppercase hover:bg-brand-dark hover:shadow-lg hover:scale-105 transition-all duration-300">
+              <Link href="/contact" className="px-5 py-2.5 bg-accent text-white text-sm font-semibold rounded uppercase hover:bg-accent-dark hover:shadow-lg hover:scale-105 transition-all duration-300">
                 Get Consultation
               </Link>
             </nav>
@@ -73,7 +73,7 @@ export default function Header() {
                 {mainNav.map((n) => (
                   <Link key={n.href} href={n.href} className={`${link(n.href)} uppercase py-3 border-b border-gray-100`}>{n.label}</Link>
                 ))}
-                <Link href="/contact" className="mt-4 px-5 py-3 bg-brand text-white font-semibold rounded text-center uppercase text-sm">
+                <Link href="/contact" className="mt-4 px-5 py-3 bg-accent text-white font-semibold rounded text-center uppercase text-sm">
                   Get Consultation
                 </Link>
               </div>

@@ -107,15 +107,17 @@ Service icons are the `icon` field in `data/services.ts`; blog category icons ar
 
 ## Theme colours
 
-The whole site is themed from 6 CSS variables at the top of `app/globals.css` (`--brand`, `--brand-dark`, `--brand-text`, `--brand-50/100/200`, as RGB triplets). Tailwind exposes them as `bg-brand`, `text-brand-text`, `hover:bg-brand-dark`, `bg-brand-50` etc., so changing the variables re-themes every page.
+The public site uses one palette, defined as 6+ CSS variables at the top of `app/globals.css` (RGB triplets) and exposed by Tailwind as tokens:
 
-Ready-made options taken from the logo:
+| Role | Hex | Tailwind |
+|---|---|---|
+| Page background | `#F8F9FA` | `bg-canvas` |
+| Primary (headers, main buttons, links) | `#0A5C36` deep green | `bg-brand`, `text-brand-text`, `hover:bg-brand-dark` |
+| Secondary (CTAs, highlights) | `#D32F2F` deep red | `bg-accent`, `text-accent`, `hover:bg-accent-dark` |
+| Text | `#1A1A1A` | `text-ink` |
+| Cards / surfaces | `#FFFFFF` | `bg-white` / `bg-surface` |
 
-| Option | --brand | --brand-dark | --brand-text | --brand-50 | --brand-100 | --brand-200 |
-|---|---|---|---|---|---|---|
-| Refined red (default) | `220 38 38` | `185 28 28` | `185 28 28` | `254 242 242` | `254 226 226` | `254 202 202` |
-| Deep green | `5 150 105` | `4 120 87` | `4 120 87` | `236 253 245` | `209 250 229` | `167 243 208` |
-| Charcoal | `31 41 55` | `17 24 39` | `31 41 55` | `249 250 251` | `243 244 246` | `229 231 235` |
+Change the variables once to re-theme the whole site. The dashboard keeps its own WordPress-blue palette (`.admin-theme`).
 
 ## Dashboard (`/admin`)
 

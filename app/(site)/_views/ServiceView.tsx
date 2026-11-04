@@ -33,7 +33,7 @@ export default async function ServiceView({ service }: { service: Service }) {
               </div>
             )}
             <div className="w-16 h-16 mb-4 rounded-full bg-brand-50 text-brand-text flex items-center justify-center text-3xl animate-fadeIn"><Icon name={service.icon} /></div>
-            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-5 animate-fadeIn">{service.title}</h1>
+            <h1 className="text-3xl md:text-4xl font-bold text-ink mb-5 animate-fadeIn">{service.title}</h1>
             {service.contentHtml ? (
               <Reveal><RichContent html={service.contentHtml} /></Reveal>
             ) : (
@@ -57,12 +57,12 @@ export default async function ServiceView({ service }: { service: Service }) {
 
           <aside className="space-y-8">
             <Reveal variant="right" className="border border-gray-200 rounded-lg p-6">
-              <h2 className="text-xl font-bold text-gray-900 mb-4">Service Categories:</h2>
+              <h2 className="text-xl font-bold text-ink mb-4">Service Categories:</h2>
               <ul>
                 {services.map((s) => (
                   <li key={s.slug} className="border-b border-dotted border-gray-300 last:border-0">
                     <Link href={`/services/${s.slug}`} className={`group flex items-center py-2.5 text-sm transition-colors hover:text-brand-text ${s.slug === service.slug ? "text-brand-text font-semibold" : "text-gray-700"}`}>
-                      <span className="text-brand-text mr-2 group-hover:translate-x-1 transition-transform" aria-hidden="true">»</span>{s.title}
+                      <span className="text-accent mr-2 group-hover:translate-x-1 transition-transform" aria-hidden="true">»</span>{s.title}
                     </Link>
                   </li>
                 ))}
@@ -70,7 +70,7 @@ export default async function ServiceView({ service }: { service: Service }) {
             </Reveal>
 
             <Reveal variant="right" delay={80} className="border border-gray-200 rounded-lg p-6">
-              <h2 className="text-xl font-bold text-gray-900 mb-4">Popular Countries:</h2>
+              <h2 className="text-xl font-bold text-ink mb-4">Popular Countries:</h2>
               <ul className="space-y-3">
                 {countries.slice(0, 4).map((c) => (
                   <li key={c.slug}>
@@ -83,12 +83,12 @@ export default async function ServiceView({ service }: { service: Service }) {
             </Reveal>
 
             <Reveal variant="right" delay={160} className="border border-gray-200 rounded-lg p-6">
-              <h2 className="text-xl font-bold text-gray-900 mb-4">Latest Posts</h2>
+              <h2 className="text-xl font-bold text-ink mb-4">Latest Posts</h2>
               <ul className="space-y-5">
                 {posts.slice(0, 3).map((p) => (
                   <li key={p.slug}>
                     <p className="text-xs text-gray-500 mb-1">{formatDate(p.date)} · {p.category}</p>
-                    <Link href={`/blog/${p.slug}`} className="font-bold text-gray-900 hover:text-brand-text transition-colors">{p.title}</Link>
+                    <Link href={`/blog/${p.slug}`} className="font-bold text-ink hover:text-brand-text transition-colors">{p.title}</Link>
                   </li>
                 ))}
               </ul>
@@ -98,14 +98,14 @@ export default async function ServiceView({ service }: { service: Service }) {
       </section>
 
       {related.length > 0 && (
-        <section className="py-14 bg-gray-50">
+        <section className="py-14 bg-canvas">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <Reveal className="text-center mb-10"><h2 className="text-3xl font-bold text-gray-900">Related Services</h2></Reveal>
+            <Reveal className="text-center mb-10"><h2 className="text-3xl font-bold text-ink">Related Services</h2></Reveal>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {related.map((s, i) => (
                 <Reveal key={s.slug} delay={i * 80}>
                   <Link href={`/services/${s.slug}`} className="group block h-full bg-white border border-gray-200 rounded-lg p-7 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-500">
-                    <h3 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-brand-text transition-colors">{s.title}</h3>
+                    <h3 className="text-lg font-bold text-ink mb-2 group-hover:text-brand-text transition-colors">{s.title}</h3>
                     <p className="text-sm text-gray-600 leading-relaxed">{s.summary}</p>
                   </Link>
                 </Reveal>
@@ -118,7 +118,7 @@ export default async function ServiceView({ service }: { service: Service }) {
       {service.faqs.length > 0 && (
         <section className="py-14">
           <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-            <Reveal className="text-center mb-8"><h2 className="text-3xl font-bold text-gray-900">Have Questions? Look Here</h2></Reveal>
+            <Reveal className="text-center mb-8"><h2 className="text-3xl font-bold text-ink">Have Questions? Look Here</h2></Reveal>
             <Reveal><FaqList faqs={service.faqs} /></Reveal>
           </div>
         </section>

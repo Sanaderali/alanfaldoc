@@ -19,7 +19,7 @@ export default function BlogListing({ crumbs, heading, posts, page, pages, intro
           <div className="lg:col-span-2 min-w-0">
             {heading && (
               <div className="mb-8 animate-fadeIn">
-                <h1 className="text-3xl md:text-4xl font-bold text-gray-900">{heading}</h1>
+                <h1 className="text-3xl md:text-4xl font-bold text-ink">{heading}</h1>
                 {intro && <p className="mt-2 text-gray-600">{intro}</p>}
               </div>
             )}

@@ -28,24 +28,24 @@ export default function ContactPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Breadcrumb */}
-      <section className="bg-gray-100 text-gray-700 border-b border-gray-200 py-4">
+      <section className="bg-brand text-white py-4">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center text-sm">
-            <Link href="/" className="hover:text-brand-text transition-colors">
+            <Link href="/" className="text-white/90 hover:text-white hover:underline transition-colors">
               [ Home ]
             </Link>
-            <span className="mx-2">»</span>
+            <span className="mx-2 text-white/60">»</span>
             <span>Contact Us</span>
           </div>
         </div>
       </section>
 
       {/* Contact Section */}
-      <section className="py-16 md:py-20 bg-gray-50">
+      <section className="py-16 md:py-20 bg-canvas">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Title */}
           <div className="text-center mb-16">
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+            <h1 className="text-4xl md:text-5xl font-bold text-ink mb-6">
               Have Questions? Get in Touch
             </h1>
             <p className="text-gray-600 max-w-3xl mx-auto text-lg">
@@ -64,7 +64,7 @@ export default function ContactPage() {
                     <Icon name="location-dot" className="text-2xl text-brand-text" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold text-gray-900 mb-2">
+                    <h3 className="text-xl font-bold text-ink mb-2">
                       121 King St, Melbourne<br />
                       VIC 3000 Australia
                     </h3>
@@ -80,7 +80,7 @@ export default function ContactPage() {
                     <Icon name="phone" className="text-2xl text-brand-text" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold text-gray-900 mb-2">
+                    <h3 className="text-xl font-bold text-ink mb-2">
                       P: +12 3 3456 7890<br />
                       F: +12 3 0987 6543
                     </h3>
@@ -96,7 +96,7 @@ export default function ContactPage() {
                     <Icon name="envelope" className="text-2xl text-brand-text" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold text-gray-900 mb-2">
+                    <h3 className="text-xl font-bold text-ink mb-2">
                       <a href="mailto:hello@domain.com" className="hover:text-brand-text transition-colors">hello@domain.com</a><br />
                       <a href="mailto:career@domain.com" className="hover:text-brand-text transition-colors">career@domain.com</a>
                     </h3>
@@ -117,7 +117,7 @@ export default function ContactPage() {
                     value={formData.name}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded focus:ring-2 focus:ring-brand focus:border-transparent transition-all text-gray-900"
+                    className="w-full px-4 py-3 bg-canvas border border-gray-200 rounded focus:ring-2 focus:ring-brand focus:border-transparent transition-all text-ink"
                   />
                 </div>
 
@@ -129,7 +129,7 @@ export default function ContactPage() {
                     value={formData.email}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded focus:ring-2 focus:ring-brand focus:border-transparent transition-all text-gray-900"
+                    className="w-full px-4 py-3 bg-canvas border border-gray-200 rounded focus:ring-2 focus:ring-brand focus:border-transparent transition-all text-ink"
                   />
                 </div>
 
@@ -138,7 +138,7 @@ export default function ContactPage() {
                     name="question"
                     value={formData.question}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded focus:ring-2 focus:ring-brand focus:border-transparent transition-all text-gray-700"
+                    className="w-full px-4 py-3 bg-canvas border border-gray-200 rounded focus:ring-2 focus:ring-brand focus:border-transparent transition-all text-gray-700"
                   >
                     <option value="">Your Question About..</option>
                     <option value="company-formation">Company Formation</option>
@@ -157,7 +157,7 @@ export default function ContactPage() {
                     value={formData.message}
                     onChange={handleChange}
                     rows={6}
-                    className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded focus:ring-2 focus:ring-brand focus:border-transparent transition-all text-gray-900 resize-none"
+                    className="w-full px-4 py-3 bg-canvas border border-gray-200 rounded focus:ring-2 focus:ring-brand focus:border-transparent transition-all text-ink resize-none"
                   ></textarea>
                 </div>
 
@@ -198,12 +198,12 @@ export default function ContactPage() {
       </section>
 
       {/* Newsletter Section */}
-      <section className="py-12 bg-gray-50 border-t border-gray-200">
+      <section className="py-12 bg-canvas border-t border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-white rounded-lg p-8 shadow-md border border-gray-100">
             <div className="flex flex-col md:flex-row items-center justify-between gap-6">
               <div className="flex-1">
-                <h3 className="text-2xl font-bold text-gray-900 mb-2">
+                <h3 className="text-2xl font-bold text-ink mb-2">
                   Stay Always In Touch
                 </h3>
                 <p className="text-gray-600">
@@ -215,7 +215,7 @@ export default function ContactPage() {
                   <input
                     type="email"
                     placeholder="Your email address"
-                    className="flex-1 px-4 py-3 bg-gray-50 border border-gray-200 rounded focus:ring-2 focus:ring-brand focus:border-transparent transition-all text-gray-900"
+                    className="flex-1 px-4 py-3 bg-canvas border border-gray-200 rounded focus:ring-2 focus:ring-brand focus:border-transparent transition-all text-ink"
                   />
                   <button className="px-6 sm:px-8 py-3 bg-brand text-white font-semibold rounded hover:bg-brand-dark hover:shadow-lg transition-all duration-300 uppercase text-sm whitespace-nowrap">
                     SUBSCRIBE

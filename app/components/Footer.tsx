@@ -6,10 +6,10 @@ import Icon from "./Icon";
 
 export default async function Footer() {
   const services = await getServices();
-  const h = "text-lg font-bold mb-5 text-gray-900";
+  const h = "text-lg font-bold mb-5 text-ink";
   const a = "hover:text-brand-text transition-colors";
   return (
-    <footer className="bg-gray-50 border-t border-gray-200">
+    <footer className="bg-canvas border-t border-gray-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
         <div>
           <div className="relative w-32 h-12 mb-5">

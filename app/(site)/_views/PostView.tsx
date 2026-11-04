@@ -43,9 +43,9 @@ export default async function PostView({ post }: { post: Post }) {
                 <Link href={`/blog/category/${slugify(post.category)}`} className="font-semibold text-gray-600 hover:text-brand-text">{post.category}</Link>
                 {" "}· {readingMinutes(post)} min read
               </p>
-              <h1 className="mt-2 text-3xl md:text-4xl font-bold text-[#2b3a55] leading-tight">{post.title}</h1>
+              <h1 className="mt-2 text-3xl md:text-4xl font-bold text-brand-text leading-tight">{post.title}</h1>
               <p className="mt-3 mb-8 text-sm text-gray-500">
-                By <strong className="text-gray-800">{post.author ?? "Al Anfal Doc Team"}</strong> · <time dateTime={post.date}>{formatDate(post.date)}</time>
+                By <strong className="text-ink">{post.author ?? "Al Anfal Doc Team"}</strong> · <time dateTime={post.date}>{formatDate(post.date)}</time>
                 {post.updated && post.updated !== post.date && <> · Updated <time dateTime={post.updated}>{formatDate(post.updated)}</time></>}
               </p>
             </div>
@@ -55,7 +55,7 @@ export default async function PostView({ post }: { post: Post }) {
 
             {post.tags && post.tags.length > 0 && (
               <Reveal className="mt-10 flex flex-wrap items-center gap-2">
-                <span className="text-sm font-semibold text-gray-900 mr-1">Tags:</span>
+                <span className="text-sm font-semibold text-ink mr-1">Tags:</span>
                 {post.tags.map((t) => (
                   <Link key={t} href={`/blog/tag/${slugify(t)}`} className="px-3 py-1.5 bg-gray-100 text-gray-500 text-xs rounded hover:bg-brand hover:text-white transition-colors">{t}</Link>
                 ))}
@@ -63,16 +63,16 @@ export default async function PostView({ post }: { post: Post }) {
             )}
 
             <Reveal className="mt-6 flex flex-wrap items-center gap-3 py-5 border-y border-gray-200">
-              <span className="text-sm font-semibold text-gray-900">Share:</span>
+              <span className="text-sm font-semibold text-ink">Share:</span>
               {share.map((s) => (
                 <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" className="px-3 py-1.5 border border-gray-200 rounded text-xs text-gray-600 hover:border-brand hover:text-brand-text transition-colors"><Icon name={s.icon} className="mr-1.5" />{s.label}</a>
               ))}
             </Reveal>
 
-            <Reveal className="mt-8 flex gap-4 items-center bg-gray-50 border border-gray-200 rounded-lg p-5">
+            <Reveal className="mt-8 flex gap-4 items-center bg-canvas border border-gray-200 rounded-lg p-5">
               <div className="w-14 h-14 shrink-0 rounded-full bg-brand-100 text-brand-text flex items-center justify-center font-bold text-xl" aria-hidden="true">{(post.author ?? "A")[0]}</div>
               <div>
-                <p className="font-semibold text-gray-900">{post.author ?? "Al Anfal Doc Team"}</p>
+                <p className="font-semibold text-ink">{post.author ?? "Al Anfal Doc Team"}</p>
                 <p className="text-sm text-gray-600">Practical guidance on company setup, visas and documents in Dubai and the UAE.</p>
               </div>
             </Reveal>
@@ -82,13 +82,13 @@ export default async function PostView({ post }: { post: Post }) {
                 {older ? (
                   <Link href={`/blog/${older.slug}`} rel="prev" className="group border border-gray-200 rounded-lg p-4 hover:border-brand transition-colors">
                     <span className="text-xs text-gray-400"><Icon name="arrow-left" className="mr-1" />Previous article</span>
-                    <span className="block font-medium text-gray-900 group-hover:text-brand-text transition-colors">{older.title}</span>
+                    <span className="block font-medium text-ink group-hover:text-brand-text transition-colors">{older.title}</span>
                   </Link>
                 ) : <span />}
                 {newer && (
                   <Link href={`/blog/${newer.slug}`} rel="next" className="group border border-gray-200 rounded-lg p-4 hover:border-brand transition-colors sm:text-right">
                     <span className="text-xs text-gray-400">Next article<Icon name="arrow-right" className="ml-1" /></span>
-                    <span className="block font-medium text-gray-900 group-hover:text-brand-text transition-colors">{newer.title}</span>
+                    <span className="block font-medium text-ink group-hover:text-brand-text transition-colors">{newer.title}</span>
                   </Link>
                 )}
               </nav>
@@ -100,9 +100,9 @@ export default async function PostView({ post }: { post: Post }) {
       </section>
 
       {related.length > 0 && (
-        <section className="py-14 bg-gray-50">
+        <section className="py-14 bg-canvas">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <Reveal className="text-center mb-10"><h2 className="text-3xl font-bold text-gray-900">Related Articles</h2></Reveal>
+            <Reveal className="text-center mb-10"><h2 className="text-3xl font-bold text-ink">Related Articles</h2></Reveal>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
               {related.map((p) => <Reveal key={p.slug}><BlogCard post={p} /></Reveal>)}
             </div>

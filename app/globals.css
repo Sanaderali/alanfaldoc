@@ -4,22 +4,31 @@
 
 /* Always light: no dark-mode override */
 /*
- * THEME (from the logo). RGB triplets so Tailwind opacity utilities work.
- * Active: logo red, refined. To switch, replace these 6 lines (see README "Theme colours").
+ * THEME: modern clean light mode. Change these values to re-theme the whole public site.
+ *   Background #F8F9FA   Primary (headers / main buttons) #0A5C36 deep green
+ *   Secondary (CTAs / highlights) #D32F2F deep red   Text #1A1A1A   Surface (cards) #FFFFFF
+ * RGB triplets so Tailwind opacity utilities (bg-brand/10) work.
  */
 :root {
-  --brand: 220 38 38;       /* #dc2626 buttons / fills */
-  --brand-dark: 185 28 28;  /* #b91c1c hover */
-  --brand-text: 185 28 28;  /* #b91c1c text & links on white */
-  --brand-50: 254 242 242;
-  --brand-100: 254 226 226;
-  --brand-200: 254 202 202;
+  --brand: 10 92 54;         /* #0A5C36 primary: main buttons, headers, links */
+  --brand-dark: 7 69 40;     /* #074528 hover */
+  --brand-text: 10 92 54;    /* #0A5C36 text/links on light backgrounds */
+  --brand-50: 237 247 241;
+  --brand-100: 214 238 224;
+  --brand-200: 173 219 192;
+  --accent: 211 47 47;       /* #D32F2F secondary: CTAs and highlights */
+  --accent-dark: 183 28 28;  /* #B71C1C hover */
+  --accent-50: 253 237 237;
+  --accent-100: 250 214 214;
+  --canvas: 248 249 250;     /* #F8F9FA page background */
+  --ink: 26 26 26;           /* #1A1A1A primary text */
+  --surface: 255 255 255;    /* #FFFFFF cards */
 }
 
 :root {
   color-scheme: light;
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #F8F9FA;
+  --foreground: #1A1A1A;
 }
 
 
@@ -357,12 +366,12 @@ html, body { overflow-x: clip; }
 }
 
 /* ---------- Rich text (public pages + dashboard visual editor share these styles) ---------- */
-.rich-content { color: #374151; line-height: 1.75; font-size: 1rem; }
+.rich-content { color: #1A1A1A; line-height: 1.75; font-size: 1rem; }
 .rich-content > :first-child { margin-top: 0; }
 .rich-content p { margin: 0 0 1.1rem; }
-.rich-content h2 { font-size: 1.6rem; line-height: 1.3; font-weight: 700; color: #111827; margin: 2rem 0 0.75rem; }
-.rich-content h3 { font-size: 1.25rem; line-height: 1.35; font-weight: 700; color: #111827; margin: 1.6rem 0 0.6rem; }
-.rich-content h4 { font-size: 1.05rem; font-weight: 700; color: #111827; margin: 1.3rem 0 0.5rem; }
+.rich-content h2 { font-size: 1.6rem; line-height: 1.3; font-weight: 700; color: #1A1A1A; margin: 2rem 0 0.75rem; }
+.rich-content h3 { font-size: 1.25rem; line-height: 1.35; font-weight: 700; color: #1A1A1A; margin: 1.6rem 0 0.6rem; }
+.rich-content h4 { font-size: 1.05rem; font-weight: 700; color: #1A1A1A; margin: 1.3rem 0 0.5rem; }
 .rich-content ul, .rich-content ol { margin: 0 0 1.2rem; padding-left: 1.4rem; }
 .rich-content ul { list-style: disc; }
 .rich-content ol { list-style: decimal; }

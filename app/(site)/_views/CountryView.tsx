@@ -36,7 +36,7 @@ export default async function CountryView({ country }: { country: Country }) {
           {/* Main column */}
           <article className="lg:col-span-2 min-w-0">
             {/* Banner */}
-            <div className={`relative h-48 sm:h-64 rounded-lg overflow-hidden bg-gradient-to-br ${country.gradient} flex items-center justify-center text-center text-gray-900 mb-8 animate-fadeIn`}>
+            <div className={`relative h-48 sm:h-64 rounded-lg overflow-hidden bg-gradient-to-br ${country.gradient} flex items-center justify-center text-center text-ink mb-8 animate-fadeIn`}>
               {country.image && <Image src={country.image} alt={country.imageAlt ?? country.name} fill priority sizes="(min-width:1024px) 66vw, 100vw" className="object-cover" />}
               <div className="relative px-4">
                 <div className="mb-3"><Flag country={country} size={96} className="drop-shadow-lg" /></div>
@@ -45,7 +45,7 @@ export default async function CountryView({ country }: { country: Country }) {
               </div>
             </div>
 
-            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-5 animate-fadeIn">{country.headline}</h1>
+            <h1 className="text-3xl md:text-4xl font-bold text-ink mb-5 animate-fadeIn">{country.headline}</h1>
             {country.intro && <p className="text-gray-600 leading-relaxed mb-6">{country.intro}</p>}
 
             <Reveal>
@@ -53,7 +53,7 @@ export default async function CountryView({ country }: { country: Country }) {
                 {country.facts.map((f) => (
                   <li key={f.label} className="flex items-start text-gray-700">
                     <span className="text-brand-text mr-2" aria-hidden="true">•</span>
-                    <span><strong className="text-gray-900">{f.label}:</strong> {f.value}</span>
+                    <span><strong className="text-ink">{f.label}:</strong> {f.value}</span>
                   </li>
                 ))}
               </ul>
@@ -73,12 +73,12 @@ export default async function CountryView({ country }: { country: Country }) {
           {/* Sidebar */}
           <aside className="lg:col-span-1 space-y-10">
             <Reveal variant="right">
-              <h2 className="text-xl font-bold text-gray-900 mb-4">{country.categories ? "Visa Categories:" : "Related Services:"}</h2>
+              <h2 className="text-xl font-bold text-ink mb-4">{country.categories ? "Visa Categories:" : "Related Services:"}</h2>
               <ul>
                 {sideLinks.map((l) => (
                   <li key={l.title} className="border-b border-dotted border-gray-300">
                     <Link href={l.href} className="group flex items-center py-3 text-gray-700 hover:text-brand-text transition-colors">
-                      <span className="text-brand-text mr-2 font-bold group-hover:translate-x-1 transition-transform" aria-hidden="true">»</span>
+                      <span className="text-accent mr-2 font-bold group-hover:translate-x-1 transition-transform" aria-hidden="true">»</span>
                       {l.title}
                     </Link>
                   </li>
@@ -87,7 +87,7 @@ export default async function CountryView({ country }: { country: Country }) {
             </Reveal>
 
             <Reveal variant="right" delay={100}>
-              <h2 className="text-xl font-bold text-gray-900 mb-4">Popular Countries:</h2>
+              <h2 className="text-xl font-bold text-ink mb-4">Popular Countries:</h2>
               <div className="space-y-5">
                 {popular.map((c) => (
                   <Link key={c.slug} href={`/countries/${c.slug}`} className="group block">
@@ -95,7 +95,7 @@ export default async function CountryView({ country }: { country: Country }) {
                       {c.image && <Image src={c.image} alt="" fill sizes="(min-width:1024px) 33vw, 100vw" className="object-cover" />}
                       <Flag country={c} size={72} className="relative group-hover:scale-110 transition-transform duration-500" />
                     </div>
-                    <p className="mt-2 font-semibold text-gray-900 group-hover:text-brand-text transition-colors">{c.name}</p>
+                    <p className="mt-2 font-semibold text-ink group-hover:text-brand-text transition-colors">{c.name}</p>
                   </Link>
                 ))}
               </div>
@@ -107,7 +107,7 @@ export default async function CountryView({ country }: { country: Country }) {
       {country.faqs && country.faqs.length > 0 && (
         <section className="py-14 md:py-16 border-t border-dashed border-gray-200">
           <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-            <Reveal className="text-center mb-8"><h2 className="text-3xl font-bold text-gray-900">{country.name}: Frequently Asked Questions</h2></Reveal>
+            <Reveal className="text-center mb-8"><h2 className="text-3xl font-bold text-ink">{country.name}: Frequently Asked Questions</h2></Reveal>
             <Reveal><FaqList faqs={country.faqs} /></Reveal>
           </div>
         </section>
@@ -118,7 +118,7 @@ export default async function CountryView({ country }: { country: Country }) {
         <section className="py-14 md:py-20 border-t border-dashed border-gray-200 bg-gray-50/60">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <Reveal className="text-center mb-10">
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">Immigration Opportunities</h2>
+              <h2 className="text-3xl md:text-4xl font-bold text-ink mb-3">Immigration Opportunities</h2>
               <p className="text-gray-500 max-w-xl mx-auto">Explore other destinations we support with documentation and visa services.</p>
             </Reveal>
             <Reveal>

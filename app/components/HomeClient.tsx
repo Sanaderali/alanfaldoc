@@ -65,7 +65,7 @@ export default function HomeClient() {
   return (
     <>
       {/* Hero Section */}
-      <section id="home" className="relative bg-gradient-to-b from-brand-50 via-white to-[#f6f7f9] text-gray-900 py-16 sm:py-20 md:py-28">
+      <section id="home" className="relative bg-gradient-to-b from-brand-50 via-white to-canvas text-ink py-16 sm:py-20 md:py-28">
         <div className="absolute inset-0 bg-[url('/hero-team.jpg')] bg-cover bg-center opacity-[0.08]"></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8">
@@ -95,8 +95,8 @@ export default function HomeClient() {
           {/* Consultation Form */}
           <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-2xl p-6 sm:p-8">
             <form className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              <input type="text" placeholder="Enter Your Name*" className="px-4 py-3 border border-gray-300 rounded text-gray-900 focus:ring-2 focus:ring-brand focus:border-transparent" />
-              <input type="email" placeholder="Enter Your Email*" className="px-4 py-3 border border-gray-300 rounded text-gray-900 focus:ring-2 focus:ring-brand focus:border-transparent" />
+              <input type="text" placeholder="Enter Your Name*" className="px-4 py-3 border border-gray-300 rounded text-ink focus:ring-2 focus:ring-brand focus:border-transparent" />
+              <input type="email" placeholder="Enter Your Email*" className="px-4 py-3 border border-gray-300 rounded text-ink focus:ring-2 focus:ring-brand focus:border-transparent" />
               <select className="px-4 py-3 border border-gray-300 rounded text-gray-700 focus:ring-2 focus:ring-brand focus:border-transparent">
                 <option>Visa Type</option>
                 <option>Company Formation</option>
@@ -126,8 +126,8 @@ export default function HomeClient() {
               </div>
             </div>
             <div>
-              <span className="text-brand-text font-semibold text-sm uppercase tracking-wide">ABOUT AGENCY</span>
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mt-3 mb-6">
+              <span className="text-accent font-semibold text-sm uppercase tracking-wide">ABOUT AGENCY</span>
+              <h2 className="text-3xl md:text-4xl font-bold text-ink mt-3 mb-6">
                 Get guarantee success with our advisors
               </h2>
               <p className="text-gray-600 mb-4 leading-relaxed">
@@ -136,7 +136,7 @@ export default function HomeClient() {
               <p className="text-gray-600 mb-6 leading-relaxed">
                 Cursus risus laoreet auctor, varius augue. Nulla dolor and sapien risus nec, luctus mauris donec diam sapien neque in cubilia an ligula quaerat ipsum volute turpis sodales sapien vitae donec an ipsum porta justo integer at velna vitae auctor a magna risus
               </p>
-              <Link href="/about" className="inline-block px-8 py-3 border-2 border-gray-800 text-gray-900 font-semibold rounded hover:bg-gray-800 hover:text-white hover:shadow-lg hover:scale-105 transition-all duration-300 uppercase text-sm">
+              <Link href="/about" className="inline-block px-8 py-3 border-2 border-brand text-brand-text font-semibold rounded hover:bg-brand hover:text-white hover:shadow-lg hover:scale-105 transition-all duration-300 uppercase text-sm">
                 DISCOVER MORE
               </Link>
             </div>
@@ -145,10 +145,10 @@ export default function HomeClient() {
       </section>
 
       {/* Services Section */}
-      <section id="services" className="py-16 md:py-20 bg-gray-50">
+      <section id="services" className="py-16 md:py-20 bg-canvas">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-ink mb-4">
               Our Services
             </h2>
             <p className="text-gray-600 max-w-3xl mx-auto">
@@ -159,7 +159,7 @@ export default function HomeClient() {
             {services.map((service, index) => (
               <div key={index} className={`bg-white rounded-lg p-8 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 border border-gray-100 animate-slide-up stagger-${index + 1} group`}>
                 <div className="w-14 h-14 mb-4 rounded-full bg-brand-50 text-brand-text flex items-center justify-center text-2xl transform group-hover:scale-110 group-hover:bg-brand group-hover:text-white transition-all duration-300"><Icon name={service.icon} /></div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-brand-text transition-colors">{service.title}</h3>
+                <h3 className="text-xl font-bold text-ink mb-3 group-hover:text-brand-text transition-colors">{service.title}</h3>
                 <p className="text-gray-600 mb-4 leading-relaxed text-sm">{service.desc}</p>
                 <Link href="/services" className="text-gray-500 hover:text-brand-text text-sm font-medium transition-all inline-flex items-center group-hover:gap-2">
                   READ MORE <span className="inline-block group-hover:translate-x-1 transition-transform">›</span>
@@ -174,7 +174,7 @@ export default function HomeClient() {
       <section className="py-16 md:py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-ink mb-4">
               Countries We Cover
             </h2>
             <p className="text-gray-600 max-w-3xl mx-auto">
@@ -183,10 +183,10 @@ export default function HomeClient() {
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
             {countries.slice(0, 7).map((country, index) => (
-              <Link href="/countries" key={index} className="relative block h-32 sm:h-40 rounded-lg overflow-hidden bg-gradient-to-br from-gray-50 to-gray-200 border border-gray-200 group cursor-pointer transform hover:scale-105 hover:shadow-xl transition-all duration-500">
+              <Link href="/countries" key={index} className="relative block h-32 sm:h-40 rounded-lg overflow-hidden bg-gradient-to-br from-canvas to-gray-200 border border-gray-200 group cursor-pointer transform hover:scale-105 hover:shadow-xl transition-all duration-500">
                 <div className="absolute inset-0 pb-6 flex items-center justify-center text-5xl sm:text-6xl transform group-hover:scale-110 transition-transform duration-500"><Flag country={{ flag: country.img }} size={64} /></div>
                 <div className="absolute bottom-4 left-0 right-0 text-center transform group-hover:translate-y-[-4px] transition-transform duration-300">
-                  <h3 className="text-gray-900 font-bold text-sm sm:text-base">{country.name}</h3>
+                  <h3 className="text-ink font-bold text-sm sm:text-base">{country.name}</h3>
                 </div>
               </Link>
             ))}
@@ -195,14 +195,14 @@ export default function HomeClient() {
       </section>
 
       {/* CTA Banner */}
-      <section className="py-12 md:py-16 bg-gradient-to-r from-brand-50 to-brand-100 text-gray-900">
+      <section className="py-12 md:py-16 bg-gradient-to-r from-brand-50 to-brand-100 text-ink">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-6">
             <div>
-              <h3 className="text-sm uppercase tracking-wide mb-2 text-brand-text font-semibold">CONSULTATIONS FOR PROSPECTIVE IMMIGRANTS</h3>
+              <h3 className="text-sm uppercase tracking-wide mb-2 text-accent font-semibold">CONSULTATIONS FOR PROSPECTIVE IMMIGRANTS</h3>
               <p className="text-gray-600 text-sm">Aliquam a augue suscipit, luctus neque purus ipsum neque dolor primis libero tempus, and blandit ligula varius</p>
             </div>
-            <Link href="/contact" className="px-8 py-3 border-2 border-gray-900 text-gray-900 font-semibold hover:bg-gray-900 hover:text-white transition-all uppercase text-sm whitespace-nowrap">
+            <Link href="/contact" className="px-8 py-3 bg-accent text-white font-semibold rounded hover:bg-accent-dark hover:shadow-lg transition-all uppercase text-sm whitespace-nowrap">
               GET CONSULTATION
             </Link>
           </div>
@@ -210,10 +210,10 @@ export default function HomeClient() {
       </section>
 
       {/* Why Choose Section */}
-      <section className="py-16 md:py-20 bg-gray-50">
+      <section className="py-16 md:py-20 bg-canvas">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-ink mb-4">
               Why Choose Al Anfal Doc?
             </h2>
             <p className="text-gray-600 max-w-3xl mx-auto">
@@ -249,7 +249,7 @@ export default function HomeClient() {
       <section className="py-16 md:py-20 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-ink mb-4">
               Have Questions? Look Here
             </h2>
             <p className="text-gray-600">
@@ -258,12 +258,12 @@ export default function HomeClient() {
           </div>
           <div className="space-y-3">
             {faqs.map((faq, index) => (
-              <div key={index} className="bg-gray-50 rounded overflow-hidden border border-gray-200 hover:border-brand hover:shadow-md transition-all duration-300">
+              <div key={index} className="bg-canvas rounded overflow-hidden border border-gray-200 hover:border-brand hover:shadow-md transition-all duration-300">
                 <button
                   onClick={() => setActiveAccordion(activeAccordion === index ? null : index)}
                   className="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-100 transition-all duration-300 group"
                 >
-                  <span className="font-semibold text-gray-900 text-sm sm:text-base pr-4 group-hover:text-brand-text transition-colors">{index + 1}. {faq.question}</span>
+                  <span className="font-semibold text-ink text-sm sm:text-base pr-4 group-hover:text-brand-text transition-colors">{index + 1}. {faq.question}</span>
                   <span className={`text-2xl text-gray-400 flex-shrink-0 transform group-hover:scale-125 group-hover:text-brand-text transition-all duration-500 ${activeAccordion === index ? 'rotate-180' : 'rotate-0'}`}>{activeAccordion === index ? '−' : '+'}</span>
                 </button>
                 <div className={`faq-content ${activeAccordion === index ? 'open' : ''} ${activeAccordion === index ? 'px-6 pb-4 pt-2' : 'px-6'}`}>
@@ -279,17 +279,17 @@ export default function HomeClient() {
           </div>
           <div className="text-center mt-8">
             <p className="text-gray-600 text-sm">
-              Still have a question? <Link href="/contact" className="text-blue-600 hover:underline font-medium">Ask your question here</Link>
+              Still have a question? <Link href="/contact" className="text-brand-text hover:underline font-medium">Ask your question here</Link>
             </p>
           </div>
         </div>
       </section>
 
       {/* Testimonials */}
-      <section className="py-16 md:py-20 bg-gray-50">
+      <section className="py-16 md:py-20 bg-canvas">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-ink mb-4">
               Our Success Stories...
             </h2>
             <p className="text-gray-600 max-w-3xl mx-auto">
@@ -302,7 +302,7 @@ export default function HomeClient() {
                 <div className="flex items-center mb-4">
                   <div className="w-14 h-14 bg-gradient-to-br from-brand to-brand-dark rounded-full flex items-center justify-center text-2xl mr-4 transform group-hover:scale-110 transition-transform duration-300 shadow-md text-white"><Icon name={testimonial.img} /></div>
                   <div>
-                    <div className="font-bold text-gray-900 group-hover:text-brand-text transition-colors">{testimonial.name}</div>
+                    <div className="font-bold text-ink group-hover:text-brand-text transition-colors">{testimonial.name}</div>
                     <div className="text-sm text-gray-500">{testimonial.role}</div>
                   </div>
                 </div>
@@ -314,7 +314,7 @@ export default function HomeClient() {
       </section>
 
       {/* Final CTA */}
-      <section className="py-12 md:py-16 bg-gradient-to-r from-gray-50 to-gray-100 text-gray-900">
+      <section className="py-12 md:py-16 bg-gradient-to-r from-canvas to-canvas text-ink">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4">
             Free Immigration & Visa Consultation
@@ -324,7 +324,7 @@ export default function HomeClient() {
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <span className="text-sm sm:text-base">Call : <span className="font-bold text-lg">+971 50 123 4567</span></span>
-            <Link href="/contact" className="px-8 py-3 bg-brand text-white font-semibold rounded hover:bg-brand-dark hover:shadow-lg hover:scale-105 transition-all duration-300 uppercase text-sm">
+            <Link href="/contact" className="px-8 py-3 bg-accent text-white font-semibold rounded hover:bg-accent-dark hover:shadow-lg hover:scale-105 transition-all duration-300 uppercase text-sm">
               GET CONSULTATION
             </Link>
           </div>

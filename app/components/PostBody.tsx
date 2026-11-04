@@ -3,7 +3,7 @@ export default function PostBody({ body }: { body: string[] }) {
   return (
     <div className="text-gray-700 leading-relaxed">
       {body.map((b, i) => {
-        if (b.startsWith("## ")) return <h2 key={i} className="text-2xl font-bold text-gray-900 mt-8 mb-3">{b.slice(3)}</h2>;
+        if (b.startsWith("## ")) return <h2 key={i} className="text-2xl font-bold text-ink mt-8 mb-3">{b.slice(3)}</h2>;
         if (b.startsWith("- ")) {
           return (
             <ul key={i} className="space-y-2 my-4">

@@ -8,7 +8,7 @@ export default function ContentSections({ sections }: { sections: ContentSection
         const H = s.minor ? "h3" : "h2";
         return (
           <div key={i} className="mb-8">
-            <H className={s.minor ? "text-lg font-bold text-gray-900 mb-3" : "text-2xl font-bold text-gray-900 mb-4"}>{s.heading}</H>
+            <H className={s.minor ? "text-lg font-bold text-ink mb-3" : "text-2xl font-bold text-ink mb-4"}>{s.heading}</H>
             {s.paragraphs?.map((p, j) => (
               <p key={j} className="text-gray-600 leading-relaxed mb-4">{p}</p>
             ))}
