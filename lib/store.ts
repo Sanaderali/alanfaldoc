@@ -48,6 +48,7 @@ const seedPages = (): PageSettings[] =>
       ["blog", "Blog list", "/blog"],
       ["faqs", "FAQs", "/faqs"],
       ["contact", "Contact", "/contact"],
+      ["sitemap", "Sitemap", "/sitemap"],
     ] as const
   ).map(([key, name, p]) => stamp({ key, name, path: p, seo: {}, faqSchema: true }));
 
@@ -66,9 +67,17 @@ function seed<K extends CollectionName>(name: K): CollectionMap[K][] {
 const file = (n: CollectionName) => path.join(CONTENT_DIR, `${n}.json`);
 const locks = new Map<string, Promise<unknown>>();
 
+/** Built-in fixed pages added in later versions are merged into an existing pages.json automatically. */
+function withMissingPages(items: PageSettings[]): PageSettings[] {
+  const have = new Set(items.map((p) => p.key));
+  const missing = seedPages().filter((p) => !have.has(p.key));
+  return missing.length ? [...items, ...missing] : items;
+}
+
 export async function readAll<K extends CollectionName>(name: K): Promise<CollectionMap[K][]> {
   try {
-    return JSON.parse(await fs.readFile(file(name), "utf8"));
+    const data = JSON.parse(await fs.readFile(file(name), "utf8"));
+    return (name === "pages" ? withMissingPages(data) : data) as CollectionMap[K][];
   } catch (e) {
     if ((e as NodeJS.ErrnoException).code !== "ENOENT") throw e;
     const data = seed(name);
@@ -103,3 +112,28 @@ export async function mutate<K extends CollectionName, R>(name: K, fn: (items: C
 }
 
 export { now, stamp };
+
+/* ---------------- previews (dashboard "Preview" button) ---------------- */
+const PREVIEW_DIR = path.join(CONTENT_DIR, "previews");
+const safeId = (id: string) => /^[a-zA-Z0-9-]{1,64}$/.test(id);
+
+/** Unsaved/draft copy of an item, so the editor can show a real preview without touching live content. */
+export async function writePreview(id: string, item: unknown): Promise<void> {
+  if (!safeId(id)) throw new Error("bad id");
+  await fs.mkdir(PREVIEW_DIR, { recursive: true });
+  await fs.writeFile(path.join(PREVIEW_DIR, `${id}.json`), JSON.stringify(item), "utf8");
+  // housekeeping: drop previews older than a day
+  const now = Date.now();
+  for (const f of await fs.readdir(PREVIEW_DIR)) {
+    const fp = path.join(PREVIEW_DIR, f);
+    if (now - (await fs.stat(fp)).mtimeMs > 24 * 3600 * 1000) await fs.rm(fp, { force: true });
+  }
+}
+export async function readPreview<T = unknown>(id: string): Promise<T | undefined> {
+  if (!safeId(id)) return undefined;
+  try {
+    return JSON.parse(await fs.readFile(path.join(PREVIEW_DIR, `${id}.json`), "utf8"));
+  } catch {
+    return undefined;
+  }
+}

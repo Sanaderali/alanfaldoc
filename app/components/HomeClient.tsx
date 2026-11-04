@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Icon from "./Icon";
+import Flag from "./Flag";
 
 export default function HomeClient() {
   const [mounted, setMounted] = useState(false);
@@ -183,7 +184,7 @@ export default function HomeClient() {
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
             {countries.slice(0, 7).map((country, index) => (
               <Link href="/countries" key={index} className="relative block h-32 sm:h-40 rounded-lg overflow-hidden bg-gradient-to-br from-gray-50 to-gray-200 border border-gray-200 group cursor-pointer transform hover:scale-105 hover:shadow-xl transition-all duration-500">
-                <div className="absolute inset-0 pb-6 flex items-center justify-center text-5xl sm:text-6xl transform group-hover:scale-110 transition-transform duration-500">{country.img}</div>
+                <div className="absolute inset-0 pb-6 flex items-center justify-center text-5xl sm:text-6xl transform group-hover:scale-110 transition-transform duration-500"><Flag country={{ flag: country.img }} size={64} /></div>
                 <div className="absolute bottom-4 left-0 right-0 text-center transform group-hover:translate-y-[-4px] transition-transform duration-300">
                   <h3 className="text-gray-900 font-bold text-sm sm:text-base">{country.name}</h3>
                 </div>

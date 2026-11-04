@@ -6,8 +6,10 @@ import { useRouter } from "next/navigation";
 import Icon from "@/app/components/Icon";
 import { articleLd, countryPageLd, faqLd, serviceLd } from "@/lib/seo";
 import { btnGhost, btnPrimary, inputCls } from "../../ui";
-import { saveItem, deleteItem, duplicateItem } from "../actions";
+import { saveItem, deleteItem, duplicateItem, savePreview } from "../actions";
 import RichEditor from "./RichEditor";
+import Flag from "@/app/components/Flag";
+import { BUILTIN_FLAGS, builtinFlag, emojiToCode } from "@/lib/flags";
 import { CheckList, Counter, Field, FaqsEditor, ImageField, PairsEditor, SchemaPanel, SeoPanel, TextArea, TextField, Toggle, type Errors, type Form } from "./fields";
 
 type Kind = "services" | "countries" | "posts";
@@ -32,7 +34,7 @@ const slugify = (s: string) => s.toLowerCase().trim().replace(/[^a-z0-9]+/g, "-"
 function blank(kind: Kind): Form {
   const b = { status: "draft", publishAt: "", slug: "", image: "", imageAlt: "", faqSchema: true, schemaCustom: "", seo: {}, faqs: [], contentHtml: "" };
   if (kind === "services") return { ...b, title: "", icon: "briefcase", summary: "", relatedSlugs: [], serviceType: "" };
-  if (kind === "countries") return { ...b, name: "", flag: "", tagline: "", headline: "", summary: "", facts: [], gradient: GRADIENTS[0], categories: [], serviceSlugs: [], featured: false };
+  if (kind === "countries") return { ...b, name: "", flag: "", flagImage: "", tagline: "", headline: "", summary: "", facts: [], gradient: GRADIENTS[0], categories: [], serviceSlugs: [], featured: false };
   return { ...b, title: "", excerpt: "", category: "", author: "Al Anfal Doc Team", tags: [], readMinutes: "" };
 }
 
@@ -54,7 +56,8 @@ export default function ItemEditor({ kind, id, initial, ctx }: { kind: Kind; id?
   const [msg, setMsg] = useState<{ ok: boolean; text: string } | null>(null);
   const [dirty, setDirty] = useState(false);
   const [pending, start] = useTransition();
-  const [editSlug, setEditSlug] = useState(false);
+  const [previewing, setPreviewing] = useState(false);
+  const [previewId, setPreviewId] = useState<string | undefined>(id);
   const slugTouched = useRef(!!id);
 
   const titleKey = kind === "countries" ? "name" : "title";
@@ -84,6 +87,18 @@ export default function ItemEditor({ kind, id, initial, ctx }: { kind: Kind; id?
       setTimeout(() => document.querySelector('p[role="alert"]')?.scrollIntoView({ behavior: "smooth", block: "center" }), 50);
     }
   });
+
+  /** WordPress-style preview: stores the CURRENT editor content privately and opens the real page in a new tab */
+  const openPreview = async () => {
+    const w = window.open("about:blank", "_blank"); // open synchronously so pop-up blockers allow it
+    setPreviewing(true);
+    const r = await savePreview(kind, JSON.stringify({ ...f, publishAt: fromLocal(f.publishAt) }), id ?? previewId);
+    setPreviewing(false);
+    if (!r.ok || !r.id) { w?.close(); setMsg({ ok: false, text: r.message ?? "Could not create the preview" }); return; }
+    setPreviewId(r.id);
+    const url = `/preview/${kind}/${r.id}`;
+    if (w) w.location.href = url; else window.open(url, "_blank");
+  };
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => { if ((e.ctrlKey || e.metaKey) && e.key === "s") { e.preventDefault(); save(f.status === "published" ? "published" : "draft"); } };
@@ -122,16 +137,15 @@ export default function ItemEditor({ kind, id, initial, ctx }: { kind: Kind; id?
             className="w-full px-4 py-3 text-2xl sm:text-3xl font-bold bg-white border border-gray-300 rounded-lg placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-brand/40"
           />
           {errors[titleKey] && <p role="alert" className="text-xs text-red-600 mt-1">{errors[titleKey]}</p>}
-          <p className="mt-2 text-sm text-gray-500 flex flex-wrap items-center gap-2">
-            <span>Link:</span>
-            {editSlug ? (
-              <span className="inline-flex items-center gap-1">{base[kind]}<input aria-label="URL slug" value={f.slug} onChange={(e) => { slugTouched.current = true; set({ slug: slugify(e.target.value) }); }} className="px-2 py-1 text-sm border border-gray-300 rounded" /><button type="button" className="text-brand-text font-medium" onClick={() => setEditSlug(false)}>OK</button></span>
-            ) : (
-              <><span className="text-gray-800">{ctx.siteUrl.replace(/^https?:\/\//, "")}{path}</span><button type="button" onClick={() => setEditSlug(true)} className="text-brand-text font-medium hover:underline">Edit</button></>
-            )}
-          </p>
+          <p className="mt-2 text-sm text-gray-500 break-all"><span>Link: </span><span className="text-gray-800">{ctx.siteUrl.replace(/^https?:\/\//, "")}{path}</span></p>
           {errors.slug && <p role="alert" className="text-xs text-red-600 mt-1">{errors.slug}</p>}
         </div>
+
+        {kind === "posts" && (
+          <Box title="Featured image">
+            <ImageField src={f.image} alt={f.imageAlt} error={errors.imageAlt} onChange={(src, alt) => set({ image: src, imageAlt: alt })} label="" />
+          </Box>
+        )}
 
         {kind === "countries" && (
           <Box title="Quick facts" className="!bg-white">
@@ -171,9 +185,11 @@ export default function ItemEditor({ kind, id, initial, ctx }: { kind: Kind; id?
 
       {/* ------------ sidebar ------------ */}
       <aside className="space-y-5 xl:sticky xl:top-4">
-        <Box title="Featured image">
+        {kind !== "posts" && (
+          <Box title="Featured image">
           <ImageField src={f.image} alt={f.imageAlt} error={errors.imageAlt} onChange={(src, alt) => set({ image: src, imageAlt: alt })} label="" />
-        </Box>
+          </Box>
+        )}
 
         <section className="bg-white border border-gray-200 rounded-lg shadow-sm">
           <h2 className="px-4 py-3 font-semibold text-sm border-b border-gray-100">Publish</h2>
@@ -194,18 +210,30 @@ export default function ItemEditor({ kind, id, initial, ctx }: { kind: Kind; id?
               {f.status === "published" ? (
                 <>
                   <button type="button" disabled={pending} onClick={() => save("published")} className={`${btnPrimary} w-full`}>{pending ? "Saving…" : "Update"}</button>
-                  <button type="button" disabled={pending} onClick={() => save("draft")} className={`${btnGhost} w-full`}>Switch to draft</button>
+                  <div className="grid grid-cols-2 gap-2">
+                    <button type="button" disabled={previewing} onClick={openPreview} className={btnGhost}><Icon name="eye" />Preview</button>
+                    <button type="button" disabled={pending} onClick={() => save("draft")} className={btnGhost}>Draft</button>
+                  </div>
                 </>
               ) : (
                 <>
                   <button type="button" disabled={pending} onClick={() => save("published")} className={`${btnPrimary} w-full`}>{pending ? "Saving…" : future ? "Schedule" : "Publish"}</button>
-                  <button type="button" disabled={pending} onClick={() => save("draft")} className={`${btnGhost} w-full`}>Save draft</button>
+                  <div className="grid grid-cols-2 gap-2">
+                    <button type="button" disabled={previewing} onClick={openPreview} className={btnGhost}><Icon name="eye" />Preview</button>
+                    <button type="button" disabled={pending} onClick={() => save("draft")} className={btnGhost}>Save draft</button>
+                  </div>
                 </>
               )}
               {id && isLive && <Link href={path} target="_blank" className="text-center text-sm text-brand-text hover:underline">View on website ↗</Link>}
             </div>
           </div>
         </section>
+
+        <Box title="URL" open={false}>
+          <Field label="Slug" htmlFor="slug" error={errors.slug} hint={`${ctx.siteUrl}${path}`}>
+            <TextField id="slug" value={f.slug} onChange={(v) => { slugTouched.current = true; set({ slug: slugify(v) }); }} />
+          </Field>
+        </Box>
 
         {kind === "posts" && (
           <Box title="Post details">
@@ -229,10 +257,21 @@ export default function ItemEditor({ kind, id, initial, ctx }: { kind: Kind; id?
 
         {kind === "countries" && (
           <Box title="Country details">
-            <div className="grid grid-cols-3 gap-3">
-              <Field label="Flag" htmlFor="flag"><TextField id="flag" value={f.flag} onChange={(v) => set({ flag: v })} placeholder="🇦🇺" /></Field>
-              <div className="col-span-2"><Field label="Headline" htmlFor="headline"><TextField id="headline" value={f.headline} onChange={(v) => set({ headline: v })} placeholder="Study. Work. Live in…" /></Field></div>
+            <div className="rounded-md border border-gray-200 p-3 space-y-3">
+              <div className="flex items-center gap-3">
+                <span className="w-16 h-12 rounded bg-gray-50 border border-gray-200 flex items-center justify-center text-2xl"><Flag country={f as never} size={44} /></span>
+                <div className="text-sm"><p className="font-medium">Flag</p><p className="text-xs text-gray-500">{f.flagImage ? "Using your uploaded image" : builtinFlag(emojiToCode(f.flag)) ? "Using the built-in flag" : "No flag image yet"}</p></div>
+              </div>
+              <Field label="Pick a built-in flag" htmlFor="flagpick">
+                <select id="flagpick" value={f.flagImage?.startsWith("/flags/") ? f.flagImage : ""} onChange={(e) => set({ flagImage: e.target.value })} className={inputCls}>
+                  <option value="">Automatic / none</option>
+                  {BUILTIN_FLAGS.map((c) => <option key={c} value={`/flags/${c}.svg`}>{c.toUpperCase()} - {new Intl.DisplayNames(["en"], { type: "region" }).of(c.toUpperCase())}</option>)}
+                </select>
+              </Field>
+              <ImageField label="…or upload a flag image" showAlt={false} src={f.flagImage?.startsWith("/flags/") ? "" : f.flagImage} alt="" onChange={(src) => set({ flagImage: src })} />
+              <Field label="Flag emoji (fallback)" htmlFor="flag" hint="Used only if there is no image."><TextField id="flag" value={f.flag} onChange={(v) => set({ flag: v })} placeholder="🇦🇺" /></Field>
             </div>
+            <Field label="Headline" htmlFor="headline"><TextField id="headline" value={f.headline} onChange={(v) => set({ headline: v })} placeholder="Study. Work. Live in…" /></Field>
             <Field label="Tagline" htmlFor="tagline"><TextField id="tagline" value={f.tagline} onChange={(v) => set({ tagline: v })} /></Field>
             <Field label="Banner colour (when there is no image)">
               <div className="flex flex-wrap gap-2">{GRADIENTS.map((g) => <button key={g} type="button" aria-label={g} onClick={() => set({ gradient: g })} className={`w-9 h-7 rounded bg-gradient-to-br ${g} border ${f.gradient === g ? "ring-2 ring-brand border-brand" : "border-gray-200"}`} />)}</div>

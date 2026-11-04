@@ -55,6 +55,8 @@ export type Country = Managed & {
   slug: string;
   name: string;
   flag: string;
+  /** flag image (dashboard upload or /flags/xx.svg). Overrides the emoji; when empty a built-in flag is derived from the emoji */
+  flagImage?: string;
   /** banner subtitle, e.g. "Great Destination to Study and Live" */
   tagline: string;
   /** page headline, e.g. "Study. Work. Live in Canada" */
@@ -119,7 +121,7 @@ export type Post = Managed & {
 export type NavItem = { label: string; href: string };
 
 /** SEO + schema settings for the fixed pages (home, about, services list…). */
-export type PageKey = "home" | "about" | "services" | "countries" | "blog" | "faqs" | "contact";
+export type PageKey = "home" | "about" | "services" | "countries" | "blog" | "faqs" | "contact" | "sitemap";
 export type PageSettings = Managed & {
   key: PageKey;
   name: string;

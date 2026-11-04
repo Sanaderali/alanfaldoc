@@ -5,7 +5,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { redirect } from "next/navigation";
 import { requireAdmin } from "@/lib/auth";
-import { mutate, readAll, now, UPLOAD_DIR, type CollectionMap } from "@/lib/store";
+import { mutate, readAll, now, UPLOAD_DIR, writePreview, type CollectionMap } from "@/lib/store";
 import { refreshSite } from "@/lib/revalidate";
 import { cleanCountry, cleanPage, cleanPost, cleanService, str, cleanFaqs, type Errors } from "@/lib/validate";
 import type { FaqGroup } from "@/types/content";
@@ -36,7 +36,7 @@ export async function saveItem(kind: Kind, payload: string, id?: string): Promis
     savedId = prev?.id ?? randomUUID();
     const next = { ...(prev ?? {}), ...item, id: savedId, createdAt: prev?.createdAt ?? now(), updatedAt: now() } as CollectionMap[Kind];
     // fields the editor can clear must really be cleared
-    for (const k of ["image", "imageAlt", "publishAt", "schemaCustom", "seo", "serviceType", "categories", "author", "readMinutes", "contentHtml"] as const) {
+    for (const k of ["image", "imageAlt", "publishAt", "schemaCustom", "seo", "serviceType", "categories", "author", "readMinutes", "contentHtml", "flagImage"] as const) {
       if (!(k in item)) delete (next as Record<string, unknown>)[k];
     }
     if (kind === "posts" && prev) (next as { updated?: string }).updated = now().slice(0, 10);
@@ -146,3 +146,23 @@ export async function deleteMedia(id: string): Promise<SaveResult> {
   return { ok: true, message: "Deleted" };
 }
 
+
+/**
+ * Preview: stores the editor's CURRENT (even unsaved) content as a private preview copy, so you can see the real page
+ * without changing the live site. Validation problems are ignored here (a preview can be incomplete).
+ */
+export async function savePreview(kind: Kind | "faqs", payload: string, id?: string): Promise<{ ok: boolean; id?: string; message?: string }> {
+  await requireAdmin();
+  let raw: unknown;
+  try { raw = JSON.parse(payload); } catch { return { ok: false, message: "Invalid data" }; }
+  if (kind === "faqs") {
+    const groups = (Array.isArray(raw) ? raw : []).map((g: Record<string, unknown>, i) => ({ id: `g${i}`, title: str(g.title, 120) || "Untitled group", faqs: cleanFaqs(g.faqs), status: "published" }));
+    await writePreview("faqs", groups);
+    return { ok: true, id: "faqs" };
+  }
+  const { item } = cleaners[kind](raw as Record<string, unknown>) as { item: Record<string, unknown> };
+  const pid = id && /^[a-zA-Z0-9-]{1,64}$/.test(id) ? id : `new-${randomUUID()}`;
+  const existing = (await readAll(kind)).find((x) => x.id === id);
+  await writePreview(pid, { ...(existing ?? {}), ...item, id: pid, createdAt: existing?.createdAt ?? now(), updatedAt: now() });
+  return { ok: true, id: pid };
+}

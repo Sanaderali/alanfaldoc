@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Reveal from "./Reveal";
+import Flag from "./Flag";
 import BlogSearch from "./BlogSearch";
 import { formatDate, getCategories, getCountries, getPosts, getTags } from "@/lib/content";
 
@@ -56,7 +57,7 @@ export default async function BlogSidebar() {
           {countries.slice(0, 4).map((c) => (
             <li key={c.slug}>
               <Link href={`/countries/${c.slug}`} className="group flex items-center gap-3">
-                <span className={`w-16 h-12 rounded bg-gradient-to-br ${c.gradient} flex items-center justify-center text-2xl`} aria-hidden="true">{c.flag}</span>
+                <span className={`w-16 h-12 rounded bg-gradient-to-br ${c.gradient} flex items-center justify-center`}><Flag country={c} size={32} /></span>
                 <span className="font-medium text-gray-900 group-hover:text-brand-text transition-colors">{c.name}</span>
               </Link>
             </li>

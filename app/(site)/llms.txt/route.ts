@@ -27,6 +27,7 @@ export async function GET() {
     `- [About us](${abs("/about")})`,
     `- [FAQs](${abs("/faqs")}): ${faqs.flatMap((g) => g.faqs).length} answered questions`,
     `- [Contact](${abs("/contact")})`,
+    `- [Sitemap](${abs("/sitemap")})`,
     "",
   ];
   return new Response(lines.join("\n"), { headers: { "Content-Type": "text/plain; charset=utf-8" } });

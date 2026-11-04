@@ -109,15 +109,42 @@ export function Repeater<T>({ items, onChange, render, empty, addLabel, blank }:
 }
 
 type Faq = { question: string; answer: string };
+/** Collapsible Q&A list: one question open at a time, so long lists stay tidy. */
 export function FaqsEditor({ value, onChange }: { value: Faq[]; onChange: (v: Faq[]) => void }) {
+  const list = value ?? [];
+  const [open, setOpen] = useState<number | null>(null);
+  const patch = (i: number, p: Partial<Faq>) => onChange(list.map((x, n) => (n === i ? { ...x, ...p } : x)));
+  const swap = (i: number, d: number) => { const j = i + d; if (j < 0 || j >= list.length) return; const c = [...list]; [c[i], c[j]] = [c[j], c[i]]; onChange(c); setOpen(j); };
   return (
-    <Repeater<Faq> items={value} onChange={onChange} empty={{ question: "", answer: "" }} addLabel="Add question" blank="No questions yet."
-      render={(f, set, i) => (
-        <div className="space-y-3">
-          <Field label="Question" htmlFor={`fq${i}`}><TextField id={`fq${i}`} value={f.question} onChange={(v) => set({ question: v })} placeholder="e.g. How long does it take?" /></Field>
-          <Field label="Answer" htmlFor={`fa${i}`}><TextArea id={`fa${i}`} rows={3} value={f.answer} onChange={(v) => set({ answer: v })} /></Field>
-        </div>
-      )} />
+    <div className="space-y-2">
+      {list.length === 0 && <p className="text-sm text-gray-500">No questions yet.</p>}
+      {list.map((f, i) => {
+        const isOpen = open === i;
+        return (
+          <div key={i} className={`border rounded-md ${isOpen ? "border-brand/50 bg-white" : "border-gray-200 bg-gray-50/60"}`}>
+            <div className="flex items-center">
+              <button type="button" aria-expanded={isOpen} onClick={() => setOpen(isOpen ? null : i)} className="flex-1 min-w-0 flex items-center gap-3 px-3 py-2.5 text-left">
+                <Icon name="chevron-right" className={`text-xs text-gray-400 transition-transform ${isOpen ? "rotate-90" : ""}`} />
+                <span className="text-xs font-semibold text-gray-400">{i + 1}</span>
+                <span className="truncate text-sm font-medium text-gray-800">{f.question || <em className="text-gray-400">New question</em>}</span>
+              </button>
+              <div className="flex pr-1">
+                <button type="button" onClick={() => swap(i, -1)} disabled={i === 0} aria-label="Move up" className="px-2 py-1 text-gray-400 hover:text-gray-900 disabled:opacity-20"><Icon name="arrow-up" /></button>
+                <button type="button" onClick={() => swap(i, 1)} disabled={i === list.length - 1} aria-label="Move down" className="px-2 py-1 text-gray-400 hover:text-gray-900 disabled:opacity-20"><Icon name="arrow-down" /></button>
+                <button type="button" onClick={() => { onChange(list.filter((_, n) => n !== i)); setOpen(null); }} aria-label="Remove question" className="px-2 py-1 text-red-400 hover:text-red-700"><Icon name="trash-can" /></button>
+              </div>
+            </div>
+            {isOpen && (
+              <div className="px-3 pb-3 pt-1 space-y-3 border-t border-gray-100">
+                <Field label="Question" htmlFor={`fq${i}`}><TextField id={`fq${i}`} value={f.question} onChange={(v) => patch(i, { question: v })} placeholder="e.g. How long does it take?" /></Field>
+                <Field label="Answer" htmlFor={`fa${i}`}><TextArea id={`fa${i}`} rows={3} value={f.answer} onChange={(v) => patch(i, { answer: v })} /></Field>
+              </div>
+            )}
+          </div>
+        );
+      })}
+      <button type="button" onClick={() => { onChange([...list, { question: "", answer: "" }]); setOpen(list.length); }} className={btnGhost}><Icon name="plus" />Add question</button>
+    </div>
   );
 }
 

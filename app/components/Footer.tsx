@@ -37,6 +37,7 @@ export default async function Footer() {
             <li><Link href="/blog" className={a}>Blog</Link></li>
             <li><Link href="/faqs" className={a}>FAQs</Link></li>
             <li><Link href="/contact" className={a}>Contact Us</Link></li>
+            <li><Link href="/sitemap" className={a}>Sitemap</Link></li>
           </ul>
         </div>
 
@@ -52,7 +53,7 @@ export default async function Footer() {
 
       <div className="border-t border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row justify-between items-center gap-4">
-          <p className="text-gray-600 text-sm">© {new Date().getFullYear()} <strong>{site.name}</strong>. All Rights Reserved</p>
+          <p className="text-gray-600 text-sm">© {new Date().getFullYear()} <strong>{site.name}</strong>. All Rights Reserved<span className="mx-2 text-gray-300" aria-hidden="true">|</span><Link href="/sitemap" className={a}>Sitemap</Link></p>
           <ul className="flex gap-4">
             {site.social.map((s) => (
               <li key={s.label}>

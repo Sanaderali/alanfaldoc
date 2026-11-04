@@ -7,7 +7,7 @@ export const revalidate = 900;
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const [countries, services, posts, cats, { pages }] = await Promise.all([getCountries(), getServices(), getPosts(), getCategories(), getPostsPage(1)]);
   const idx = (s: { seo?: { noindex?: boolean } }) => !s.seo?.noindex;
-  const keys = [["/about", "about"], ["/services", "services"], ["/countries", "countries"], ["/blog", "blog"], ["/faqs", "faqs"], ["/contact", "contact"]] as const;
+  const keys = [["/about", "about"], ["/services", "services"], ["/countries", "countries"], ["/blog", "blog"], ["/faqs", "faqs"], ["/contact", "contact"], ["/sitemap", "sitemap"]] as const;
   const fixed = (await Promise.all(keys.map(async ([p, k]) => ((await getPageSeo(k)).seo?.noindex ? "" : p as string)))).filter(Boolean);
   return [
     { url: abs("/"), changeFrequency: "weekly", priority: 1 },
