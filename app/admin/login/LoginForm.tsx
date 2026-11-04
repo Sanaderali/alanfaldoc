@@ -1,15 +1,14 @@
 "use client";
 
-import { useActionState, useState } from "react";
+import { useState } from "react";
 import Icon from "@/app/components/Icon";
-import { login, type LoginState } from "../actions-auth";
 import { btnPrimary, inputCls } from "../ui";
 
-export default function LoginForm() {
-  const [state, action, pending] = useActionState<LoginState, FormData>(login, {});
+/** Standard HTML form (works without JavaScript). The client code only powers the show/hide eye button. */
+export default function LoginForm({ error }: { error?: string }) {
   const [show, setShow] = useState(false);
   return (
-    <form action={action} className="space-y-4">
+    <form method="post" action="/admin/api/login" className="space-y-4">
       <div>
         <label htmlFor="user" className="block text-sm font-medium mb-1">Username</label>
         <input id="user" name="user" autoComplete="username" required className={inputCls} defaultValue="admin" />
@@ -30,8 +29,8 @@ export default function LoginForm() {
           </button>
         </div>
       </div>
-      {state.error && <p role="alert" className="text-sm text-red-600">{state.error}</p>}
-      <button type="submit" disabled={pending} className={`${btnPrimary} w-full`}>{pending ? "Signing in…" : "Sign in"}</button>
+      {error && <p role="alert" className="text-sm text-red-600">{error}</p>}
+      <button type="submit" className={`${btnPrimary} w-full`}>Sign in</button>
     </form>
   );
 }
