@@ -142,7 +142,7 @@ export default function Home() {
               <p className="text-gray-600 mb-6 leading-relaxed">
                 Cursus risus laoreet auctor, varius augue. Nulla dolor and sapien risus nec, luctus mauris donec diam sapien neque in cubilia an ligula quaerat ipsum volute turpis sodales sapien vitae donec an ipsum porta justo integer at velna vitae auctor a magna risus
               </p>
-              <Link href="#" className="inline-block px-8 py-3 border-2 border-gray-800 text-gray-900 font-semibold rounded hover:bg-gray-800 hover:text-white hover:shadow-lg hover:scale-105 transition-all duration-300 uppercase text-sm">
+              <Link href="/about" className="inline-block px-8 py-3 border-2 border-gray-800 text-gray-900 font-semibold rounded hover:bg-gray-800 hover:text-white hover:shadow-lg hover:scale-105 transition-all duration-300 uppercase text-sm">
                 DISCOVER MORE
               </Link>
             </div>
@@ -155,7 +155,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              ImmiEx Immigration Services
+              Our Services
             </h2>
             <p className="text-gray-600 max-w-3xl mx-auto">
               Cursus porta, feugiat primis in ultrice ligula risus auctor tempus dolor feugiat, felis lacinia risus interdum auctor id viverra dolor iaculis luctus placerat and massa
@@ -167,7 +167,7 @@ export default function Home() {
                 <div className="text-4xl mb-4 transform group-hover:scale-125 transition-transform duration-300">{service.icon}</div>
                 <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-[#ff5722] transition-colors">{service.title}</h3>
                 <p className="text-gray-600 mb-4 leading-relaxed text-sm">{service.desc}</p>
-                <Link href="#" className="text-gray-500 hover:text-[#ff5722] text-sm font-medium transition-all inline-flex items-center group-hover:gap-2">
+                <Link href="/services" className="text-gray-500 hover:text-[#ff5722] text-sm font-medium transition-all inline-flex items-center group-hover:gap-2">
                   READ MORE <span className="inline-block group-hover:translate-x-1 transition-transform">›</span>
                 </Link>
               </div>
@@ -181,7 +181,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Immigration Opportunities
+              Countries We Cover
             </h2>
             <p className="text-gray-600 max-w-3xl mx-auto">
               Cursus porta, feugiat primis in ultrice ligula risus auctor tempus dolor feugiat, felis lacinia risus interdum auctor id viverra dolor iaculis luctus placerat and massa
@@ -189,13 +189,13 @@ export default function Home() {
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
             {countries.slice(0, 7).map((country, index) => (
-              <div key={index} className="relative h-32 sm:h-40 rounded-lg overflow-hidden group cursor-pointer transform hover:scale-105 hover:shadow-xl transition-all duration-500">
+              <Link href="/countries" key={index} className="relative block h-32 sm:h-40 rounded-lg overflow-hidden group cursor-pointer transform hover:scale-105 hover:shadow-xl transition-all duration-500">
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/70 group-hover:to-black/85 transition-all duration-300"></div>
                 <div className="absolute inset-0 flex items-center justify-center text-5xl sm:text-6xl transform group-hover:scale-110 transition-transform duration-500">{country.img}</div>
                 <div className="absolute bottom-4 left-0 right-0 text-center transform group-hover:translate-y-[-4px] transition-transform duration-300">
                   <h3 className="text-white font-bold text-sm sm:text-base">{country.name}</h3>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </div>
@@ -209,7 +209,7 @@ export default function Home() {
               <h3 className="text-sm uppercase tracking-wide mb-2 text-blue-200">CONSULTATIONS FOR PROSPECTIVE IMMIGRANTS</h3>
               <p className="text-gray-200 text-sm">Aliquam a augue suscipit, luctus neque purus ipsum neque dolor primis libero tempus, and blandit ligula varius</p>
             </div>
-            <Link href="#" className="px-8 py-3 border-2 border-white text-white font-semibold hover:bg-white hover:text-blue-900 transition-all uppercase text-sm whitespace-nowrap">
+            <Link href="/contact" className="px-8 py-3 border-2 border-white text-white font-semibold hover:bg-white hover:text-blue-900 transition-all uppercase text-sm whitespace-nowrap">
               GET CONSULTATION
             </Link>
           </div>
@@ -221,7 +221,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Why Choose ImmiEx?
+              Why Choose Al Anfal Doc?
             </h2>
             <p className="text-gray-600 max-w-3xl mx-auto">
               Cursus porta, feugiat primis in ultrice ligula risus auctor tempus dolor feugiat, felis lacinia risus interdum auctor id viverra dolor iaculis luctus placerat and massa
@@ -286,7 +286,7 @@ export default function Home() {
           </div>
           <div className="text-center mt-8">
             <p className="text-gray-600 text-sm">
-              Still have a question? <Link href="#" className="text-blue-600 hover:underline font-medium">Ask your question here</Link>
+              Still have a question? <Link href="/contact" className="text-blue-600 hover:underline font-medium">Ask your question here</Link>
             </p>
           </div>
         </div>
@@ -330,8 +330,8 @@ export default function Home() {
             Aliquam a augue suscipit, luctus neque purus ipsum neque dolor primis libero tempus, and blandit posuere ligula varius magna congue cursus porta ultrice
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <span className="text-sm sm:text-base">Call : <span className="font-bold text-lg">+12 9 8765 4321</span></span>
-            <Link href="#" className="px-8 py-3 bg-[#ff5722] text-white font-semibold rounded hover:bg-[#e64a19] hover:shadow-lg hover:scale-105 transition-all duration-300 uppercase text-sm">
+            <span className="text-sm sm:text-base">Call : <span className="font-bold text-lg">+971 50 123 4567</span></span>
+            <Link href="/contact" className="px-8 py-3 bg-[#ff5722] text-white font-semibold rounded hover:bg-[#e64a19] hover:shadow-lg hover:scale-105 transition-all duration-300 uppercase text-sm">
               GET CONSULTATION
             </Link>
           </div>

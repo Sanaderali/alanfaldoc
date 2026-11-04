@@ -217,13 +217,13 @@ export default function ContactPage() {
                 </p>
               </div>
               <div className="flex-1 max-w-md w-full">
-                <div className="flex gap-2">
+                <div className="flex gap-2 flex-col sm:flex-row">
                   <input
                     type="email"
                     placeholder="Your email address"
                     className="flex-1 px-4 py-3 bg-gray-50 border border-gray-200 rounded focus:ring-2 focus:ring-[#ff5722] focus:border-transparent transition-all text-gray-900"
                   />
-                  <button className="px-8 py-3 bg-[#ff5722] text-white font-semibold rounded hover:bg-[#e64a19] hover:shadow-lg transition-all duration-300 uppercase text-sm whitespace-nowrap">
+                  <button className="px-6 sm:px-8 py-3 bg-[#ff5722] text-white font-semibold rounded hover:bg-[#e64a19] hover:shadow-lg transition-all duration-300 uppercase text-sm whitespace-nowrap">
                     SUBSCRIBE
                   </button>
                 </div>

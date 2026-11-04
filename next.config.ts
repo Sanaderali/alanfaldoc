@@ -4,7 +4,7 @@ const nextConfig: NextConfig = {
   output: 'standalone',
   reactStrictMode: false,
   typescript: {
-    ignoreBuildErrors: true,
+    ignoreBuildErrors: false,
   },
   images: {
     remotePatterns: [
