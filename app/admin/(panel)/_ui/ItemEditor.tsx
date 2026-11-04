@@ -171,6 +171,10 @@ export default function ItemEditor({ kind, id, initial, ctx }: { kind: Kind; id?
 
       {/* ------------ sidebar ------------ */}
       <aside className="space-y-5 xl:sticky xl:top-4">
+        <Box title="Featured image">
+          <ImageField src={f.image} alt={f.imageAlt} error={errors.imageAlt} onChange={(src, alt) => set({ image: src, imageAlt: alt })} label="" />
+        </Box>
+
         <section className="bg-white border border-gray-200 rounded-lg shadow-sm">
           <h2 className="px-4 py-3 font-semibold text-sm border-b border-gray-100">Publish</h2>
           <div className="p-4 space-y-4">
@@ -202,10 +206,6 @@ export default function ItemEditor({ kind, id, initial, ctx }: { kind: Kind; id?
             </div>
           </div>
         </section>
-
-        <Box title="Featured image">
-          <ImageField src={f.image} alt={f.imageAlt} error={errors.imageAlt} onChange={(src, alt) => set({ image: src, imageAlt: alt })} label="" />
-        </Box>
 
         {kind === "posts" && (
           <Box title="Post details">
