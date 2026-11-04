@@ -33,6 +33,8 @@ export default async function CountryPage({ params }: Props) {
     ? allServices.filter((s) => country.serviceSlugs!.includes(s.slug))
     : allServices.slice(0, 6);
 
+  const sideLinks = country.categories ?? related.map((s) => ({ title: s.title, href: `/services/${s.slug}` }));
+
   return (
     <>
       <Breadcrumb items={[{ label: "Country List", href: "/countries" }, { label: country.name }]} />
@@ -75,13 +77,13 @@ export default async function CountryPage({ params }: Props) {
           {/* Sidebar */}
           <aside className="lg:col-span-1 space-y-10">
             <Reveal variant="right">
-              <h2 className="text-xl font-bold text-gray-900 mb-4">Related Services:</h2>
+              <h2 className="text-xl font-bold text-gray-900 mb-4">{country.categories ? "Visa Categories:" : "Related Services:"}</h2>
               <ul>
-                {related.map((s) => (
-                  <li key={s.slug} className="border-b border-dotted border-gray-300">
-                    <Link href={`/services/${s.slug}`} className="group flex items-center py-3 text-gray-700 hover:text-[#ff5722] transition-colors">
+                {sideLinks.map((l) => (
+                  <li key={l.title} className="border-b border-dotted border-gray-300">
+                    <Link href={l.href} className="group flex items-center py-3 text-gray-700 hover:text-[#ff5722] transition-colors">
                       <span className="text-[#ff5722] mr-2 font-bold group-hover:translate-x-1 transition-transform" aria-hidden="true">»</span>
-                      {s.title}
+                      {l.title}
                     </Link>
                   </li>
                 ))}

@@ -35,6 +35,8 @@ export type Country = {
   gradient: string;
   /** optional photo in /public (or remote). Falls back to the gradient banner */
   image?: string;
+  /** sidebar "Visa Categories" list, specific to this country. Falls back to related services */
+  categories?: { title: string; href: string }[];
   /** services most relevant to this country (slugs) */
   serviceSlugs?: string[];
   featured?: boolean;
