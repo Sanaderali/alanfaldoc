@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/app/components/SiteLink";
 import JsonLd from "./JsonLd";
 import { breadcrumbLd } from "@/lib/seo";
 

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import ServiceView from "../../_views/ServiceView";
-import Link from "next/link";
+import Link from "@/app/components/SiteLink";
 import { notFound } from "next/navigation";
 import Breadcrumb from "@/app/components/Breadcrumb";
 import ContentSections from "@/app/components/ContentSections";

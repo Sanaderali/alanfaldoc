@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/app/components/SiteLink";
 import type { Post } from "@/types/content";
 import { formatDate, readingMinutes, slugify } from "@/lib/content";
 import PostImage from "./PostImage";

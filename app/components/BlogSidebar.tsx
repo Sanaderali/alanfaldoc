@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/app/components/SiteLink";
 import Reveal from "./Reveal";
 import Flag from "./Flag";
 import BlogSearch from "./BlogSearch";

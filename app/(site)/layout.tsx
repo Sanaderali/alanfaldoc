@@ -1,6 +1,7 @@
 import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
 import ChatLauncher from "@/app/components/ChatLauncher";
+import IdlePrefetch from "@/app/components/IdlePrefetch";
 import JsonLd from "@/app/components/JsonLd";
 import { getServices } from "@/lib/content";
 import { organizationLd, websiteLd } from "@/lib/seo";
@@ -19,6 +20,7 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
       <main id="main">{children}</main>
       <Footer />
       <ChatLauncher />
+      <IdlePrefetch />
     </>
   );
 }

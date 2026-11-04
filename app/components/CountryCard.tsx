@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/app/components/SiteLink";
 import Image from "next/image";
 import type { Country } from "@/types/content";
 import Flag from "./Flag";

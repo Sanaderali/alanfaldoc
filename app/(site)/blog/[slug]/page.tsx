@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import PostView from "../../_views/PostView";
-import Link from "next/link";
+import Link from "@/app/components/SiteLink";
 import { notFound } from "next/navigation";
 import BlogCard from "@/app/components/BlogCard";
 import BlogSidebar from "@/app/components/BlogSidebar";

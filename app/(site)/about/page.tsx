@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/app/components/SiteLink";
 import Breadcrumb from "@/app/components/Breadcrumb";
 import CTABanner from "@/app/components/CTABanner";
 import Icon from "@/app/components/Icon";

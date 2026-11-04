@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/app/components/SiteLink";
 import Breadcrumb from "@/app/components/Breadcrumb";
 import ContentSections from "@/app/components/ContentSections";
 import CTABanner from "@/app/components/CTABanner";

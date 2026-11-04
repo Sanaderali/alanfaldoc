@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/app/components/SiteLink";
 import Icon from "./Icon";
 
 const href = (n: number) => (n === 1 ? "/blog" : `/blog/page/${n}`);

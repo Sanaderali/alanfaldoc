@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Link from "next/link";
+import Link from "@/app/components/SiteLink";
 import { site } from "@/data/site";
 import { getServices } from "@/lib/content";
 import Icon from "./Icon";

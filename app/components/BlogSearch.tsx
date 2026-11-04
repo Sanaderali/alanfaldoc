@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link from "@/app/components/SiteLink";
 import { useRef, useState } from "react";
 
 type Item = { title: string; slug: string; category: string; excerpt: string };

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import CountryView from "../../_views/CountryView";
 import Image from "next/image";
-import Link from "next/link";
+import Link from "@/app/components/SiteLink";
 import { notFound } from "next/navigation";
 import Breadcrumb from "@/app/components/Breadcrumb";
 import Carousel from "@/app/components/Carousel";

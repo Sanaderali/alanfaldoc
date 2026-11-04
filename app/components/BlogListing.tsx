@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/app/components/SiteLink";
 import BlogCard from "./BlogCard";
 import BlogSidebar from "./BlogSidebar";
 import Breadcrumb, { type Crumb } from "./Breadcrumb";

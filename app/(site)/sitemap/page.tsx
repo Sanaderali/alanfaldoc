@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/app/components/SiteLink";
 import Breadcrumb from "@/app/components/Breadcrumb";
 import Flag from "@/app/components/Flag";
 import Reveal from "@/app/components/Reveal";

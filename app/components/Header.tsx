@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
+import Link from "@/app/components/SiteLink";
 import { usePathname } from "next/navigation";
 import { mainNav, site } from "@/data/site";
 import Icon from "./Icon";
