@@ -3,25 +3,10 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Icon from "./Icon";
 import { readChat, writeChat } from "./ChatLauncher";
+import { beep, flashTitle } from "./chatSound";
 
 type Msg = { id: string; from: "visitor" | "staff" | "system"; name?: string; text: string; at: string };
 
-/** short two-tone beep for new agent replies (Web Audio, no file) */
-let actx: AudioContext | null = null;
-function beep() {
-  try {
-    const AC = window.AudioContext ?? (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
-    actx ??= new AC();
-    if (actx.state === "suspended") void actx.resume();
-    const c = actx, t0 = c.currentTime;
-    [[880, 0], [1320, 0.16]].forEach(([f, d]) => {
-      const o = c.createOscillator(), g = c.createGain();
-      o.type = "sine"; o.frequency.value = f;
-      g.gain.setValueAtTime(0.0001, t0 + d); g.gain.exponentialRampToValueAtTime(0.2, t0 + d + 0.02); g.gain.exponentialRampToValueAtTime(0.0001, t0 + d + 0.28);
-      o.connect(g).connect(c.destination); o.start(t0 + d); o.stop(t0 + d + 0.3);
-    });
-  } catch { /* sound is optional */ }
-}
 const addMsgs = (prev: Msg[], add: Msg[]) => { const seen = new Set(prev.map((m) => m.id)); const fresh = add.filter((m) => !seen.has(m.id)); return fresh.length ? [...prev, ...fresh] : prev; };
 
 const PHONE_RE = /^\+?[0-9\s()-]{7,20}$/;
@@ -53,7 +38,7 @@ export default function ChatPanel({ onClose }: { onClose: () => void }) {
       setStatus(d.status);
       if (d.messages.length) {
         const hadAny = known.current.size > 0;
-        if (hadAny && d.messages.some((m) => m.from === "staff" && !known.current.has(m.id))) beep();
+        if (hadAny && d.messages.some((m) => m.from === "staff" && !known.current.has(m.id))) { beep(); flashTitle(); }
         d.messages.forEach((m) => known.current.add(m.id));
         setMsgs((m) => addMsgs(m, d.messages)); total.current = d.total; writeChat({ ...chat, seen: d.total });
       }
@@ -63,17 +48,14 @@ export default function ChatPanel({ onClose }: { onClose: () => void }) {
   useEffect(() => {
     if (!chat) return;
     void poll();
-    const t = setInterval(() => { if (!document.hidden) void poll(); }, 2500);
-    return () => clearInterval(t);
+    const t = setInterval(() => void poll(), 2500);
+    const vis = () => { if (!document.hidden) void poll(); };
+    document.addEventListener("visibilitychange", vis);
+    return () => { clearInterval(t); document.removeEventListener("visibilitychange", vis); };
   }, [chat, poll]);
 
   useEffect(() => { end.current?.scrollIntoView({ block: "end" }); }, [msgs.length]);
   useEffect(() => { input.current?.focus(); }, [chat]);
-  useEffect(() => {
-    const unlock = () => { try { const AC = window.AudioContext ?? (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext; actx ??= new AC(); void actx.resume(); } catch { /* ignore */ } };
-    window.addEventListener("pointerdown", unlock, { once: true });
-    return () => window.removeEventListener("pointerdown", unlock);
-  }, []);
   useEffect(() => {
     const k = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
     window.addEventListener("keydown", k);

@@ -1,8 +1,9 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Icon from "./Icon";
+import { armSound, beep, flashTitle } from "./chatSound";
 
 /** Floating live-chat button (bottom right). The chat panel itself is loaded only when opened, so it costs nothing at page load. */
 const Panel = dynamic(() => import("./ChatPanel"), { ssr: false });
@@ -15,25 +16,33 @@ export const writeChat = (v: Stored | null) => { try { v ? localStorage.setItem(
 export default function ChatLauncher() {
   const [open, setOpen] = useState(false);
   const [unread, setUnread] = useState(0);
+  const notified = useRef(0);
+  useEffect(() => armSound(), []);
 
-  // while closed, quietly check (every 20s) whether an agent replied, to show a badge
+  // while closed, quietly check (every 5s, also in a background tab) whether an agent replied, to show a badge
   const check = useCallback(async () => {
     const c = readChat();
-    if (!c || document.hidden) return;
+    if (!c) return;
     try {
       const r = await fetch(`/api/chat/poll?id=${c.id}&token=${c.token}&since=${c.seen}`, { cache: "no-store" });
       if (r.status === 404 || r.status === 403) return writeChat(null);
       if (!r.ok) return;
       const d: { messages: { from: string }[] } = await r.json();
-      setUnread(d.messages.filter((m) => m.from === "staff").length);
+      const n = d.messages.filter((m) => m.from === "staff").length;
+      if (n > notified.current) { beep(); flashTitle(); }
+      notified.current = n;
+      setUnread(n);
     } catch { /* offline */ }
   }, []);
 
   useEffect(() => {
     if (open) return;
-    const first = setTimeout(check, 3000);
-    const t = setInterval(check, 20000);
-    return () => { clearTimeout(first); clearInterval(t); };
+    notified.current = 0;
+    const first = setTimeout(check, 2000);
+    const t = setInterval(check, 5000);
+    const vis = () => { if (!document.hidden) void check(); };
+    document.addEventListener("visibilitychange", vis);
+    return () => { clearTimeout(first); clearInterval(t); document.removeEventListener("visibilitychange", vis); };
   }, [open, check]);
 
   return (
