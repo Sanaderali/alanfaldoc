@@ -50,7 +50,7 @@ export default function Header() {
               {mainNav.map((n) => (
                 <Link key={n.href} href={n.href} className={`${link(n.href)} uppercase`}>{n.label}</Link>
               ))}
-              <Link href="/contact" className="px-5 py-2.5 bg-brand text-gray-900 text-sm font-semibold rounded uppercase hover:bg-brand-dark hover:shadow-lg hover:scale-105 transition-all duration-300">
+              <Link href="/contact" className="px-5 py-2.5 bg-brand text-white text-sm font-semibold rounded uppercase hover:bg-brand-dark hover:shadow-lg hover:scale-105 transition-all duration-300">
                 Get Consultation
               </Link>
             </nav>
@@ -73,7 +73,7 @@ export default function Header() {
                 {mainNav.map((n) => (
                   <Link key={n.href} href={n.href} className={`${link(n.href)} uppercase py-3 border-b border-gray-100`}>{n.label}</Link>
                 ))}
-                <Link href="/contact" className="mt-4 px-5 py-3 bg-brand text-gray-900 font-semibold rounded text-center uppercase text-sm">
+                <Link href="/contact" className="mt-4 px-5 py-3 bg-brand text-white font-semibold rounded text-center uppercase text-sm">
                   Get Consultation
                 </Link>
               </div>

@@ -104,7 +104,7 @@ export default function HomeClient() {
                 <option>Trade License</option>
                 <option>Document Clearing</option>
               </select>
-              <button type="submit" className="px-6 py-3 bg-brand text-gray-900 font-semibold rounded hover:bg-brand-dark hover:shadow-lg hover:scale-105 transition-all duration-300 uppercase text-sm">
+              <button type="submit" className="px-6 py-3 bg-brand text-white font-semibold rounded hover:bg-brand-dark hover:shadow-lg hover:scale-105 transition-all duration-300 uppercase text-sm">
                 SEND REQUEST
               </button>
             </form>
@@ -157,7 +157,7 @@ export default function HomeClient() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {services.map((service, index) => (
               <div key={index} className={`bg-white rounded-lg p-8 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 border border-gray-100 animate-slide-up stagger-${index + 1} group`}>
-                <div className="w-14 h-14 mb-4 rounded-full bg-brand-50 text-brand-text flex items-center justify-center text-2xl transform group-hover:scale-110 group-hover:bg-brand group-hover:text-gray-900 transition-all duration-300"><Icon name={service.icon} /></div>
+                <div className="w-14 h-14 mb-4 rounded-full bg-brand-50 text-brand-text flex items-center justify-center text-2xl transform group-hover:scale-110 group-hover:bg-brand group-hover:text-white transition-all duration-300"><Icon name={service.icon} /></div>
                 <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-brand-text transition-colors">{service.title}</h3>
                 <p className="text-gray-600 mb-4 leading-relaxed text-sm">{service.desc}</p>
                 <Link href="/services" className="text-gray-500 hover:text-brand-text text-sm font-medium transition-all inline-flex items-center group-hover:gap-2">
@@ -299,7 +299,7 @@ export default function HomeClient() {
             {testimonials.map((testimonial, index) => (
               <div key={index} className={`bg-white rounded-lg p-6 sm:p-8 shadow-sm border border-gray-100 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 animate-slide-up stagger-${index + 1} group`}>
                 <div className="flex items-center mb-4">
-                  <div className="w-14 h-14 bg-gradient-to-br from-brand to-brand-dark rounded-full flex items-center justify-center text-2xl mr-4 transform group-hover:scale-110 transition-transform duration-300 shadow-md text-gray-900"><Icon name={testimonial.img} /></div>
+                  <div className="w-14 h-14 bg-gradient-to-br from-brand to-brand-dark rounded-full flex items-center justify-center text-2xl mr-4 transform group-hover:scale-110 transition-transform duration-300 shadow-md text-white"><Icon name={testimonial.img} /></div>
                   <div>
                     <div className="font-bold text-gray-900 group-hover:text-brand-text transition-colors">{testimonial.name}</div>
                     <div className="text-sm text-gray-500">{testimonial.role}</div>
@@ -323,7 +323,7 @@ export default function HomeClient() {
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <span className="text-sm sm:text-base">Call : <span className="font-bold text-lg">+971 50 123 4567</span></span>
-            <Link href="/contact" className="px-8 py-3 bg-brand text-gray-900 font-semibold rounded hover:bg-brand-dark hover:shadow-lg hover:scale-105 transition-all duration-300 uppercase text-sm">
+            <Link href="/contact" className="px-8 py-3 bg-brand text-white font-semibold rounded hover:bg-brand-dark hover:shadow-lg hover:scale-105 transition-all duration-300 uppercase text-sm">
               GET CONSULTATION
             </Link>
           </div>

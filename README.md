@@ -107,4 +107,12 @@ Service icons are the `icon` field in `data/services.ts`; blog category icons ar
 
 ## Theme colours
 
-Brand colours come from the logo and live in one place: `tailwind.config.ts` → `colors.brand` (green `#04c366`) and `colors.accent` (red `#f2030b`). Use `bg-brand`, `text-brand-text`, `hover:bg-brand-dark`, `bg-brand-50` etc. Change the values there to re-theme the whole site.
+The whole site is themed from 6 CSS variables at the top of `app/globals.css` (`--brand`, `--brand-dark`, `--brand-text`, `--brand-50/100/200`, as RGB triplets). Tailwind exposes them as `bg-brand`, `text-brand-text`, `hover:bg-brand-dark`, `bg-brand-50` etc., so changing the variables re-themes every page.
+
+Ready-made options taken from the logo:
+
+| Option | --brand | --brand-dark | --brand-text | --brand-50 | --brand-100 | --brand-200 |
+|---|---|---|---|---|---|---|
+| Refined red (default) | `220 38 38` | `185 28 28` | `185 28 28` | `254 242 242` | `254 226 226` | `254 202 202` |
+| Deep green | `5 150 105` | `4 120 87` | `4 120 87` | `236 253 245` | `209 250 229` | `167 243 208` |
+| Charcoal | `31 41 55` | `17 24 39` | `31 41 55` | `249 250 251` | `243 244 246` | `229 231 235` |

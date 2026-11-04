@@ -9,16 +9,15 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Brand palette taken from the logo (green #04c366, red #f2030b). Change here to re-theme the whole site.
+        // Brand palette from the logo. Values live as CSS variables in app/globals.css (:root) so the theme is changed in ONE place.
         brand: {
-          DEFAULT: "#04c366",
-          dark: "#03a356",
-          text: "#039a50", // green for text/links on white (better contrast)
-          50: "#effcf5",
-          100: "#d9f7e7",
-          200: "#b3efd0",
+          DEFAULT: "rgb(var(--brand) / <alpha-value>)",
+          dark: "rgb(var(--brand-dark) / <alpha-value>)",
+          text: "rgb(var(--brand-text) / <alpha-value>)",
+          50: "rgb(var(--brand-50) / <alpha-value>)",
+          100: "rgb(var(--brand-100) / <alpha-value>)",
+          200: "rgb(var(--brand-200) / <alpha-value>)",
         },
-        accent: { DEFAULT: "#f2030b", 50: "#fff1f1", 100: "#ffe0e1" }, // logo red, available for highlights
       },
     },
   },

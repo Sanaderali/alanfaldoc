@@ -12,7 +12,7 @@ export default function Pagination({ page, pages }: { page: number; pages: numbe
         <Link href={href(page - 1)} aria-label="Previous page" rel="prev" className={`${box} border-gray-200 text-gray-600 hover:border-brand hover:text-brand-text`}><Icon name="arrow-left" /></Link>
       ) : <span aria-hidden="true" className={`${box} border-gray-100 text-gray-300`}><Icon name="arrow-left" /></span>}
       {Array.from({ length: pages }, (_, i) => i + 1).map((n) => (
-        <Link key={n} href={href(n)} aria-current={n === page ? "page" : undefined} className={`${box} ${n === page ? "bg-brand border-brand text-gray-900 shadow" : "border-gray-200 text-gray-600 hover:border-brand hover:text-brand-text"}`}>{n}</Link>
+        <Link key={n} href={href(n)} aria-current={n === page ? "page" : undefined} className={`${box} ${n === page ? "bg-brand border-brand text-white shadow" : "border-gray-200 text-gray-600 hover:border-brand hover:text-brand-text"}`}>{n}</Link>
       ))}
       {page < pages ? (
         <Link href={href(page + 1)} aria-label="Next page" rel="next" className={`${box} border-gray-200 text-gray-600 hover:border-brand hover:text-brand-text`}><Icon name="arrow-right" /></Link>

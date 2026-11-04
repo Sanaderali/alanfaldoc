@@ -69,7 +69,7 @@ export default async function PostPage({ params }: Props) {
               <Reveal className="mt-10 flex flex-wrap items-center gap-2">
                 <span className="text-sm font-semibold text-gray-900 mr-1">Tags:</span>
                 {post.tags.map((t) => (
-                  <Link key={t} href={`/blog/tag/${slugify(t)}`} className="px-3 py-1.5 bg-gray-100 text-gray-500 text-xs rounded hover:bg-brand hover:text-gray-900 transition-colors">{t}</Link>
+                  <Link key={t} href={`/blog/tag/${slugify(t)}`} className="px-3 py-1.5 bg-gray-100 text-gray-500 text-xs rounded hover:bg-brand hover:text-white transition-colors">{t}</Link>
                 ))}
               </Reveal>
             )}

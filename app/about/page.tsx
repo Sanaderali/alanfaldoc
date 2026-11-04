@@ -45,7 +45,7 @@ export default async function AboutPage() {
             <p className="text-gray-600 leading-relaxed mb-8">
               With over 20 years of experience, our team removes the complexity from government procedures so you can focus on what matters: your business and your family.
             </p>
-            <Link href="/contact" className="inline-block px-8 py-3.5 bg-brand text-gray-900 font-semibold rounded uppercase text-sm hover:bg-brand-dark hover:shadow-lg hover:scale-105 transition-all duration-300">
+            <Link href="/contact" className="inline-block px-8 py-3.5 bg-brand text-white font-semibold rounded uppercase text-sm hover:bg-brand-dark hover:shadow-lg hover:scale-105 transition-all duration-300">
               Get Consultation
             </Link>
           </div>

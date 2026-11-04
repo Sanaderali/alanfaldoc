@@ -43,7 +43,7 @@ export default async function BlogSidebar() {
           <ul className="flex flex-wrap gap-2">
             {tags.map((t) => (
               <li key={t.slug}>
-                <Link href={`/blog/tag/${t.slug}`} className="inline-block px-3 py-1.5 bg-gray-100 text-gray-500 text-xs rounded hover:bg-brand hover:text-gray-900 transition-colors">{t.name}</Link>
+                <Link href={`/blog/tag/${t.slug}`} className="inline-block px-3 py-1.5 bg-gray-100 text-gray-500 text-xs rounded hover:bg-brand hover:text-white transition-colors">{t.name}</Link>
               </li>
             ))}
           </ul>

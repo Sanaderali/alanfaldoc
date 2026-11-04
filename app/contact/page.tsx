@@ -163,7 +163,7 @@ export default function ContactPage() {
 
                 <button
                   type="submit"
-                  className="w-full px-8 py-4 bg-brand text-gray-900 font-semibold rounded hover:bg-brand-dark hover:shadow-lg hover:scale-105 transition-all duration-300 uppercase text-sm"
+                  className="w-full px-8 py-4 bg-brand text-white font-semibold rounded hover:bg-brand-dark hover:shadow-lg hover:scale-105 transition-all duration-300 uppercase text-sm"
                 >
                   SEND YOUR MESSAGE
                 </button>
@@ -217,7 +217,7 @@ export default function ContactPage() {
                     placeholder="Your email address"
                     className="flex-1 px-4 py-3 bg-gray-50 border border-gray-200 rounded focus:ring-2 focus:ring-brand focus:border-transparent transition-all text-gray-900"
                   />
-                  <button className="px-6 sm:px-8 py-3 bg-brand text-gray-900 font-semibold rounded hover:bg-brand-dark hover:shadow-lg transition-all duration-300 uppercase text-sm whitespace-nowrap">
+                  <button className="px-6 sm:px-8 py-3 bg-brand text-white font-semibold rounded hover:bg-brand-dark hover:shadow-lg transition-all duration-300 uppercase text-sm whitespace-nowrap">
                     SUBSCRIBE
                   </button>
                 </div>

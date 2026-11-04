@@ -3,6 +3,19 @@
 @tailwind utilities;
 
 /* Always light: no dark-mode override */
+/*
+ * THEME (from the logo). RGB triplets so Tailwind opacity utilities work.
+ * Active: logo red, refined. To switch, replace these 6 lines (see README "Theme colours").
+ */
+:root {
+  --brand: 220 38 38;       /* #dc2626 buttons / fills */
+  --brand-dark: 185 28 28;  /* #b91c1c hover */
+  --brand-text: 185 28 28;  /* #b91c1c text & links on white */
+  --brand-50: 254 242 242;
+  --brand-100: 254 226 226;
+  --brand-200: 254 202 202;
+}
+
 :root {
   color-scheme: light;
   --background: #ffffff;
