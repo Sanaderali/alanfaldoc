@@ -1,7 +1,7 @@
 "use server";
 
 import { randomUUID } from "node:crypto";
-import { revalidatePath } from "next/cache";
+import { refresh } from "next/cache";
 import { requirePerm } from "@/lib/auth";
 import { cleanText } from "@/lib/chat";
 import { notifyTicketReply } from "@/lib/notify";
@@ -10,13 +10,13 @@ import type { Ticket } from "@/types/content";
 
 export type TicketResult = { ok: boolean; message?: string };
 
-/** make every open dashboard view (list, thread, menu badges) show the new data straight away */
-const refresh = () => revalidatePath("/admin", "layout");
+/** re-render only the page the user is on (cheap). Does not wipe the whole client cache. */
+const refreshView = () => refresh();
 
 export async function markTicketRead(id: string): Promise<void> {
   await requirePerm("tickets.view");
   await mutate("tickets", (all) => all.map((t) => (t.id === id && t.unreadStaff ? { ...t, unreadStaff: false } : t)));
-  refresh();
+  // intentionally no refresh: marking as read must never re-render the page (the menu badge updates by itself)
 }
 
 /** Reply to a ticket: saved in the thread and emailed to the customer (once mail is configured). */
@@ -29,7 +29,7 @@ export async function replyTicket(id: string, text: string, closeAfter = false):
   await mutate("tickets", (all) => all.map((t) => (t.id === id ? (updated = { ...t, replies: [...t.replies, reply], status: closeAfter ? "closed" : "pending", unreadStaff: false, updatedAt: reply.at }) : t)));
   if (!updated) return { ok: false, message: "Ticket not found" };
   void notifyTicketReply(updated, reply);
-  refresh();
+  refreshView();
   return { ok: true, message: closeAfter ? "Reply sent and ticket closed" : "Reply sent" };
 }
 
@@ -44,6 +44,6 @@ export async function setTicketStatus(id: string, status: Ticket["status"]): Pro
   const exists = (await readAll("tickets")).some((t) => t.id === id);
   if (!exists) return { ok: false, message: "Ticket not found" };
   await mutate("tickets", (all) => all.map((t) => (t.id === id ? { ...t, status, updatedAt: now() } : t)));
-  refresh();
+  refreshView();
   return { ok: true };
 }

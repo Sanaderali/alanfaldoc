@@ -1,23 +1,28 @@
 "use client";
 
-import { useEffect, useState, useTransition } from "react";
-import { useRouter } from "next/navigation";
+import { useEffect, useRef, useState, useTransition } from "react";
 import type { Ticket } from "@/types/content";
 import { btnGhost, btnPrimary, inputCls, wpDate } from "../../ui";
 import { markTicketRead, replyTicket, setTicketStatus } from "../tickets-actions";
 
 export default function TicketThread({ ticket, canReply }: { ticket: Ticket; canReply: boolean }) {
-  const router = useRouter();
   const [text, setText] = useState("");
   const [msg, setMsg] = useState<{ ok: boolean; text: string } | null>(null);
   const [pending, start] = useTransition();
 
-  useEffect(() => { if (ticket.unreadStaff) markTicketRead(ticket.id).then(() => router.refresh()); }, [ticket.id, ticket.unreadStaff, router]);
+  // mark as read ONCE per ticket (no refresh afterwards, so it can never loop)
+  const marked = useRef<string | null>(null);
+  useEffect(() => {
+    if (ticket.unreadStaff && marked.current !== ticket.id) {
+      marked.current = ticket.id;
+      void markTicketRead(ticket.id);
+    }
+  }, [ticket.id, ticket.unreadStaff]);
 
   const send = (close: boolean) => start(async () => {
     const r = await replyTicket(ticket.id, text, close);
     setMsg({ ok: r.ok, text: r.message ?? "" });
-    if (r.ok) { setText(""); router.refresh(); }
+    if (r.ok) setText("");
   });
   const bubble = (who: "customer" | "staff") => `border px-3.5 py-3 text-[13px] leading-relaxed whitespace-pre-wrap ${who === "staff" ? "bg-brand-50 border-brand-200" : "bg-a-surface border-a-line"}`;
 
@@ -56,7 +61,7 @@ export default function TicketThread({ ticket, canReply }: { ticket: Ticket; can
           {canReply && (
             <div className="px-3 pb-3">
               <label htmlFor="tstatus" className="text-xs text-a-muted">Status</label>
-              <select id="tstatus" value={ticket.status} onChange={(e) => start(async () => { await setTicketStatus(ticket.id, e.target.value as Ticket["status"]); router.refresh(); })} className={`${inputCls} mt-1`}>
+              <select id="tstatus" value={ticket.status} onChange={(e) => start(async () => { await setTicketStatus(ticket.id, e.target.value as Ticket["status"]); })} className={`${inputCls} mt-1`}>
                 <option value="open">Open</option><option value="pending">Pending (waiting for customer)</option><option value="closed">Closed</option>
               </select>
             </div>
