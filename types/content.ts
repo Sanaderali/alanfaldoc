@@ -78,7 +78,15 @@ export type Post = {
   /** ISO date, e.g. 2026-11-01 */
   date: string;
   category: string;
+  /**
+   * Article body. Each entry is a paragraph. Prefix with "## " for a heading, or write
+   * "- item" lines (one entry, newline-separated) for a bullet list.
+   */
   body: string[];
+  author?: string;
+  tags?: string[];
+  /** override the auto-calculated reading time */
+  readMinutes?: number;
   image?: string;
   /** ISO date of last edit (used for schema + sitemap) */
   updated?: string;

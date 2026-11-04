@@ -1,15 +1,17 @@
 import type { MetadataRoute } from "next";
 import { abs } from "@/lib/seo";
-import { getCountries, getPosts, getServices } from "@/lib/content";
+import { getCategories, getCountries, getPosts, getPostsPage, getServices } from "@/lib/content";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const [countries, services, posts] = await Promise.all([getCountries(), getServices(), getPosts()]);
+  const [countries, services, posts, cats, { pages }] = await Promise.all([getCountries(), getServices(), getPosts(), getCategories(), getPostsPage(1)]);
   const idx = (s: { seo?: { noindex?: boolean } }) => !s.seo?.noindex;
   return [
     { url: abs("/"), changeFrequency: "weekly", priority: 1 },
     ...["/services", "/countries", "/blog", "/faqs", "/about", "/contact"].map((p) => ({ url: abs(p), changeFrequency: "monthly" as const, priority: 0.8 })),
     ...services.filter(idx).map((s) => ({ url: abs(`/services/${s.slug}`), changeFrequency: "monthly" as const, priority: 0.9 })),
     ...countries.filter(idx).map((c) => ({ url: abs(`/countries/${c.slug}`), changeFrequency: "monthly" as const, priority: 0.8 })),
+    ...Array.from({ length: Math.max(0, pages - 1) }, (_, i) => ({ url: abs(`/blog/page/${i + 2}`), changeFrequency: "weekly" as const, priority: 0.5 })),
+    ...cats.map((c) => ({ url: abs(`/blog/category/${c.slug}`), changeFrequency: "weekly" as const, priority: 0.5 })),
     ...posts.filter(idx).map((p) => ({ url: abs(`/blog/${p.slug}`), lastModified: p.updated ?? p.date, changeFrequency: "yearly" as const, priority: 0.6 })),
   ];
 }

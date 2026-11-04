@@ -173,8 +173,9 @@ export function articleLd(p: Post) {
     datePublished: p.date,
     dateModified: p.updated ?? p.date,
     articleSection: p.category,
-    author: { "@id": orgId() },
+    author: p.author && p.author !== site.name && !p.author.includes("Team") ? { "@type": "Person", name: p.author } : { "@id": orgId() },
     publisher: { "@id": orgId() },
+    ...(p.tags?.length ? { keywords: p.tags.join(", ") } : {}),
     ...(p.image ? { image: p.image.startsWith("http") ? p.image : abs(p.image) } : {}),
   };
 }
