@@ -11,7 +11,9 @@ export async function login(_: LoginState, formData: FormData): Promise<LoginSta
   const ok = checkCredentials(String(formData.get("user") ?? ""), String(formData.get("password") ?? ""));
   if (!ok) {
     recordFailure(ip);
-    return { error: "Incorrect username or password." };
+    // Local development only: a password cut short by "#" or "$" in .env is the most common cause of a failed login
+    const hint = process.env.NODE_ENV !== "production" ? ` (Dev hint: the server loaded a ${(process.env.ADMIN_PASSWORD ?? "").length}-character password. If that is shorter than yours, wrap the value in quotes in .env.local.)` : "";
+    return { error: `Incorrect username or password.${hint}` };
   }
   clearFailures(ip);
   await startSession();
