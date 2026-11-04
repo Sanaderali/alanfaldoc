@@ -7,7 +7,7 @@ import { btnGhost, btnPrimary } from "../../ui";
 
 type Summary = { id: string; name: string; phone: string; status: "open" | "closed"; unread: number; lastAt: string; createdAt: string; preview: string; lastFrom?: string; country?: string; city?: string };
 type Msg = { id: string; from: "visitor" | "staff" | "system"; name?: string; text: string; at: string };
-type Selected = { id: string; name: string; phone: string; status: "open" | "closed"; createdAt: string; ip?: string; country?: string; city?: string; page?: string; referrer?: string; userAgent?: string; language?: string; total: number; messages: Msg[] };
+type Selected = { id: string; name: string; phone: string; status: "open" | "closed"; createdAt: string; ip?: string; country?: string; city?: string; page?: string; referrer?: string; userAgent?: string; language?: string; handledBy?: string; total: number; messages: Msg[] };
 
 const ago = (iso: string) => {
   const s = Math.max(0, (Date.now() - new Date(iso).getTime()) / 1000);
@@ -185,7 +185,7 @@ export default function ChatInbox({ canReply }: { canReply: boolean }) {
             {([
               ["Name", sel.name || "Not given"], ["Phone", sel.phone], ["IP address", sel.ip || "-"],
               ["Location", [sel.city, sel.country].filter(Boolean).join(", ") || "Unknown"], ["Page", sel.page || "-"], ["Came from", sel.referrer || "Direct"],
-              ["Device", device(sel.userAgent)], ["Language", sel.language || "-"], ["Started", new Date(sel.createdAt).toLocaleString("en-GB")],
+              ["Device", device(sel.userAgent)], ["Language", sel.language || "-"], ["Started", new Date(sel.createdAt).toLocaleString("en-GB")], ["Handled by", sel.handledBy || "Unassigned (first reply claims it)"],
             ] as [string, string][]).map(([k, v]) => <div key={k}><dt className="text-[11px] uppercase tracking-wide text-a-subtle">{k}</dt><dd className="break-all">{v}</dd></div>)}
           </dl>
         ) : <p className="p-3 text-[13px] text-a-muted">Select a conversation to see visitor details.</p>}
