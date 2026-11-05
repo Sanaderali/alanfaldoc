@@ -15,17 +15,21 @@ const VOID = new Set(["area", "base", "br", "col", "embed", "hr", "img", "input"
 export function collectStrings(html: string): string[] {
   const out = new Set<string>();
   const stack: boolean[] = []; // true = this element (or an ancestor) is skipped
+  let buf = ""; // the parser hands over text in pieces (it splits at entities such as &#x27;); a browser text node is the whole run
   const add = (t: string) => { const s = t.trim(); if (s.length >= 2 && s.length <= 600 && /\p{L}/u.test(s)) out.add(s); };
+  const flush = () => { if (buf && !(stack[stack.length - 1] ?? false)) add(buf); buf = ""; };
   const p = new Parser({
     onopentag(name, attrs) {
+      flush();
       const skipped = (stack[stack.length - 1] ?? false) || SKIP_TAGS.has(name) || "data-notranslate" in attrs || attrs.translate === "no" || attrs.contenteditable === "true";
       if (!skipped) for (const a of ATTRS) if (attrs[a]) add(attrs[a]);
       if (!VOID.has(name)) stack.push(skipped);
     },
-    onclosetag(name) { if (!VOID.has(name)) stack.pop(); },
-    ontext(text) { if (!(stack[stack.length - 1] ?? false)) add(text); },
+    onclosetag(name) { flush(); if (!VOID.has(name)) stack.pop(); },
+    oncomment() { flush(); }, // React puts <!-- --> between adjacent text pieces: those are separate text nodes in the browser too
+    ontext(text) { buf += text; },
   }, { decodeEntities: true });
-  p.write(html); p.end();
+  p.write(html); p.end(); flush();
   return [...out];
 }
 
