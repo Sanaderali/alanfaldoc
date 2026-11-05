@@ -5,7 +5,7 @@ import Icon from "./Icon";
 import { readChat, writeChat } from "./ChatLauncher";
 import { beep, flashTitle } from "./chatSound";
 
-type Msg = { id: string; from: "visitor" | "staff" | "system"; name?: string; text: string; at: string };
+type Msg = { id: string; from: "visitor" | "staff" | "system" | "ai"; name?: string; text: string; at: string };
 
 const addMsgs = (prev: Msg[], add: Msg[]) => { const seen = new Set(prev.map((m) => m.id)); const fresh = add.filter((m) => !seen.has(m.id)); return fresh.length ? [...prev, ...fresh] : prev; };
 
@@ -125,7 +125,7 @@ export default function ChatPanel({ onClose }: { onClose: () => void }) {
               ) : (
                 <div key={m.id} className={`flex ${m.from === "visitor" ? "justify-end" : "justify-start"}`}>
                   <div className={`max-w-[82%] px-4 py-2.5 text-sm leading-relaxed whitespace-pre-wrap break-words shadow-sm ${m.from === "visitor" ? "bg-brand text-white rounded-2xl rounded-br-md" : "bg-white text-ink border border-gray-200 rounded-2xl rounded-bl-md"}`}>
-                    {m.from === "staff" && <p className="text-[11px] font-semibold text-brand-text mb-0.5">{m.name || "Agent"}</p>}
+                    {(m.from === "staff" || m.from === "ai") && <p className="text-[11px] font-semibold text-brand-text mb-0.5">{m.name || "Agent"}{m.from === "ai" && <span className="ml-1.5 rounded bg-brand-50 px-1.5 py-px text-[10px] font-bold uppercase tracking-wide text-brand-text">AI</span>}</p>}
                     {m.text}
                   </div>
                 </div>

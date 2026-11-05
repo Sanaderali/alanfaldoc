@@ -29,7 +29,7 @@ export function publicView(c: Chat, since = 0) {
     id: c.id,
     status: c.status,
     total: c.messages.length,
-    messages: c.messages.slice(since).map((m) => ({ id: m.id, from: m.from, name: m.from === "staff" ? m.name : undefined, text: m.text, at: m.at })),
+    messages: c.messages.slice(since).map((m) => ({ id: m.id, from: m.from, name: m.from === "staff" || m.from === "ai" ? m.name : undefined, text: m.text, at: m.at })),
   };
 }
 

@@ -285,7 +285,7 @@ export type Ticket = {
   closedAt?: string;
 };
 
-export type ChatMessage = { id: string; from: "visitor" | "staff" | "system"; name?: string; staffId?: string; text: string; at: string };
+export type ChatMessage = { id: string; from: "visitor" | "staff" | "system" | "ai"; name?: string; staffId?: string; text: string; at: string };
 export type Chat = {
   id: string;
   /** sha256 of the visitor's secret token (the token itself lives only in the visitor's browser) */
@@ -309,4 +309,8 @@ export type Chat = {
   /** staff replies the visitor has not seen yet */
   unreadVisitor: number;
   assignedTo?: string;
+  /** the AI assistant stays silent while true (set when staff reply or the assistant hands over) */
+  aiPaused?: boolean;
+  /** how many replies the assistant has sent in this chat */
+  aiReplies?: number;
 };

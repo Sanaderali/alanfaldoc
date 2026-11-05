@@ -214,3 +214,13 @@ All emails are wired in code (`lib/notify.ts`): welcome email for new team membe
 - **Schema:** Organization/LocalBusiness (with contact point), WebSite, BreadcrumbList, Service, WebPage (dateModified, speakable, citations), FAQPage, BlogPosting (author, citations).
 - **Crawlers:** `robots.txt` allows GPTBot, OAI-SearchBot, ChatGPT-User, PerplexityBot, Google-Extended, ClaudeBot and others (toggle in `data/site.ts`); `/llms.txt` and `/llms-full.txt` give AI assistants a clean summary of every page. `/admin`, `/api` and previews are `noindex` and disallowed.
 - **Technical:** dynamic `sitemap.xml` with last-modified dates and images, canonical tags, security headers, and Core Web Vitals work (no layout shift: measured CLS 0.000; the home page is server-rendered; the chat widget is lazy-loaded).
+
+## AI chat assistant (Groq)
+
+The live chat can answer visitors automatically from the website's own content (services, country guides, FAQs, articles). Set these environment variables on the server, then restart:
+
+- `GROQ_API_KEY` - key from console.groq.com (required; without it the chat works as before, staff only)
+- `GROQ_MODEL` - optional, default `llama-3.3-70b-versatile`
+- `AI_CHAT=off` - optional switch to disable the assistant without removing the key
+
+The assistant introduces itself as a virtual assistant, never invents fees or approvals, answers at most 20 times per chat, and ends with a hand-off (staff are alerted, AI pauses) when someone asks for a person or a quote. When any staff member replies, the AI stops for that chat; use "Resume AI assistant" / "Take over" in Dashboard -> Live chat.

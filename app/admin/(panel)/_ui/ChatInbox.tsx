@@ -6,8 +6,8 @@ import { askDesktopPermission, desktopNotify, flashTitle, playBeep, setSoundEnab
 import { btnGhost, btnPrimary } from "../../ui";
 
 type Summary = { id: string; name: string; phone: string; status: "open" | "closed"; unread: number; lastAt: string; createdAt: string; preview: string; lastFrom?: string; country?: string; city?: string };
-type Msg = { id: string; from: "visitor" | "staff" | "system"; name?: string; text: string; at: string };
-type Selected = { id: string; name: string; phone: string; status: "open" | "closed"; createdAt: string; ip?: string; country?: string; city?: string; page?: string; referrer?: string; userAgent?: string; language?: string; handledBy?: string; total: number; messages: Msg[] };
+type Msg = { id: string; from: "visitor" | "staff" | "system" | "ai"; name?: string; text: string; at: string };
+type Selected = { id: string; name: string; phone: string; status: "open" | "closed"; createdAt: string; ip?: string; country?: string; city?: string; page?: string; referrer?: string; userAgent?: string; language?: string; handledBy?: string; aiPaused?: boolean; aiReplies?: number; total: number; messages: Msg[] };
 
 const ago = (iso: string) => {
   const s = Math.max(0, (Date.now() - new Date(iso).getTime()) / 1000);
@@ -21,6 +21,7 @@ const device = (ua = "") => `${/Mobile|Android|iPhone/i.test(ua) ? "Mobile" : "D
 /** Real-time chat inbox (polls every 2s). Plays a sound + visual alert for every new chat or visitor message. */
 export default function ChatInbox({ canReply }: { canReply: boolean }) {
   const [chats, setChats] = useState<Summary[]>([]);
+  const [aiOn, setAiOn] = useState(false);
   const [sel, setSel] = useState<Selected | null>(null);
   const [selId, setSelId] = useState<string | null>(null);
   const [text, setText] = useState("");
@@ -44,8 +45,9 @@ export default function ChatInbox({ canReply }: { canReply: boolean }) {
     try {
       const r = await fetch(`/admin/api/chat${id ? `?id=${id}&since=${total}` : ""}`, { cache: "no-store" });
       if (!r.ok) return;
-      const d: { chats: Summary[]; selected: Selected | null } = await r.json();
+      const d: { chats: Summary[]; selected: Selected | null; ai?: boolean } = await r.json();
       setChats(d.chats);
+      setAiOn(!!d.ai);
       setLoaded(true);
 
       // ---- alerts: new chat, or more unread messages than before (for chats you are not looking at right now) ----
@@ -98,6 +100,7 @@ export default function ChatInbox({ canReply }: { canReply: boolean }) {
     if (!r.ok) return setError("Could not send. Check your connection.");
     setText(""); void tick();
   };
+  const setAi = async (paused: boolean) => { if (!sel) return; setSel({ ...sel, aiPaused: paused }); await post("/admin/api/chat/ai", { id: sel.id, paused }); void tick(); };
   const setStatus = async (status: "open" | "closed") => { if (!sel) return; await post("/admin/api/chat/status", { id: sel.id, status }); void tick(); };
   const toggleSound = () => { const n = !sound; setSound(n); setSoundEnabled(n); if (n) { playBeep(); void askDesktopPermission(); } };
 
@@ -146,6 +149,7 @@ export default function ChatInbox({ canReply }: { canReply: boolean }) {
                 <button type="button" onClick={() => setMobileThread(false)} className="lg:hidden text-brand-text" aria-label="Back"><Icon name="arrow-left" /></button>
                 <div className="min-w-0"><p className="font-semibold text-[14px] truncate">{sel.name || "Visitor"}</p><a href={`tel:${sel.phone}`} className="text-xs text-brand-text">{sel.phone}</a></div>
               </div>
+              {canReply && aiOn && sel.status === "open" && (sel.aiPaused ? <button type="button" onClick={() => setAi(false)} className={btnGhost} title="The assistant is silent in this chat. Click to let it answer visitor messages again.">Resume AI assistant</button> : <span className="inline-flex items-center gap-2 text-[12px] text-a-muted"><span className="inline-block h-2 w-2 rounded-full bg-green-500" aria-hidden="true" />AI assistant answering<button type="button" onClick={() => setAi(true)} className={btnGhost}>Take over</button></span>)}
               {canReply && (sel.status === "open" ? <button type="button" onClick={() => setStatus("closed")} className={btnGhost}>Close chat</button> : <button type="button" onClick={() => setStatus("open")} className={btnGhost}>Reopen</button>)}
             </div>
             <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-a-raised" aria-live="polite">
@@ -153,9 +157,9 @@ export default function ChatInbox({ canReply }: { canReply: boolean }) {
                 m.from === "system" ? (
                   <p key={m.id} className="text-center text-xs text-a-subtle">{m.text}</p>
                 ) : (
-                  <div key={m.id} className={`flex ${m.from === "staff" ? "justify-end" : "justify-start"}`}>
-                    <div className={`max-w-[80%] px-3 py-2 text-[13px] leading-relaxed whitespace-pre-wrap break-words ${m.from === "staff" ? "bg-brand text-a-on" : "bg-a-surface border border-a-line"}`}>
-                      <p className={`text-[11px] mb-0.5 ${m.from === "staff" ? "text-a-on/70" : "text-a-subtle"}`}>{m.from === "staff" ? m.name || "Agent" : sel.name || "Visitor"} · {new Date(m.at).toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" })}</p>
+                  <div key={m.id} className={`flex ${m.from === "staff" || m.from === "ai" ? "justify-end" : "justify-start"}`}>
+                    <div className={`max-w-[80%] px-3 py-2 text-[13px] leading-relaxed whitespace-pre-wrap break-words ${m.from === "staff" ? "bg-brand text-a-on" : m.from === "ai" ? "bg-a-surface border border-brand/50" : "bg-a-surface border border-a-line"}`}>
+                      <p className={`text-[11px] mb-0.5 ${m.from === "staff" ? "text-a-on/70" : "text-a-subtle"}`}>{m.from === "staff" ? m.name || "Agent" : m.from === "ai" ? "AI assistant" : sel.name || "Visitor"} · {new Date(m.at).toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" })}</p>
                       {m.text}
                     </div>
                   </div>

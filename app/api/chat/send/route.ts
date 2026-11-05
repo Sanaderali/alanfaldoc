@@ -1,7 +1,9 @@
+import { after } from "next/server";
+import { askAI, AI_NAME, aiEnabled, MAX_AI_REPLIES } from "@/lib/ai";
 import { clientIp } from "@/lib/auth";
 import { cleanText, tokenMatches, MAX_MESSAGES_PER_CHAT, msg, publicView } from "@/lib/chat";
 import { allow } from "@/lib/ratelimit";
-import { mutate, now } from "@/lib/store";
+import { mutate, now, readAll } from "@/lib/store";
 
 export const dynamic = "force-dynamic";
 
@@ -32,5 +34,23 @@ export async function POST(req: Request) {
   );
   if (denied) return Response.json({ error: "Not allowed" }, { status: 403 });
   if (!result) return Response.json({ error: "Chat not found" }, { status: 404 });
+  // AI assistant: answers in the background while no staff member has joined. It never blocks the visitor's message.
+  if (aiEnabled()) after(() => aiReply(id));
   return Response.json(result);
+}
+
+async function aiReply(id: string) {
+  const chat = (await readAll("chats")).find((c) => c.id === id);
+  if (!chat || chat.status !== "open" || chat.aiPaused || (chat.aiReplies ?? 0) >= MAX_AI_REPLIES) return;
+  if (chat.messages[chat.messages.length - 1]?.from !== "visitor") return;
+  const r = await askAI(chat);
+  if (!r) return;
+  await mutate("chats", (all) =>
+    all.map((c) => {
+      if (c.id !== id || c.aiPaused || c.status !== "open") return c; // a person took over while the AI was thinking
+      const a = msg("ai", r.text, AI_NAME);
+      const added = [a, ...(r.handoff ? [msg("system", "A team member has been notified and will join this chat shortly.")] : [])];
+      return { ...c, messages: [...c.messages, ...added], unreadVisitor: c.unreadVisitor + 1, ...(r.handoff ? { aiPaused: true, unreadStaff: c.unreadStaff + 1 } : {}), aiReplies: (c.aiReplies ?? 0) + 1, lastMessageAt: a.at, updatedAt: now() };
+    })
+  );
 }
