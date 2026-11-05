@@ -89,3 +89,28 @@ export async function countMissing(lang: string, texts: string[]): Promise<numbe
   const cache = await load(lang);
   return texts.filter((t) => !cache[key(t)]).length;
 }
+
+/**
+ * Import translations from one file: { "ar": { "English sentence": "translation", ... }, "de": { ... }, ... }.
+ * Entries are matched to the website by sentence, so one file can hold every language and be uploaded again at any time
+ * (newer translations replace older ones). Returns how many sentences were added or changed per language.
+ */
+export async function importTranslations(data: unknown): Promise<{ ok: boolean; message?: string; result: Record<string, number> }> {
+  const result: Record<string, number> = {};
+  if (!data || typeof data !== "object" || Array.isArray(data)) return { ok: false, message: "The file must be an object with language codes as keys, for example {\"ar\": {\"Home\": \"الرئيسية\"}}.", result };
+  const codes = new Set(LANGUAGES.map((l) => l.code).filter((c) => c !== "en"));
+  for (const [lang, entries] of Object.entries(data as Record<string, unknown>)) {
+    if (!codes.has(lang) || !entries || typeof entries !== "object" || Array.isArray(entries)) continue;
+    const cache = await load(lang);
+    let n = 0;
+    for (const [en, tr] of Object.entries(entries as Record<string, unknown>)) {
+      const source = en.trim(), text = typeof tr === "string" ? tr.trim() : "";
+      if (!source || !text || source.length > 600 || text.length > 2000) continue;
+      if (cache[key(source)] !== text) { cache[key(source)] = text; n++; }
+    }
+    if (n) await save(lang, cache);
+    result[lang] = n;
+  }
+  if (!Object.keys(result).length) return { ok: false, message: "No supported language codes found. Use: " + [...codes].join(", ") + ".", result };
+  return { ok: true, result };
+}
