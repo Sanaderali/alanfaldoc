@@ -3,6 +3,9 @@ import BlogListing from "@/app/components/BlogListing";
 import { getPostsPage, getPageSeo } from "@/lib/content";
 import { buildMetadata } from "@/lib/seo";
 
+
+/** Lists read the (cached) content files on every request, so newly published items appear immediately. */
+export const dynamic = "force-dynamic";
 export async function generateMetadata(): Promise<Metadata> {
   const { seo } = await getPageSeo("blog");
   return buildMetadata({ title: "Our Latest News & Articles", description: "News and guides on Dubai business setup, visas and documents.", path: "/blog", seo });

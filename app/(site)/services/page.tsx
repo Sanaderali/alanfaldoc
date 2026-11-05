@@ -7,6 +7,9 @@ import Reveal from "@/app/components/Reveal";
 import { getServices, getPageSeo } from "@/lib/content";
 import { buildMetadata } from "@/lib/seo";
 
+
+/** Lists read the (cached) content files on every request, so newly published items appear immediately. */
+export const dynamic = "force-dynamic";
 export async function generateMetadata(): Promise<Metadata> {
   const { seo } = await getPageSeo("services");
   return buildMetadata({ title: "Our Services", description: "Company formation, PRO services, visa processing, document clearing and more in Dubai & UAE.", path: "/services", seo });

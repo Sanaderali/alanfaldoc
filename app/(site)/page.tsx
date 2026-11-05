@@ -5,6 +5,9 @@ import { site } from "@/data/site";
 import { getPageSeo } from "@/lib/content";
 import { buildMetadata, customLd } from "@/lib/seo";
 
+
+/** Lists read the (cached) content files on every request, so newly published items appear immediately. */
+export const dynamic = "force-dynamic";
 export async function generateMetadata(): Promise<Metadata> {
   const { seo } = await getPageSeo("home");
   return {
