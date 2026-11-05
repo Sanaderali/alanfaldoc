@@ -28,7 +28,7 @@ export default async function ResourceList({ kind, params }: { kind: Kind; param
   const when = (x: Item) => (kind === "posts" ? x.publishAt ?? (x.date ? `${x.date}T00:00:00.000Z` : x.updatedAt) : x.updatedAt);
 
   const q = (params.q ?? "").toLowerCase().trim();
-  const status = params.status ?? "all";
+  const status = params.status || "all"; // an empty value (from a search form) means "all"
   const orderby = params.orderby === "title" ? "title" : "date";
   const order = params.order === "asc" ? "asc" : "desc";
   const paged = Math.max(1, Number(params.paged) || 1);

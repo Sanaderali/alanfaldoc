@@ -27,3 +27,14 @@ export async function deleteLanding(id: string) {
   refreshSite();
   redirect("/admin/landings");
 }
+
+/** Publish only the drafts that are in the current filtered view (for publishing in waves). */
+export async function publishSelectedLandings(formData: FormData) {
+  await requirePerm("content.publish");
+  const ids = new Set(formData.getAll("ids").map(String));
+  if (ids.size) {
+    await mutate("landings", (all) => all.map((l) => (l.id && ids.has(l.id) && l.status === "draft" ? { ...l, status: "published" as const, updatedAt: now() } : l)));
+    refreshSite();
+  }
+  redirect(String(formData.get("back") || "/admin/landings"));
+}

@@ -12,7 +12,9 @@ const tone = { open: "warn", pending: "info", closed: "ok" } as const;
 export default async function Page({ searchParams }: { searchParams: Promise<{ status?: string; q?: string }> }) {
   const me = await requirePerm("tickets.view");
   const canReply = can(me, "tickets.reply");
-  const { status = "all", q = "" } = await searchParams;
+  const sp = await searchParams;
+  const { q = "" } = sp;
+  const status = sp.status || "all";
   const all = (await readAll("tickets")).sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
   const count = (s: string) => all.filter((t) => s === "all" || t.status === s).length;
   const names = new Map((await readAll("users")).map((u) => [u.id, u.name]));

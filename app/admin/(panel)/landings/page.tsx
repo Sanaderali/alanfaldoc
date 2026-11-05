@@ -3,15 +3,21 @@ import { requirePerm } from "@/lib/auth";
 import { can } from "@/lib/rbac";
 import { readAll } from "@/lib/store";
 import { Badge, Empty, PageHeader, btnGhost, wpDate } from "../../ui";
-import { deleteLanding, publishAllLandings, setLandingStatus } from "../landings-actions";
+import { deleteLanding, publishAllLandings, publishSelectedLandings, setLandingStatus } from "../landings-actions";
 
 export const dynamic = "force-dynamic";
 
-export default async function Page({ searchParams }: { searchParams: Promise<{ q?: string; status?: string }> }) {
+export default async function Page({ searchParams }: { searchParams: Promise<{ q?: string; status?: string; service?: string; country?: string }> }) {
   const me = await requirePerm("content.view");
-  const { q = "", status = "all" } = await searchParams;
+  const sp = await searchParams;
+  const { q = "", service = "", country = "" } = sp;
+  const status = sp.status || "all";
   const all = (await readAll("landings")).sort((a, b) => a.slug.localeCompare(b.slug));
-  const rows = all.filter((l) => (status === "all" || (status === "draft" ? l.status === "draft" : l.status === "published")) && (!q || `${l.title} ${l.slug}`.toLowerCase().includes(q.toLowerCase())));
+  const rows = all.filter((l) => (status === "all" || (status === "draft" ? l.status === "draft" : l.status === "published")) && (!service || l.service === service) && (!country || l.country === country) && (!q || `${l.title} ${l.slug}`.toLowerCase().includes(q.toLowerCase())));
+  const services = [...new Set(all.map((l) => l.service))].sort();
+  const countries = [...new Set(all.map((l) => l.country))].sort();
+  const shownDrafts = rows.filter((l) => l.status === "draft");
+  const back = `/admin/landings?${new URLSearchParams({ ...(status !== "all" ? { status } : {}), ...(service ? { service } : {}), ...(country ? { country } : {}) }).toString()}`;
   const drafts = all.filter((l) => l.status === "draft").length;
   const canPub = can(me, "content.publish");
   return (
@@ -24,7 +30,13 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ q
           ))}
         </ul>
         <div className="flex gap-2 flex-wrap">
-          <form role="search" className="flex gap-1.5"><input type="hidden" name="status" value={status === "all" ? "" : status} /><input name="q" defaultValue={q} aria-label="Search pages" className="px-2 py-1 text-[13px] border border-a-line2 rounded-[3px] w-44" /><button className={btnGhost}>Search</button></form>
+          <form role="search" className="flex flex-wrap gap-1.5"><input type="hidden" name="status" value={status === "all" ? "" : status} />
+            <select name="service" defaultValue={service} aria-label="Filter by service" className="px-2 py-1 text-[13px] border border-a-line2 rounded-[3px] bg-a-surface"><option value="">All services</option>{services.map((x) => <option key={x} value={x}>{x}</option>)}</select>
+            <select name="country" defaultValue={country} aria-label="Filter by country" className="px-2 py-1 text-[13px] border border-a-line2 rounded-[3px] bg-a-surface"><option value="">All countries</option>{countries.map((x) => <option key={x} value={x}>{x}</option>)}</select>
+            <input name="q" defaultValue={q} aria-label="Search pages" className="px-2 py-1 text-[13px] border border-a-line2 rounded-[3px] w-36" /><button className={btnGhost}>Filter</button></form>
+          {canPub && shownDrafts.length > 0 && (service || country || q) && (
+            <form action={publishSelectedLandings}>{shownDrafts.map((l) => <input key={l.id} type="hidden" name="ids" value={l.id} />)}<input type="hidden" name="back" value={back} /><button className={btnGhost}>Publish the {shownDrafts.length} drafts shown</button></form>
+          )}
           {canPub && drafts > 0 && <form action={publishAllLandings}><button className={btnGhost}>Publish all {drafts} drafts</button></form>}
           <Link href="/admin/import" className={btnGhost}>Import pack</Link>
         </div>

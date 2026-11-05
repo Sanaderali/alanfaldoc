@@ -12,7 +12,7 @@ const siteHost = (() => { try { return new URL(process.env.NEXT_PUBLIC_SITE_URL 
 /** @type {import("next").NextConfig} */
 const nextConfig = {
   // dashboard actions (save, logout...) are accepted when the hosting proxy rewrites the Host header
-  experimental: { serverActions: { allowedOrigins: siteHost ? [siteHost, `www.${siteHost.replace(/^www\./, "")}`] : [] } },
+  experimental: { serverActions: { bodySizeLimit: "25mb", allowedOrigins: siteHost ? [siteHost, `www.${siteHost.replace(/^www\./, "")}`] : [] } },
   reactStrictMode: false,
   poweredByHeader: false,
   typescript: {
