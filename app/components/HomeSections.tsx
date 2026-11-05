@@ -89,7 +89,7 @@ export default async function HomeSections() {
                 Every Dubai business deals with several authorities, each with its own forms, portals and deadlines. We prepare the documents, submit them in the right order and follow every transaction until the authority has issued its decision.</p>
               <p className="text-gray-600 mb-6 leading-relaxed">
                 Our services cover company setup and licence renewals, Ejari registration, notary and attestation, legal typing and translation, insurance, Emirates ID and residence file support. You get one team, itemised fees and a clear status at every step.</p>
-              <Link href="/about" className="btn btn-secondary inline-block">
+              <Link href="/about" className="btn btn-secondary">
                 DISCOVER MORE
               </Link>
             </div>
@@ -121,7 +121,7 @@ export default async function HomeSections() {
             ))}
           </div>
           <div className="text-center mt-10">
-            <Link href="/services" className="btn btn-secondary inline-block">MORE SERVICES</Link>
+            <Link href="/services" className="btn btn-secondary">MORE SERVICES</Link>
           </div>
         </div>
       </section>
@@ -148,7 +148,7 @@ export default async function HomeSections() {
             ))}
           </div>
           <div className="text-center mt-10">
-            <Link href="/countries" className="btn btn-secondary inline-block">MORE COUNTRIES</Link>
+            <Link href="/countries" className="btn btn-secondary">MORE COUNTRIES</Link>
           </div>
         </div>
       </section>
@@ -189,7 +189,7 @@ export default async function HomeSections() {
             ))}
           </div>
           <div className="text-center mt-10">
-            <Link href="/contact" className="btn btn-cta inline-block">TALK TO AN ADVISOR</Link>
+            <Link href="/contact" className="btn btn-cta">TALK TO AN ADVISOR</Link>
           </div>
         </div>
       </section>
