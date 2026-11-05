@@ -188,6 +188,10 @@ No CAPTCHA for real customers. Layers (see `lib/antispam.ts`): hidden trap field
 - **Country key stats:** in a country's editor, "Key stats" (value, label, optional source note) show as number cards at the top of the country page.
 - **Buttons / CTA:** all buttons are rounded pills. The header button says "Get a Free Quote". Every public page ends with a WhatsApp / Contact us now / Call banner (country, state and blog pages have their own topic versions).
 
+### Importing content packs
+
+**Dashboard -> Import content** uploads a `.json` pack of `services`, `countries` and/or `posts` (same fields as the editors). Each item is validated like a normal save; a page whose URL already exists is updated, otherwise created. New pages are always drafts. `content-packs/services-pack-1.json` holds the 17 core service pages (10 FAQs each, SEO titles/descriptions/keywords, sources). Fees and timings inside are indicative and must be checked before publishing.
+
 ### Support Activity (manage your support team)
 
 **Team → Support Activity** (Super Admin / anyone with *Manage users*) shows, for each person who can reply to tickets or chat: which channels they can reply to, how many tickets they replied to, total replies, tickets currently open / pending that are assigned to them, tickets they closed, average first-response time and chats handled. Filter by 7 / 30 / 90 days or all time. A ticket is assigned to whoever replies first, or you can choose **Assigned to** on the ticket; the Tickets list has an *Assigned to* column.

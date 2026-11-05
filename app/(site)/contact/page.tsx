@@ -65,8 +65,7 @@ export default function ContactPage() {
               Have Questions? Get in Touch
             </h1>
             <p className="text-gray-600 max-w-3xl mx-auto text-lg">
-              Cursus porta, feugiat primis in ultrice ligula risus auctor tempus dolor feugiat, felis lacinia risus interdum auctor id viverra dolor iaculis luctus placerat and massa
-            </p>
+              Tell us what you need help with and our team will reply by email or phone as soon as possible. You can also message us on WhatsApp or call during office hours.</p>
           </div>
 
           {/* Contact Content */}

@@ -1,0 +1,1907 @@
+{
+ "services": [
+  {
+   "slug": "pro-services",
+   "title": "Government Transactions Liaison",
+   "icon": "landmark",
+   "summary": "We handle the submissions, follow-ups and collections with Dubai government departments so your files keep moving.",
+   "serviceType": "Government liaison and PRO services",
+   "contentHtml": "<h2>What a PRO does for a Dubai business</h2>\n<p>A company in Dubai deals with several government bodies, and each one has its own portal, forms and approval order. A Public Relations Officer, usually shortened to PRO, is the person who knows which office needs which paper and in what sequence. Our team takes that work off the owner's desk: we prepare the file, check it against the authority's current checklist, submit it, and keep following it until a result is issued.</p>\n<h2>Transactions we routinely manage</h2>\n<ul>\n<li>Trade licence issue, renewal and amendment through the Department of Economy and Tourism (see <a href=\"/services/trade-license\">trade licence renewal and amendments</a>)</li>\n<li>Labour transactions through MOHRE and its authorised Tasheel centres (see <a href=\"/services/amer-tasheel-tadbeer-services\">Amer, Tasheel and Tadbeer facilitation</a>)</li>\n<li>Residency filings with GDRFA and the ICP (see <a href=\"/services/visa-processing\">visa processing and MOHRE application support</a>)</li>\n<li>Tenancy registration with the Dubai Land Department (see <a href=\"/services/virtual-office-ejari-registration\">Ejari registration</a>)</li>\n<li>Municipality and other regulatory approvals (see <a href=\"/services/dubai-municipality-approvals\">Dubai Municipality approvals</a>)</li>\n</ul>\n<h2>How the process works</h2>\n<h3>1. Scope and authority</h3>\n<p>We list the transactions you need, confirm who is allowed to sign for the company, and agree the fee in writing. If the owner is abroad, a notarised power of attorney or an authorisation letter lets us act on the company's behalf; our <a href=\"/services/online-poa-drafting-attestation\">POA drafting and attestation service</a> covers that step.</p>\n<h3>2. Document check</h3>\n<p>Most delays come from a missing signature, an expired passport copy or a tenancy contract that is not registered. We check every paper before it is submitted, so the file is not rejected on the first day.</p>\n<h3>3. Submission and tracking</h3>\n<p>Files are submitted through the authority's online channel or an authorised service centre, and we keep the transaction numbers. You receive a short status message whenever something changes, not only when it finishes.</p>\n<h3>4. Collection and records</h3>\n<p>When the licence, permit or certificate is issued we send you the digital copy and file the original. A renewal calendar then tracks expiry dates for your licence, tenancy, labour cards and insurance.</p>\n<h2>Cost and timing</h2>\n<p>Government fees are paid at the amount the authority charges, and our service fee is shown separately in the quote so you can see exactly what is official. Simple submissions can be completed the same day; transactions that need an inspection or a second department may take days or longer. We give you a realistic window before we begin.</p>\n<p><em>Costs and timings on this page are indicative and were last reviewed in November 2026. Authorities change fees, forms and processing times, so we confirm the current figure in writing before any work starts.</em></p>\n<h2>Why owners outsource this work</h2>\n<p>The cost of a missed expiry date is usually higher than the cost of the service: trade licence and residency delays can block banking, payroll and new contracts. A fixed process, a named case handler and one place to see every transaction is what clients value most. If you want to see how it would work for your company, <a href=\"/contact\">contact our team</a> and describe the transactions you expect over the next twelve months.</p>",
+   "answer": "Government transactions liaison means a PRO team submits, tracks and collects your paperwork at Dubai authorities such as the Department of Economy and Tourism, MOHRE, GDRFA and the Land Department, so company owners do not queue or chase files. You approve each step, the authority makes the decision, and you receive the result with a clear record.",
+   "takeaways": [
+    "One team follows your file across several departments",
+    "You stay in control: nothing is filed without your approval",
+    "Renewal and expiry dates are tracked before they become fines",
+    "Owners based outside the UAE can work through a POA or authorisation letter"
+   ],
+   "summaryTable": [
+    {
+     "label": "Best for",
+     "value": "Company owners, managers and foreign investors who cannot spend days at service centres"
+    },
+    {
+     "label": "Main authorities",
+     "value": "DET, MOHRE, GDRFA / ICP, Dubai Land Department, Dubai Municipality, Dubai Courts"
+    },
+    {
+     "label": "Typical timing",
+     "value": "Same day for simple filings; days to weeks where an authority must review (indicative)"
+    },
+    {
+     "label": "Government fees",
+     "value": "Charged at actual cost, shown separately from our service fee"
+    },
+    {
+     "label": "Our role",
+     "value": "Preparation, submission, follow-up and collection"
+    }
+   ],
+   "faqs": [
+    {
+     "question": "What does government transactions liaison actually include?",
+     "answer": "It covers the full chain around a government file: checking the requirements, preparing and typing the application, submitting it through the right channel, tracking it, paying the official fees, and collecting the result. The authority still makes the decision; we manage the paperwork and the follow-up."
+    },
+    {
+     "question": "Is a PRO the same as a lawyer or a consultant?",
+     "answer": "No. A PRO focuses on procedure: forms, approvals, submissions and renewals. A lawyer gives legal advice and a consultant plans the business structure. We work alongside both, and we will tell you when a question needs legal advice rather than paperwork."
+    },
+    {
+     "question": "Can I use your team if I live outside the UAE?",
+     "answer": "Yes. A notarised power of attorney or a company authorisation letter lets us submit and collect on your behalf. Documents signed abroad usually need notarisation and legalisation first, and we explain which steps apply to the country you sign in."
+    },
+    {
+     "question": "Which Dubai authorities do you deal with most often?",
+     "answer": "The Department of Economy and Tourism for licences, MOHRE for labour transactions, GDRFA and the ICP for residency, the Dubai Land Department for tenancy registration, Dubai Municipality for activity approvals and the Dubai Courts notary for attestations."
+    },
+    {
+     "question": "How do you charge for government fees?",
+     "answer": "Official fees are passed through at the amount the authority charges and are listed separately from our professional fee. You see the breakdown before you approve the work, so there is no mixed 'all-in' number to decode."
+    },
+    {
+     "question": "How long does a typical filing take?",
+     "answer": "Straightforward submissions can be completed the same day. Anything that needs an inspection, an external approval or a second department can take days or a few weeks. We give a realistic window at the start and tell you quickly if an authority changes the process."
+    },
+    {
+     "question": "What happens if a government office rejects the file?",
+     "answer": "We read the rejection reason, correct the file and resubmit it. Most rejections come from small errors such as an expired document or a mismatched name spelling, and a pre-submission check removes many of them."
+    },
+    {
+     "question": "Do you remind us about renewals?",
+     "answer": "Yes. We keep a renewal calendar for trade licences, tenancy contracts, labour and residency documents and insurance, and we contact you well before each date so you can avoid late penalties."
+    },
+    {
+     "question": "I pay in a different currency. Does that complicate things?",
+     "answer": "Government fees are charged in UAE dirhams, which are pegged to the US dollar at 3.6725. We invoice in dirhams and can accept bank transfer from abroad; your bank's exchange rate and transfer charges apply on your side."
+    },
+    {
+     "question": "Will I be able to see what you have submitted for me?",
+     "answer": "Yes. You get copies of every submission, the transaction numbers and the final documents, and we keep a record per company so a new manager or accountant can pick up where the last one stopped."
+    }
+   ],
+   "sources": [
+    {
+     "title": "UAE Government Portal (u.ae)",
+     "url": "https://u.ae/en/information-and-services"
+    },
+    {
+     "title": "Invest in Dubai (business setup and licences)",
+     "url": "https://www.investindubai.gov.ae/business-setup"
+    },
+    {
+     "title": "Ministry of Human Resources and Emiratisation (MOHRE)",
+     "url": "https://www.mohre.gov.ae"
+    },
+    {
+     "title": "General Directorate of Residency and Foreigners Affairs, Dubai (GDRFA)",
+     "url": "https://gdrfad.gov.ae"
+    }
+   ],
+   "relatedSlugs": [
+    "trade-license",
+    "visa-processing",
+    "document-clearing"
+   ],
+   "faqSchema": true,
+   "seo": {
+    "title": "Government Transactions Liaison in Dubai | PRO Services",
+    "description": "Outsource Dubai government paperwork to a PRO team: licences, labour, residency and municipality files submitted, tracked and collected for you.",
+    "keywords": [
+     "government transactions liaison Dubai",
+     "PRO services Dubai",
+     "government liaison UAE",
+     "Dubai PRO company"
+    ]
+   },
+   "author": "Al Anfal Doc Team"
+  },
+  {
+   "slug": "dubai-municipality-approvals",
+   "title": "Dubai Municipality Approvals & Clearance",
+   "icon": "building",
+   "summary": "Activity, location and food-safety approvals from Dubai Municipality, prepared and followed up for your business.",
+   "serviceType": "Municipality approval and clearance",
+   "contentHtml": "<h2>When Dubai Municipality approval applies</h2>\n<p>A trade licence from the Department of Economy and Tourism tells you what a company may do. Some of those activities also need a municipal approval before the business can operate from its premises. The clearest case is food: restaurants, cafés, catering kitchens and food trading usually need a food establishment permit with a review of the location and the facility. Health and safety related activities and certain premises can need further approvals. A company that offers consulting or other desk-based services will often have none to obtain, but the activity list on the licence decides, so it should be checked before you sign a lease.</p>\n<h2>Two tracks, planned together</h2>\n<p>The licence and the municipal approval are separate applications. Starting the second one only after the licence is issued is the most common reason a new restaurant opens weeks late. We map both tracks on one timeline: initial approval, tenancy (<a href=\"/services/virtual-office-ejari-registration\">Ejari registration</a>), municipal review, inspection and final licence. For the licence side, see <a href=\"/services/company-formation\">company formation and business setup</a>.</p>\n<h2>What the file usually contains</h2>\n<ul>\n<li>Trade licence or initial approval and the activity description</li>\n<li>Registered tenancy contract and a floor plan or layout for the premises</li>\n<li>For food activities, a food safety plan (HACCP) and the equipment and menu details the department requests</li>\n<li>Passport and Emirates ID copies for the owners and the authorised signatory</li>\n<li>A power of attorney or authorisation letter if we submit for you (<a href=\"/services/online-poa-drafting-attestation\">POA drafting and attestation</a>)</li>\n</ul>\n<h2>Inspection and clearance</h2>\n<p>For premises-based activities an inspector visits to confirm the facility matches the plan and the hygiene and safety rules. We prepare the owner and staff for what is checked, book the visit, and follow up on any remarks so the clearance is not held up by a small correction. Fire safety approval and building permissions are usually handled separately through Civil Defence and the building owner, and we flag them in the same plan.</p>\n<h2>Cost and timing</h2>\n<p>Municipal fees depend on the activity, the size of the premises and the permit type, and published estimates differ widely, so we do not quote a single number here. Food activities commonly take a few weeks end to end when the premises are ready. We give you the official fee list and a timeline after reviewing your activity and location.</p>\n<p><em>Costs and timings on this page are indicative and were last reviewed in November 2026. Authorities change fees, forms and processing times, so we confirm the current figure in writing before any work starts.</em></p>\n<p>Tell us the activity you plan and the address you are considering, and we will confirm whether a municipal approval is required before you commit to the lease. <a href=\"/contact\">contact our team</a> to start with a short requirement check.</p>",
+   "answer": "Some business activities in Dubai need approval from Dubai Municipality in addition to the trade licence. Food, health and safety related activities and certain premises are the usual examples. The approval runs as its own track, with a location review, documents and an inspection, so it should be planned in parallel with the licence, not after it.",
+   "takeaways": [
+    "The trade licence and municipal approval are separate tracks",
+    "Food businesses usually need food safety sign-off and an inspection",
+    "Fire safety approval is normally handled by a different body",
+    "Consultancy and purely digital activities often need no municipal approval"
+   ],
+   "summaryTable": [
+    {
+     "label": "Best for",
+     "value": "Restaurants, cafés, catering, food trading, and other activities flagged for municipal approval"
+    },
+    {
+     "label": "Main authority",
+     "value": "Dubai Municipality (plus Civil Defence where fire safety applies)"
+    },
+    {
+     "label": "Typical timing",
+     "value": "Often a few weeks for food activities, depending on the premises (indicative)"
+    },
+    {
+     "label": "Government fees",
+     "value": "Vary widely by activity and premises; reported estimates differ, so we quote after review"
+    },
+    {
+     "label": "Our role",
+     "value": "Requirement check, file preparation, inspection coordination, follow-up"
+    }
+   ],
+   "faqs": [
+    {
+     "question": "Does every Dubai business need Dubai Municipality approval?",
+     "answer": "No. It depends on the licensed activity and the premises. Food related activities and some health, safety or premises-based activities need it, while many consultancy and online services do not. The activity code on the licence is the starting point for the check."
+    },
+    {
+     "question": "Is a trade licence enough to start trading?",
+     "answer": "Not always. The licence permits the activity, but a regulated activity may need the municipal approval and sometimes a fire safety approval before opening. Check the approval list for your activity before you invest in fit-out."
+    },
+    {
+     "question": "What is the food safety plan I keep hearing about?",
+     "answer": "It is a documented system, commonly based on HACCP, that shows how food is received, stored, prepared and served safely. Food establishment applications normally include it, and it should be kept up to date after approval."
+    },
+    {
+     "question": "How long does municipal approval take?",
+     "answer": "Food activities often take a few weeks when the premises, layout and documents are ready. Delays usually come from incomplete plans, equipment that does not match the application or an inspection that has to be repeated."
+    },
+    {
+     "question": "What does it cost?",
+     "answer": "Fees depend on the activity and premises and published estimates vary widely. We confirm the official fees after reviewing your case and show them separately from our professional fee."
+    },
+    {
+     "question": "Can I apply before I have a tenancy contract?",
+     "answer": "Premises-based approvals usually need a confirmed location, so the lease and its registration normally come first. We can prepare the rest of the file in advance so submission is quick once the address is fixed."
+    },
+    {
+     "question": "Who handles fire safety approval?",
+     "answer": "Fire safety is usually reviewed by Civil Defence and building permissions sit with the building owner or the relevant authority, not with the municipality's food team. We include both in the project plan so nothing is forgotten."
+    },
+    {
+     "question": "I am setting up from abroad. Can you attend the inspection?",
+     "answer": "Yes. With a power of attorney or authorisation letter, our team can receive the inspector, sign the visit report where permitted and follow up on remarks, and we send you photographs and the written outcome."
+    },
+    {
+     "question": "Are there tax or accounting points I should plan for at the same time?",
+     "answer": "Yes. Dubai companies also register for corporate tax with the Federal Tax Authority and, above the threshold, for VAT. Corporate tax applies at 9% on taxable income above AED 375,000, and registration is required even where the rate is 0%. Confirm your own position with a tax adviser."
+    },
+    {
+     "question": "What if the application is refused or corrections are requested?",
+     "answer": "We read the remarks, update the plan or documents and resubmit. Most requests are for layout changes, missing certificates or clarifications on the activity, and they are usually solved faster when one person manages the whole file."
+    }
+   ],
+   "sources": [
+    {
+     "title": "Dubai Municipality",
+     "url": "https://www.dm.gov.ae"
+    },
+    {
+     "title": "Invest in Dubai (business setup and licences)",
+     "url": "https://www.investindubai.gov.ae/business-setup"
+    },
+    {
+     "title": "UAE Government Portal (u.ae)",
+     "url": "https://u.ae/en/information-and-services"
+    },
+    {
+     "title": "Federal Tax Authority (corporate tax)",
+     "url": "https://tax.gov.ae"
+    }
+   ],
+   "relatedSlugs": [
+    "company-formation",
+    "virtual-office-ejari-registration",
+    "official-government-approvals-clearances"
+   ],
+   "faqSchema": true,
+   "seo": {
+    "title": "Dubai Municipality Approvals & Clearance for Businesses",
+    "description": "Need Dubai Municipality approval for your activity or premises? We prepare the file, book inspections and follow the clearance through to issue.",
+    "keywords": [
+     "Dubai Municipality approval",
+     "Dubai Municipality clearance",
+     "food safety permit Dubai",
+     "business activity approval Dubai"
+    ]
+   },
+   "author": "Al Anfal Doc Team"
+  },
+  {
+   "slug": "det-services",
+   "title": "DED / Dubai Economy & Tourism (DET) Services",
+   "icon": "building-columns",
+   "summary": "Licence issue, trade name, activity changes and cancellations with the Department of Economy and Tourism, handled start to finish.",
+   "serviceType": "DET and DED licensing services",
+   "contentHtml": "<h2>What the department does</h2>\n<p>Dubai's Department of Economy and Tourism, known to many business owners by its former name DED, issues and supervises mainland trade licences. Everything that changes the legal identity or permission of a mainland company passes through it: the trade name, the activities, the legal form, the address, the partners and managers, and finally the cancellation. Companies in a free zone are licensed by their own free zone authority and follow that body's rules, not DET's.</p>\n<h2>Licence types in plain terms</h2>\n<ul>\n<li><strong>Commercial</strong> licences cover trading in goods and certain service activities such as logistics.</li>\n<li><strong>Professional</strong> licences cover expertise and services, for example consulting, design or engineering. Some professional activities have extra ownership rules, so we check the activity before you plan the shareholding.</li>\n<li><strong>Industrial</strong> licences cover manufacturing and processing and normally need an industrial premises.</li>\n</ul>\n<p>Since the 2021 reforms most mainland activities are open to full foreign ownership, with a limited list of strategic activities still needing a UAE partner or a special approval. Always confirm the current position for your activity. Our <a href=\"/services/company-formation\">company formation service</a> covers the structuring decision in more detail.</p>\n<h2>Services we file</h2>\n<ul>\n<li>Trade name reservation and initial approval</li>\n<li>New licence issue after the tenancy is registered (<a href=\"/services/virtual-office-ejari-registration\">Ejari</a>) and the memorandum is signed (<a href=\"/services/moa-drafting-amendments\">MOA drafting and amendments</a>)</li>\n<li>Activity addition or removal, change of address, partner or manager</li>\n<li>Renewal and amendment (<a href=\"/services/trade-license\">trade licence renewal and amendments</a>)</li>\n<li>Licence cancellation and closing formalities</li>\n</ul>\n<h2>The process in four steps</h2>\n<h3>1. Requirement check</h3>\n<p>We compare your activity, ownership and premises with the department's current rules so that the application is built correctly from the start.</p>\n<h3>2. Documents and approvals</h3>\n<p>Passports, Emirates IDs where available, the signed memorandum, the registered tenancy and any external approvals are collected. Where another authority must approve the activity first, see our note on <a href=\"/services/dubai-municipality-approvals\">Dubai Municipality approvals</a>.</p>\n<h3>3. Submission</h3>\n<p>Applications are submitted through the department's online channels. We keep the transaction numbers and answer any request for clarification quickly.</p>\n<h3>4. Issue and next steps</h3>\n<p>Once the licence is issued we move on to the immigration card, visas and bank account, where relevant, so the company can start operating without another round of delays.</p>\n<h2>Cost and timing</h2>\n<p>Fees are set by the department and depend on the licence type and activities. Simple changes can be completed within a day when the documents are right, and new licences take longer because tenancy registration and approvals must be in place first.</p>\n<p><em>Costs and timings on this page are indicative and were last reviewed in November 2026. Authorities change fees, forms and processing times, so we confirm the current figure in writing before any work starts.</em></p>\n<p>If you are unsure which transaction you need, describe your situation and <a href=\"/contact\">contact our team</a>; we will name the filing and the documents before any fee is paid.</p>",
+   "answer": "The Department of Economy and Tourism, formerly the Department of Economic Development or DED, licenses mainland businesses in Dubai. We handle trade name reservation, initial approval, licence issue, activity additions, address and partner changes and cancellations, preparing each application so that it matches the department's current requirements and is submitted in the correct order.",
+   "takeaways": [
+    "DET is the former DED: the same licensing role under a new name",
+    "Licences are commercial, professional or industrial",
+    "Most services are filed online with UAE Pass access",
+    "Free zone companies deal with their own free zone authority instead"
+   ],
+   "summaryTable": [
+    {
+     "label": "Best for",
+     "value": "Mainland companies in Dubai and investors planning one"
+    },
+    {
+     "label": "Main authority",
+     "value": "Department of Economy and Tourism (DET), through Invest in Dubai and DET eServices"
+    },
+    {
+     "label": "Typical timing",
+     "value": "From the same day for simple changes to a few days where approvals are needed (indicative)"
+    },
+    {
+     "label": "Government fees",
+     "value": "Set by DET and depend on licence type and activity; we confirm before filing"
+    },
+    {
+     "label": "Our role",
+     "value": "Preparation, submission, follow-up and collection"
+    }
+   ],
+   "faqs": [
+    {
+     "question": "Is DED the same as DET?",
+     "answer": "Yes. The Department of Economic Development was renamed the Department of Economy and Tourism. Many forms, documents and conversations still use the older DED name, but the licensing role is the same."
+    },
+    {
+     "question": "Do free zone companies use DET?",
+     "answer": "Generally no. A free zone company is licensed and supervised by its own free zone authority, which has its own forms and fees. A mainland licence from DET is needed to trade directly in the Dubai market without a distributor."
+    },
+    {
+     "question": "What is the difference between commercial, professional and industrial licences?",
+     "answer": "Commercial covers trading in goods and some services, professional covers expertise-based services, and industrial covers manufacturing. The type decides the allowed activities, the premises needed and in some cases the ownership rules."
+    },
+    {
+     "question": "Can a foreigner own 100% of a Dubai mainland company?",
+     "answer": "For most activities, yes, since the 2021 reforms. A limited list of strategic activities still needs a UAE partner or special approval, and some professional activities have extra conditions. We confirm the current rule for your activity before you decide on the structure."
+    },
+    {
+     "question": "What is initial approval?",
+     "answer": "It is the department's first approval of the trade name and activities, given before the tenancy and memorandum are finalised. It tells you the proposed company is acceptable so that you can sign the lease and documents with confidence."
+    },
+    {
+     "question": "How long does adding an activity take?",
+     "answer": "When the activity needs no external approval and the file is complete, it can be done quickly, sometimes within a day. Activities that need another authority's approval take as long as that approval does."
+    },
+    {
+     "question": "What if my Ejari expires before I renew the licence?",
+     "answer": "The tenancy registration normally has to be valid for the licence to be processed, so renew it first. Our service tracks both dates and alerts you in advance. See our page on Ejari registration for the process."
+    },
+    {
+     "question": "Do I need to be in Dubai to file?",
+     "answer": "Not always. With a notarised power of attorney or an authorisation letter, we can submit and collect on your behalf. Some steps, such as signing a memorandum, may need a notary, and we guide you on when."
+    },
+    {
+     "question": "Are there any tax steps connected to a new licence?",
+     "answer": "A newly licensed company should register for corporate tax with the Federal Tax Authority, even if its profit will be inside the 0% band up to AED 375,000, and for VAT once it passes the threshold. We coordinate the timing with your accountant."
+    },
+    {
+     "question": "Can you cancel a licence and close the company file?",
+     "answer": "Yes. Cancellation needs the labour and residency files, the tenancy and bank matters to be settled in the right order. We prepare the closing checklist and submit the cancellation so that no penalty or hold remains on the owners."
+    }
+   ],
+   "sources": [
+    {
+     "title": "Invest in Dubai (business setup and licences)",
+     "url": "https://www.investindubai.gov.ae/business-setup"
+    },
+    {
+     "title": "UAE Government Portal (u.ae)",
+     "url": "https://u.ae/en/information-and-services"
+    },
+    {
+     "title": "Federal Tax Authority (corporate tax)",
+     "url": "https://tax.gov.ae"
+    }
+   ],
+   "relatedSlugs": [
+    "company-formation",
+    "trade-license",
+    "moa-drafting-amendments"
+   ],
+   "faqSchema": true,
+   "seo": {
+    "title": "DED & DET Services Dubai | Licence & Activity Changes",
+    "description": "Trade name reservation, initial approval, activity changes and licence cancellation with Dubai's Department of Economy and Tourism, prepared for you.",
+    "keywords": [
+     "DED services Dubai",
+     "Department of Economy and Tourism services",
+     "DET trade licence Dubai",
+     "trade name reservation Dubai"
+    ]
+   },
+   "author": "Al Anfal Doc Team"
+  },
+  {
+   "slug": "online-poa-drafting-attestation",
+   "title": "Online POA Draft & Attestation",
+   "icon": "file-signature",
+   "summary": "Power of attorney drafted in English and Arabic, attested for use in Dubai or abroad.",
+   "serviceType": "Power of attorney drafting and attestation",
+   "contentHtml": "<h2>What a power of attorney does</h2>\n<p>A power of attorney, or POA, is a signed authority that allows someone else to act in your name. In Dubai it is used to open or run a company file, sign tenancy and bank documents, handle government transactions, sell or buy assets and appear before authorities. The text decides what the agent may do, so a POA written for one purpose and one period is safer than a general authority with no end date.</p>\n<h2>Types we draft</h2>\n<ul>\n<li><strong>Special POA</strong> for a defined task, such as completing a licence renewal or collecting a certificate</li>\n<li><strong>General POA</strong> for a wider set of company or personal matters, with clear limits</li>\n<li><strong>Company authorisation letter</strong> where the company, not an individual, delegates its authority to a PRO (see <a href=\"/services/pro-services\">government transactions liaison</a>)</li>\n</ul>\n<h2>How the process works</h2>\n<h3>1. Define the authority</h3>\n<p>We ask what exactly the agent must do, for how long, and with which limits (for example, no authority to sell property or sign loans). We then draft the text in English and Arabic, because UAE authorities generally require Arabic. Our <a href=\"/services/legal-typing-form-drafting\">legal typing and form drafting</a> team prepares the final layout.</p>\n<h3>2. Sign and notarise</h3>\n<p>In Dubai a notary public attests the signature. The 2025 fee schedule lists AED 300 per signature attested on an instrument or proxy. Larger or complex documents may involve extra work. Our guide to <a href=\"/services/notary-public-legal-attestations\">notary public and legal attestations</a> explains the notary step.</p>\n<h3>3. Signed outside the UAE</h3>\n<p>A POA signed abroad normally has to be notarised in the country of signing, legalised or apostilled as that country's rules require, and then attested by the UAE embassy in that country and by the Ministry of Foreign Affairs in the UAE. The exact chain depends on the country, so we confirm it before you sign anything. For corporate papers, see <a href=\"/services/document-clearing\">commercial and corporate document clearing</a>.</p>\n<h3>4. Delivery and use</h3>\n<p>You receive the attested original or a certified scan, plus a short note explaining which authorities will accept it and when it expires.</p>\n<h2>Common mistakes</h2>\n<ul>\n<li>Signing a broad POA when only one transaction is needed</li>\n<li>Names that differ from the passport or the licence</li>\n<li>Skipping the Arabic text or translating it informally</li>\n<li>Forgetting to set an expiry or to revoke a POA that is no longer needed</li>\n</ul>\n<h2>Cost and timing</h2>\n<p>The official notary charge is per signature, and the legalisation chain adds fees that depend on the country and the number of steps. Drafting is usually done within a day, and the attestation timeline depends on the notary's schedule and, for foreign documents, on the embassy.</p>\n<p><em>Costs and timings on this page are indicative and were last reviewed in November 2026. Authorities change fees, forms and processing times, so we confirm the current figure in writing before any work starts.</em></p>\n<p><a href=\"/contact\">contact our team</a> with the purpose, the name of the person you wish to authorise and the country where you will sign, and we will confirm the steps and the cost before you travel or send anything.</p>",
+   "answer": "A power of attorney lets another person sign or act for you. We draft it in English and Arabic with the right scope, arrange notarisation, and complete any legalisation needed so that banks, courts and authorities accept it. The Dubai notary fee published in 2025 is AED 300 for each signature attested, plus any attestation steps.",
+   "takeaways": [
+    "A narrow, clearly worded POA is safer than a broad one",
+    "Documents signed abroad usually need notarisation and legalisation first",
+    "The Dubai notary fee is charged per signature attested",
+    "We can prepare the draft online before you sign"
+   ],
+   "summaryTable": [
+    {
+     "label": "Best for",
+     "value": "Owners and investors who cannot be in Dubai, and companies that authorise a manager or PRO"
+    },
+    {
+     "label": "Main authorities",
+     "value": "Notary Public, Ministry of Foreign Affairs, embassies"
+    },
+    {
+     "label": "Typical timing",
+     "value": "Draft within a day; attestation depends on the notary and country (indicative)"
+    },
+    {
+     "label": "Government fees",
+     "value": "AED 300 per signature attested at a Dubai notary under the 2025 schedule; other steps vary"
+    },
+    {
+     "label": "Our role",
+     "value": "Drafting, translation, notary booking, attestation follow-up"
+    }
+   ],
+   "faqs": [
+    {
+     "question": "What is the difference between a general and a special POA?",
+     "answer": "A special POA allows a specific task or transaction, such as renewing a licence. A general POA covers a wider set of matters. For company and property affairs a special POA with a clear scope and end date is usually safer."
+    },
+    {
+     "question": "How much does a notary charge in Dubai?",
+     "answer": "Under the Dubai fee schedule published in 2025, a notary charges AED 300 for each signature attested on an instrument or proxy. Extra translation, drafting and later attestation steps are separate. We confirm the full amount in your quote."
+    },
+    {
+     "question": "Can I sign a POA for the UAE while I am abroad?",
+     "answer": "Yes. You sign before a notary in the country where you are, then the document is legalised or apostilled according to that country's rules and attested by the UAE embassy and the UAE Ministry of Foreign Affairs. We confirm the exact steps for your country first."
+    },
+    {
+     "question": "Does the POA have to be in Arabic?",
+     "answer": "UAE authorities generally require Arabic or a certified Arabic translation. We draft both versions together so that the English and Arabic text match and the document is accepted without a second round."
+    },
+    {
+     "question": "How long is a POA valid?",
+     "answer": "It is valid for the period stated in the document, or until it is revoked. We recommend setting a clear end date and revoking it formally once the task is done."
+    },
+    {
+     "question": "Can a PRO or manager use my POA at the bank?",
+     "answer": "Banks apply their own rules and may ask for their own form or extra attestation. We check the bank's requirement in advance so the POA is drafted in the form it will accept."
+    },
+    {
+     "question": "Can I cancel or change a POA?",
+     "answer": "Yes. A POA can be revoked through a notarised revocation, and a new one can be issued. Tell the agent and any authority or bank that holds a copy so they stop relying on the old document."
+    },
+    {
+     "question": "Do you offer online drafting?",
+     "answer": "Yes. We take the details online, send the draft for your approval and arrange notarisation and attestation afterwards. Some steps still need a signature in person before a notary."
+    },
+    {
+     "question": "Are there tax or currency issues with a POA for a foreign investor?",
+     "answer": "A POA itself is not a tax document, but it may be used for steps such as opening a bank account or registering for corporate tax. Fees are paid in dirhams, which are pegged to the US dollar at 3.6725, so your own bank's exchange rate applies on the transfer."
+    },
+    {
+     "question": "What if the signature on my passport is different from my POA signature?",
+     "answer": "Differences can lead to rejection. Sign the same way on all documents and tell us if your signature has changed, so we can advise on a declaration or a new identity document before filing."
+    }
+   ],
+   "sources": [
+    {
+     "title": "Dubai Courts (Notary Public)",
+     "url": "https://www.dc.gov.ae"
+    },
+    {
+     "title": "Ministry of Foreign Affairs (attestation)",
+     "url": "https://www.mofa.gov.ae"
+    },
+    {
+     "title": "UAE Government Portal (u.ae)",
+     "url": "https://u.ae/en/information-and-services"
+    }
+   ],
+   "relatedSlugs": [
+    "notary-public-legal-attestations",
+    "legal-typing-form-drafting",
+    "document-clearing"
+   ],
+   "faqSchema": true,
+   "seo": {
+    "title": "Power of Attorney Drafting & Attestation in Dubai (POA)",
+    "description": "Online POA drafting in English and Arabic with notary and legalisation support, for UAE company matters and documents signed from abroad.",
+    "keywords": [
+     "power of attorney Dubai",
+     "POA attestation UAE",
+     "online POA drafting",
+     "power of attorney notary Dubai"
+    ]
+   },
+   "author": "Al Anfal Doc Team"
+  },
+  {
+   "slug": "moa-drafting-amendments",
+   "title": "MOA Draft & Amendments",
+   "icon": "file-lines",
+   "summary": "Memorandum of Association drafted for a new company, or amended for new shareholders, capital, activities or managers.",
+   "serviceType": "Memorandum of Association drafting and amendment",
+   "contentHtml": "<h2>Why the memorandum matters</h2>\n<p>When partners disagree, when a bank asks who can sign, or when a buyer wants to purchase shares, the Memorandum of Association is the document everyone reads first. A clear MOA lists the shareholders and their percentages, the capital, the manager and signing powers, the licensed activities, the profit and loss sharing, and what happens when a partner wishes to leave. A vague or copied template is a common source of disputes later.</p>\n<h2>What we draft</h2>\n<ul>\n<li>MOA and articles for a new mainland LLC, tailored to the real ownership and management arrangement</li>\n<li>Addenda for a change of shareholders or share transfer</li>\n<li>Capital increase or decrease and change of share distribution</li>\n<li>Manager or authorised signatory changes, including limits on authority</li>\n<li>Activity changes aligned with the licence (<a href=\"/services/det-services\">DET services</a>)</li>\n</ul>\n<h2>The amendment process</h2>\n<h3>1. Agree the change</h3>\n<p>The partners confirm what is changing. If one partner is selling, the others normally have a right of first refusal under the MOA, so they should sign or waive it in writing. Skipping that step is a typical reason an amendment stops at the notary.</p>\n<h3>2. Draft in two languages</h3>\n<p>We prepare the revised text and the Arabic version. Where partners are abroad, they can sign through a notarised power of attorney (<a href=\"/services/online-poa-drafting-attestation\">POA drafting</a>) or sign in front of a notary in their own country and have the document legalised (<a href=\"/services/document-clearing\">document clearing</a>).</p>\n<h3>3. Notarise</h3>\n<p>The signatures are attested by a notary public. The Dubai notary schedule lists AED 300 per signature attested on an instrument, and complex documents may have extra costs. Read our guide to <a href=\"/services/notary-public-legal-attestations\">notary public and legal attestations</a> for the notary step.</p>\n<h3>4. File and update the licence</h3>\n<p>For a mainland company the notarised document is filed with the licensing authority, and the licence is updated to match. Companies in a free zone file with their own authority. Related bank records, visa files and tenancy details should then be updated, and our <a href=\"/services/trade-license\">trade licence amendment service</a> follows through on those.</p>\n<h2>Things to decide before you sign</h2>\n<ul>\n<li>Who can sign for the company alone, and above what amount two signatures are needed</li>\n<li>How shares are valued and transferred on exit, death or dispute</li>\n<li>Whether the manager is also a shareholder and what happens if the manager leaves</li>\n<li>How profits are distributed, including any difference between ownership and profit share</li>\n</ul>\n<h2>Cost and timing</h2>\n<p>We usually produce the draft within one to two working days. The notary fee is per signature, and the licensing authority charges its own fee for the amendment; both depend on the case, so we list them in the quote.</p>\n<p><em>Costs and timings on this page are indicative and were last reviewed in November 2026. Authorities change fees, forms and processing times, so we confirm the current figure in writing before any work starts.</em></p>\n<p>This page is procedural guidance and not legal advice. For disputes, complex share structures or tax planning we will work with your lawyer. <a href=\"/contact\">contact our team</a> to receive a draft for review.</p>",
+   "answer": "The Memorandum of Association is the constitution of a company: owners, shares, capital, activities, management and what happens when something changes. We draft it for new companies and prepare amendments for shareholder, capital, manager or activity changes. In most mainland cases the revised memorandum is notarised and then filed with the licensing authority.",
+   "takeaways": [
+    "The MOA sets who controls the company and how shares are transferred",
+    "Changes in owners, capital or managers need a formal amendment",
+    "Mainland amendments are notarised and filed with DET; free zones use their own authority",
+    "Rights of first refusal usually require partners to sign or waive"
+   ],
+   "summaryTable": [
+    {
+     "label": "Best for",
+     "value": "New company founders and owners changing shareholders, capital, managers or activities"
+    },
+    {
+     "label": "Main authorities",
+     "value": "Notary Public, Department of Economy and Tourism (mainland) or the free zone authority"
+    },
+    {
+     "label": "Typical timing",
+     "value": "Draft in one to two days; filing depends on the authority (indicative)"
+    },
+    {
+     "label": "Government fees",
+     "value": "Notary fee per signature attested plus authority amendment fees; we confirm before filing"
+    },
+    {
+     "label": "Our role",
+     "value": "Drafting, review with partners, notarisation and filing"
+    }
+   ],
+   "faqs": [
+    {
+     "question": "What is a Memorandum of Association?",
+     "answer": "It is the founding document of a company. It records the shareholders, capital, activities, management rules and procedures for changes such as share transfers. Banks, authorities and buyers rely on it to see who controls the company."
+    },
+    {
+     "question": "When do I need to amend the MOA?",
+     "answer": "Whenever something it records changes: a shareholder joins or leaves, shares move between partners, capital changes, a manager or signatory changes, or the activity list changes. The amendment is then filed so that the licence and the memorandum match."
+    },
+    {
+     "question": "Do all partners have to sign an amendment?",
+     "answer": "Usually yes, or they sign through a power of attorney. If one partner sells shares, the others normally have a right of first refusal and must sign or waive it in writing. The notary and the authority expect to see that."
+    },
+    {
+     "question": "Is notarisation always needed?",
+     "answer": "For most mainland LLC changes the amended memorandum or addendum is notarised before filing. Free zone companies follow their authority's own procedure, which may differ. We confirm the requirement for your authority."
+    },
+    {
+     "question": "How long does an amendment take?",
+     "answer": "We prepare the draft in one to two working days. The notary appointment and the authority's processing add time, and some changes need extra approvals. We give an estimate for your case at the start."
+    },
+    {
+     "question": "Can partners abroad sign?",
+     "answer": "Yes. They can sign before a notary in their country and have the document legalised for UAE use, or authorise someone in the UAE through a notarised power of attorney. We advise on the faster route for your country."
+    },
+    {
+     "question": "Will my bank need the new MOA?",
+     "answer": "Almost certainly. Banks ask for the updated memorandum and licence when signatories or shareholders change. Updating the bank file at the same time avoids payment delays."
+    },
+    {
+     "question": "What does a share transfer cost?",
+     "answer": "There is a notary charge per signature, plus the authority's fee for the amendment, plus our professional fee. The authority's fee depends on the licence type and the change. We list each item in the quote."
+    },
+    {
+     "question": "Does a change of shareholder affect taxes?",
+     "answer": "It may. Changes in ownership can affect the company's corporate tax position, and share purchase prices can raise tax questions in a seller's home country. Ask your tax adviser, and we can coordinate the paperwork with them."
+    },
+    {
+     "question": "Do you advise on legal disputes between partners?",
+     "answer": "We handle the documents and filings. If there is a dispute or a legal question about the memorandum, we recommend a UAE lawyer and can coordinate with them on the drafting and filing."
+    }
+   ],
+   "sources": [
+    {
+     "title": "Invest in Dubai (business setup and licences)",
+     "url": "https://www.investindubai.gov.ae/business-setup"
+    },
+    {
+     "title": "Dubai Courts (Notary Public)",
+     "url": "https://www.dc.gov.ae"
+    },
+    {
+     "title": "UAE Government Portal (u.ae)",
+     "url": "https://u.ae/en/information-and-services"
+    }
+   ],
+   "relatedSlugs": [
+    "company-formation",
+    "det-services",
+    "notary-public-legal-attestations"
+   ],
+   "faqSchema": true,
+   "seo": {
+    "title": "MOA Drafting & Amendments in Dubai | Company Memorandum",
+    "description": "Memorandum of Association drafted or amended for Dubai companies: shareholders, capital, activities and managers, notarised and filed correctly.",
+    "keywords": [
+     "MOA drafting Dubai",
+     "memorandum of association amendment UAE",
+     "MOA amendment Dubai",
+     "shareholder change Dubai"
+    ]
+   },
+   "author": "Al Anfal Doc Team"
+  },
+  {
+   "slug": "legal-typing-form-drafting",
+   "title": "Legal Typing & Form Drafting",
+   "icon": "keyboard",
+   "summary": "Accurate typing and drafting of forms, contracts and applications in Arabic and English for UAE authorities.",
+   "serviceType": "Legal typing and form drafting",
+   "contentHtml": "<h2>Why accurate typing still matters</h2>\n<p>Many UAE processes still depend on a correctly typed application: a labour contract, a licence amendment, a residency form, a tenancy registration or a letter to an authority. A name that differs from the passport by one letter, or a date in the wrong format, is enough for a rejection. Correct typing at the start saves the owner a second trip and a second fee.</p>\n<h2>What we prepare</h2>\n<ul>\n<li>Government application forms and attachments for licensing, labour and residency files</li>\n<li>Commercial contracts, agreements and addenda in English and Arabic</li>\n<li>Letters, declarations, no-objection certificates and authorisation letters</li>\n<li>Memoranda and amendments (<a href=\"/services/moa-drafting-amendments\">MOA drafting</a>) and powers of attorney (<a href=\"/services/online-poa-drafting-attestation\">POA drafting</a>)</li>\n<li>Translations of supporting documents; for certified translation, see our <a href=\"/services/legal-translation\">legal translation service</a></li>\n</ul>\n<h2>Our process</h2>\n<h3>1. Source check</h3>\n<p>We take the original data from passports, Emirates IDs, licences and previous contracts, not from memory or messages. Differences between documents are flagged to you before anything is typed.</p>\n<h3>2. Drafting and typing</h3>\n<p>The document is prepared in the format of the destination authority. If it must be bilingual, both versions are prepared together so that numbers, dates and names match line by line.</p>\n<h3>3. Review</h3>\n<p>A second person checks the file against the source documents. You also receive a short summary of the facts typed, so that you can confirm them before signature.</p>\n<h3>4. Submission or hand-over</h3>\n<p>We either submit the document through the authority's channel (see <a href=\"/services/amer-tasheel-tadbeer-services\">Amer, Tasheel and Tadbeer services</a>) or hand over the final file for you to sign, notarise or file yourself.</p>\n<h2>Cost and timing</h2>\n<p>Standard forms are normally prepared the same day. Contracts and bilingual documents take longer because of drafting and review. Typing charges depend on the length and language of the document and are quoted before we start; any official filing fee is paid to the authority at cost.</p>\n<p><em>Costs and timings on this page are indicative and were last reviewed in November 2026. Authorities change fees, forms and processing times, so we confirm the current figure in writing before any work starts.</em></p>\n<p>If you are unsure which form a transaction needs, describe it and <a href=\"/contact\">contact our team</a>; we will name the right document and prepare it.</p>",
+   "answer": "Legal typing means preparing contracts, applications and government forms in the exact format authorities expect, in Arabic, English or both. A single wrong name spelling, date or number can cause a rejection. Our team types, checks and formats each document, and aligns it with the portal or service centre where it will be filed.",
+   "takeaways": [
+    "Names and numbers must match passports and licences exactly",
+    "Many authorities require Arabic or bilingual documents",
+    "Typing and checking before submission prevents repeat visits",
+    "Contracts and applications can be prepared in English and Arabic together"
+   ],
+   "summaryTable": [
+    {
+     "label": "Best for",
+     "value": "Companies and individuals preparing applications, contracts and letters for UAE authorities"
+    },
+    {
+     "label": "Languages",
+     "value": "Arabic and English, with certified translation where needed"
+    },
+    {
+     "label": "Typical timing",
+     "value": "Same day for standard forms; longer for contracts (indicative)"
+    },
+    {
+     "label": "Government fees",
+     "value": "None for typing itself; the filing authority charges its own fees"
+    },
+    {
+     "label": "Our role",
+     "value": "Typing, drafting, checking and formatting"
+    }
+   ],
+   "faqs": [
+    {
+     "question": "What is a typing centre and what does it do?",
+     "answer": "A typing centre prepares and submits applications for government services on behalf of customers. In practice that means entering your details correctly into the authority's system or form, attaching the right documents and paying the official fee."
+    },
+    {
+     "question": "Do I need Arabic for every document?",
+     "answer": "Not for every document, but many UAE authorities require Arabic or an Arabic translation, especially for contracts, memoranda and powers of attorney. We prepare the Arabic version with the English so they match."
+    },
+    {
+     "question": "Can you draft a contract from my notes?",
+     "answer": "Yes. We turn the agreed terms into a clear contract or addendum in English and Arabic. For legal advice on the terms, we recommend a UAE lawyer, and we can format the final text after the lawyer approves."
+    },
+    {
+     "question": "What documents do you need to type an application?",
+     "answer": "Usually passports, Emirates IDs, the trade licence, the tenancy contract and any earlier application. We tell you the exact list once we know the transaction."
+    },
+    {
+     "question": "How do you avoid spelling mistakes in names?",
+     "answer": "We copy names from the passport and the Emirates ID, compare them to the licence, and flag any difference before filing. Many rejections come from differences in spelling or order of names."
+    },
+    {
+     "question": "How long does legal typing take?",
+     "answer": "Standard forms are generally prepared the same day. Contracts, bilingual texts and long documents take longer, and we give a time estimate when you send the request."
+    },
+    {
+     "question": "Is certified translation part of this service?",
+     "answer": "Typing and drafting are separate from certified translation. If a document needs to be translated by a certified translator, we arrange that through our legal translation service and then type or format the result."
+    },
+    {
+     "question": "Can I pay in a foreign currency?",
+     "answer": "We invoice in dirhams. The dirham is pegged to the US dollar at 3.6725, so bank transfers from abroad convert at your bank's rate, and we can share a pro-forma invoice for your records."
+    },
+    {
+     "question": "Do I need to be in Dubai to use the service?",
+     "answer": "No. You can send scans of your documents and approve the draft online. Where a signature must be given in person or before a notary, we explain how to do it from your country."
+    },
+    {
+     "question": "What if an authority changes its form?",
+     "answer": "We update the format as soon as the authority publishes the change. If a form changes while your application is in progress, we correct and resubmit it."
+    }
+   ],
+   "sources": [
+    {
+     "title": "UAE Government Portal (u.ae)",
+     "url": "https://u.ae/en/information-and-services"
+    },
+    {
+     "title": "Ministry of Human Resources and Emiratisation (MOHRE)",
+     "url": "https://www.mohre.gov.ae"
+    },
+    {
+     "title": "General Directorate of Residency and Foreigners Affairs, Dubai (GDRFA)",
+     "url": "https://gdrfad.gov.ae"
+    }
+   ],
+   "relatedSlugs": [
+    "amer-tasheel-tadbeer-services",
+    "legal-translation",
+    "online-poa-drafting-attestation"
+   ],
+   "faqSchema": true,
+   "seo": {
+    "title": "Legal Typing & Form Drafting in Dubai | Arabic & English",
+    "description": "Arabic and English legal typing for contracts, applications and government forms in Dubai, drafted accurately and ready for submission.",
+    "keywords": [
+     "legal typing Dubai",
+     "typing center Dubai",
+     "Arabic typing services",
+     "form drafting UAE"
+    ]
+   },
+   "author": "Al Anfal Doc Team"
+  },
+  {
+   "slug": "company-formation",
+   "title": "Company Formation & Business Setup",
+   "icon": "building",
+   "summary": "Mainland and free zone company setup in Dubai: structure, licence, tenancy, memorandum and the first steps after approval.",
+   "serviceType": "Company formation and business setup",
+   "contentHtml": "<h2>Mainland, free zone or something else?</h2>\n<p>The first decision is where the company will be licensed. A <strong>mainland</strong> company is licensed by the Department of Economy and Tourism and can trade with customers anywhere in the UAE, bid for government work and open offices in the city. A <strong>free zone</strong> company is licensed by a free zone authority, often with a simple setup and a flexible office, but with limits on trading directly in the mainland market. The right answer depends on who your customers are, what you sell and where your staff will sit. We explain both options in plain language and give a recommendation in writing.</p>\n<h2>Ownership</h2>\n<p>Since the 2021 reforms most mainland activities are open to 100% foreign ownership, with a limited list of strategic activities still requiring a UAE partner or special approval. Some professional activities carry extra conditions. Because details change, we confirm the rule for your exact activity before you decide on shares. See also our guide to <a href=\"/services/det-services\">DED and DET services</a>.</p>\n<h2>The steps</h2>\n<h3>1. Activity and name</h3>\n<p>You choose the activity and the proposed trade name. We check the name against the department's naming rules and obtain initial approval.</p>\n<h3>2. Premises and Ejari</h3>\n<p>A mainland licence normally needs a registered tenancy contract. Free zones often provide a flexible desk or office as part of the package. Read our page on <a href=\"/services/virtual-office-ejari-registration\">virtual office and Ejari registration</a> before choosing the address.</p>\n<h3>3. Memorandum of Association</h3>\n<p>The partners sign the MOA and, where needed, notarise it (<a href=\"/services/moa-drafting-amendments\">MOA drafting and amendments</a>). Foreign partners can sign through a power of attorney (<a href=\"/services/online-poa-drafting-attestation\">POA drafting</a>).</p>\n<h3>4. Approvals and licence</h3>\n<p>If the activity needs an external approval, such as a municipal approval (<a href=\"/services/dubai-municipality-approvals\">Dubai Municipality approvals</a>), it is obtained in parallel. The licence is issued once the approvals, tenancy and memorandum are complete.</p>\n<h3>5. After the licence</h3>\n<p>We then handle the immigration card, residence visas (<a href=\"/services/visa-processing\">visa processing and MOHRE application support</a>), Emirates ID (<a href=\"/services/emirates-id-medical-fitness\">Emirates ID and medical fitness</a>), health insurance (<a href=\"/services/corporate-medical-insurance-processing\">corporate and medical insurance</a>) and the supporting documents your bank asks for when opening the account.</p>\n<h2>Tax at a glance</h2>\n<p>The UAE applies corporate tax at 9% on taxable income above AED 375,000, with 0% on income up to that amount. Every company, including free zone companies, must register with the Federal Tax Authority, and a small business relief may be available for companies below a revenue limit. Free zone companies can access a 0% rate only on qualifying income and when conditions are met. VAT registration is mandatory once taxable supplies pass the threshold. Confirm your own position with a tax adviser; we coordinate the paperwork with your accountant.</p>\n<h2>Cost and timing</h2>\n<p>Costs depend on the licence type, activity, office and number of visas. We list each government fee separately from our professional fee, and we explain which costs are one-off and which recur at renewal. Timing ranges from several days for a simple setup to a few weeks when approvals are needed.</p>\n<p><em>Costs and timings on this page are indicative and were last reviewed in November 2026. Authorities change fees, forms and processing times, so we confirm the current figure in writing before any work starts.</em></p>\n<p><a href=\"/contact\">contact our team</a> with your activity, ownership and number of visas, and we will return a recommended structure and an itemised estimate.</p>",
+   "answer": "Setting up a company in Dubai means choosing mainland or a free zone, selecting the licence type and activity, registering a tenancy, signing the memorandum and receiving the licence. Most mainland activities now allow full foreign ownership. We prepare each step, submit it in the right order and then move on to visas, bank account and tax registration.",
+   "takeaways": [
+    "Mainland lets you trade across the UAE; free zones suit specific activities with restrictions on mainland trade",
+    "Most mainland activities allow 100% foreign ownership since the 2021 reforms",
+    "A registered tenancy (Ejari) is normally required for a mainland licence",
+    "Corporate tax registration is required, even where the rate is 0%"
+   ],
+   "summaryTable": [
+    {
+     "label": "Best for",
+     "value": "Foreign investors, entrepreneurs and companies expanding into the UAE"
+    },
+    {
+     "label": "Main authorities",
+     "value": "Department of Economy and Tourism (mainland), free zone authorities, Dubai Land Department, Federal Tax Authority"
+    },
+    {
+     "label": "Typical timing",
+     "value": "Several days to a few weeks, depending on approvals and tenancy (indicative)"
+    },
+    {
+     "label": "Government fees",
+     "value": "Depend on licence type, activity and premises; we give an itemised estimate before you commit"
+    },
+    {
+     "label": "Our role",
+     "value": "Structuring input, document preparation, filings, and follow-through to visas and bank account"
+    }
+   ],
+   "faqs": [
+    {
+     "question": "Can a foreigner own 100% of a company in Dubai?",
+     "answer": "For most mainland activities, yes, since the 2021 reforms. A limited list of strategic activities needs a UAE partner or special approval, and some professional activities have conditions. We confirm the rule for your exact activity before you decide on shares."
+    },
+    {
+     "question": "What is the difference between mainland and free zone?",
+     "answer": "A mainland company is licensed by the Department of Economy and Tourism and can trade across the UAE. A free zone company is licensed by a free zone authority, often with simple procedures, but with limits on direct trade in the mainland market."
+    },
+    {
+     "question": "How long does company formation take?",
+     "answer": "A simple setup can take several days; setups that need external approvals, inspections or a new tenancy take longer, often a few weeks. We give you a timeline per step after reviewing your activity and premises."
+    },
+    {
+     "question": "Do I need an office to get a mainland licence?",
+     "answer": "A mainland licence normally needs a registered tenancy contract (Ejari) for a physical premises. Free zones often provide a flexi desk or office within the package. See our page on virtual offices and Ejari for details."
+    },
+    {
+     "question": "What does it cost to set up a company?",
+     "answer": "Costs depend on the licence type, activity, premises and number of visas. We give an itemised estimate with each government fee shown separately from our professional fee, and we show the renewal cost too, so you can see the yearly total."
+    },
+    {
+     "question": "What taxes will my Dubai company pay?",
+     "answer": "Corporate tax is 9% on taxable income above AED 375,000, with 0% below it, and registration is required even if the rate is 0%. VAT applies above the registration threshold. Your tax position also depends on your home country, so ask a tax adviser."
+    },
+    {
+     "question": "Can I run the company from my home country?",
+     "answer": "You can own it and manage it remotely, but some steps, such as the residence visa, medical test and Emirates ID, need your presence in the UAE. Many owners visit once and handle the rest through a power of attorney."
+    },
+    {
+     "question": "How do I bring money from my home country to set up and run the business?",
+     "answer": "Bank transfers from abroad are normal. The dirham is pegged to the US dollar at 3.6725, so the exchange rate for dollar transfers is stable, while other currencies convert at your bank's rate. The bank may ask for source-of-funds documents."
+    },
+    {
+     "question": "Can you also open the bank account?",
+     "answer": "We prepare the company documents banks ask for and introduce the file, but the bank decides whether to open the account and sets its own requirements and timeline. See our business bank account service for more."
+    },
+    {
+     "question": "Is company formation a good way to get residency?",
+     "answer": "A licensed company can sponsor residence visas for its owners and employees according to its licence and office size. Residency is granted by the authorities, and the rules differ by company type. We prepare the files and explain the conditions."
+    }
+   ],
+   "sources": [
+    {
+     "title": "Invest in Dubai (business setup and licences)",
+     "url": "https://www.investindubai.gov.ae/business-setup"
+    },
+    {
+     "title": "Federal Tax Authority (corporate tax)",
+     "url": "https://tax.gov.ae"
+    },
+    {
+     "title": "Dubai Land Department (Ejari)",
+     "url": "https://dubailand.gov.ae"
+    },
+    {
+     "title": "UAE Government Portal (u.ae)",
+     "url": "https://u.ae/en/information-and-services"
+    }
+   ],
+   "relatedSlugs": [
+    "det-services",
+    "virtual-office-ejari-registration",
+    "moa-drafting-amendments",
+    "visa-processing"
+   ],
+   "faqSchema": true,
+   "seo": {
+    "title": "Company Formation in Dubai | Mainland & Free Zone Setup",
+    "description": "Set up a company in Dubai: mainland or free zone, licence type, ownership, tenancy and documents prepared and submitted for you from start to finish.",
+    "keywords": [
+     "company formation Dubai",
+     "business setup Dubai",
+     "Dubai mainland company",
+     "Dubai free zone company setup"
+    ]
+   },
+   "author": "Al Anfal Doc Team"
+  },
+  {
+   "slug": "trade-license",
+   "title": "Trade License Renewal & Amendments",
+   "icon": "id-card",
+   "summary": "Trade licence renewal and changes to activity, name, address, partners or managers, filed before deadlines.",
+   "serviceType": "Trade licence renewal and amendment",
+   "contentHtml": "<h2>Why renewal needs planning</h2>\n<p>An expired trade licence is more than a late fee. It can block visa renewals, payroll files and bank transactions, and it can stop a company from signing new contracts. The renewal depends on other documents being current, especially the tenancy registration, so the steps must be done in the right order. Many advisers recommend starting around 30 to 45 days before expiry to leave room for corrections.</p>\n<h2>What we need for a renewal</h2>\n<ul>\n<li>The current trade licence</li>\n<li>A valid registered tenancy contract (<a href=\"/services/virtual-office-ejari-registration\">Ejari registration</a>)</li>\n<li>Passport and Emirates ID copies for the owners and manager</li>\n<li>Any approvals the activity requires (<a href=\"/services/dubai-municipality-approvals\">municipal approvals</a>)</li>\n<li>Signed renewal application, by the owner or through a power of attorney (<a href=\"/services/online-poa-drafting-attestation\">POA drafting</a>)</li>\n</ul>\n<h2>Renewal process</h2>\n<h3>1. Review</h3>\n<p>We check the expiry date, the Ejari date, the activities and the partner details, and flag anything that does not match.</p>\n<h3>2. Prepare</h3>\n<p>We prepare the application and supporting documents, then send the draft for your approval with a clear list of the fees.</p>\n<h3>3. Submit and pay</h3>\n<p>The renewal is submitted through the authority's online channel, and the fees are paid. Reported processing times range from one to seven working days once the file is complete, but any query from the authority can add time.</p>\n<h3>4. Collect and update</h3>\n<p>You receive the renewed licence. We then update the dependent files: labour cards, insurance and the bank.</p>\n<h2>Amendments</h2>\n<p>Common amendments include adding or removing an activity, changing the trade name, moving to a new address, adding or removing a partner and appointing a new manager. Partner and manager changes require an updated memorandum (<a href=\"/services/moa-drafting-amendments\">MOA drafting and amendments</a>). New activities may need external approvals, and an address change needs a new tenancy registration. See <a href=\"/services/det-services\">DED and DET services</a> for the licensing steps.</p>\n<h2>Penalties and risk</h2>\n<p>Late renewal can attract penalties and affect related files. Reports about the exact amounts and grace periods vary, so we confirm the current rule for your licence type and avoid guessing. The simplest protection is to renew early.</p>\n<h2>Cost and timing</h2>\n<p>Fees depend on the licence type and activities and are quoted before filing. Processing for a clean renewal is commonly a few working days.</p>\n<p><em>Costs and timings on this page are indicative and were last reviewed in November 2026. Authorities change fees, forms and processing times, so we confirm the current figure in writing before any work starts.</em></p>\n<p>Send us your current licence and Ejari dates and <a href=\"/contact\">contact our team</a>. We will return a checklist, the fees and a submission date.</p>",
+   "answer": "Renew a Dubai trade licence before it expires: sources recommend starting around 30 to 45 days ahead, and the tenancy registration must be valid first. Amendments cover activities, trade name, address, partners and managers. We prepare the file, submit it through the licensing authority and track every date, so the licence never lapses.",
+   "takeaways": [
+    "Start the renewal about 30 to 45 days before expiry",
+    "A valid Ejari is normally needed before the licence can be renewed",
+    "Late renewal can bring fines and blocks on visas and banking",
+    "Changes to activities or partners also need updates elsewhere, like the memorandum and bank"
+   ],
+   "summaryTable": [
+    {
+     "label": "Best for",
+     "value": "Mainland licence holders in Dubai"
+    },
+    {
+     "label": "Main authority",
+     "value": "Department of Economy and Tourism (free zones: their own authority)"
+    },
+    {
+     "label": "Typical timing",
+     "value": "About one to seven working days once documents are complete (reported range, indicative)"
+    },
+    {
+     "label": "Government fees",
+     "value": "Depend on licence type and activities; late penalties apply after expiry, so we confirm the amount"
+    },
+    {
+     "label": "Our role",
+     "value": "Checklist, submission, payment, follow-up and calendar reminders"
+    }
+   ],
+   "faqs": [
+    {
+     "question": "When should I start renewing my trade licence?",
+     "answer": "Around 30 to 45 days before the expiry date is a common recommendation. That leaves time to renew the tenancy registration, correct any document problems and handle a query from the authority."
+    },
+    {
+     "question": "What is needed to renew a licence?",
+     "answer": "The current licence, a valid registered tenancy contract, passport and Emirates ID copies for the owners and manager, any required activity approvals and the signed application. We prepare the list for your exact licence type."
+    },
+    {
+     "question": "How long does a renewal take?",
+     "answer": "Reported processing times range from one to seven working days once the file is complete. Delays usually come from an expired tenancy registration, missing approvals or a mismatch in documents."
+    },
+    {
+     "question": "How much does renewal cost?",
+     "answer": "Fees depend on licence type and activity, so there is no single figure. We give the official fee in your quote, with our professional fee shown separately."
+    },
+    {
+     "question": "What happens if my licence expires?",
+     "answer": "Late renewal can bring penalties and may affect visas, banking and contracts. Published reports about the exact amounts and any grace period differ, so we confirm the current rule before advising you."
+    },
+    {
+     "question": "Can I add a new activity to my licence?",
+     "answer": "Yes, subject to the authority's rules. Some activities need an external approval first and some need a change in the premises. We check the activity list and approvals before we file."
+    },
+    {
+     "question": "Do I need to update my memorandum when I change a partner?",
+     "answer": "Yes. A new partner, a transfer of shares or a new manager requires an updated memorandum, normally notarised, before the licence is amended. See our page on MOA drafting and amendments."
+    },
+    {
+     "question": "Can I renew while I am abroad?",
+     "answer": "Yes, with a power of attorney or a company authorisation letter, or by approving the application online. Where a signature or presence is needed, we tell you in advance."
+    },
+    {
+     "question": "Does a licence renewal affect my corporate tax obligations?",
+     "answer": "Renewal itself does not, but the company's corporate tax registration and filing are separate obligations with the Federal Tax Authority. Companies should keep both current, and your accountant can confirm filing dates."
+    },
+    {
+     "question": "Can you remind us about the next renewal?",
+     "answer": "Yes. We keep a renewal calendar for your licence, tenancy and related documents and contact you ahead of each deadline, so you are not relying on memory."
+    }
+   ],
+   "sources": [
+    {
+     "title": "Invest in Dubai (business setup and licences)",
+     "url": "https://www.investindubai.gov.ae/business-setup"
+    },
+    {
+     "title": "Dubai Land Department (Ejari)",
+     "url": "https://dubailand.gov.ae"
+    },
+    {
+     "title": "UAE Government Portal (u.ae)",
+     "url": "https://u.ae/en/information-and-services"
+    },
+    {
+     "title": "Federal Tax Authority (corporate tax)",
+     "url": "https://tax.gov.ae"
+    }
+   ],
+   "relatedSlugs": [
+    "det-services",
+    "virtual-office-ejari-registration",
+    "moa-drafting-amendments"
+   ],
+   "faqSchema": true,
+   "seo": {
+    "title": "Trade License Renewal & Amendments in Dubai",
+    "description": "Renew your Dubai trade licence on time and amend activities, name, address, partners or managers. We prepare and submit the file and track the dates.",
+    "keywords": [
+     "trade license renewal Dubai",
+     "trade licence amendment Dubai",
+     "renew trade license Dubai",
+     "add business activity Dubai"
+    ]
+   },
+   "author": "Al Anfal Doc Team"
+  },
+  {
+   "slug": "virtual-office-ejari-registration",
+   "title": "Virtual Office Space & Ejari Registration",
+   "icon": "location-dot",
+   "summary": "Business address options and Ejari tenancy registration for Dubai licences, checked against what your licence type needs.",
+   "serviceType": "Ejari registration and business address",
+   "contentHtml": "<h2>What Ejari is</h2>\n<p>Ejari, meaning \"my rent\" in Arabic, is the system through which tenancy contracts are registered with the Dubai Land Department. For a business, the Ejari certificate is the proof of the registered business address. Mainland trade licences are normally tied to it, and licence renewals depend on it being current.</p>\n<h2>Which address options exist?</h2>\n<h3>Mainland: a real, registered lease</h3>\n<p>A mainland licence generally needs a lease for a premises that fits the activity, registered through Ejari. Industrial activities need suitable facilities, and food and similar activities need premises that can pass municipal checks (<a href=\"/services/dubai-municipality-approvals\">Dubai Municipality approvals</a>).</p>\n<h3>Flexi desk and virtual office</h3>\n<p>These products give you an address, a desk or a mailing service without a dedicated office. In free zones a flexi desk can satisfy the address requirement for the licence. For mainland licences the position is less clear: advisers report that some professional activities can use a flexi desk where the provider issues an Ejari-compliant lease, while commercial and industrial activities normally need a dedicated unit, and plain virtual office contracts often do not qualify. Because vendors disagree, we check with the licensing authority before you buy.</p>\n<h3>Free zone office</h3>\n<p>Free zones usually include an office or desk in the licence package and issue their own lease documents instead of an Ejari.</p>\n<h2>The Ejari registration process</h2>\n<ol>\n<li>Prepare the signed tenancy contract with the landlord's details, the property details and the rent.</li>\n<li>Collect the landlord's title deed copy, the tenant's passport and Emirates ID or trade licence, and the electricity and water connection details.</li>\n<li>Submit the registration online or through an authorised centre, and pay the fee.</li>\n<li>Receive the Ejari certificate, which is then used for the licence file (<a href=\"/services/company-formation\">company formation</a>, <a href=\"/services/trade-license\">trade licence renewal</a>).</li>\n</ol>\n<h2>Cost and timing</h2>\n<p>Recent guides report an online Ejari fee of about AED 177.75 including service-partner fees and VAT, and a higher amount at a trustee centre. Renewal uses the same process and a similar fee. Registration is quick once the contract and documents are complete. Office rent is separate and depends on location and size.</p>\n<p><em>Costs and timings on this page are indicative and were last reviewed in November 2026. Authorities change fees, forms and processing times, so we confirm the current figure in writing before any work starts.</em></p>\n<p>Tell us the licence type and the area you are considering, and <a href=\"/contact\">contact our team</a>. We will tell you which address options your licence accepts before you sign any contract.</p>",
+   "answer": "Ejari is the registration of a tenancy contract with the Dubai Land Department, and a mainland trade licence normally needs one. Online registration was reported at about AED 177.75 in recent guides. Virtual offices and flexi desks usually suit free zone licences, while mainland activities generally need a real, registered lease, so check before you buy.",
+   "takeaways": [
+    "Ejari registers a tenancy contract with the Dubai Land Department",
+    "A mainland licence normally needs an Ejari-backed lease",
+    "Virtual offices and flexi desks are mostly a free zone solution",
+    "Renewing the licence needs the Ejari to be valid"
+   ],
+   "summaryTable": [
+    {
+     "label": "Best for",
+     "value": "New companies choosing an address, and companies renewing or moving"
+    },
+    {
+     "label": "Main authority",
+     "value": "Dubai Land Department (Ejari), plus the licensing authority"
+    },
+    {
+     "label": "Typical timing",
+     "value": "Online registration can be quick once the contract and documents are ready (indicative)"
+    },
+    {
+     "label": "Government fees",
+     "value": "Around AED 177.75 for online registration per recent guides; trustee centres charge more (indicative)"
+    },
+    {
+     "label": "Our role",
+     "value": "Option check, contract review, registration and renewal reminders"
+    }
+   ],
+   "faqs": [
+    {
+     "question": "What is Ejari?",
+     "answer": "Ejari is the Dubai system that registers tenancy contracts with the Dubai Land Department. The Ejari certificate shows that the lease is registered, and for businesses it serves as proof of the registered address for the licence."
+    },
+    {
+     "question": "Do I need Ejari for a trade licence?",
+     "answer": "A mainland trade licence normally requires a registered tenancy for the business premises. Free zones use their own lease documents. Check your licensing authority's current rule before you rent."
+    },
+    {
+     "question": "Can I use a virtual office for a mainland licence?",
+     "answer": "Advisers report that plain virtual office contracts often do not meet the mainland requirement because Ejari needs a valid lease. Some flexi desk providers issue Ejari-compliant leases for certain professional activities. We confirm with the authority before you commit."
+    },
+    {
+     "question": "Can a virtual office or flexi desk work in a free zone?",
+     "answer": "Often yes. Many free zones accept a flexi desk or similar package as the registered address for the licence. The exact rule depends on the free zone and the licence type."
+    },
+    {
+     "question": "How much does Ejari registration cost?",
+     "answer": "Recent guides report about AED 177.75 for online registration, including fees and VAT, and a higher amount at a trustee centre. Fees can change, so we confirm the current figure."
+    },
+    {
+     "question": "How long does Ejari registration take?",
+     "answer": "With a signed contract and complete documents, online registration can be fast. Delays usually come from missing landlord documents or utility details."
+    },
+    {
+     "question": "When do I renew Ejari?",
+     "answer": "Renew it when the tenancy contract is renewed, and always before you renew the trade licence, because the licence file depends on a valid certificate. Our calendar service tracks both dates."
+    },
+    {
+     "question": "What documents are needed for registration?",
+     "answer": "The signed tenancy contract, the landlord's title deed, the tenant's passport and Emirates ID or trade licence, and electricity and water connection details. We prepare the exact list once we see the contract."
+    },
+    {
+     "question": "Does the office rent depend on my country of origin?",
+     "answer": "No. Rent depends on the area, size and building, not on nationality. International payments are made in dirhams; the dirham is pegged to the US dollar at 3.6725, so only your own bank's exchange and transfer fees apply."
+    },
+    {
+     "question": "Can I change address in the middle of the year?",
+     "answer": "Yes. Moving needs a new tenancy, a new Ejari and an amendment of the trade licence. We coordinate the three steps so the licence is not left with an old address."
+    }
+   ],
+   "sources": [
+    {
+     "title": "Dubai Land Department (Ejari)",
+     "url": "https://dubailand.gov.ae"
+    },
+    {
+     "title": "Invest in Dubai (business setup and licences)",
+     "url": "https://www.investindubai.gov.ae/business-setup"
+    },
+    {
+     "title": "UAE Government Portal (u.ae)",
+     "url": "https://u.ae/en/information-and-services"
+    }
+   ],
+   "relatedSlugs": [
+    "company-formation",
+    "trade-license",
+    "dubai-municipality-approvals"
+   ],
+   "faqSchema": true,
+   "seo": {
+    "title": "Virtual Office & Ejari Registration in Dubai",
+    "description": "Virtual office, flexi desk or office lease with Ejari registration for Dubai licences. We check what your licence type accepts and register the contract.",
+    "keywords": [
+     "Ejari registration Dubai",
+     "virtual office Dubai",
+     "flexi desk Dubai",
+     "Ejari certificate"
+    ]
+   },
+   "author": "Al Anfal Doc Team"
+  },
+  {
+   "slug": "document-clearing",
+   "title": "Commercial & Corporate Document Clearing",
+   "icon": "file-circle-check",
+   "summary": "Attestation and legalisation of company and commercial documents so UAE authorities and banks accept them.",
+   "serviceType": "Commercial and corporate document clearing",
+   "contentHtml": "<h2>What \"clearing\" means in practice</h2>\n<p>A certificate of incorporation, a board resolution, a power of attorney or financial statements issued in your home country are not automatically accepted in the UAE. Each authority wants proof that the document is genuine and that the signature or seal is real. The proof comes from a chain of attestations, and every link in the chain depends on the one before it.</p>\n<h2>A typical route for documents coming into the UAE</h2>\n<ol>\n<li><strong>Notarisation or certified copy</strong> in the country of origin, where the document is not already an original public document.</li>\n<li><strong>Legalisation or apostille</strong> by the competent authority of that country, depending on whether it participates in the apostille system and on how the UAE treats it.</li>\n<li><strong>UAE embassy or consulate attestation</strong> in that country, where required.</li>\n<li><strong>UAE Ministry of Foreign Affairs attestation</strong> after arrival (<a href=\"https://www.mofa.gov.ae\" rel=\"noopener\">MOFA</a>).</li>\n<li><strong>Arabic translation</strong> by a certified translator, where the receiving authority requires it (<a href=\"/services/legal-typing-form-drafting\">legal typing</a>, <a href=\"/services/legal-translation\">legal translation</a>).</li>\n</ol>\n<p>The exact route varies by country and by document type, so we confirm it before you start. Do not send originals abroad until the route is agreed.</p>\n<h2>Documents we often clear</h2>\n<ul>\n<li>Certificates of incorporation, good standing and registration extracts</li>\n<li>Board resolutions, shareholder resolutions and company bylaws</li>\n<li>Powers of attorney (<a href=\"/services/online-poa-drafting-attestation\">POA drafting and attestation</a>)</li>\n<li>Commercial invoices, certificates of origin and contracts</li>\n<li>Financial statements and bank letters</li>\n</ul>\n<h2>Documents going out of the UAE</h2>\n<p>UAE company documents that must be used abroad generally follow a reverse route: notary or authority, Ministry of Foreign Affairs attestation and then the foreign embassy or an apostille where available. See also <a href=\"/services/notary-public-legal-attestations\">notary public and legal attestations</a>.</p>\n<h2>Where files go wrong</h2>\n<ul>\n<li>Documents issued too long ago for the receiving authority</li>\n<li>Names that differ from the passport or the licence</li>\n<li>Skipping a step because a colleague said it was \"not needed\" last time</li>\n<li>Missing translation after attestation</li>\n</ul>\n<h2>Cost and timing</h2>\n<p>Fees are set by each authority and differ by country and document. Timing depends on the countries involved; some chains finish within days and others take several weeks. We give the route, the fees and a time estimate before we start.</p>\n<p><em>Costs and timings on this page are indicative and were last reviewed in November 2026. Authorities change fees, forms and processing times, so we confirm the current figure in writing before any work starts.</em></p>\n<p>Tell us the document, the issuing country and where it will be used, and <a href=\"/contact\">contact our team</a>. We will map the steps and quote the work.</p>",
+   "answer": "Document clearing is the process that makes a company or commercial document acceptable in another country. For UAE use, a foreign document is typically notarised, legalised or apostilled at home, attested by the UAE embassy and then by the Ministry of Foreign Affairs. We plan the chain, track each step and prepare the translation.",
+   "takeaways": [
+    "The chain of steps depends on the country the document comes from",
+    "Foreign documents for UAE use usually need embassy and Ministry of Foreign Affairs attestation",
+    "Arabic translation is often needed after attestation",
+    "Mistakes in the first step force the whole chain to repeat"
+   ],
+   "summaryTable": [
+    {
+     "label": "Best for",
+     "value": "Foreign companies and investors using home-country documents in the UAE, and UAE companies sending documents abroad"
+    },
+    {
+     "label": "Main authorities",
+     "value": "Notary, home country foreign ministry or apostille authority, UAE embassy, UAE Ministry of Foreign Affairs"
+    },
+    {
+     "label": "Typical timing",
+     "value": "Varies by country; from days to several weeks (indicative)"
+    },
+    {
+     "label": "Government fees",
+     "value": "Differ per country and step; we list them before you pay"
+    },
+    {
+     "label": "Our role",
+     "value": "Route planning, courier and tracking, translation and final delivery"
+    }
+   ],
+   "faqs": [
+    {
+     "question": "What is the difference between legalisation and apostille?",
+     "answer": "Both prove that a signature or seal on a public document is genuine. An apostille is a single certificate used between countries that joined the Hague Apostille system. Legalisation is the longer chain used where that system does not apply. We confirm which applies for your country."
+    },
+    {
+     "question": "Do I need embassy attestation for UAE use?",
+     "answer": "Often yes for documents coming from abroad, followed by attestation by the UAE Ministry of Foreign Affairs. The exact route depends on the country and the document, so we confirm it before you begin."
+    },
+    {
+     "question": "How long does attestation take?",
+     "answer": "It depends on the countries involved and the number of steps. Some routes finish within days, others take several weeks. We give an estimate once we know the document and the country."
+    },
+    {
+     "question": "Do documents need to be translated into Arabic?",
+     "answer": "Usually yes for UAE authorities, courts and many banks. Translation is normally done by a certified translator after the document has been attested, so the stamps are translated too."
+    },
+    {
+     "question": "Can you clear documents from my home country without me travelling?",
+     "answer": "Yes. Many steps can be done through courier and local agents, and you may only need to sign before a notary at home. We outline what can be done remotely for your country."
+    },
+    {
+     "question": "How old can a document be?",
+     "answer": "Some authorities want recent certificates, for example a good standing certificate issued within the last few months. We check the requirement of the receiving authority before you order the document."
+    },
+    {
+     "question": "What if the document has a spelling mistake?",
+     "answer": "Correct it at the source before attesting. A mistake that is found after attestation usually means repeating the chain. We check names against the passport and licence before the first step."
+    },
+    {
+     "question": "Do you handle documents from Asia, Europe and the Americas?",
+     "answer": "Yes. The route differs by country, but the logic is the same. We keep a checklist by country and update it when rules change."
+    },
+    {
+     "question": "How are fees paid, and in what currency?",
+     "answer": "Each authority charges in its own currency. We invoice in dirhams and list the authority fees separately. The dirham is pegged to the US dollar at 3.6725, so dollar transfers are easy to convert."
+    },
+    {
+     "question": "Can UAE documents be used abroad?",
+     "answer": "Yes, through a reverse chain of notary, Ministry of Foreign Affairs attestation and, for the foreign destination, an embassy attestation or an apostille where available. We map the steps for each destination country."
+    }
+   ],
+   "sources": [
+    {
+     "title": "Ministry of Foreign Affairs (attestation)",
+     "url": "https://www.mofa.gov.ae"
+    },
+    {
+     "title": "UAE Government Portal (u.ae)",
+     "url": "https://u.ae/en/information-and-services"
+    },
+    {
+     "title": "Dubai Courts (Notary Public)",
+     "url": "https://www.dc.gov.ae"
+    }
+   ],
+   "relatedSlugs": [
+    "notary-public-legal-attestations",
+    "online-poa-drafting-attestation",
+    "legal-typing-form-drafting"
+   ],
+   "faqSchema": true,
+   "seo": {
+    "title": "Corporate Document Clearing & Attestation in Dubai",
+    "description": "Attestation and legalisation of commercial and corporate documents for use in the UAE or abroad, with the chain of steps planned and tracked for you.",
+    "keywords": [
+     "document clearing Dubai",
+     "document attestation UAE",
+     "corporate document legalisation",
+     "MOFA attestation"
+    ]
+   },
+   "author": "Al Anfal Doc Team"
+  },
+  {
+   "slug": "amer-tasheel-tadbeer-services",
+   "title": "Amer, Tasheel & Tadbeer Services",
+   "icon": "clipboard-list",
+   "summary": "Facilitation of Amer residency filings, Tasheel labour transactions and Tadbeer domestic worker services.",
+   "serviceType": "Amer, Tasheel and Tadbeer service facilitation",
+   "contentHtml": "<h2>Which centre does what</h2>\n<h3>Amer centres</h3>\n<p>Amer centres accept residency and visa transactions on behalf of the General Directorate of Residency and Foreigners Affairs in Dubai (<a href=\"https://gdrfad.gov.ae\" rel=\"noopener\">GDRFA</a>). Typical tasks include entry permits, status changes, residence visa applications and renewals, and dependents' visas. See <a href=\"/services/visa-processing\">visa processing and MOHRE application support</a> and <a href=\"/services/family-visit-visa-documentation\">family and visit visa documentation</a>.</p>\n<h3>Tasheel centres</h3>\n<p>Tasheel centres are authorised by the Ministry of Human Resources and Emiratisation (<a href=\"https://www.mohre.gov.ae\" rel=\"noopener\">MOHRE</a>) to process private-sector labour transactions: work permits, labour contracts, quota and fee payments, complaints and cancellations. They work with the ministry's systems; the residence side of the process is separate and goes through residency channels.</p>\n<h3>Tadbeer centres</h3>\n<p>Tadbeer centres serve households that employ domestic workers, covering recruitment, contracts and permits under the domestic worker framework. They are not used for ordinary company staff.</p>\n<h2>The order that avoids rejections</h2>\n<ol>\n<li>Company licence and quota in order (<a href=\"/services/trade-license\">trade licence renewal and amendments</a>)</li>\n<li>Labour side: offer or contract and work permit through the labour channel</li>\n<li>Entry permit or status change through residency channels</li>\n<li>Medical fitness and biometrics (<a href=\"/services/emirates-id-medical-fitness\">Emirates ID and medical fitness</a>)</li>\n<li>Residence visa stamping and Emirates ID</li>\n<li>Insurance in place (<a href=\"/services/corporate-medical-insurance-processing\">corporate and medical insurance</a>)</li>\n</ol>\n<p>Skipping or reordering these steps is the most common reason for rejection, so we keep a single checklist per employee or dependent.</p>\n<h2>What we do for you</h2>\n<ul>\n<li>Decide which channel each task belongs to and prepare the file</li>\n<li>Type and check the data against passports and licences (<a href=\"/services/legal-typing-form-drafting\">legal typing</a>)</li>\n<li>Submit, pay and follow the transaction until a result is issued</li>\n<li>Collect the documents and update your records (<a href=\"/services/pro-services\">government transactions liaison</a>)</li>\n</ul>\n<h2>Cost and timing</h2>\n<p>Authority fees and centre service charges differ by transaction and change over time. We list each item before we start. Timing depends on the authority's review and on whether the file is complete the first time.</p>\n<p><em>Costs and timings on this page are indicative and were last reviewed in November 2026. Authorities change fees, forms and processing times, so we confirm the current figure in writing before any work starts.</em></p>\n<p><a href=\"/contact\">contact our team</a> with the transaction you need and the number of people involved, and we will say which centre handles each step.</p>",
+   "answer": "Three service networks serve different needs: Amer centres handle residency and visa filings for GDRFA, Tasheel centres handle private-sector labour transactions for MOHRE, and Tadbeer centres handle domestic worker recruitment and permits. Using the right one avoids wasted trips. We facilitate the paperwork and the follow-up; the authorities make the decisions.",
+   "takeaways": [
+    "Amer is for residency and visa transactions",
+    "Tasheel is for MOHRE labour transactions such as work permits and contracts",
+    "Tadbeer is for domestic workers, not ordinary company staff",
+    "Many tasks need both a labour and a residency step, in the right order"
+   ],
+   "summaryTable": [
+    {
+     "label": "Best for",
+     "value": "Company owners, HR teams and families dealing with labour and residency files"
+    },
+    {
+     "label": "Main authorities",
+     "value": "GDRFA (Amer), MOHRE (Tasheel), MOHRE domestic worker framework (Tadbeer)"
+    },
+    {
+     "label": "Typical timing",
+     "value": "Depends on the transaction and authority review (indicative)"
+    },
+    {
+     "label": "Government fees",
+     "value": "Set by each authority, plus the centre's service charges; we list them separately"
+    },
+    {
+     "label": "Our role",
+     "value": "Selecting the right channel, preparing the file, submission and follow-up"
+    }
+   ],
+   "faqs": [
+    {
+     "question": "What is the difference between Amer and Tasheel?",
+     "answer": "Amer centres handle residency and visa transactions for GDRFA. Tasheel centres handle private-sector labour transactions for MOHRE, such as work permits and labour contracts. A new employee usually needs both, in a set order."
+    },
+    {
+     "question": "What is Tadbeer?",
+     "answer": "Tadbeer is the network of centres for domestic worker services, such as recruitment, contracts and permits. It is meant for households, not for ordinary company employees."
+    },
+    {
+     "question": "Can I apply directly online instead of using a centre?",
+     "answer": "Many services are available through the authorities' online portals and apps, often with UAE Pass login. Centres and service providers help where you want a person to check the file, type the application or handle the follow-up."
+    },
+    {
+     "question": "What documents do I need for a work permit?",
+     "answer": "Typically the company's licence and establishment card, the employee's passport and photo, and an offer or contract. Requirements depend on the category, so we confirm the list before filing."
+    },
+    {
+     "question": "Does a new hire need a labour step or a residency step first?",
+     "answer": "The labour side, including the offer or contract and work permit, generally comes first, followed by the entry permit or status change, medical fitness, biometrics, visa stamping and Emirates ID. We keep the order on one checklist."
+    },
+    {
+     "question": "How long does a transaction take?",
+     "answer": "It depends on the transaction and the authority's review. We give you an estimate once we have the file, and we tell you promptly if a query is raised."
+    },
+    {
+     "question": "Can a company with a free zone licence use Tasheel?",
+     "answer": "Free zone companies often follow their free zone authority's labour and residency procedures, and the available channels differ by zone. We confirm the right route for your licence."
+    },
+    {
+     "question": "What happens if a transaction is rejected?",
+     "answer": "We read the reason, fix the file and resubmit. Typical causes are a mismatch in names, an expired document, a missing approval or a wrong sequence."
+    },
+    {
+     "question": "Is there a fee schedule I can see?",
+     "answer": "Fees are set by each authority and by the service centre. We list each item before you approve the work, and we show the authority's fee separately from our own."
+    },
+    {
+     "question": "Can you handle many employees at once?",
+     "answer": "Yes. We create one tracker for the whole group, with each person's status, and we batch submissions where the authority allows it, so you can see progress at a glance."
+    }
+   ],
+   "sources": [
+    {
+     "title": "Ministry of Human Resources and Emiratisation (MOHRE)",
+     "url": "https://www.mohre.gov.ae"
+    },
+    {
+     "title": "General Directorate of Residency and Foreigners Affairs, Dubai (GDRFA)",
+     "url": "https://gdrfad.gov.ae"
+    },
+    {
+     "title": "Federal Authority for Identity, Citizenship, Customs and Port Security (ICP)",
+     "url": "https://icp.gov.ae"
+    },
+    {
+     "title": "UAE Government Portal (u.ae)",
+     "url": "https://u.ae/en/information-and-services"
+    }
+   ],
+   "relatedSlugs": [
+    "visa-processing",
+    "family-visit-visa-documentation",
+    "pro-services"
+   ],
+   "faqSchema": true,
+   "seo": {
+    "title": "Amer, Tasheel & Tadbeer Services Facilitation in Dubai",
+    "description": "We facilitate Amer residency filings, Tasheel MOHRE labour transactions and Tadbeer domestic worker paperwork, with the right centre for each task.",
+    "keywords": [
+     "Amer Tasheel Tadbeer services",
+     "Tasheel services Dubai",
+     "Amer center Dubai",
+     "Tadbeer domestic worker"
+    ]
+   },
+   "author": "Al Anfal Doc Team"
+  },
+  {
+   "slug": "visa-processing",
+   "title": "Visa Processing & Ministry of Labor Application Support",
+   "icon": "passport",
+   "summary": "Document preparation, processing and application support for employment and investor residence files and MOHRE labour steps.",
+   "serviceType": "Visa processing and application support (document preparation, not visa issuance)",
+   "contentHtml": "<h2>What this service is, and what it is not</h2>\n<p>We provide document preparation, processing and application support only. We do not issue visas or permits: every decision is taken by the relevant UAE authority. We help you assemble a correct, complete file, we process the application through the authorised channels and we support you until the authority has decided.</p>\n<h2>Files we support</h2>\n<ul>\n<li>Employment-based residence files for new and existing staff</li>\n<li>Owner, partner and investor residence files linked to a licensed company (<a href=\"/services/company-formation\">company formation</a>)</li>\n<li>MOHRE steps: work permit, labour contract, fee payments and cancellation (<a href=\"/services/amer-tasheel-tadbeer-services\">Amer, Tasheel and Tadbeer services</a>)</li>\n<li>Renewals, status changes and cancellations</li>\n<li>Dependents' files (<a href=\"/services/family-visit-visa-documentation\">family and visit visa documentation</a>)</li>\n</ul>\n<h2>The usual sequence</h2>\n<h3>1. Company and quota</h3>\n<p>The employing company must have a valid licence and an establishment record with enough quota for the new hire. We check this first, so you do not discover a quota problem after paying the fees.</p>\n<h3>2. Labour step</h3>\n<p>The labour contract and work permit are processed through the MOHRE channel. Our team prepares the offer, the contract data and the supporting documents.</p>\n<h3>3. Entry or status change</h3>\n<p>The candidate either enters the UAE on an entry permit or changes status inside the country. We prepare the residency application and the passport and photo requirements.</p>\n<h3>4. Medical fitness, biometrics and Emirates ID</h3>\n<p>The employee completes the medical fitness test and biometrics, then the visa is stamped and the Emirates ID is issued. See <a href=\"/services/emirates-id-medical-fitness\">Emirates ID processing and medical fitness</a>.</p>\n<h3>5. Insurance and records</h3>\n<p>Health insurance must be in place (<a href=\"/services/corporate-medical-insurance-processing\">corporate and medical insurance processing</a>), and your HR records are updated.</p>\n<h2>What makes a file succeed</h2>\n<ul>\n<li>Names, dates and passport numbers identical across all documents</li>\n<li>Passport validity long enough for the visa period</li>\n<li>Educational and civil documents attested where the category requires it (<a href=\"/services/document-clearing\">document clearing</a>)</li>\n<li>Applications submitted in the right order</li>\n</ul>\n<h2>Cost and timing</h2>\n<p>Fees are set by the authorities and by the service centre, and they depend on the category and validity. Timing depends on the authority's review and on whether the file is complete the first time. We give a realistic estimate and update you at each stage.</p>\n<p><em>Costs and timings on this page are indicative and were last reviewed in November 2026. Authorities change fees, forms and processing times, so we confirm the current figure in writing before any work starts.</em></p>\n<p>Tell us the category and the number of people, and <a href=\"/contact\">contact our team</a>. We will provide a document checklist and an itemised quote.</p>",
+   "answer": "We provide document preparation, processing and application support for UAE residence and labour files, including the MOHRE steps. We do not issue visas: the UAE authorities decide each application. Our role is to prepare a complete file, submit it in the correct order, answer queries and keep you informed until the authority's decision.",
+   "takeaways": [
+    "Support service only: visas and permits are issued by UAE authorities",
+    "Labour and residency steps follow a set order",
+    "Complete, consistent documents prevent most rejections",
+    "Medical fitness, Emirates ID and insurance are part of the same file"
+   ],
+   "summaryTable": [
+    {
+     "label": "Best for",
+     "value": "Employers, owners and investors needing residence and labour files for staff or themselves"
+    },
+    {
+     "label": "Main authorities",
+     "value": "MOHRE, GDRFA and the ICP"
+    },
+    {
+     "label": "Typical timing",
+     "value": "Depends on the category and the authority's review (indicative)"
+    },
+    {
+     "label": "Government fees",
+     "value": "Set by each authority; we list them separately from our service fee"
+    },
+    {
+     "label": "Our role",
+     "value": "Document preparation, processing and application support"
+    }
+   ],
+   "faqs": [
+    {
+     "question": "Do you issue visas?",
+     "answer": "No. Visas and permits are issued by the UAE authorities. We provide document preparation, processing and application support, and we follow your file until the authority has decided."
+    },
+    {
+     "question": "What is the order of steps for a new employee?",
+     "answer": "The company licence and quota come first, then the labour contract and work permit, then the entry permit or status change, medical fitness, biometrics, visa stamping and Emirates ID, with insurance in place. We keep this order on one checklist."
+    },
+    {
+     "question": "What documents are needed?",
+     "answer": "Typically the company licence and establishment record, the employee's passport and photograph, a contract or offer, and, for some categories, attested educational or civil documents. We give the exact list once we know the category."
+    },
+    {
+     "question": "How long does a residence file take?",
+     "answer": "It depends on the category and the authority's review, and queries can add time. We give an estimate at the start and update you at each step."
+    },
+    {
+     "question": "Can the owner or investor of a company also be processed?",
+     "answer": "A licensed company can sponsor residence for its owners and partners according to the licence and premises, and some investment categories have separate routes. We confirm the right category for your situation."
+    },
+    {
+     "question": "What if an application is rejected?",
+     "answer": "We read the reason, correct the file and resubmit where the rules allow. Typical causes are mismatched names, expired documents or an incomplete sequence."
+    },
+    {
+     "question": "Do my educational certificates need attestation?",
+     "answer": "For some categories, yes. The route depends on the country where the certificate was issued, and we explain it. See our document clearing service."
+    },
+    {
+     "question": "Is medical fitness mandatory?",
+     "answer": "For residence it generally is. The medical test, usually done at an approved centre, is part of the file, and the visa and Emirates ID steps depend on it. See our page on Emirates ID and medical fitness."
+    },
+    {
+     "question": "Can you handle renewals and cancellations?",
+     "answer": "Yes. We track expiry dates, prepare renewals and process cancellations when staff leave, so the company's quota and records stay accurate."
+    },
+    {
+     "question": "How are the fees paid when I am abroad?",
+     "answer": "Authority fees are charged in dirhams. The dirham is pegged to the US dollar at 3.6725, so transfers in dollars convert predictably; other currencies convert at your bank's rate."
+    }
+   ],
+   "sources": [
+    {
+     "title": "Ministry of Human Resources and Emiratisation (MOHRE)",
+     "url": "https://www.mohre.gov.ae"
+    },
+    {
+     "title": "General Directorate of Residency and Foreigners Affairs, Dubai (GDRFA)",
+     "url": "https://gdrfad.gov.ae"
+    },
+    {
+     "title": "Federal Authority for Identity, Citizenship, Customs and Port Security (ICP)",
+     "url": "https://icp.gov.ae"
+    },
+    {
+     "title": "UAE Government Portal (u.ae)",
+     "url": "https://u.ae/en/information-and-services"
+    }
+   ],
+   "relatedSlugs": [
+    "amer-tasheel-tadbeer-services",
+    "emirates-id-medical-fitness",
+    "corporate-medical-insurance-processing"
+   ],
+   "faqSchema": true,
+   "seo": {
+    "title": "Visa Processing Support & MOHRE Applications in Dubai",
+    "description": "Document preparation, processing and application support for UAE residence and MOHRE labour files. The authorities decide; we prepare and follow up.",
+    "keywords": [
+     "visa processing support Dubai",
+     "MOHRE work permit support",
+     "residence visa documents UAE",
+     "employment visa Dubai documents"
+    ]
+   },
+   "author": "Al Anfal Doc Team"
+  },
+  {
+   "slug": "family-visit-visa-documentation",
+   "title": "Family & Visit Visa Documentation Support",
+   "icon": "people-roof",
+   "summary": "Document preparation and application support for family residence files and visit visa applications.",
+   "serviceType": "Family and visit visa documentation support (document preparation, not visa issuance)",
+   "contentHtml": "<h2>Family residence files</h2>\n<p>We provide document preparation, processing and application support only. We do not issue visas or permits: every decision is taken by the relevant UAE authority. A resident can apply to sponsor a spouse, children and, in some cases, parents, subject to the sponsor's status, income, accommodation and the category's rules. Salary thresholds have been reported differently by different sources and have changed over time, so we check the authority's current requirement before you pay any fee.</p>\n<h2>Typical documents</h2>\n<ul>\n<li>Sponsor's passport, residence visa and Emirates ID</li>\n<li>Marriage certificate, and birth certificates for children, attested for UAE use (<a href=\"/services/document-clearing\">document clearing</a>) and translated into Arabic where required (<a href=\"/services/legal-translation\">legal translation</a>)</li>\n<li>A registered tenancy contract or ownership proof for the sponsor's accommodation (<a href=\"/services/virtual-office-ejari-registration\">Ejari registration</a>)</li>\n<li>Salary evidence or an employer letter, where the category asks for it</li>\n<li>Passport copies and photographs for each family member</li>\n<li>Valid health insurance for dependants (<a href=\"/services/corporate-medical-insurance-processing\">medical insurance processing</a>)</li>\n</ul>\n<h2>Visit visas</h2>\n<p>Relatives and business visitors may enter on a visit visa applied for through the authorised channels. The file normally needs the visitor's passport and photo and the sponsor's details, and the entry permit is processed through residency channels. We prepare and check the file and track it, but we cannot promise approval.</p>\n<h2>How the process runs</h2>\n<h3>1. Eligibility check</h3>\n<p>We compare the sponsor's status, accommodation and documents with the current category requirements and tell you what is missing before you apply.</p>\n<h3>2. Attestation and translation</h3>\n<p>Home-country certificates are attested through the route that applies to the issuing country, then translated. This is often the slowest step, so we start it first.</p>\n<h3>3. Application</h3>\n<p>We submit through the authorised channel (<a href=\"/services/amer-tasheel-tadbeer-services\">Amer and Tasheel services</a>) or help you apply online.</p>\n<h3>4. Medical, biometrics and Emirates ID</h3>\n<p>Where residence is granted, family members complete medical fitness and biometrics, and receive Emirates IDs (<a href=\"/services/emirates-id-medical-fitness\">Emirates ID and medical fitness</a>).</p>\n<h2>Cost and timing</h2>\n<p>Government fees depend on the category and validity, and some categories involve a refundable deposit. Timing depends on the authority's review and on the time needed to attest foreign documents.</p>\n<p><em>Costs and timings on this page are indicative and were last reviewed in November 2026. Authorities change fees, forms and processing times, so we confirm the current figure in writing before any work starts.</em></p>\n<p><a href=\"/contact\">contact our team</a> with the relationship, the sponsor's visa type and the family members' countries, and we will send a checklist and an itemised quote.</p>",
+   "answer": "We prepare the documents and support the application for family residence files and visit visas, including attested marriage and birth certificates, the sponsor's residence and tenancy records and dependents' insurance. We do not issue visas: GDRFA and the ICP decide each case. Sponsor requirements, such as salary, are set by the authorities and change, so we confirm them first.",
+   "takeaways": [
+    "Support service only: the authorities grant or refuse the visa",
+    "Marriage and birth certificates usually need attestation",
+    "Sponsors need residency, accommodation and dependants need medical insurance",
+    "Requirements such as sponsor salary differ by source and change, so confirm before applying"
+   ],
+   "summaryTable": [
+    {
+     "label": "Best for",
+     "value": "Residents sponsoring a spouse, children or parents, and anyone inviting relatives or business visitors"
+    },
+    {
+     "label": "Main authorities",
+     "value": "GDRFA and the ICP"
+    },
+    {
+     "label": "Typical timing",
+     "value": "Depends on the category and review; attestation of home-country documents can add time (indicative)"
+    },
+    {
+     "label": "Government fees",
+     "value": "Set by the authorities; some categories include a refundable deposit; we confirm for your case"
+    },
+    {
+     "label": "Our role",
+     "value": "Document preparation, application support and follow-up"
+    }
+   ],
+   "faqs": [
+    {
+     "question": "Who can sponsor a family member in Dubai?",
+     "answer": "Residents with a valid residence permit may apply to sponsor a spouse and children, and in some cases parents, if they meet the category's conditions on income, accommodation and documents. We check the sponsor's eligibility against the authority's current rules."
+    },
+    {
+     "question": "What salary do I need to sponsor my family?",
+     "answer": "Reported figures differ between sources and have changed over time, and some categories have special rules. Check the current GDRFA or ICP requirement before applying; we confirm it for your category and tell you before you pay any fee."
+    },
+    {
+     "question": "Do marriage and birth certificates need attestation?",
+     "answer": "Usually yes, for certificates issued abroad. The attestation chain depends on the issuing country, and an Arabic translation is often needed. We plan the route so the slowest step starts first."
+    },
+    {
+     "question": "Do dependants need health insurance?",
+     "answer": "Yes, dependants need valid medical insurance as part of the residence file. Our insurance processing service arranges cover that meets the authority's minimum requirements."
+    },
+    {
+     "question": "Can I sponsor my parents?",
+     "answer": "In some cases, subject to the authority's rules and the sponsor's status. Extra conditions, such as a deposit or higher income, may apply. We confirm the requirement for your case."
+    },
+    {
+     "question": "What is a visit visa and how is it different from a residence visa?",
+     "answer": "A visit visa allows a short stay as a visitor and does not give residency. A residence visa lets a person live in the UAE for a longer period under a sponsor or an employer."
+    },
+    {
+     "question": "Can you guarantee that the visa will be approved?",
+     "answer": "No. The authorities decide every application. Our service is preparation and support: a correct and complete file reduces the chance of rejection, but approval is not something we can promise."
+    },
+    {
+     "question": "How long does the process take?",
+     "answer": "It depends on the category, the authority's review and how long it takes to attest and translate documents from abroad. We give an estimate after reviewing the file."
+    },
+    {
+     "question": "My documents are in another language. What do I do?",
+     "answer": "Documents not in Arabic or English usually need a certified translation, and some need attestation before or after translation. We arrange both and check that names match across all documents."
+    },
+    {
+     "question": "How do I pay if my family and I are abroad?",
+     "answer": "Fees are charged in dirhams, which are pegged to the US dollar at 3.6725. You can pay by bank transfer from abroad, and only your own bank's exchange rate and transfer charges apply."
+    }
+   ],
+   "sources": [
+    {
+     "title": "General Directorate of Residency and Foreigners Affairs, Dubai (GDRFA)",
+     "url": "https://gdrfad.gov.ae"
+    },
+    {
+     "title": "Federal Authority for Identity, Citizenship, Customs and Port Security (ICP)",
+     "url": "https://icp.gov.ae"
+    },
+    {
+     "title": "UAE Government Portal (u.ae)",
+     "url": "https://u.ae/en/information-and-services"
+    }
+   ],
+   "relatedSlugs": [
+    "visa-processing",
+    "emirates-id-medical-fitness",
+    "corporate-medical-insurance-processing"
+   ],
+   "faqSchema": true,
+   "seo": {
+    "title": "Family & Visit Visa Documentation Support in Dubai",
+    "description": "Document preparation and application support for UAE family residence and visit visa files: attested papers, insurance, tenancy and sponsor records.",
+    "keywords": [
+     "family visa documents Dubai",
+     "family visa Dubai documents",
+     "visit visa application support UAE",
+     "sponsor family UAE"
+    ]
+   },
+   "author": "Al Anfal Doc Team"
+  },
+  {
+   "slug": "corporate-medical-insurance-processing",
+   "title": "Corporate & Medical Health Insurance Processing",
+   "icon": "shield-heart",
+   "summary": "Arranging employee and family health insurance for Dubai residence files, with cover that meets the authority's minimum.",
+   "serviceType": "Corporate and medical health insurance processing",
+   "contentHtml": "<h2>The rule in plain terms</h2>\n<p>Dubai's health insurance law requires residents to have medical cover, and employers are responsible for providing it to their employees. The basic standard is the <strong>Essential Benefits Plan</strong>, which sets a minimum level of care. Employers may choose a plan that matches or exceeds it. Dependants such as a spouse and children also need valid cover for their residence files, and in some cases the sponsor pays for it. See <a href=\"https://www.dha.gov.ae\" rel=\"noopener\">the Dubai Health Authority</a> for the framework.</p>\n<h2>Plan types</h2>\n<ul>\n<li><strong>Essential Benefits Plan</strong>: the minimum cover with a limited network and cost sharing</li>\n<li><strong>Enhanced plans</strong>: wider hospital networks, lower co-payments, and optional benefits such as dental, optical or maternity</li>\n<li><strong>Group corporate plans</strong>: one policy for all employees, with options for family members</li>\n</ul>\n<p>Premiums depend on the plan, age, gender, family size and network. Some groups, such as elderly parents or women of child-bearing age, can have higher premiums under the schemes' rules.</p>\n<h2>How we process it</h2>\n<h3>1. Need assessment</h3>\n<p>We ask how many employees and dependants need cover, their ages, the budget and the hospital network you prefer.</p>\n<h3>2. Plan comparison</h3>\n<p>We compare plans from approved insurers on benefits, network, co-payments and exclusions and show the differences in a simple table.</p>\n<h3>3. Application and policy</h3>\n<p>Passport, Emirates ID or visa details and the company's information are submitted to the insurer. The policy is issued and linked to the residence file (<a href=\"/services/visa-processing\">visa processing and MOHRE application support</a>, <a href=\"/services/emirates-id-medical-fitness\">Emirates ID and medical fitness</a>).</p>\n<h3>4. Changes and renewals</h3>\n<p>New hires, leavers, new dependants and renewals are handled as they happen, and we track expiry dates so that cover does not lapse. Related guidance for staff and families is in our pages on <a href=\"/services/family-visit-visa-documentation\">family and visit visa documentation</a> and <a href=\"/services/pro-services\">government transactions liaison</a>.</p>\n<h2>Penalties and risk</h2>\n<p>Going without valid cover can lead to fines and may block visa transactions. Published reports on the amounts differ, so we confirm the current position when we assess your case.</p>\n<h2>Cost and timing</h2>\n<p>The basic plan has been reported at several hundred dirhams per person per year, and enhanced and group plans cost more depending on benefits and demographics. Policies can often be issued quickly once documents are complete. We quote real prices from the insurers rather than estimates.</p>\n<p><em>Costs and timings on this page are indicative and were last reviewed in November 2026. Authorities change fees, forms and processing times, so we confirm the current figure in writing before any work starts.</em></p>\n<p><a href=\"/contact\">contact our team</a> with the number of people and their ages, and we will return a comparison of compliant plans.</p>",
+   "answer": "Health insurance is mandatory for residents of Dubai. Employers must provide at least the Essential Benefits Plan, and plans must be issued by Dubai Health Authority approved insurers. We compare plans, arrange cover for employees and dependants for residence files, and process additions, cancellations and renewals so that no one is left without valid cover.",
+   "takeaways": [
+    "Dubai's health insurance law requires cover for residents, including free zone staff",
+    "Employers must provide at least the Essential Benefits Plan",
+    "Higher plans can add dental, maternity or wider networks",
+    "Cover must be valid for residence files and kept current at renewal"
+   ],
+   "summaryTable": [
+    {
+     "label": "Best for",
+     "value": "Employers, owners and families who need compliant cover for residence files"
+    },
+    {
+     "label": "Main authority",
+     "value": "Dubai Health Authority (DHA) and approved insurers"
+    },
+    {
+     "label": "Typical timing",
+     "value": "Policies are often issued quickly once documents are complete (indicative)"
+    },
+    {
+     "label": "Premium",
+     "value": "Varies by plan, age and network; the basic plan has been reported at several hundred dirhams a year (indicative)"
+    },
+    {
+     "label": "Our role",
+     "value": "Plan comparison, application, policy updates and renewals"
+    }
+   ],
+   "faqs": [
+    {
+     "question": "Is health insurance compulsory in Dubai?",
+     "answer": "Yes. Dubai's health insurance law requires residents to have cover, and employers are responsible for providing it to their employees. Free zone staff are also covered by the requirement."
+    },
+    {
+     "question": "What is the Essential Benefits Plan?",
+     "answer": "It is the minimum standard of health cover set under Dubai's insurance framework. Employers may choose a plan that matches or exceeds it. Enhanced plans add benefits such as wider networks, lower co-payments, dental or maternity."
+    },
+    {
+     "question": "Who pays for an employee's insurance?",
+     "answer": "The employer is responsible for providing at least the basic plan to employees. Dependants' cover can differ by situation, and sponsors often pay it. We confirm your obligations for your category."
+    },
+    {
+     "question": "How much does health insurance cost?",
+     "answer": "The basic plan has been reported at several hundred dirhams per person per year in recent years, and enhanced plans cost more. Premiums depend on age, gender, network and family size, so we ask the insurers for current prices."
+    },
+    {
+     "question": "What happens if my staff have no valid cover?",
+     "answer": "Employers can face fines and delays in visa transactions. Reports on the amounts vary, so we confirm the current rule and help you put compliant cover in place quickly."
+    },
+    {
+     "question": "Can I add family members to a company plan?",
+     "answer": "Often yes, under the insurer's terms. Dependants can be added at the start or at renewal, and premiums depend on their ages and the plan. We compare group and individual options."
+    },
+    {
+     "question": "Do I need cover before I apply for a visa?",
+     "answer": "Valid cover is part of the residence file, so the policy should be ready at the right step. We arrange it so that it matches the visa application and the Emirates ID stage."
+    },
+    {
+     "question": "Is dental or maternity included?",
+     "answer": "Not in the basic plan, which has a limited scope. Enhanced plans can include them with waiting periods and limits, so we show the exact terms in the comparison."
+    },
+    {
+     "question": "Can I keep my existing insurer when I move to Dubai?",
+     "answer": "Only if the policy is issued by an approved insurer and meets the minimum standard for the UAE. International policies often do not satisfy the residence requirement, so we check this first."
+    },
+    {
+     "question": "What if I pay from abroad?",
+     "answer": "Premiums are charged in dirhams, which are pegged to the US dollar at 3.6725. Bank transfers from abroad are accepted by most insurers, and your bank's exchange rate and fees apply."
+    }
+   ],
+   "sources": [
+    {
+     "title": "Dubai Health Authority",
+     "url": "https://www.dha.gov.ae"
+    },
+    {
+     "title": "Ministry of Human Resources and Emiratisation (MOHRE)",
+     "url": "https://www.mohre.gov.ae"
+    },
+    {
+     "title": "UAE Government Portal (u.ae)",
+     "url": "https://u.ae/en/information-and-services"
+    }
+   ],
+   "relatedSlugs": [
+    "visa-processing",
+    "family-visit-visa-documentation",
+    "emirates-id-medical-fitness"
+   ],
+   "faqSchema": true,
+   "seo": {
+    "title": "Corporate & Medical Health Insurance Processing Dubai",
+    "description": "Health insurance for Dubai employees and dependants: we compare approved plans, arrange cover for residence files and handle policy updates and renewals.",
+    "keywords": [
+     "medical insurance Dubai",
+     "corporate health insurance Dubai",
+     "Dubai mandatory health insurance",
+     "employee insurance UAE"
+    ]
+   },
+   "author": "Al Anfal Doc Team"
+  },
+  {
+   "slug": "official-government-approvals-clearances",
+   "title": "Official Government Approvals & Clearances",
+   "icon": "stamp",
+   "summary": "Finding out which approvals your activity or project needs, and obtaining them in the right order.",
+   "serviceType": "Government approvals and clearances",
+   "contentHtml": "<h2>Why approvals get missed</h2>\n<p>Dubai's regulatory framework is spread across several bodies. A business can hold a valid trade licence and still need a health approval for its premises, a fire safety approval for the fit-out, or a sector permit before it opens. Discovering one of them late is the most expensive way to find out. A short mapping exercise at the start of a project removes that risk.</p>\n<h2>What we map for you</h2>\n<ul>\n<li><strong>Licence and activity</strong> with the licensing authority (<a href=\"/services/det-services\">DED and DET services</a>)</li>\n<li><strong>Municipality approvals</strong> for activities and premises (<a href=\"/services/dubai-municipality-approvals\">Dubai Municipality approvals</a>)</li>\n<li><strong>Health sector</strong> approvals through the Dubai Health Authority where the activity is medical</li>\n<li><strong>Fire and building safety</strong> approvals through the relevant bodies and the landlord</li>\n<li><strong>Sector regulators</strong> for regulated activities such as finance, education and others, each with its own permit process</li>\n<li><strong>Labour and residency</strong> for the people who will work in the business (<a href=\"/services/visa-processing\">visa processing support</a>)</li>\n</ul>\n<h2>Our method</h2>\n<h3>1. Project brief</h3>\n<p>We record the activity, the premises, the number of staff, the start date and any special features such as food handling, medical equipment or public access.</p>\n<h3>2. Authority map</h3>\n<p>We produce a list of authorities and approvals in the order they must be obtained, with the documents needed for each and the time expected.</p>\n<h3>3. Submission and tracking</h3>\n<p>We prepare and submit each application (<a href=\"/services/pro-services\">government transactions liaison</a>), track the answers and handle queries.</p>\n<h3>4. Close-out file</h3>\n<p>When all clearances are in, you receive a single file with every approval and its expiry date, and we add the dates to the renewal calendar.</p>\n<h2>No-objection certificates</h2>\n<p>A no-objection certificate, or NOC, is a letter from an employer, landlord, partner or authority stating that it has no objection to a specific action. They are often required for transfers, changes of activity or premises, and some visa steps. We draft the request, obtain the NOC and make sure its wording matches what the receiving authority expects (<a href=\"/services/legal-typing-form-drafting\">legal typing and form drafting</a>).</p>\n<h2>Cost and timing</h2>\n<p>Each authority sets its own fee. Time depends on how many approvals are needed and whether they can run in parallel. We give you the map, the fees and a timeline before we start.</p>\n<p><em>Costs and timings on this page are indicative and were last reviewed in November 2026. Authorities change fees, forms and processing times, so we confirm the current figure in writing before any work starts.</em></p>\n<p><a href=\"/contact\">contact our team</a> with a short description of your project and we will return the list of approvals it is likely to need.</p>",
+   "answer": "Many Dubai projects need more than a licence: a municipal approval, a no-objection certificate, a health or safety clearance, or a sector regulator's permit. The risk is not knowing which applies or in what order. We map the authorities for your activity, prepare each application and follow every clearance through to issue.",
+   "takeaways": [
+    "The licence is often the first approval, not the only one",
+    "Each authority has its own forms, portal and review time",
+    "A single timeline avoids the late discovery of a missing clearance",
+    "Some sectors have their own regulators with separate permits"
+   ],
+   "summaryTable": [
+    {
+     "label": "Best for",
+     "value": "Companies launching or changing an activity, premises or project in Dubai"
+    },
+    {
+     "label": "Main authorities",
+     "value": "DET, Dubai Municipality, Civil Defence, DHA, sector regulators and other government bodies"
+    },
+    {
+     "label": "Typical timing",
+     "value": "Depends on the number of authorities; we plan them in parallel (indicative)"
+    },
+    {
+     "label": "Government fees",
+     "value": "Set by each authority; we list them separately from our fee"
+    },
+    {
+     "label": "Our role",
+     "value": "Requirement mapping, preparation, submission and follow-up"
+    }
+   ],
+   "faqs": [
+    {
+     "question": "Which approvals will my business need?",
+     "answer": "It depends on the activity, the premises and the number of staff. The licence is usually the first approval, and you may also need municipal, health, safety or sector approvals. A short mapping exercise gives you the exact list."
+    },
+    {
+     "question": "What is a no-objection certificate?",
+     "answer": "A no-objection certificate, or NOC, is a letter stating that the issuer has no objection to a particular action, such as a transfer or a change of premises. It can come from an employer, landlord, partner or authority."
+    },
+    {
+     "question": "Can approvals be obtained in parallel?",
+     "answer": "Often yes. Some approvals depend on others, for example a premises approval needs a confirmed address, but many can run at the same time. We plan them so that dependencies are respected."
+    },
+    {
+     "question": "How long do approvals take?",
+     "answer": "It depends on the authority and the activity. The map we prepare includes an expected time per step, and we update you when an authority asks for more information."
+    },
+    {
+     "question": "Do I need approvals if I only offer consulting services?",
+     "answer": "Many consultancy activities need no municipal approval, but sector rules still apply to regulated professions. We confirm the position for your activity."
+    },
+    {
+     "question": "Who handles fire safety approval?",
+     "answer": "Fire safety is generally reviewed by Civil Defence and building permissions sit with the landlord or the relevant authority. We include them in the project timeline so they are not forgotten."
+    },
+    {
+     "question": "What if a regulator refuses an approval?",
+     "answer": "We read the reasons, adjust the application or the plan and resubmit where the rules allow, and we tell you early if a change in activity or premises would be needed."
+    },
+    {
+     "question": "Can you coordinate with my lawyer or architect?",
+     "answer": "Yes. We work with lawyers, architects and fit-out contractors so that the documents they produce meet the authorities' requirements and the application is not delayed by format issues."
+    },
+    {
+     "question": "Are there tax filings connected to a new project?",
+     "answer": "Yes. A new company or activity can bring corporate tax registration with the Federal Tax Authority, with 9% applying above AED 375,000 of taxable income, and VAT registration above the threshold. Your accountant should confirm your position."
+    },
+    {
+     "question": "How do I pay if I manage the project from abroad?",
+     "answer": "Government fees are in dirhams. The dirham is pegged to the US dollar at 3.6725, so dollar transfers are straightforward, and your bank's rate applies for other currencies."
+    }
+   ],
+   "sources": [
+    {
+     "title": "Invest in Dubai (business setup and licences)",
+     "url": "https://www.investindubai.gov.ae/business-setup"
+    },
+    {
+     "title": "Dubai Municipality",
+     "url": "https://www.dm.gov.ae"
+    },
+    {
+     "title": "Dubai Health Authority",
+     "url": "https://www.dha.gov.ae"
+    },
+    {
+     "title": "UAE Government Portal (u.ae)",
+     "url": "https://u.ae/en/information-and-services"
+    }
+   ],
+   "relatedSlugs": [
+    "dubai-municipality-approvals",
+    "det-services",
+    "pro-services"
+   ],
+   "faqSchema": true,
+   "seo": {
+    "title": "Official Government Approvals & Clearances in Dubai",
+    "description": "Which Dubai approvals does your business need? We map the authorities, prepare each application and follow the clearances through to issue.",
+    "keywords": [
+     "government approvals Dubai",
+     "NOC Dubai",
+     "business approvals UAE",
+     "regulatory clearance Dubai"
+    ]
+   },
+   "author": "Al Anfal Doc Team"
+  },
+  {
+   "slug": "notary-public-legal-attestations",
+   "title": "Notary Public Assistance & Legal Attestations",
+   "icon": "stamp",
+   "summary": "Notary appointments, document preparation and onward attestation for agreements, declarations and powers of attorney.",
+   "serviceType": "Notary public assistance and legal attestation",
+   "contentHtml": "<h2>What a notary does</h2>\n<p>A notary public confirms the identity of the people signing, checks that they understand and sign the document voluntarily, and attests the signature. The result is a document that authorities, banks and courts treat as genuine. Typical documents include powers of attorney (<a href=\"/services/online-poa-drafting-attestation\">POA drafting and attestation</a>), agreements, declarations, affidavits, share transfers and memorandum amendments (<a href=\"/services/moa-drafting-amendments\">MOA drafting and amendments</a>).</p>\n<h2>Fees</h2>\n<p>Dubai's notary fee schedule, amended by Executive Council Resolution No. (72) of 2025, lists AED 300 per signature attested on an instrument or proxy. Private notaries collect fees under a separate schedule. Translation, drafting and the later attestation steps are additional. Please confirm the current schedule before relying on any figure; we do this for you at quotation.</p>\n<h2>Before you go to the notary</h2>\n<ul>\n<li>Valid passports or Emirates IDs for everyone who signs, with names that match the document</li>\n<li>The final text, in Arabic or with a certified Arabic translation (<a href=\"/services/legal-typing-form-drafting\">legal typing and form drafting</a>)</li>\n<li>Company documents if a company signs, and proof of the signatory's authority</li>\n<li>Supporting papers, such as a licence or a title deed, where the document refers to them</li>\n</ul>\n<h2>After the notary</h2>\n<p>For use inside the UAE the notarised document is usually enough. For use in another country the next steps typically include attestation by the UAE Ministry of Foreign Affairs (<a href=\"https://www.mofa.gov.ae\" rel=\"noopener\">MOFA</a>) and then an embassy attestation or, where available, an apostille. For documents arriving from abroad the chain runs in the other direction, as explained in our guide to <a href=\"/services/document-clearing\">commercial and corporate document clearing</a>.</p>\n<h2>How we help</h2>\n<h3>1. Review and draft</h3>\n<p>We check your document for clarity, names and numbers, and draft it where you do not have one.</p>\n<h3>2. Translation and formatting</h3>\n<p>We produce the Arabic text and format the document the way the notary and the receiving authority expect.</p>\n<h3>3. Appointment and signing</h3>\n<p>We book the appointment, explain who must attend with which documents, and assist at the notary where permitted.</p>\n<h3>4. Onward attestation</h3>\n<p>We arrange the remaining steps and deliver the final document, or a certified copy, to you.</p>\n<h2>Cost and timing</h2>\n<p>The notary step is appointment-based and usually quick. The onward chain can add days or weeks depending on the destination. We give the complete cost and time before you sign.</p>\n<p><em>Costs and timings on this page are indicative and were last reviewed in November 2026. Authorities change fees, forms and processing times, so we confirm the current figure in writing before any work starts.</em></p>\n<p><a href=\"/contact\">contact our team</a> with the document, the signers and the place where it will be used, and we will outline the steps.</p>",
+   "answer": "A notary public verifies identities and attests signatures on legal documents. Under the Dubai notary fee schedule published in 2025, AED 300 is charged for each signature attested on an instrument or proxy. We prepare the document, book the notary, and arrange any onward attestation so that the document is accepted by the authority or country that needs it.",
+   "takeaways": [
+    "Notary fees in Dubai are charged per signature attested",
+    "Documents are usually in Arabic or accompanied by a certified translation",
+    "Documents for use abroad continue to the Ministry of Foreign Affairs and an embassy or apostille",
+    "Identity documents must be valid and match the names on the document"
+   ],
+   "summaryTable": [
+    {
+     "label": "Best for",
+     "value": "Companies and individuals who need a signed document attested for use in the UAE or abroad"
+    },
+    {
+     "label": "Main authorities",
+     "value": "Dubai Courts Notary Public, Ministry of Justice notary offices, Ministry of Foreign Affairs"
+    },
+    {
+     "label": "Typical timing",
+     "value": "Appointment-based; onward attestation adds time (indicative)"
+    },
+    {
+     "label": "Government fees",
+     "value": "AED 300 per signature attested under the 2025 Dubai schedule; other steps vary"
+    },
+    {
+     "label": "Our role",
+     "value": "Drafting, translation, appointment and attestation chain"
+    }
+   ],
+   "faqs": [
+    {
+     "question": "What does a notary public do in Dubai?",
+     "answer": "A notary verifies the identity of the signers, confirms that they sign knowingly and attests their signatures on the document. The attested document is then accepted by authorities, banks and courts as genuine."
+    },
+    {
+     "question": "How much does a notary charge?",
+     "answer": "Under the Dubai fee schedule amended in 2025, AED 300 is charged per signature attested on an instrument or proxy. Private notaries charge under a separate schedule, and drafting, translation and later attestation steps cost extra. We confirm the total before you proceed."
+    },
+    {
+     "question": "Which documents can be notarised?",
+     "answer": "Powers of attorney, agreements, declarations, affidavits, share transfers, memorandum amendments and other legal documents. The notary may refuse a document that is unclear or incomplete, so we review it first."
+    },
+    {
+     "question": "Does the document have to be in Arabic?",
+     "answer": "Arabic is generally required for UAE use, or an accompanying certified Arabic translation. We prepare the text so that both versions match."
+    },
+    {
+     "question": "What must I bring to the notary?",
+     "answer": "Valid passports or Emirates IDs for everyone who signs, with names matching the document, the final text and any company or supporting documents that the document refers to. We give the exact list at booking."
+    },
+    {
+     "question": "Can I notarise a document if I am not in the UAE?",
+     "answer": "You can have it notarised in the country where you are and then follow the legalisation and attestation chain for UAE use. We confirm the route for your country before you sign."
+    },
+    {
+     "question": "Is notarisation enough for use abroad?",
+     "answer": "Not usually. For use in another country the document normally goes on to the Ministry of Foreign Affairs and then an embassy attestation or an apostille. We confirm the chain for the destination."
+    },
+    {
+     "question": "How long does it take?",
+     "answer": "The notary step is appointment-based and often quick. The onward attestation chain depends on the destination and can take from days to a few weeks."
+    },
+    {
+     "question": "What if names differ across my documents?",
+     "answer": "Differences are a frequent cause of rejection. We compare your passport, Emirates ID and the document before the appointment and advise on a declaration or a corrected document if needed."
+    },
+    {
+     "question": "Can I pay from abroad and in my own currency?",
+     "answer": "Fees are charged in dirhams, which are pegged to the US dollar at 3.6725. You can pay by bank transfer, and your bank's exchange rate and charges apply for other currencies."
+    }
+   ],
+   "sources": [
+    {
+     "title": "Dubai Courts (Notary Public)",
+     "url": "https://www.dc.gov.ae"
+    },
+    {
+     "title": "Ministry of Foreign Affairs (attestation)",
+     "url": "https://www.mofa.gov.ae"
+    },
+    {
+     "title": "UAE Government Portal (u.ae)",
+     "url": "https://u.ae/en/information-and-services"
+    }
+   ],
+   "relatedSlugs": [
+    "online-poa-drafting-attestation",
+    "document-clearing",
+    "moa-drafting-amendments"
+   ],
+   "faqSchema": true,
+   "seo": {
+    "title": "Notary Public & Legal Attestation Support in Dubai",
+    "description": "Notary public assistance in Dubai: documents prepared, signatures attested and the onward attestation chain arranged for UAE and foreign use.",
+    "keywords": [
+     "notary public Dubai",
+     "legal attestation UAE",
+     "notarisation Dubai",
+     "document notarization Dubai"
+    ]
+   },
+   "author": "Al Anfal Doc Team"
+  },
+  {
+   "slug": "emirates-id-medical-fitness",
+   "title": "Emirates ID Processing & Medical Fitness Setup",
+   "icon": "address-card",
+   "summary": "Emirates ID applications and medical fitness appointments coordinated with the residence visa process.",
+   "serviceType": "Emirates ID processing and medical fitness coordination",
+   "contentHtml": "<h2>The Emirates ID in the residence process</h2>\n<p>The Emirates ID is the identity card issued to UAE residents. It links to the residence visa and is used for banking, health insurance, tenancy, driving and many government services. It is applied for as part of the residence process, after entry or status change, medical fitness and biometrics. Our pages on <a href=\"/services/visa-processing\">visa processing support</a> and <a href=\"/services/family-visit-visa-documentation\">family and visit visa documentation</a> show where it sits in the sequence.</p>\n<h2>Medical fitness</h2>\n<p>A mandatory medical fitness test, done at an approved centre, is a prerequisite for most residence categories. It usually includes a blood test and a chest X-ray, and the result is sent electronically to the authority. Reported costs range from a few hundred dirhams to more, depending on the clinic and the package, and some centres offer faster service for an extra charge. If a result is flagged, the authority tells the applicant what to do next.</p>\n<h2>The steps</h2>\n<h3>1. Prepare the file</h3>\n<p>We prepare the entry or status change application and the passport and photo files (<a href=\"/services/amer-tasheel-tadbeer-services\">Amer, Tasheel and Tadbeer services</a>).</p>\n<h3>2. Book the medical test</h3>\n<p>We choose an approved centre close to the applicant, book the slot and explain what to bring: passport, entry permit or visa details and, where required, a photograph.</p>\n<h3>3. Biometrics and application</h3>\n<p>Fingerprints, a photo and signature are captured at an authorised centre, and the Emirates ID application is typed and submitted (<a href=\"/services/legal-typing-form-drafting\">legal typing</a>).</p>\n<h3>4. Visa stamping and ID issue</h3>\n<p>Once the visa is processed and the ID is printed, it is delivered to the registered address or collected. We track the status until you receive it.</p>\n<h3>5. Updates</h3>\n<p>If your ID or residence details change, for example a new job, new address or renewal, we handle the updates so that records stay consistent.</p>\n<h2>Insurance and tenancy</h2>\n<p>The residence file also needs valid health insurance (<a href=\"/services/corporate-medical-insurance-processing\">corporate and medical insurance processing</a>), and families need a registered tenancy (<a href=\"/services/virtual-office-ejari-registration\">Ejari registration</a>). We confirm these items before the application, so nothing stops the file at the last step.</p>\n<h2>Cost and timing</h2>\n<p>Emirates ID fees depend on the validity period and have changed over time, and the centre's service charge is added. We give you the current total before we proceed. Appointments are usually quick to arrange, and the issue time depends on the authority.</p>\n<p><em>Costs and timings on this page are indicative and were last reviewed in November 2026. Authorities change fees, forms and processing times, so we confirm the current figure in writing before any work starts.</em></p>\n<p><a href=\"/contact\">contact our team</a> with the number of people and the visa type, and we will arrange the appointments and the application.</p>",
+   "answer": "The Emirates ID is the resident's identity card, and applying for it follows the residence file. The medical fitness test is a prerequisite for residence, and biometrics are captured when the ID is processed. We coordinate the appointments, documents and typing so that the visa and ID steps finish in the right order.",
+   "takeaways": [
+    "Medical fitness is generally required before the residence visa and Emirates ID",
+    "The ID application follows entry or status change and the visa steps",
+    "Fees depend on the validity period and the centre's service charge",
+    "Names and passport data must match across all steps"
+   ],
+   "summaryTable": [
+    {
+     "label": "Best for",
+     "value": "New residents, employers onboarding staff and families completing residence files"
+    },
+    {
+     "label": "Main authorities",
+     "value": "ICP, GDRFA, approved medical fitness centres"
+    },
+    {
+     "label": "Typical timing",
+     "value": "Appointments are quick to arrange; issue time depends on the authority (indicative)"
+    },
+    {
+     "label": "Government fees",
+     "value": "Depend on validity period; the medical test has been reported at several hundred dirhams depending on the clinic (indicative)"
+    },
+    {
+     "label": "Our role",
+     "value": "Booking, documents, typing and follow-up"
+    }
+   ],
+   "faqs": [
+    {
+     "question": "What is the Emirates ID?",
+     "answer": "It is the identity card issued to UAE residents. It links to the residence visa and is used for banking, insurance, tenancy, driving and many government services."
+    },
+    {
+     "question": "Is the medical fitness test mandatory?",
+     "answer": "For most residence categories, yes. It is done at an approved centre, usually with a blood test and chest X-ray, and the result is sent to the authority electronically."
+    },
+    {
+     "question": "How much does the Emirates ID cost?",
+     "answer": "Fees depend on the validity period and have changed in recent years, and a centre's service charge is added. We confirm the current total for your case before you pay."
+    },
+    {
+     "question": "How much does the medical test cost?",
+     "answer": "Reported figures range from a few hundred dirhams to more, depending on the clinic and whether you choose faster service. We quote the actual price at booking."
+    },
+    {
+     "question": "In what order do these steps happen?",
+     "answer": "Typically entry permit or status change first, then medical fitness, biometrics, visa stamping and finally the Emirates ID. Some steps can overlap, and we keep the order on one checklist."
+    },
+    {
+     "question": "How long does it take to receive the ID?",
+     "answer": "It depends on the authority and the file. Booking the appointments is quick, and the ID is delivered after processing. We track it and tell you when to expect it."
+    },
+    {
+     "question": "What if the medical test result is not clear?",
+     "answer": "The authority informs the applicant and explains the next step, which may be a repeat test or further review. We help you follow the instructions and update the file."
+    },
+    {
+     "question": "Do children and family members need the same steps?",
+     "answer": "Dependants generally follow a similar process, with medical fitness, biometrics and an Emirates ID, subject to age rules. See our page on family and visit visa documentation."
+    },
+    {
+     "question": "Can I renew my Emirates ID with you?",
+     "answer": "Yes. We prepare renewals, book biometrics where needed and keep the dates in our reminder calendar so that the ID and the visa do not expire at different times."
+    },
+    {
+     "question": "What about payment from abroad?",
+     "answer": "Fees are charged in dirhams, pegged to the US dollar at 3.6725. Payments from abroad are accepted by bank transfer, and your bank's exchange rate and charges apply for other currencies."
+    }
+   ],
+   "sources": [
+    {
+     "title": "Federal Authority for Identity, Citizenship, Customs and Port Security (ICP)",
+     "url": "https://icp.gov.ae"
+    },
+    {
+     "title": "General Directorate of Residency and Foreigners Affairs, Dubai (GDRFA)",
+     "url": "https://gdrfad.gov.ae"
+    },
+    {
+     "title": "Ministry of Human Resources and Emiratisation (MOHRE)",
+     "url": "https://www.mohre.gov.ae"
+    },
+    {
+     "title": "UAE Government Portal (u.ae)",
+     "url": "https://u.ae/en/information-and-services"
+    }
+   ],
+   "relatedSlugs": [
+    "visa-processing",
+    "family-visit-visa-documentation",
+    "corporate-medical-insurance-processing"
+   ],
+   "faqSchema": true,
+   "seo": {
+    "title": "Emirates ID Processing & Medical Fitness in Dubai",
+    "description": "Emirates ID applications and medical fitness tests coordinated with the residence visa: appointments, documents and biometrics arranged for you.",
+    "keywords": [
+     "Emirates ID processing Dubai",
+     "medical fitness test Dubai",
+     "Emirates ID application",
+     "residence visa medical test"
+    ]
+   },
+   "author": "Al Anfal Doc Team"
+  }
+ ]
+}

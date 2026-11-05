@@ -7,7 +7,7 @@ export const site = {
   description:
     "Expert consultation for company formation, PRO services, visa processing and document clearing in Dubai & UAE.",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://alanfaldoc.com",
-  legalName: "Al Anfal Doc",
+  legalName: "Al Anfal Documents Clearing Services LLC",
   /** default byline when an item has no named author */
   defaultAuthor: "Al Anfal Doc Team",
   locale: "en_AE",

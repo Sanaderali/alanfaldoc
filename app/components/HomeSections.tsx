@@ -24,26 +24,11 @@ export default async function HomeSections() {
 
 
   const faqs = [
-    {
-      question: "Which payment methods do you accept?",
-      answer: "We accept various payment methods including bank transfers, credit cards, and online payment gateways to make the process convenient for our clients."
-    },
-    {
-      question: "What is the registration process?",
-      answer: "The registration process begins with an initial consultation, followed by document preparation, submission to relevant authorities, and finally receiving your licenses and permits."
-    },
-    {
-      question: "How can I update or cancel my personal information?",
-      answer: "You can update your information by contacting our customer service team directly or through your client portal. Cancellation policies vary based on the stage of your application."
-    },
-    {
-      question: "Does your firm offer a money-back guarantee?",
-      answer: "Yes, we offer a money-back guarantee if we're unable to secure approvals due to our service issues. Terms and conditions apply based on the specific service package."
-    },
-    {
-      question: "How long does it take to get approval for business setup?",
-      answer: "Approval timeframes vary: free zone setups typically take 5-7 working days, while mainland company registrations can take 2-3 weeks depending on the business activity."
-    },
+    { question: "How do I pay for your services?", answer: "Your written quote lists our professional fee and the government fees separately, together with the payment options available for that quote. Government fees are charged in UAE dirhams at the amount the authority sets." },
+    { question: "What is the process once I contact you?", answer: "We review what you need, confirm the steps, documents and fees in writing, prepare and check your file, submit it to the right authority and follow it until the authority issues its decision. You receive copies of every submission." },
+    { question: "Can I update my details or cancel a request?", answer: "Contact our team and we will tell you what can be changed at the stage your file has reached. Once an authority has received an application, changes and refunds depend on that authority's rules." },
+    { question: "Can you guarantee that my application will be approved?", answer: "No. Every decision is made by the relevant UAE authority. We prepare complete and correct files and follow them up, which reduces avoidable rejections, but approval is never ours to promise." },
+    { question: "How long does company setup or a licence renewal take?", answer: "It depends on the activity, the premises and the authority's review. A simple renewal can take a few working days, while a new company with approvals can take several weeks. We give you an estimate for your case before work starts." },
   ];
 
 
@@ -54,17 +39,16 @@ export default async function HomeSections() {
         <div className="absolute inset-0 bg-[url('/hero-team.jpg')] bg-cover bg-center opacity-[0.08]"></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8">
-            <p className="text-sm sm:text-base mb-4">We have 20+ years experience in</p>
+            <p className="text-sm sm:text-base mb-4">Al Anfal Documents Clearing Services in Dubai</p>
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
-              IMMIGRATION AND<br />VISA CONSULTATION
+              DOCUMENT CLEARING AND<br />BUSINESS SETUP IN DUBAI
             </h1>
             <p className="text-sm sm:text-base text-gray-600 max-w-3xl mx-auto mb-8 px-4">
-              Feugiat primis ligula risus auctor egestas augue mauri viverra tortor in iaculis and placerat purus feugiat primis ultrice in ligula impedit magna purus pretium neque ligula an ipsum volute turpis quaerat auctor and rhoncus laoreet augue in cubilia augue
-            </p>
+              Company formation, trade licences, government approvals, attestation and visa application support, prepared and submitted for you by a team that works with Dubai authorities every day.</p>
             <div className="flex flex-wrap justify-center gap-4 sm:gap-8 text-xs sm:text-sm mb-10">
               <span className="flex items-center">
                 <Icon name="circle-check" className="text-brand-text mr-2" />
-                Government Approved
+                Checked Before Submission
               </span>
               <span className="flex items-center">
                 <Icon name="circle-check" className="text-brand-text mr-2" />
@@ -99,14 +83,12 @@ export default async function HomeSections() {
             <div>
               <span className="text-accent font-semibold text-sm uppercase tracking-wide">ABOUT AGENCY</span>
               <h2 className="text-3xl md:text-4xl font-bold text-ink mt-3 mb-6">
-                Get guarantee success with our advisors
+                Dubai paperwork handled from first form to final approval
               </h2>
               <p className="text-gray-600 mb-4 leading-relaxed">
-                Semper lacus cursus porta, feugiat primis ligula risus auctor and rhoncus in ultrice ligula purus ipsum primis in cubilia augue vitae laoreet augue in cubilia augue egestas an ipsum turpis
-              </p>
+                Every Dubai business deals with several authorities, each with its own forms, portals and deadlines. We prepare the documents, submit them in the right order and follow every transaction until the authority has issued its decision.</p>
               <p className="text-gray-600 mb-6 leading-relaxed">
-                Cursus risus laoreet auctor, varius augue. Nulla dolor and sapien risus nec, luctus mauris donec diam sapien neque in cubilia an ligula quaerat ipsum volute turpis sodales sapien vitae donec an ipsum porta justo integer at velna vitae auctor a magna risus
-              </p>
+                Our services cover company setup and licence renewals, Ejari registration, notary and attestation, legal typing and translation, insurance, Emirates ID and residence file support. You get one team, itemised fees and a clear status at every step.</p>
               <Link href="/about" className="btn btn-secondary inline-block">
                 DISCOVER MORE
               </Link>
@@ -177,7 +159,7 @@ export default async function HomeSections() {
           <div className="flex flex-col md:flex-row justify-between items-center gap-6">
             <div>
               <h3 className="text-sm uppercase tracking-wide mb-2 text-accent font-semibold">CONSULTATIONS FOR PROSPECTIVE IMMIGRANTS</h3>
-              <p className="text-gray-600 text-sm">Aliquam a augue suscipit, luctus neque purus ipsum neque dolor primis libero tempus, and blandit ligula varius</p>
+              <p className="text-gray-600 text-sm">Tell us what you need and we will confirm the steps, the documents and the fees before any work starts.</p>
             </div>
             <Link href="/contact" className="btn btn-cta">
               GET A FREE QUOTE
