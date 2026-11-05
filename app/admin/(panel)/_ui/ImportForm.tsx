@@ -39,7 +39,7 @@ export default function ImportForm() {
           <label className="flex items-start gap-2"><input type="radio" name="mode" checked={mode === "draft"} onChange={() => setMode("draft")} className="mt-1" /><span><strong>Update it and save it as a draft</strong> (safest: the live page is taken offline until you review and publish it).</span></label>
           <label className="flex items-start gap-2"><input type="radio" name="mode" checked={mode === "keep"} onChange={() => setMode("keep")} className="mt-1" /><span><strong>Update it and keep its current status</strong> (a live page goes live with the new text straight away).</span></label>
         </fieldset>
-        <p className="text-xs text-a-muted">New pages are always created as drafts. Open each one, read it, then press Publish.</p>
+        <p className="text-xs text-a-muted">A pack can hold services, countries, service changes (featured / hide), FAQ groups and reviews. New pages, FAQ groups and reviews are always created as drafts. Open each one, read it, then press Publish.</p>
         <button type="button" onClick={run} disabled={pending || !text} className={btnPrimary}>{pending ? "Importing…" : "Import"}</button>
       </section>
 

@@ -3,9 +3,9 @@ import type { NavItem } from "@/types/content";
 /** Global site settings. Edit here once, updates header, footer, SEO, contact page. */
 export const site = {
   name: "Al Anfal Doc",
-  tagline: "Dubai Business Setup & Document Services",
+  tagline: "Document Clearing & Business Setup in Dubai",
   description:
-    "Expert consultation for company formation, PRO services, visa processing and document clearing in Dubai & UAE.",
+    "Dubai company formation, trade licence renewal, government approvals, document attestation and visa application support for business owners, investors and expatriates.",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://alanfaldoc.com",
   legalName: "Al Anfal Documents Clearing Services LLC",
   /** default byline when an item has no named author */
@@ -63,12 +63,12 @@ export const mainNav: NavItem[] = [
   { label: "Contact", href: "/contact" },
 ];
 
-/** Placeholder figures. Replace with your real numbers. */
+/** Facts about the website's own scope (not performance claims). */
 export const stats = [
-  { value: "20+", label: "Years of experience" },
-  { value: "5,000+", label: "Documents processed" },
-  { value: "200+", label: "Companies served" },
-  { value: "6", label: "Countries covered" },
+  { value: "17", label: "Core Dubai services" },
+  { value: "20", label: "Country guides for investors" },
+  { value: "2", label: "Languages for documents: Arabic and English" },
+  { value: "1", label: "Team following each file end to end" },
 ];
 
 /** Blog category -> Font Awesome icon (used on post covers). Add your own categories here. */

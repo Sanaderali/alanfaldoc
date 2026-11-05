@@ -8,7 +8,7 @@ export default async function Page() {
   await requirePerm("content.edit");
   return (
     <>
-      <PageHeader title="Import content" subtitle="Upload a content pack (services, countries or blog posts as a .json file). Everything is checked like a normal save, and new pages arrive as drafts." />
+      <PageHeader title="Import content" subtitle="Upload a content pack (.json) with services, countries, blog posts, FAQ groups or reviews. Everything is checked like a normal save, and new items arrive as drafts." />
       <ImportForm />
     </>
   );

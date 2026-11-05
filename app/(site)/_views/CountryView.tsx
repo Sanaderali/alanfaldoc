@@ -29,7 +29,7 @@ export default async function CountryView({ country }: { country: Country }) {
 
   return (
     <>
-      <Breadcrumb items={[{ label: "Country List", href: "/countries" }, { label: country.name }]} />
+      <Breadcrumb items={[{ label: "Country Guides", href: "/countries" }, { label: country.name }]} />
       <JsonLd data={[countryPageLd(country), ...(country.faqs?.length && country.faqSchema !== false ? [faqLd(country.faqs)] : []), ...(customLd(country.schemaCustom) ? [customLd(country.schemaCustom)!] : [])]} />
 
       <section className="py-12 md:py-16">
@@ -155,8 +155,8 @@ export default async function CountryView({ country }: { country: Country }) {
         <section className="py-14 md:py-20 border-t border-dashed border-gray-200 bg-gray-50/60">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <Reveal className="text-center mb-10">
-              <h2 className="text-3xl md:text-4xl font-bold text-ink mb-3">Immigration Opportunities</h2>
-              <p className="text-gray-500 max-w-xl mx-auto">Explore other destinations we support with documentation and visa services.</p>
+              <h2 className="text-3xl md:text-4xl font-bold text-ink mb-3">Guides for Investors from Other Countries</h2>
+              <p className="text-gray-500 max-w-xl mx-auto">See how setting up in Dubai works for investors and expatriates from other countries.</p>
             </Reveal>
             <Reveal>
               <Carousel>

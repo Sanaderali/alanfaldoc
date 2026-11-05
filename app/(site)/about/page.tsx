@@ -10,13 +10,13 @@ import { buildMetadata } from "@/lib/seo";
 
 export async function generateMetadata(): Promise<Metadata> {
   const { seo } = await getPageSeo("about");
-  return buildMetadata({ title: "About Us", description: `Learn about ${site.name}: who we are, what we do and why clients trust us for Dubai business setup and document services.`, path: "/about", seo });
+  return buildMetadata({ title: "About Us", description: `Learn about ${site.name}: a Dubai team for company formation, licence renewals, government approvals, attestation and visa application support.`, path: "/about", seo });
 }
 
 const values = [
   { icon: "bullseye", title: "Accuracy", text: "Every document is checked before submission so applications are right the first time." },
-  { icon: "bolt", title: "Speed", text: "Established relationships with authorities help us move files quickly." },
-  { icon: "handshake", title: "Transparency", text: "Clear timelines and clear pricing, with updates at every step." },
+  { icon: "bolt", title: "Speed", text: "We know each authority's forms, portals and order of steps, so files are prepared and submitted correctly the first time." },
+  { icon: "handshake", title: "Transparency", text: "Government fees are shown separately from our fee, and you get a clear status at every step." },
   { icon: "lock", title: "Confidentiality", text: "Your personal and business documents are handled with strict care." },
 ];
 
@@ -24,7 +24,7 @@ const steps = [
   { n: "01", title: "Consultation", text: "Tell us your goal and we recommend the best route." },
   { n: "02", title: "Documents", text: "We prepare, check and attest everything required." },
   { n: "03", title: "Submission", text: "We submit and follow up with the relevant authorities." },
-  { n: "04", title: "Approval", text: "You receive your licence, visa or cleared documents." },
+  { n: "04", title: "Approval", text: "The authority issues its decision and we hand over your licence, permit or cleared documents." },
 ];
 
 export default async function AboutPage() {
@@ -37,12 +37,12 @@ export default async function AboutPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           <div className="animate-fadeIn">
             <p className="text-sm font-semibold tracking-widest text-accent uppercase mb-3">About {site.name}</p>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-ink mb-6 leading-tight">Your Trusted Partner in Dubai</h1>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-ink mb-6 leading-tight">Dubai Paperwork, Handled End to End</h1>
             <p className="text-gray-600 leading-relaxed mb-4">
-              {site.name} helps individuals and businesses navigate company formation, PRO services, visa processing and document clearing in Dubai and across the UAE.
+              {site.name} (Al Anfal Documents Clearing Services LLC) helps business owners, investors and expatriates with company formation, licence renewals, government approvals, notary and attestation, Ejari, insurance, Emirates ID and residence file support in Dubai.
             </p>
             <p className="text-gray-600 leading-relaxed mb-8">
-              With over 20 years of experience, our team removes the complexity from government procedures so you can focus on what matters: your business and your family.
+              We prepare each file, submit it in the right order and follow it until the authority has decided. Our visa services are document preparation, processing and application support: the UAE authorities make every decision.
             </p>
             <Link href="/contact" className="btn btn-cta inline-block">
               Get a Free Quote
