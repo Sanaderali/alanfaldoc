@@ -47,9 +47,15 @@ const wrap = (title: string, body: string, preheader = "") => `<!doctype html>
   <p style="${FONT}font-size:11px;color:#9ca3af;margin:14px 0 0;">You received this email because a request was made on ${esc(site.url.replace(/^https?:\/\//, ""))}.</p>
 </td></tr></table></body></html>`;
 
-/** small label/value summary card */
-const infoCard = (rows: [string, string][]) =>
-  `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:${C.tint};border-radius:10px;margin:20px 0;"><tr><td style="padding:16px 20px;${FONT}font-size:14px;line-height:1.8;color:${C.ink};">${rows.map(([k, v]) => `<span style="color:${C.muted};">${esc(k)}</span><br/><strong style="font-size:15px;">${esc(v)}</strong>`).join('<div style="height:10px;line-height:10px;font-size:0;">&nbsp;</div>')}</td></tr></table>`;
+/** small label/value summary card; a row may carry a link as 3rd item */
+const infoCard = (rows: [string, string, string?][]) =>
+  `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:${C.tint};border-radius:10px;margin:20px 0;"><tr><td style="padding:16px 20px;${FONT}font-size:14px;line-height:1.8;color:${C.ink};">${rows.map(([k, v, href]) => `<span style="color:${C.muted};">${esc(k)}</span><br/><strong style="font-size:15px;">${href ? `<a href="${href}" style="color:${C.brand};text-decoration:none;">${esc(v)}</a>` : esc(v)}</strong>`).join('<div style="height:10px;line-height:10px;font-size:0;">&nbsp;</div>')}</td></tr></table>`;
+
+/** a quoted block (customer message, reply text) */
+const quote = (text: string) => `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:14px 0;"><tr><td style="border-left:4px solid ${C.brand};background:#ffffff;padding:12px 16px;${FONT}font-size:15px;line-height:1.65;color:${C.ink};white-space:pre-wrap;">${esc(text)}</td></tr></table>`;
+
+const btnRow = (...b: string[]) => `<table role="presentation" cellpadding="0" cellspacing="0" style="margin:8px 0 4px;"><tr>${b.map((x) => `<td style="padding:0 10px 10px 0;">${x}</td>`).join("")}</tr></table>`;
+const when = (iso: string) => new Date(iso).toLocaleString("en-GB", { day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit", timeZone: "Asia/Dubai" }) + " (Dubai)";
 
 /** "what happens next" numbered steps */
 const steps = (items: string[]) =>
@@ -62,40 +68,51 @@ export async function notifyWelcome(user: User) {
     to: user.email,
     subject: `Welcome to ${site.name}`,
     text: `Hi ${user.name},\n\nAn account has been created for you on the ${site.name} dashboard.\nUsername: ${user.username}\nSign in: ${url}\n\nYour administrator will share your password separately.`,
-    html: wrap(`Welcome, ${user.name}`, `<p>An account has been created for you on the ${esc(site.name)} dashboard.</p><p><strong>Username:</strong> ${esc(user.username)}</p><p><a href="${url}">Sign in</a></p><p>Your administrator will share your password separately.</p>`),
+    html: wrap(`Welcome, ${user.name.split(/\s+/)[0]}!`, `<p style="margin:0 0 6px;">An account has been created for you on the ${esc(site.name)} dashboard.</p>` + infoCard([["Username", user.username], ["Dashboard", url.replace(/^https?:\/\//, ""), url]]) + `<p style="margin:0 0 14px;">Your administrator will share your password separately.</p>` + btnRow(button(url, "Sign in to the dashboard")), `Your ${site.name} dashboard account is ready.`),
   });
 }
 
 /** New live chat started: alert the team */
 export async function notifyChatStarted(chat: Chat) {
-  const where = [chat.city, chat.country].filter(Boolean).join(", ") || "unknown location";
+  const where = [chat.city, chat.country].filter(Boolean).join(", ") || "Unknown location";
+  const link = `${site.url}/admin/chat`;
   return sendMail({
     to: leadRecipients(),
     subject: `New live chat from ${chat.name || chat.phone}`,
-    text: `A visitor started a chat.\nName: ${chat.name || "-"}\nPhone: ${chat.phone}\nFrom: ${where}\nPage: ${chat.page || "-"}\n\nReply in the dashboard: ${site.url}/admin/chat`,
-    html: wrap("New live chat", `<p><strong>Name:</strong> ${esc(chat.name || "-")}<br/><strong>Phone:</strong> ${esc(chat.phone)}<br/><strong>From:</strong> ${esc(where)}<br/><strong>Page:</strong> ${esc(chat.page || "-")}</p><p><a href="${site.url}/admin/chat">Open the chat inbox</a></p>`),
+    text: `A visitor started a chat.\nName: ${chat.name || "-"}\nPhone: ${chat.phone}\nFrom: ${where}\nPage: ${chat.page || "-"}\n\nReply in the dashboard: ${link}`,
+    html: wrap("New live chat", `<p style="margin:0 0 6px;">A visitor has just started a chat on your website. Reply while they are online.</p>` + infoCard([["Name", chat.name || "Not given"], ["Phone", chat.phone, `tel:${chat.phone.replace(/[^+\d]/g, "")}`], ["Location", where], ["Page", chat.page || "-"], ["Started", when(chat.createdAt)]]) + btnRow(button(link, "Open the chat inbox")), `${chat.name || chat.phone} started a live chat.`),
   });
 }
 
 /** Chat finished: transcript to the team (and a copy for the record) */
 export async function notifyChatTranscript(chat: Chat) {
-  const lines = chat.messages.map((m) => `[${new Date(m.at).toLocaleString("en-GB")}] ${m.from === "visitor" ? chat.name || "Visitor" : m.from === "staff" ? m.name || "Agent" : "System"}: ${m.text}`);
+  const who = (m: Chat["messages"][number]) => (m.from === "visitor" ? chat.name || "Visitor" : m.from === "staff" ? m.name || "Agent" : "System");
+  const lines = chat.messages.map((m) => `[${new Date(m.at).toLocaleString("en-GB")}] ${who(m)}: ${m.text}`);
+  const rows = chat.messages.map((m) => `<tr><td style="padding:6px 0;${FONT}font-size:14px;line-height:1.55;color:${C.ink};"><span style="color:${m.from === "visitor" ? C.accent : C.brand};font-weight:700;">${esc(who(m))}</span> <span style="color:${C.muted};font-size:12px;">${esc(new Date(m.at).toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit", timeZone: "Asia/Dubai" }))}</span><br/>${esc(m.text)}</td></tr>`).join("");
   return sendMail({
     to: leadRecipients(),
     subject: `Chat transcript: ${chat.name || chat.phone}`,
     text: `Chat with ${chat.name || "-"} (${chat.phone})\n\n${lines.join("\n")}`,
-    html: wrap("Chat transcript", `<p><strong>${esc(chat.name || "-")}</strong> · ${esc(chat.phone)}</p><pre style="white-space:pre-wrap;font-family:inherit">${esc(lines.join("\n"))}</pre>`),
+    html: wrap("Chat transcript", infoCard([["Visitor", chat.name || "Not given"], ["Phone", chat.phone, `tel:${chat.phone.replace(/[^+\d]/g, "")}`], ["Messages", String(chat.messages.length)]]) + `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-top:1px solid ${C.line};margin-top:6px;">${rows}</table>`, `Transcript of the chat with ${chat.name || chat.phone}.`),
   });
 }
 
 /** New ticket (contact form): alert the team and acknowledge the customer */
 export async function notifyTicketCreated(t: Ticket) {
+  const link = `${site.url}/admin/tickets/${t.id}`;
   await sendMail({
     to: leadRecipients(),
     replyTo: t.email,
     subject: `New ticket #${t.number}: ${t.subject}`,
-    text: `From: ${t.name} <${t.email}>${t.phone ? `\nPhone: ${t.phone}` : ""}\n\n${t.message}\n\nReply in the dashboard: ${site.url}/admin/tickets/${t.id}`,
-    html: wrap(`New ticket #${t.number}`, `<p><strong>${esc(t.name)}</strong> &lt;${esc(t.email)}&gt;${t.phone ? ` · ${esc(t.phone)}` : ""}</p><p><strong>${esc(t.subject)}</strong></p><p style="white-space:pre-wrap">${esc(t.message)}</p><p><a href="${site.url}/admin/tickets/${t.id}">Open the ticket</a></p>`),
+    text: `From: ${t.name} <${t.email}>${t.phone ? `\nPhone: ${t.phone}` : ""}\nService: ${t.subject}\n\n${t.message}\n\nReply in the dashboard: ${link}`,
+    html: wrap(
+      `New request: ${t.subject}`,
+      `<p style="margin:0 0 6px;">A new request was submitted on your website. You can reply from the dashboard, or directly by email.</p>` +
+        infoCard([["Customer", t.name], ["Email", t.email, `mailto:${t.email}`], ...(t.phone ? [["Phone", t.phone, `tel:${t.phone.replace(/[^+\d]/g, "")}`] as [string, string, string]] : []), ["Service", t.subject], ["Ticket", `#${t.number}`], ["Received", when(t.createdAt)]]) +
+        `<p style="margin:18px 0 0;font-weight:700;color:${C.ink};">Message</p>` + quote(t.message) +
+        btnRow(button(link, "Open ticket & reply"), button(`mailto:${t.email}?subject=${encodeURIComponent(`Re: ${t.subject} (#${t.number})`)}`, "Reply by email", false)),
+      `${t.name} sent a request about ${t.subject}.`
+    ),
   });
   const first = t.name.trim().split(/\s+/)[0];
   return sendMail({
@@ -118,11 +135,19 @@ export async function notifyTicketCreated(t: Ticket) {
 
 /** Staff replied to a ticket: email the customer */
 export async function notifyTicketReply(t: Ticket, reply: TicketReply) {
+  const first = t.name.trim().split(/\s+/)[0];
   return sendMail({
     to: t.email,
     replyTo: process.env.REPLY_TO_EMAIL || undefined,
     subject: `Re: ${t.subject} (#${t.number})`,
-    text: `${reply.body}\n\n- ${reply.staffName || site.name}`,
-    html: wrap(`Re: ${t.subject}`, `<p style="white-space:pre-wrap">${esc(reply.body)}</p><p>- ${esc(reply.staffName || site.name)}</p>`),
+    text: `Hi ${first},\n\n${reply.body}\n\n- ${reply.staffName || site.name}\n${site.name}\n${site.phone}`,
+    html: wrap(
+      `Hi ${first},`,
+      quote(reply.body) +
+        `<p style="margin:16px 0 4px;">Kind regards,<br/><strong>${esc(reply.staffName || site.name)}</strong><br/><span style="color:${C.muted};">${esc(site.name)}</span></p>` +
+        infoCard([["Your reference", `Ticket #${t.number}`], ["Service", t.subject]]) +
+        btnRow(button(`tel:${tel()}`, "Call us now"), button(`mailto:${site.email}?subject=${encodeURIComponent(`Re: ${t.subject} (#${t.number})`)}`, "Reply by email", false)),
+      reply.body.slice(0, 110)
+    ),
   });
 }
