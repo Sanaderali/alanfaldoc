@@ -77,5 +77,10 @@ export const categoryIcons: Record<string, string> = {
   Documents: "file-circle-check",
   "Company Formation": "building",
   Banking: "building-columns",
+  "Licensing & Ejari": "id-card",
+  "Investment & Holding": "chart-line",
+  "Documents & Attestation": "file-circle-check",
+  "Visas & Residency": "passport",
+  "Country Guides": "earth-americas",
   default: "newspaper",
 };

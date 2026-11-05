@@ -149,7 +149,7 @@ export function cleanService(o: Record<string, unknown>): { item: Omit<Service, 
 }
 
 const REGION_SLUG = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
-function cleanRegions(v: unknown, errors: Errors): Region[] | undefined {
+export function cleanRegions(v: unknown, errors: Errors): Region[] | undefined {
   if (!Array.isArray(v)) return undefined;
   const used = new Set<string>();
   const out: Region[] = [];

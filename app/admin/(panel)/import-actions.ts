@@ -5,7 +5,7 @@ import { can } from "@/lib/rbac";
 import { randomUUID } from "node:crypto";
 import { mutate, readAll, now } from "@/lib/store";
 import { refreshSite } from "@/lib/revalidate";
-import { cleanFaqs, cleanLanding, str } from "@/lib/validate";
+import { cleanFaqs, cleanLanding, cleanRegions, str, type Errors } from "@/lib/validate";
 import type { FaqGroup, Landing, Review } from "@/types/content";
 import { saveItem } from "./actions";
 
@@ -21,7 +21,14 @@ const MAX_ITEMS = 400;
  * dashboard editor. Items go through the normal validation. An item whose URL slug already exists is updated, otherwise created.
  * mode "draft": everything (also updated items) is saved as a draft for review. mode "keep": updated items keep their live status.
  */
-export async function importPack(json: string, mode: "draft" | "keep"): Promise<ImportResult> {
+/** Dubai (UTC+4) calendar: day 1 = tomorrow, time "HH:MM" Dubai time -> ISO UTC. */
+function scheduleAt(day: number, time: string): string {
+  const [hh, mm] = /^\d{1,2}:\d{2}$/.test(time) ? time.split(":").map(Number) : [9, 0];
+  const dubai = new Date(Date.now() + 4 * 3600_000);
+  return new Date(Date.UTC(dubai.getUTCFullYear(), dubai.getUTCMonth(), dubai.getUTCDate() + Math.max(1, Math.round(day)), hh - 4, mm)).toISOString();
+}
+
+export async function importPack(json: string, mode: "draft" | "keep" | "schedule"): Promise<ImportResult> {
   const me = await requirePerm("content.edit");
   let pack: Record<string, unknown>;
   try { pack = JSON.parse(json); } catch { return { ok: false, message: "That file is not valid JSON.", rows: [] }; }
@@ -29,7 +36,7 @@ export async function importPack(json: string, mode: "draft" | "keep"): Promise<
 
   const rows: ImportRow[] = [];
   let total = 0;
-  for (const k of ["servicePatches", "countryPatches", "landings", "faqs", "reviews"] as const) { const l = pack[k]; if (l !== undefined) { if (!Array.isArray(l)) return { ok: false, message: `"${k}" must be a list.`, rows }; total += l.length; } }
+  for (const k of ["servicePatches", "countryPatches", "landings", "regions", "faqs", "reviews"] as const) { const l = pack[k]; if (l !== undefined) { if (!Array.isArray(l)) return { ok: false, message: `"${k}" must be a list.`, rows }; total += l.length; } }
   for (const kind of KINDS) {
     const list = pack[kind];
     if (list === undefined) continue;
@@ -46,11 +53,13 @@ export async function importPack(json: string, mode: "draft" | "keep"): Promise<
       const slug = String(raw.slug ?? "");
       const existing = (await readAll(kind as Kind)).find((x) => (x as { slug: string }).slug === slug) as { id?: string; status?: string } | undefined;
       let status: string = "draft";
+      let publishAt = "";
       if (existing && mode === "keep") status = existing.status ?? "published";
-      if (status === "published" && !can(me, "content.publish")) status = "draft";
+      if (kind === "posts" && mode === "schedule" && Number(raw.scheduleDay) > 0) { status = "published"; publishAt = scheduleAt(Number(raw.scheduleDay), String(raw.scheduleTime ?? "09:00")); }
+      if (status === "published" && !can(me, "content.publish")) { status = "draft"; publishAt = ""; }
       const full = existing as Record<string, unknown> | undefined;
       const merged = full ? { ...full, ...raw } : raw; // fields the pack leaves out (e.g. a country's states) are kept
-      const r = await saveItem(kind, JSON.stringify({ ...merged, status, publishAt: "" }), existing?.id);
+      const r = await saveItem(kind, JSON.stringify({ ...merged, status, publishAt }), existing?.id);
       rows.push({ kind, title, slug, result: r.ok ? (existing ? "updated" : "created") : "error", message: r.ok ? undefined : [r.message, ...Object.values(r.errors ?? {})].filter(Boolean).join(" · ") });
     }
   }
@@ -65,6 +74,25 @@ export async function importPack(json: string, mode: "draft" | "keep"): Promise<
       await mutate(coll, (all) => (all as unknown as { slug: string }[]).map((x) => (x.slug === slug ? { ...x, ...(typeof p.featured === "boolean" ? { featured: p.featured } : {}), ...(status ? { status } : {}), updatedAt: now() } : x)) as never);
       rows.push({ kind: label, title: ex.title ?? ex.name ?? slug, slug, result: "updated", message: [typeof p.featured === "boolean" ? `featured: ${p.featured}` : "", status ? `status: ${status}` : ""].filter(Boolean).join(", ") });
     }
+  }
+
+  /* ---- states / provinces with their own pages: merged into the country, existing states are kept ---- */
+  for (const raw of (pack.regions as Record<string, unknown>[] | undefined) ?? []) {
+    const countrySlug = String(raw.country ?? ""), name = String(raw.name ?? "");
+    const country = (await readAll("countries")).find((c) => c.slug === countrySlug);
+    const label = `${name}${country ? `, ${country.name}` : ""}`;
+    if (!country || !name) { rows.push({ kind: "region", title: label || "(unnamed)", slug: countrySlug, result: "error", message: !country ? `No country with the URL "${countrySlug}"` : "A region needs a name" }); continue; }
+    const list = country.regions ?? [];
+    const i = list.findIndex((r) => r.name.toLowerCase() === name.toLowerCase() || (!!raw.slug && r.slug === raw.slug));
+    const { country: _c, ...fields } = raw; void _c;
+    const incoming = { ...(i >= 0 ? list[i] : {}), ...fields, page: i >= 0 && mode === "keep" ? list[i].page ?? "draft" : "draft" };
+    const errs: Errors = {};
+    const clean = cleanRegions([incoming], errs)?.[0];
+    if (!clean || Object.keys(errs).length) { rows.push({ kind: "region", title: label, slug: String(raw.slug ?? ""), result: "error", message: Object.values(errs).join(" · ") || "Invalid region" }); continue; }
+    const next = { ...clean, updatedAt: now() };
+    const regions = i >= 0 ? list.map((r, n) => (n === i ? next : r)) : [...list, next];
+    await mutate("countries", (all) => all.map((c) => (c.slug === countrySlug ? { ...c, regions, updatedAt: now() } : c)));
+    rows.push({ kind: "region", title: label, slug: `${countrySlug}/${clean.slug}`, result: i >= 0 ? "updated" : "created" });
   }
 
   /* ---- service x country pages (always drafts) ---- */
