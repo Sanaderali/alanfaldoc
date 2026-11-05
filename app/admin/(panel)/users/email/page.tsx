@@ -13,6 +13,9 @@ export default async function Page() {
     ["Connection", mailMode()],
     ["Sent from", mailFrom() || "(MAIL_FROM not set)"],
     ["Team alerts go to", leadRecipients().join(", ") || "(LEAD_ALERT_EMAIL not set)"],
+    ["SMTP host / port", process.env.SMTP_HOST ? `${process.env.SMTP_HOST} : ${process.env.SMTP_PORT ?? "465 (default)"}` : "(SMTP_HOST not set)"],
+    ["SMTP user", process.env.SMTP_USER || "(SMTP_USER not set)"],
+    ["SMTP password", process.env.SMTP_PASS ? `${process.env.SMTP_PASS.length} characters received (compare with your real password's length)` : "(SMTP_PASS not set)"],
   ];
   return (
     <>
