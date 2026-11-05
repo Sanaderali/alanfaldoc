@@ -1,11 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 /** Home page quick request: name, email and service. Creates a support ticket and sends the thank-you email. */
 export default function HeroForm({ services }: { services: string[] }) {
   const [f, setF] = useState({ name: "", email: "", service: "" });
   const [trap, setTrap] = useState("");
+  const opened = useRef(0);
+  useEffect(() => { opened.current = Date.now(); }, []);
   const [st, setSt] = useState<{ sending: boolean; ok?: { name: string; number: number }; error?: string }>({ sending: false });
 
   const submit = async (e: React.FormEvent) => {
@@ -15,7 +17,7 @@ export default function HeroForm({ services }: { services: string[] }) {
       const r = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: f.name, email: f.email, question: f.service || "General enquiry", message: `Consultation request from the home page.${f.service ? ` Service: ${f.service}.` : ""}`, website: trap }),
+        body: JSON.stringify({ name: f.name, email: f.email, question: f.service || "General enquiry", message: `Consultation request from the home page.${f.service ? ` Service: ${f.service}.` : ""}`, website: trap, t: opened.current }),
       });
       const d = await r.json().catch(() => ({}));
       if (!r.ok) throw new Error(d.error ?? "Could not send your request. Please try again.");
@@ -30,7 +32,7 @@ export default function HeroForm({ services }: { services: string[] }) {
     return (
       <div role="status" className="text-center py-4">
         <p className="text-lg font-bold text-brand-text">Thank you, {st.ok.name}!</p>
-        <p className="text-gray-600 text-sm mt-1">We have received your request (ref #{st.ok.number}) and sent a confirmation to your email. Our team will get back to you as soon as possible.</p>
+        <p className="text-gray-600 text-sm mt-1">We have received your request{st.ok.number ? ` (ref #${st.ok.number})` : ""} and sent a confirmation to your email. Our team will get back to you as soon as possible.</p>
         <button type="button" onClick={() => setSt({ sending: false })} className="mt-3 text-sm text-brand-text underline">Send another request</button>
       </div>
     );

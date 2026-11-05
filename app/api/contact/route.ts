@@ -1,4 +1,5 @@
 import { clientIp } from "@/lib/auth";
+import { checkSubmission } from "@/lib/antispam";
 import { cleanText } from "@/lib/chat";
 import { notifyTicketCreated } from "@/lib/notify";
 import { allow } from "@/lib/ratelimit";
@@ -25,6 +26,13 @@ export async function POST(req: Request) {
   if (!name) return Response.json({ error: "Please enter your name." }, { status: 400 });
   if (!EMAIL_RE.test(email)) return Response.json({ error: "Please enter a valid email address." }, { status: 400 });
   if (message.length < 5) return Response.json({ error: "Please write a short message." }, { status: 400 });
+
+  const verdict = await checkSubmission({ ip, name, email, message, openedAt: body.t });
+  if (verdict.action === "drop") {
+    console.info(`[spam] dropped (${verdict.why}) from ${ip}`);
+    return Response.json({ ok: true, number: 0 }); // looks like success so bots learn nothing; nothing is saved or emailed
+  }
+  if (verdict.action === "reject") return Response.json({ error: verdict.message }, { status: verdict.status });
 
   let ticket!: Ticket;
   await mutate("tickets", (all) => {

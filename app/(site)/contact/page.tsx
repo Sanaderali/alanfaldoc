@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "@/app/components/SiteLink";
 import Icon from "@/app/components/Icon";
 import { site } from "@/data/site";
@@ -15,6 +15,8 @@ export default function ContactPage() {
 
   const [state, setState] = useState<{ sending: boolean; ok?: number; error?: string }>({ sending: false });
   const [trap, setTrap] = useState("");
+  const opened = useRef(0);
+  useEffect(() => { opened.current = Date.now(); }, []);
 
   /** Sends the message to /api/contact, where it becomes a support ticket for the team. */
   const handleSubmit = async (e: React.FormEvent) => {
@@ -22,7 +24,7 @@ export default function ContactPage() {
     setState({ sending: true });
     const topics: Record<string, string> = { "company-formation": "Company Formation", "visa-services": "Visa Services", "pro-services": "PRO Services", "document-clearing": "Document Clearing", "trade-license": "Trade License", other: "Other Services" };
     try {
-      const r = await fetch("/api/contact", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...formData, question: topics[formData.question] ?? "General enquiry", website: trap }) });
+      const r = await fetch("/api/contact", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...formData, question: topics[formData.question] ?? "General enquiry", website: trap, t: opened.current }) });
       const d = await r.json();
       if (!r.ok) throw new Error(d.error ?? "Something went wrong. Please try again.");
       setState({ sending: false, ok: d.number });
@@ -121,7 +123,7 @@ export default function ContactPage() {
             <div className="bg-white rounded-lg p-8 shadow-md border border-gray-100">
               <form onSubmit={handleSubmit} className="space-y-6">
                 <input type="text" name="website" tabIndex={-1} autoComplete="off" value={trap} onChange={(e) => setTrap(e.target.value)} className="hidden" aria-hidden="true" />
-                {state.ok && <p role="status" className="p-4 rounded-xl bg-brand-50 border border-brand-200 text-brand-text text-sm font-medium">Thank you! Your message was sent (ticket #{state.ok}). We will reply by email shortly.</p>}
+                {state.ok !== undefined && <p role="status" className="p-4 rounded-xl bg-brand-50 border border-brand-200 text-brand-text text-sm font-medium">Thank you! Your message was sent{state.ok ? ` (ticket #${state.ok})` : ""}. Our team will get back to you as soon as possible.</p>}
                 {state.error && <p role="alert" className="p-4 rounded-xl bg-accent-50 border border-accent-100 text-accent text-sm font-medium">{state.error}</p>}
                 <div>
                   <input

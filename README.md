@@ -170,6 +170,10 @@ The full permission matrix is shown on the Team page. First run: logging in with
 - **Our Success Stories** comes from **Dashboard -> Reviews** (add, reorder, hide, rating and photo). The section stays hidden until at least one review is published. Add only genuine reviews.
 - Phone, address and email for the whole site are in `data/site.ts` (header, footer, contact page, schema and `llms.txt` all read from there).
 
+### Spam protection (contact + home request forms)
+
+No CAPTCHA for real customers. Layers (see `lib/antispam.ts`): hidden trap field; "submitted too fast / without the page timer" check; link and spam-keyword filters; throw-away email domains refused; and limits per IP (3/hour, 8/day), per email (2/hour) and identical messages, counted from the saved tickets so they survive app restarts. Spam is silently dropped (no ticket, no email), so bots learn nothing; the server log shows `[spam] dropped (reason)`. Edit the word list / limits in `lib/antispam.ts`.
+
 ### Support Activity (manage your support team)
 
 **Team → Support Activity** (Super Admin / anyone with *Manage users*) shows, for each person who can reply to tickets or chat: which channels they can reply to, how many tickets they replied to, total replies, tickets currently open / pending that are assigned to them, tickets they closed, average first-response time and chats handled. Filter by 7 / 30 / 90 days or all time. A ticket is assigned to whoever replies first, or you can choose **Assigned to** on the ticket; the Tickets list has an *Assigned to* column.
