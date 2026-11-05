@@ -94,7 +94,7 @@ export default function ChatPanel({ onClose }: { onClose: () => void }) {
   const newChat = () => { writeChat(null); setChat(null); setMsgs([]); total.current = 0; setStatus("open"); };
 
   return (
-    <div role="dialog" aria-label="Live chat" className="fixed z-[70] bottom-24 right-3 left-3 sm:left-auto sm:right-5 sm:w-[380px] h-[min(560px,calc(100vh-8rem))] flex flex-col bg-white rounded-2xl shadow-[0_20px_60px_-10px_rgba(0,0,0,.35)] border border-gray-200 overflow-hidden animate-scale-in">
+    <div role="dialog" aria-label="Live chat" className="fixed z-[70] bottom-20 left-3 right-3 sm:right-auto sm:left-5 sm:w-[380px] h-[min(560px,calc(100vh-7rem))] flex flex-col bg-white rounded-2xl shadow-[0_20px_60px_-10px_rgba(0,0,0,.35)] border border-gray-200 overflow-hidden animate-scale-in">
       <header className="bg-brand text-white px-5 py-4 flex items-center gap-3">
         <span className="w-10 h-10 rounded-full bg-white/15 flex items-center justify-center"><Icon name="headset" className="text-lg" /></span>
         <div className="flex-1 min-w-0"><p className="font-semibold leading-tight">Chat with us</p><p className="text-xs text-white/80">We usually reply within minutes</p></div>

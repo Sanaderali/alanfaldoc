@@ -8,10 +8,11 @@ import { articleLd, countryPageLd, faqLd, serviceLd } from "@/lib/seo";
 import { btnGhost, btnPrimary, inputCls } from "../../ui";
 import { saveItem, duplicateItem, savePreview, trashItem } from "../actions";
 import { CategoryBox, TagBox } from "./TaxonomyBoxes";
+import RegionsEditor from "./RegionsEditor";
 import RichEditor from "./RichEditor";
 import Flag from "@/app/components/Flag";
 import { BUILTIN_FLAGS, builtinFlag, emojiToCode } from "@/lib/flags";
-import { CheckList, Counter, Field, FaqsEditor, ImageField, LinesField, PairsEditor, RegionsEditor, SchemaPanel, SeoPanel, TextArea, TextField, Toggle, type Errors, type Form } from "./fields";
+import { CheckList, Counter, Field, FaqsEditor, ImageField, LinesField, PairsEditor, SchemaPanel, SeoPanel, TextArea, TextField, Toggle, type Errors, type Form } from "./fields";
 
 type Kind = "services" | "countries" | "posts";
 export type EditorContext = { siteUrl: string; siteName: string; services: { value: string; label: string }[]; categories: { name: string; count: number }[]; tags: { name: string; count: number }[] };
@@ -305,7 +306,7 @@ export default function ItemEditor({ kind, id, initial, ctx }: { kind: Kind; id?
               <summary className="cursor-pointer text-sm font-medium text-a-text">States / provinces ({f.regions?.length ?? 0}) <span className="text-a-muted font-normal">· shown instead of "Big Cities", great for local search</span></summary>
               <div className="pt-3 space-y-4">
                 <Field label="Section name" htmlFor="regionsLabel" hint="Shown as the heading, e.g. States, Provinces, Regions"><TextField id="regionsLabel" value={f.regionsLabel ?? ""} onChange={(v) => set({ regionsLabel: v })} placeholder="States" /></Field>
-                <RegionsEditor value={f.regions ?? []} onChange={(v) => set({ regions: v })} />
+                <RegionsEditor value={f.regions ?? []} onChange={(v) => set({ regions: v })} countrySlug={f.slug} />
               </div>
             </details>
             <details><summary className="cursor-pointer text-sm font-medium text-a-muted">Sidebar links & related services</summary>

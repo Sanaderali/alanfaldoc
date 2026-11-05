@@ -2,11 +2,12 @@ import "server-only";
 import fs from "node:fs/promises";
 import path from "node:path";
 import { randomUUID } from "node:crypto";
-import type { Chat, Country, FaqGroup, MediaItem, PageSettings, Post, Review, Service, Term, Ticket, User } from "@/types/content";
+import type { Chat, Country, FaqGroup, MediaItem, PageSettings, Post, Review, Service, WhatsAppNumber, Term, Ticket, User } from "@/types/content";
 import { countries as seedCountries } from "@/data/countries";
 import { services as seedServices } from "@/data/services";
 import { posts as seedPosts } from "@/data/posts";
 import { faqGroups as seedFaqs } from "@/data/faqs";
+import { site } from "@/data/site";
 
 /**
  * File-based content store (no database needed, works on cPanel Node hosting).
@@ -31,6 +32,7 @@ export type CollectionMap = {
   tickets: Ticket;
   chats: Chat;
   reviews: Review;
+  whatsapp: WhatsAppNumber;
 };
 export type CollectionName = keyof CollectionMap;
 
@@ -70,6 +72,7 @@ function seed<K extends CollectionName>(name: K): CollectionMap[K][] {
     tickets: [],
     chats: [],
     reviews: [],
+    whatsapp: [{ id: "wa-main", label: "Main line", number: site.phone.replace(/\D/g, ""), active: true }],
   };
   return data[name] as CollectionMap[K][];
 }
@@ -119,6 +122,35 @@ async function mergeNewBuiltInCountries(items: Country[]): Promise<{ items: Coun
   return { items: [...items, ...add], changed: add.length > 0 };
 }
 
+/**
+ * Region pages shipped with the built-in content (e.g. the Punjab guide) are copied ONCE into a stored country whose state has no
+ * page content yet. Only empty fields are filled, and `v` records it, so your own edits are never overwritten.
+ */
+const REGION_FIELDS = ["slug", "page", "headline", "answer", "facts", "contentHtml", "faqs", "sources", "updatedAt"] as const;
+function backfillRegions(items: Country[]): { items: Country[]; changed: boolean } {
+  let changed = false;
+  const out = items.map((c) => {
+    const seedC = seedCountries.find((x) => x.slug === c.slug);
+    if (!seedC?.regions?.some((r) => r.v)) return c;
+    const regions = [...(c.regions ?? [])];
+    let touched = false;
+    for (const sr of seedC.regions) {
+      if (!sr.v) continue;
+      const i = regions.findIndex((r) => r.name === sr.name);
+      if (i < 0 || (regions[i].v ?? 0) >= sr.v) continue;
+      const cur = regions[i] as unknown as Record<string, unknown>;
+      const patch: Record<string, unknown> = { v: sr.v };
+      for (const k of REGION_FIELDS) if (cur[k] === undefined || cur[k] === "" ) patch[k] = (sr as unknown as Record<string, unknown>)[k];
+      regions[i] = { ...regions[i], ...patch } as typeof regions[number];
+      touched = true;
+    }
+    if (!touched) return c;
+    changed = true;
+    return { ...c, regions };
+  });
+  return { items: out, changed };
+}
+
 /** parsed JSON is cached until the file changes (cheap stat), so frequent polling (chat) stays fast */
 const cache = new Map<string, { sig: string; data: unknown }>();
 
@@ -133,6 +165,8 @@ export async function readAll<K extends CollectionName>(name: K): Promise<Collec
     if (name === "countries") {
       const m = await mergeNewBuiltInCountries(out as unknown as Country[]);
       if (m.changed) { out = m.items as unknown as CollectionMap[K][]; try { await writeAll(name, out); } catch { /* read-only disk */ } }
+      const b = backfillRegions(out as unknown as Country[]);
+      if (b.changed) { out = b.items as unknown as CollectionMap[K][]; try { await writeAll(name, out); } catch { /* read-only disk */ } }
     }
     if (name === "services" || name === "countries" || name === "posts") {
       const seedItems = (name === "services" ? seedServices : name === "countries" ? seedCountries : seedPosts) as unknown as { slug: string; geoV?: number }[];

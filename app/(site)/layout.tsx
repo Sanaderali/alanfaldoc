@@ -3,7 +3,8 @@ import Footer from "@/app/components/Footer";
 import ChatLauncher from "@/app/components/ChatLauncher";
 import IdlePrefetch from "@/app/components/IdlePrefetch";
 import JsonLd from "@/app/components/JsonLd";
-import { getServices } from "@/lib/content";
+import FloatingWhatsApp from "@/app/components/FloatingWhatsApp";
+import { getServices, getWhatsApp } from "@/lib/content";
 import { organizationLd, websiteLd } from "@/lib/seo";
 
 /** Scheduled items go live within 15 minutes even if nobody saves anything in the dashboard. */
@@ -11,7 +12,7 @@ export const revalidate = 900;
 
 /** Public website shell (header, footer, site-wide schema). The admin dashboard has its own layout. */
 export default async function SiteLayout({ children }: { children: React.ReactNode }) {
-  const services = await getServices();
+  const [services, wa] = await Promise.all([getServices(), getWhatsApp()]);
   return (
     <>
       <JsonLd data={[organizationLd(services), websiteLd()]} />
@@ -20,6 +21,7 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
       <main id="main">{children}</main>
       <Footer />
       <ChatLauncher />
+      <FloatingWhatsApp numbers={wa.map((w) => ({ label: w.label, number: w.number, message: w.message }))} />
       <IdlePrefetch />
     </>
   );

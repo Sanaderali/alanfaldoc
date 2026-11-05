@@ -53,11 +53,11 @@ export default function ChatLauncher() {
         onClick={() => { setOpen((o) => !o); setUnread(0); }}
         aria-label={open ? "Close live chat" : "Open live chat"}
         aria-expanded={open}
-        className="fixed z-[70] bottom-5 right-5 inline-flex items-center gap-2.5 h-14 pl-5 pr-6 rounded-full bg-brand text-white font-semibold text-[15px] shadow-[0_10px_30px_-5px_rgba(10,92,54,.55)] hover:-translate-y-0.5 hover:shadow-[0_14px_34px_-5px_rgba(10,92,54,.65)] active:scale-95 transition-all duration-200 focus:outline-none focus-visible:ring-4 focus-visible:ring-brand/40"
+        title={open ? "Close live chat" : "Live chat"}
+        className="fixed z-[70] bottom-5 left-4 sm:left-5 w-12 h-12 rounded-full bg-brand text-white flex items-center justify-center shadow-[0_8px_22px_-6px_rgba(10,92,54,.6)] hover:scale-105 active:scale-95 transition-transform focus:outline-none focus-visible:ring-4 focus-visible:ring-brand/40"
       >
-        <Icon name={open ? "xmark" : "comments"} className="text-lg" />
-        <span className="hidden sm:inline">{open ? "Close" : "Chat with us"}</span>
-        {!open && unread > 0 && <span className="absolute -top-1 -right-1 min-w-6 h-6 px-1.5 rounded-full bg-accent text-white text-xs font-bold flex items-center justify-center ring-2 ring-white">{unread}</span>}
+        <Icon name={open ? "xmark" : "comments"} fixedWidth={false} className="text-xl" />
+        {!open && unread > 0 && <span className="absolute -top-1 -right-1 min-w-5 h-5 px-1 rounded-full bg-accent text-white text-[11px] font-bold flex items-center justify-center ring-2 ring-white">{unread}</span>}
       </button>
     </>
   );

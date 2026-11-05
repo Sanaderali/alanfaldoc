@@ -95,7 +95,47 @@ export type Country = Managed & {
   seo?: Seo;
 };
 
-export type Region = { name: string; summary: string; /** comma separated main cities */ cities?: string };
+/**
+ * A state / province / region. It always shows as a card on the country page. When `page` is "published" it also gets its own page
+ * at /countries/<country>/<slug> (the long-form content below), which the card then links to.
+ */
+export type Region = {
+  name: string;
+  summary: string;
+  /** comma separated main cities */
+  cities?: string;
+  /** URL part of the state page (auto from the name when empty) */
+  slug?: string;
+  /** "published" = the state page is live; anything else = card only */
+  page?: "draft" | "published";
+  headline?: string;
+  /** answer-first summary (40-70 words) for search and AI assistants */
+  answer?: string;
+  /** short facts shown as bullets ("Community in the UAE: ...") */
+  facts?: Fact[];
+  /** article written in the visual editor (sanitised HTML) */
+  contentHtml?: string;
+  faqs?: Faq[];
+  sources?: { title: string; url: string }[];
+  seo?: Seo;
+  /** internal: seed version this region was last filled from */
+  v?: number;
+  updatedAt?: string;
+};
+
+/** WhatsApp contact numbers (Dashboard -> WhatsApp). The first active number is the default for buttons. */
+export type WhatsAppNumber = {
+  id: string;
+  /** shown to visitors, e.g. "Visa enquiries" */
+  label: string;
+  /** digits with country code, e.g. 971508051192 (a leading + and spaces are accepted when saving) */
+  number: string;
+  /** which team role looks after this number (internal) */
+  role?: Role;
+  /** message pre-filled in the visitor's WhatsApp */
+  message?: string;
+  active: boolean;
+};
 
 export type Service = Managed & {
   slug: string;

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { site } from "@/data/site";
-import type { Country, Faq, Post, Seo, Service } from "@/types/content";
+import type { Country, Faq, Post, Seo, Service, Region } from "@/types/content";
 
 /**
  * Everything SEO / AI-SEO lives here: metadata + schema.org (JSON-LD) builders.
@@ -232,4 +232,23 @@ export function customLd(raw?: string): object | null {
   } catch {
     return null;
   }
+}
+
+export function regionPageLd(country: Country, r: Region, path: string) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": `${abs(path)}#webpage`,
+    url: abs(path),
+    name: r.headline || `${r.name}, ${country.name}`,
+    description: r.answer || r.summary,
+    isPartOf: { "@id": `${abs("/")}#website` },
+    about: { "@type": "AdministrativeArea", name: r.name, containedInPlace: { "@type": "Country", name: country.name } },
+    inLanguage: "en",
+    ...(r.updatedAt ? { dateModified: r.updatedAt, lastReviewed: r.updatedAt } : {}),
+    author: authorEntity(country.author),
+    publisher: { "@id": orgId() },
+    speakable,
+    ...citations(r.sources),
+  };
 }

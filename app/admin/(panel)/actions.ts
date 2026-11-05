@@ -45,6 +45,13 @@ export async function saveItem(kind: Kind, payload: string, id?: string): Promis
     for (const k of ["image", "imageAlt", "publishAt", "schemaCustom", "seo", "serviceType", "categories", "author", "readMinutes", "contentHtml", "flagImage", "regions", "regionsLabel", "answer", "takeaways", "summaryTable", "sources"] as const) {
       if (!(k in item)) delete (next as Record<string, unknown>)[k];
     }
+    if (kind === "countries") {
+      // each state keeps its own "last updated" date: only states whose content really changed get a new one
+      const before = new Map(((prev as { regions?: { name: string }[] } | undefined)?.regions ?? []).map((r) => [r.name, r]));
+      const strip = (r: object) => JSON.stringify({ ...r, updatedAt: undefined });
+      const regions = (next as { regions?: { name: string; updatedAt?: string }[] }).regions;
+      if (regions) for (const r of regions) { const old = before.get(r.name) as { updatedAt?: string } | undefined; r.updatedAt = old && strip(old) === strip(r) ? old.updatedAt ?? now() : now(); }
+    }
     if (kind === "posts" && prev) (next as { updated?: string }).updated = now().slice(0, 10);
     return i >= 0 ? items.map((x, n) => (n === i ? next : x)) : [...items, next];
   });

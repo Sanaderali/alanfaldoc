@@ -1,5 +1,5 @@
 import { cleanRichHtml, htmlToText } from "@/lib/html";
-import type { ContentSection, Country, Faq, PageSettings, Post, Seo, Service } from "@/types/content";
+import type { ContentSection, Country, Faq, PageSettings, Post, Region, Seo, Service } from "@/types/content";
 
 /** Server-side cleaning + validation of everything the dashboard saves. Never trust the browser. */
 
@@ -148,6 +148,44 @@ export function cleanService(o: Record<string, unknown>): { item: Omit<Service, 
   };
 }
 
+const REGION_SLUG = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+function cleanRegions(v: unknown, errors: Errors): Region[] | undefined {
+  if (!Array.isArray(v)) return undefined;
+  const used = new Set<string>();
+  const out: Region[] = [];
+  for (const r of (v as Record<string, unknown>[]).slice(0, 80)) {
+    const name = str(r?.name, 80);
+    if (!name) continue;
+    let slug = str(r.slug, 80) || slugify(name);
+    if (!REGION_SLUG.test(slug)) slug = slugify(name);
+    let n = 2; const base = slug; while (used.has(slug)) slug = `${base}-${n++}`; used.add(slug);
+    const sources = Array.isArray(r.sources) ? (r.sources as { title?: string; url?: string }[]).map((x) => ({ title: str(x?.title, 160), url: str(x?.url, 500) })).filter((x) => x.title && x.url).slice(0, 20) : [];
+    if (sources.some((x) => !/^https:\/\/[^\s]+$/.test(x.url))) errors.regions = `${name}: every source needs a full https:// link`;
+    const facts = Array.isArray(r.facts) ? (r.facts as { label?: string; value?: string }[]).map((f) => ({ label: str(f?.label, 80), value: str(f?.value, 300) })).filter((f) => f.label && f.value).slice(0, 30) : [];
+    const seoErrors: Errors = {};
+    const seo = cleanSeo(r.seo, seoErrors);
+    const html = cleanRichHtml(r.contentHtml);
+    const page = r.page === "published" ? "published" : "draft";
+    if (page === "published" && !htmlToText(html) && !str(r.answer, 700)) errors.regions = `${name}: write some page content (or a quick answer) before giving the state its own page`;
+    out.push({
+      name, slug,
+      summary: str(r.summary, 900),
+      ...(str(r.cities, 240) ? { cities: str(r.cities, 240) } : {}),
+      page,
+      ...(str(r.headline, 200) ? { headline: str(r.headline, 200) } : {}),
+      ...(str(r.answer, 700) ? { answer: str(r.answer, 700) } : {}),
+      ...(facts.length ? { facts } : {}),
+      ...(htmlToText(html) || /<img/.test(html) ? { contentHtml: html } : {}),
+      ...(cleanFaqs(r.faqs).length ? { faqs: cleanFaqs(r.faqs) } : {}),
+      ...(sources.length ? { sources } : {}),
+      ...(Object.keys(seo).length ? { seo } : {}),
+      ...(typeof r.v === "number" ? { v: r.v } : {}),
+      ...(typeof r.updatedAt === "string" ? { updatedAt: r.updatedAt } : {}),
+    });
+  }
+  return out;
+}
+
 export function cleanCountry(o: Record<string, unknown>): { item: Omit<Country, "createdAt" | "updatedAt">; errors: Errors } {
   const errors: Errors = {};
   const name = str(o.name, 120);
@@ -177,12 +215,7 @@ export function cleanCountry(o: Record<string, unknown>): { item: Omit<Country, 
       serviceSlugs: strList(o.serviceSlugs, 80, 20),
       featured: bool(o.featured),
       regionsLabel: str(o.regionsLabel, 40) || undefined,
-      regions: Array.isArray(o.regions)
-        ? (o.regions as { name?: string; summary?: string; cities?: string }[])
-            .map((r) => ({ name: str(r?.name, 80), summary: str(r?.summary, 900), cities: str(r?.cities, 240) || undefined }))
-            .filter((r) => r.name)
-            .slice(0, 80)
-        : undefined,
+      regions: cleanRegions(o.regions, errors),
       faqs: cleanFaqs(o.faqs),
     } as never,
   };

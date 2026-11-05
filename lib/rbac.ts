@@ -36,6 +36,7 @@ export const PERMISSIONS = [
   { key: "chat.reply", label: "Reply to live chats" },
   { key: "tickets.view", label: "View tickets" },
   { key: "tickets.reply", label: "Reply to and close tickets" },
+  { key: "settings.manage", label: "Manage site settings (WhatsApp numbers)" },
   { key: "backup.export", label: "Download backups" },
   { key: "users.manage", label: "Manage team members and roles" },
 ] as const;

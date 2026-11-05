@@ -2,7 +2,7 @@ import Link from "@/app/components/SiteLink";
 import BlogCard from "@/app/components/BlogCard";
 import BlogSidebar from "@/app/components/BlogSidebar";
 import Breadcrumb from "@/app/components/Breadcrumb";
-import CTABanner from "@/app/components/CTABanner";
+import CtaBlock from "@/app/components/CtaBlock";
 import Icon from "@/app/components/Icon";
 import JsonLd from "@/app/components/JsonLd";
 import PostBody from "@/app/components/PostBody";
@@ -50,7 +50,10 @@ export default async function PostView({ post }: { post: Post }) {
 
             <p className="text-lg text-gray-600 leading-relaxed mb-6">{post.excerpt}</p>
             <GeoBlock item={post} />
+            <CtaBlock variant="inline" className="!mt-0" />
             {post.contentHtml ? <RichContent html={post.contentHtml} /> : <PostBody body={post.body} />}
+
+            <CtaBlock title="Need help with this?" text="Talk to our advisors on WhatsApp, send us a request or call. We will guide you through the next steps." />
 
             {post.tags && post.tags.length > 0 && (
               <Reveal className="mt-10 flex flex-wrap items-center gap-2">
@@ -111,7 +114,7 @@ export default async function PostView({ post }: { post: Post }) {
         </section>
       )}
 
-      <CTABanner />
+      <CtaBlock variant="banner" />
     </>
   );
 }

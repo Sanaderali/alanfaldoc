@@ -1,4 +1,4 @@
-import type { Country, FaqGroup, PageKey, Post, Review, Seo, Service } from "@/types/content";
+import type { Country, FaqGroup, PageKey, Post, Region, Review, Seo, Service, WhatsAppNumber } from "@/types/content";
 import { readAll } from "@/lib/store";
 import { htmlToText } from "@/lib/html";
 
@@ -97,4 +97,20 @@ export function pickFeatured<T extends { featured?: boolean }>(items: T[], limit
 
 export async function getReviews(): Promise<Review[]> {
   return live(await readAll("reviews"));
+}
+
+/* ---------------- WhatsApp numbers ---------------- */
+export async function getWhatsApp(): Promise<WhatsAppNumber[]> {
+  return (await readAll("whatsapp")).filter((w) => w.active && /^\d{7,15}$/.test(w.number));
+}
+export const waLink = (number: string, text?: string) => `https://wa.me/${number}${text ? `?text=${encodeURIComponent(text)}` : ""}`;
+
+/* ---------------- States / provinces (own pages) ---------------- */
+export const regionSlug = (r: { name: string; slug?: string }) => (r.slug && r.slug.trim()) || slugify(r.name);
+export const regionHasPage = (r: Region) => r.page === "published";
+export const regionHref = (countrySlug: string, r: Region) => `/countries/${countrySlug}/${regionSlug(r)}`;
+export async function getRegion(countrySlug: string, regionSlugValue: string): Promise<{ country: Country; region: Region } | undefined> {
+  const country = await getCountry(countrySlug);
+  const region = country?.regions?.find((r) => regionSlug(r) === regionSlugValue && regionHasPage(r));
+  return country && region ? { country, region } : undefined;
 }

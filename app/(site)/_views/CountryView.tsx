@@ -5,14 +5,14 @@ import Carousel from "@/app/components/Carousel";
 import Flag from "@/app/components/Flag";
 import ContentSections from "@/app/components/ContentSections";
 import CountryCard from "@/app/components/CountryCard";
-import CTABanner from "@/app/components/CTABanner";
 import FaqList from "@/app/components/FaqList";
 import JsonLd from "@/app/components/JsonLd";
 import Reveal from "@/app/components/Reveal";
 import RichContent from "@/app/components/RichContent";
 import { Byline, GeoBlock, Sources } from "@/app/components/GeoBlock";
 import { buildMetadata, countryPageLd, customLd, faqLd } from "@/lib/seo";
-import { getCountries, getCountry, getServices } from "@/lib/content";
+import { getCountries, getCountry, getServices, regionHasPage, regionHref } from "@/lib/content";
+import CtaBlock from "@/app/components/CtaBlock";
 import type { Country } from "@/types/content";
 
 /** Shared layout for the live page and the dashboard preview. */
@@ -50,6 +50,7 @@ export default async function CountryView({ country }: { country: Country }) {
             <Byline author={country.author} updated={country.updatedAt} published={country.createdAt} className="mb-6" />
             <GeoBlock item={country} tableTitle={`${country.name} at a glance`} />
             {country.intro && <p className="text-gray-600 leading-relaxed mb-6">{country.intro}</p>}
+            <CtaBlock variant="inline" topic={country.name} className="!mt-0" />
 
             <Reveal>
               <ul className="space-y-2 mb-10">
@@ -71,6 +72,7 @@ export default async function CountryView({ country }: { country: Country }) {
                 </Reveal>
               ))
             )}
+            <CtaBlock topic={country.name} />
             {country.regions && country.regions.length > 0 && (
               <Reveal>
                 <section id="regions" className="mt-10" aria-labelledby="regions-h">
@@ -79,9 +81,10 @@ export default async function CountryView({ country }: { country: Country }) {
                   <div className="grid sm:grid-cols-2 gap-4">
                     {country.regions.map((r) => (
                       <article key={r.name} className="rounded-lg border border-gray-200 bg-white p-5 hover:shadow-md transition-shadow">
-                        <h3 className="text-lg font-bold text-ink mb-1.5">{r.name}</h3>
+                        <h3 className="text-lg font-bold text-ink mb-1.5">{regionHasPage(r) ? <Link href={regionHref(country.slug, r)} className="hover:text-brand-text">{r.name}</Link> : r.name}</h3>
                         {r.summary && <p className="text-gray-600 text-sm leading-relaxed">{r.summary}</p>}
                         {r.cities && <p className="text-sm mt-2"><span className="font-semibold text-ink">Main cities:</span> <span className="text-gray-600">{r.cities}</span></p>}
+                        {regionHasPage(r) && <Link href={regionHref(country.slug, r)} className="mt-3 inline-flex items-center text-sm font-medium text-brand-text hover:underline">Read the {r.name} guide <span aria-hidden="true" className="ml-1">›</span></Link>}
                       </article>
                     ))}
                   </div>
@@ -155,7 +158,7 @@ export default async function CountryView({ country }: { country: Country }) {
         </section>
       )}
 
-      <CTABanner />
+      <CtaBlock variant="banner" topic={country.name} />
     </>
   );
 }

@@ -174,6 +174,12 @@ The full permission matrix is shown on the Team page. First run: logging in with
 
 No CAPTCHA for real customers. Layers (see `lib/antispam.ts`): hidden trap field; "submitted too fast / without the page timer" check; link and spam-keyword filters; throw-away email domains refused; and limits per IP (3/hour, 8/day), per email (2/hour) and identical messages, counted from the saved tickets so they survive app restarts. Spam is silently dropped (no ticket, no email), so bots learn nothing; the server log shows `[spam] dropped (reason)`. Edit the word list / limits in `lib/antispam.ts`.
 
+### State pages, call-to-action buttons and WhatsApp
+
+- **State pages:** in a country's editor, each state can get its own page (`/countries/<country>/<state>`): headline, quick answer, sourced facts, visual-editor content, FAQs, sources and SEO fields. The country page links to every live state page, state pages link to sibling states, related services and latest articles, and live state pages are in `sitemap.xml`, the page schema and `llms-full.txt`. Write only what your sources support; give each fact a year and a source.
+- **Call-to-action buttons:** every country, state and blog page shows WhatsApp / Contact us / Call buttons in three places (after the intro, after the content, and a banner at the end).
+- **WhatsApp:** Dashboard -> WhatsApp (Super Admin and Administrator). Add several numbers, each with the team role that looks after it. One active number opens WhatsApp directly; several show a small picker. The round live-chat button sits bottom-left and the WhatsApp button bottom-right.
+
 ### Support Activity (manage your support team)
 
 **Team → Support Activity** (Super Admin / anyone with *Manage users*) shows, for each person who can reply to tickets or chat: which channels they can reply to, how many tickets they replied to, total replies, tickets currently open / pending that are assigned to them, tickets they closed, average first-response time and chats handled. Filter by 7 / 30 / 90 days or all time. A ticket is assigned to whoever replies first, or you can choose **Assigned to** on the ticket; the Tickets list has an *Assigned to* column.
