@@ -6,6 +6,7 @@ import Link from "@/app/components/SiteLink";
 import { usePathname } from "next/navigation";
 import { mainNav, site } from "@/data/site";
 import { platformOf } from "@/lib/social";
+import LanguageSwitcher from "./LanguageSwitcher";
 import Icon from "./Icon";
 
 export default function Header({ social = [] }: { social?: { platform: string; url: string }[] }) {
@@ -57,18 +58,20 @@ export default function Header({ social = [] }: { social?: { platform: string; u
               <Link href="/contact" className="btn btn-cta btn-sm">
                 Get a Free Quote
               </Link>
+              <LanguageSwitcher />
             </nav>
 
+            <div className="lg:hidden flex items-center gap-1"><LanguageSwitcher />
             <button
               type="button"
               aria-label={menuOpen ? "Close menu" : "Open menu"}
               aria-expanded={menuOpen}
               aria-controls="mobile-menu"
               onClick={() => setMenuFor(menuOpen ? null : pathname)}
-              className="lg:hidden p-2 text-gray-700"
+              className="p-2 text-gray-700"
             >
               <Icon name={menuOpen ? "xmark" : "bars"} className="text-xl" />
-            </button>
+            </button></div>
           </div>
 
           {menuOpen && (

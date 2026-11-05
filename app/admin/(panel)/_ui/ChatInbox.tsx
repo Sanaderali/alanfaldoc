@@ -7,7 +7,8 @@ import { btnGhost, btnPrimary } from "../../ui";
 
 type Summary = { id: string; name: string; phone: string; status: "open" | "closed"; unread: number; lastAt: string; createdAt: string; preview: string; lastFrom?: string; country?: string; city?: string };
 type Msg = { id: string; from: "visitor" | "staff" | "system" | "ai"; name?: string; text: string; at: string };
-type Selected = { id: string; name: string; phone: string; status: "open" | "closed"; createdAt: string; ip?: string; country?: string; city?: string; page?: string; referrer?: string; userAgent?: string; language?: string; handledBy?: string; aiPaused?: boolean; aiReplies?: number; total: number; messages: Msg[] };
+type Profile = { name?: string; email?: string; nationality?: string; basedIn?: string; businessType?: string; companyName?: string; visaStatus?: string; stayDuration?: string; travelHistory?: string; query?: string };
+type Selected = { id: string; name: string; phone: string; status: "open" | "closed"; createdAt: string; ip?: string; country?: string; city?: string; page?: string; referrer?: string; userAgent?: string; language?: string; handledBy?: string; profile?: Profile | null; summary?: string; closedBy?: "visitor" | "staff"; closedByName?: string; closedAt?: string; feedback?: { rating: number; comment?: string; at: string } | null; aiPaused?: boolean; aiReplies?: number; total: number; messages: Msg[] };
 
 const ago = (iso: string) => {
   const s = Math.max(0, (Date.now() - new Date(iso).getTime()) / 1000);
@@ -19,7 +20,7 @@ const ago = (iso: string) => {
 const device = (ua = "") => `${/Mobile|Android|iPhone/i.test(ua) ? "Mobile" : "Desktop"} · ${/Edg\//.test(ua) ? "Edge" : /Chrome\//.test(ua) ? "Chrome" : /Firefox\//.test(ua) ? "Firefox" : /Safari\//.test(ua) ? "Safari" : "Browser"}`;
 
 /** Real-time chat inbox (polls every 2s). Plays a sound + visual alert for every new chat or visitor message. */
-export default function ChatInbox({ canReply }: { canReply: boolean }) {
+export default function ChatInbox({ canReply, initialId }: { canReply: boolean; initialId?: string }) {
   const [chats, setChats] = useState<Summary[]>([]);
   const [aiOn, setAiOn] = useState(false);
   const [aiState, setAiState] = useState<"ok" | "no-key" | "off">("no-key");
@@ -40,6 +41,7 @@ export default function ChatInbox({ canReply }: { canReply: boolean }) {
   const bottom = useRef<HTMLDivElement>(null);
 
   useEffect(() => { setSound(soundEnabled()); }, []);
+  useEffect(() => { if (initialId) { selRef.current = { id: initialId, total: 0 }; setSelId(initialId); setMobileThread(true); } }, [initialId]);
   useEffect(() => { selRef.current.id = selId; if (!selId) { setSel(null); selRef.current.total = 0; } }, [selId]);
 
   const tick = useCallback(async () => {
@@ -105,6 +107,9 @@ export default function ChatInbox({ canReply }: { canReply: boolean }) {
   };
   const setAi = async (paused: boolean) => { if (!sel) return; setSel({ ...sel, aiPaused: paused }); await post("/admin/api/chat/ai", { id: sel.id, paused }); void tick(); };
   const runAiTest = async () => { setAiTest("busy"); try { const r = await post("/admin/api/chat/ai-test", {}); setAiTest(await r.json()); } catch { setAiTest({ ok: false, message: "Could not run the test." }); } };
+  const [note, setNote] = useState("");
+  const learn = async (messageId: string) => { if (!sel) return; const r = await post("/admin/api/chat/learn", { id: sel.id, messageId }); const d = await r.json().catch(() => ({})); setNote(r.ok ? "Saved. The assistant will use this answer from now on (Dashboard > AI knowledge)." : d.error ?? "Could not save."); setTimeout(() => setNote(""), 6000); };
+  const summarize = async () => { if (!sel) return; setNote("Creating summary…"); const r = await post("/admin/api/chat/summarize", { id: sel.id }); const d = await r.json().catch(() => ({})); setNote(r.ok ? "" : d.error ?? "Could not create a summary."); void tick(); };
   const setStatus = async (status: "open" | "closed") => { if (!sel) return; await post("/admin/api/chat/status", { id: sel.id, status }); void tick(); };
   const toggleSound = () => { const n = !sound; setSound(n); setSoundEnabled(n); if (n) { playBeep(); void askDesktopPermission(); } };
 
@@ -174,6 +179,7 @@ export default function ChatInbox({ canReply }: { canReply: boolean }) {
                     <div className={`max-w-[80%] px-3 py-2 text-[13px] leading-relaxed whitespace-pre-wrap break-words ${m.from === "staff" ? "bg-brand text-a-on" : m.from === "ai" ? "bg-a-surface border border-brand/50" : "bg-a-surface border border-a-line"}`}>
                       <p className={`text-[11px] mb-0.5 ${m.from === "staff" ? "text-a-on/70" : "text-a-subtle"}`}>{m.from === "staff" ? m.name || "Agent" : m.from === "ai" ? "AI assistant" : sel.name || "Visitor"} · {new Date(m.at).toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" })}</p>
                       {m.text}
+                      {m.from === "staff" && canReply && <button type="button" onClick={() => learn(m.id)} className="block mt-1 text-[11px] underline opacity-70 hover:opacity-100" title="Let the assistant use this answer for similar questions">Learn from this reply</button>}
                     </div>
                   </div>
                 )
@@ -206,6 +212,21 @@ export default function ChatInbox({ canReply }: { canReply: boolean }) {
             ] as [string, string][]).map(([k, v]) => <div key={k}><dt className="text-[11px] uppercase tracking-wide text-a-subtle">{k}</dt><dd className="break-all">{v}</dd></div>)}
           </dl>
         ) : <p className="p-3 text-[13px] text-a-muted">Select a conversation to see visitor details.</p>}
+        {sel && (
+          <div className="p-3 border-t border-a-line text-[13px] space-y-3">
+            <h3 className="font-semibold text-[13px]">Client details (noted from the chat)</h3>
+            <dl className="space-y-2">
+              {([["Name", sel.profile?.name], ["Email", sel.profile?.email], ["Nationality", sel.profile?.nationality], ["Based in", sel.profile?.basedIn], ["Business", sel.profile?.businessType], ["Company", sel.profile?.companyName], ["Visa / in or out of UAE", sel.profile?.visaStatus], ["Length of stay", sel.profile?.stayDuration], ["Travel history", sel.profile?.travelHistory], ["Wants", sel.profile?.query]] as [string, string | undefined][]).map(([k, v]) => <div key={k}><dt className="text-[11px] uppercase tracking-wide text-a-subtle">{k}</dt><dd className={v ? "break-words" : "text-a-subtle"}>{v || "Not mentioned yet"}</dd></div>)}
+            </dl>
+            <div>
+              <div className="flex items-center justify-between"><h3 className="font-semibold text-[13px]">Summary</h3>{canReply && <button type="button" onClick={summarize} className={btnGhost}>{sel.summary ? "Refresh" : "Create"}</button>}</div>
+              <p className={`mt-1 whitespace-pre-wrap ${sel.summary ? "" : "text-a-subtle"}`}>{sel.summary || "No summary yet. It is created automatically when the chat is closed."}</p>
+            </div>
+            {sel.status === "closed" && <p className="text-a-muted">Closed by <strong>{sel.closedBy === "visitor" ? "the client" : sel.closedByName || "staff"}</strong>{sel.closedAt ? ` · ${new Date(sel.closedAt).toLocaleString("en-GB")}` : ""}</p>}
+            {sel.feedback && <p className="text-a-muted"><span className="text-amber-400">{"★".repeat(sel.feedback.rating)}{"☆".repeat(5 - sel.feedback.rating)}</span>{sel.feedback.comment ? ` "${sel.feedback.comment}"` : ""}</p>}
+            {note && <p role="status" className="text-a-muted">{note}</p>}
+          </div>
+        )}
       </aside>
     </div>
   );

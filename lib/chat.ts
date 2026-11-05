@@ -29,6 +29,8 @@ export function publicView(c: Chat, since = 0) {
     id: c.id,
     status: c.status,
     total: c.messages.length,
+    closedBy: c.closedBy,
+    feedbackGiven: !!c.feedback,
     messages: c.messages.slice(since).map((m) => ({ id: m.id, from: m.from, name: m.from === "staff" || m.from === "ai" ? m.name : undefined, text: m.text, at: m.at })),
   };
 }

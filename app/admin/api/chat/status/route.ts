@@ -1,3 +1,5 @@
+import { after } from "next/server";
+import { aiEnabled, finalizeChat } from "@/lib/ai";
 import { assertAdminRequest } from "@/lib/auth";
 import { msg } from "@/lib/chat";
 import { notifyChatTranscript } from "@/lib/notify";
@@ -16,12 +18,14 @@ export async function POST(req: Request) {
     all.map((c) => {
       if (c.id !== id || c.status === status) return c;
       const m = msg("system", status === "closed" ? "This chat has been closed. Thanks for contacting us!" : "This chat was reopened.");
-      return { ...c, status, messages: [...c.messages, m], unreadVisitor: c.unreadVisitor + 1, lastMessageAt: m.at, updatedAt: now() };
+      const closing = status === "closed" ? { closedBy: "staff" as const, closedAt: m.at, closedByName: auth.user.name || auth.user.username } : { closedBy: undefined, closedAt: undefined, closedByName: undefined };
+      return { ...c, ...closing, status, messages: [...c.messages, m], unreadVisitor: c.unreadVisitor + 1, lastMessageAt: m.at, updatedAt: now() };
     })
   );
   if (status === "closed") {
     const chat = (await readAll("chats")).find((c) => c.id === id);
     if (chat) void notifyChatTranscript(chat);
+    if (aiEnabled()) after(() => finalizeChat(id));
   }
   return Response.json({ ok: true });
 }

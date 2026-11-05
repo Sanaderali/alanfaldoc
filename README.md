@@ -224,3 +224,11 @@ The live chat can answer visitors automatically from the website's own content (
 - `AI_CHAT=off` - optional switch to disable the assistant without removing the key
 
 The assistant introduces itself as a virtual assistant, never invents fees or approvals, answers at most 20 times per chat, and ends with a hand-off (staff are alerted, AI pauses) when someone asks for a person or a quote. When any staff member replies, the AI stops for that chat; use "Resume AI assistant" / "Take over" in Dashboard -> Live chat.
+
+### Chat assistant, enquiries and translation (build 31)
+
+- **Assistant "Sanader":** short, natural replies from the website content; never states prices (explains what affects cost and asks for the next useful detail), declines out-of-scope or payment/other-client questions politely, and steps back only when the visitor asks for a person or staff take over. If someone sincerely asks whether it is a bot, it answers truthfully.
+- **Enquiries** (Dashboard -> Enquiries): what each visitor told the assistant (nationality, based in, business/company, visa status, stay, travel, email, what they want) is noted automatically from the conversation, with a chat summary, who closed the chat, and the star rating. Click a row to open the chat. "Add to Reviews" turns feedback into a draft review.
+- **Visitor can end the chat** ("End chat" in the widget) and leave a star rating; staff closing a chat triggers the same feedback form.
+- **AI knowledge** (Dashboard -> AI knowledge): in Live chat click "Learn from this reply" under a staff answer to teach the assistant. Replies mentioning money, bank or contact details are refused. The assistant does not learn by itself.
+- **Translation:** the globe icon in the header switches the whole site to Arabic, Chinese, Hindi, German, French, Japanese, Korean, Italian, Spanish or Dutch (RTL for Arabic). Text is translated with Groq and cached in `content/translations/<lang>.json` (edit a file to correct a translation). English remains the source and what search engines index. On Groq's free tier a page in a new language may take a minute to finish the first time.

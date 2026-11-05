@@ -215,6 +215,9 @@ export type Review = Managed & {
   image?: string;
 };
 
+/** An answer the team approved for the chat assistant ("Learn from this reply" in Live chat). */
+export type Knowledge = { id?: string; status?: "published" | "draft"; question: string; answer: string; fromChat?: string; addedBy?: string; createdAt?: string; updatedAt?: string };
+
 export type NavItem = { label: string; href: string };
 
 /** SEO + schema settings for the fixed pages (home, about, services list…). */
@@ -286,6 +289,22 @@ export type Ticket = {
 };
 
 export type ChatMessage = { id: string; from: "visitor" | "staff" | "system" | "ai"; name?: string; staffId?: string; text: string; at: string };
+export type ChatProfile = {
+  name?: string;
+  email?: string;
+  nationality?: string;
+  /** where the client says they are based */
+  basedIn?: string;
+  businessType?: string;
+  companyName?: string;
+  /** "inside UAE" / "outside UAE" and the visa type if mentioned */
+  visaStatus?: string;
+  stayDuration?: string;
+  travelHistory?: string;
+  /** what the client wants, in one short sentence */
+  query?: string;
+  updatedAt?: string;
+};
 export type Chat = {
   id: string;
   /** sha256 of the visitor's secret token (the token itself lives only in the visitor's browser) */
@@ -313,4 +332,13 @@ export type Chat = {
   aiPaused?: boolean;
   /** how many replies the assistant has sent in this chat */
   aiReplies?: number;
+  /** facts the visitor mentioned in conversation (filled automatically, shown in Dashboard -> Enquiries) */
+  profile?: ChatProfile;
+  /** short summary of the whole conversation */
+  summary?: string;
+  summaryAt?: string;
+  closedBy?: "visitor" | "staff";
+  closedAt?: string;
+  closedByName?: string;
+  feedback?: { rating: number; comment?: string; at: string; reviewId?: string };
 };

@@ -12,6 +12,8 @@ type Item = { label: string; href: string; icon: string; perm?: string; exact?: 
 const MENU: Item[] = [
   { label: "Dashboard", href: "/admin", icon: "gauge-high", perm: "dashboard.view", exact: true },
   { label: "Live Chat", href: "/admin/chat", icon: "comments", perm: "chat.view", badge: "chat" },
+  { label: "Enquiries", href: "/admin/enquiries", icon: "address-card", perm: "chat.view" },
+  { label: "AI knowledge", href: "/admin/knowledge", icon: "brain", perm: "chat.reply" },
   { label: "Tickets", href: "/admin/tickets", icon: "ticket", perm: "tickets.view", badge: "tickets" },
   { label: "Posts", href: "/admin/posts", icon: "thumbtack", perm: "content.view", children: [
     { label: "All Posts", href: "/admin/posts" }, { label: "Add New", href: "/admin/posts/new" },

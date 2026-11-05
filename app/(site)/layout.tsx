@@ -3,6 +3,7 @@ import Footer from "@/app/components/Footer";
 import CtaBlock from "@/app/components/CtaBlock";
 import HideOn from "@/app/components/HideOn";
 import Analytics from "@/app/components/Analytics";
+import Translator from "@/app/components/Translator";
 import ChatLauncher from "@/app/components/ChatLauncher";
 import IdlePrefetch from "@/app/components/IdlePrefetch";
 import JsonLd from "@/app/components/JsonLd";
@@ -30,6 +31,7 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
       <ChatLauncher />
       <FloatingWhatsApp numbers={wa.map((w) => ({ label: w.label, number: w.number, message: w.message }))} />
       <IdlePrefetch />
+      <Translator />
       <Analytics />
     </>
   );

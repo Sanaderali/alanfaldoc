@@ -1,5 +1,5 @@
 import { after } from "next/server";
-import { askAI, AI_NAME, aiEnabled, MAX_AI_REPLIES, wantsHuman } from "@/lib/ai";
+import { askAI, AI_NAME, aiEnabled, MAX_AI_REPLIES, updateProfile, wantsHuman } from "@/lib/ai";
 import { clientIp } from "@/lib/auth";
 import { cleanText, tokenMatches, MAX_MESSAGES_PER_CHAT, msg, publicView } from "@/lib/chat";
 import { allow } from "@/lib/ratelimit";
@@ -35,7 +35,7 @@ export async function POST(req: Request) {
   if (denied) return Response.json({ error: "Not allowed" }, { status: 403 });
   if (!result) return Response.json({ error: "Chat not found" }, { status: 404 });
   // AI assistant: answers in the background while no staff member has joined. It never blocks the visitor's message.
-  if (aiEnabled()) after(() => aiReply(id));
+  if (aiEnabled()) after(async () => { await aiReply(id); await updateProfile(id); });
   return Response.json(result);
 }
 
@@ -49,7 +49,7 @@ async function aiReply(id: string) {
     await mutate("chats", (all) =>
       all.map((c) => {
         if (c.id !== id || c.aiPaused) return c;
-        const a = msg("ai", "Of course, I've let the team know. Someone will join this chat shortly. I'll step back so they can take over.", AI_NAME);
+        const a = msg("ai", "Of course, I've let the team know. Someone will join this chat shortly.", AI_NAME);
         return { ...c, messages: [...c.messages, a], unreadVisitor: c.unreadVisitor + 1, unreadStaff: c.unreadStaff + 1, aiPaused: true, aiReplies: (c.aiReplies ?? 0) + 1, lastMessageAt: a.at, updatedAt: now() };
       })
     );

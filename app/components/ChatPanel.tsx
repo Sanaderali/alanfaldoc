@@ -23,6 +23,12 @@ export default function ChatPanel({ onClose }: { onClose: () => void }) {
   const [text, setText] = useState("");
   const [err, setErr] = useState("");
   const [busy, setBusy] = useState(false);
+  const [closedBy, setClosedBy] = useState<"visitor" | "staff" | undefined>();
+  const [rated, setRated] = useState(false);
+  const [stars, setStars] = useState(0);
+  const [comment, setComment] = useState("");
+  const [thanks, setThanks] = useState(false);
+  const [confirmEnd, setConfirmEnd] = useState(false);
   const total = useRef(0);
   const known = useRef<Set<string>>(new Set());
   const end = useRef<HTMLDivElement>(null);
@@ -34,8 +40,8 @@ export default function ChatPanel({ onClose }: { onClose: () => void }) {
       const r = await fetch(`/api/chat/poll?id=${chat.id}&token=${chat.token}&since=${total.current}`, { cache: "no-store" });
       if (r.status === 404 || r.status === 403) { writeChat(null); setChat(null); setMsgs([]); total.current = 0; known.current.clear(); return; }
       if (!r.ok) return;
-      const d: { total: number; status: "open" | "closed"; messages: Msg[] } = await r.json();
-      setStatus(d.status);
+      const d: { total: number; status: "open" | "closed"; messages: Msg[]; closedBy?: "visitor" | "staff"; feedbackGiven?: boolean } = await r.json();
+      setStatus(d.status); setClosedBy(d.closedBy); if (d.feedbackGiven) setRated(true);
       if (d.messages.length) {
         const hadAny = known.current.size > 0;
         if (hadAny && d.messages.some((m) => m.from === "staff" && !known.current.has(m.id))) { beep(); flashTitle(); }
@@ -91,15 +97,42 @@ export default function ChatPanel({ onClose }: { onClose: () => void }) {
     } catch (x) { setErr((x as Error).message); setText(t); }
   };
 
-  const newChat = () => { writeChat(null); setChat(null); setMsgs([]); total.current = 0; setStatus("open"); };
+  const newChat = () => { writeChat(null); setChat(null); setMsgs([]); total.current = 0; setStatus("open"); setClosedBy(undefined); setRated(false); setStars(0); setComment(""); setThanks(false); setConfirmEnd(false); };
+
+  const endChat = async () => {
+    if (!chat) return;
+    setConfirmEnd(false);
+    try {
+      const r = await fetch("/api/chat/close", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id: chat.id, token: chat.token }) });
+      if (r.ok) { const d = await r.json(); setStatus("closed"); setClosedBy(d.closedBy); void poll(); }
+    } catch { setErr("Could not end the chat. Please try again."); }
+  };
+  const sendFeedback = async () => {
+    if (!chat || !stars) return;
+    try {
+      const r = await fetch("/api/chat/feedback", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id: chat.id, token: chat.token, rating: stars, comment }) });
+      if (r.ok) { setRated(true); setThanks(true); }
+    } catch { /* try again */ }
+  };
 
   return (
-    <div role="dialog" aria-label="Live chat" className="fixed z-[70] bottom-20 left-3 right-3 sm:right-auto sm:left-5 sm:w-[380px] h-[min(560px,calc(100vh-7rem))] flex flex-col bg-white rounded-2xl shadow-[0_20px_60px_-10px_rgba(0,0,0,.35)] border border-gray-200 overflow-hidden animate-scale-in">
+    <div role="dialog" aria-label="Live chat" data-notranslate className="fixed z-[70] bottom-20 left-3 right-3 sm:right-auto sm:left-5 sm:w-[380px] h-[min(560px,calc(100vh-7rem))] flex flex-col bg-white rounded-2xl shadow-[0_20px_60px_-10px_rgba(0,0,0,.35)] border border-gray-200 overflow-hidden animate-scale-in">
       <header className="bg-brand text-white px-5 py-4 flex items-center gap-3">
         <span className="w-10 h-10 rounded-full bg-white/15 flex items-center justify-center"><Icon name="headset" className="text-lg" /></span>
         <div className="flex-1 min-w-0"><p className="font-semibold leading-tight">Chat with us</p><p className="text-xs text-white/80">We usually reply within minutes</p></div>
+        {chat && status === "open" && <button type="button" onClick={() => setConfirmEnd(true)} className="text-xs font-semibold rounded-full px-3 py-1.5 hover:bg-white/15 border border-white/30">End chat</button>}
         <button type="button" onClick={onClose} aria-label="Minimise chat" className="w-8 h-8 rounded-full hover:bg-white/15 flex items-center justify-center"><Icon name="minus" /></button>
       </header>
+
+      {confirmEnd && (
+        <div role="alertdialog" aria-label="End chat" className="absolute inset-0 z-10 bg-black/40 flex items-center justify-center p-6">
+          <div className="bg-white rounded-2xl p-5 w-full text-center space-y-3 shadow-xl">
+            <p className="font-semibold text-ink">End this chat?</p>
+            <p className="text-sm text-gray-600">You can always start a new one later.</p>
+            <div className="flex gap-2"><button type="button" onClick={() => setConfirmEnd(false)} className="btn btn-secondary flex-1">Keep chatting</button><button type="button" onClick={endChat} className="btn btn-cta flex-1">End chat</button></div>
+          </div>
+        </div>
+      )}
 
       {!chat ? (
         <form onSubmit={start} className="flex-1 overflow-y-auto p-5 space-y-4 bg-canvas">
@@ -125,7 +158,7 @@ export default function ChatPanel({ onClose }: { onClose: () => void }) {
               ) : (
                 <div key={m.id} className={`flex ${m.from === "visitor" ? "justify-end" : "justify-start"}`}>
                   <div className={`max-w-[82%] px-4 py-2.5 text-sm leading-relaxed whitespace-pre-wrap break-words shadow-sm ${m.from === "visitor" ? "bg-brand text-white rounded-2xl rounded-br-md" : "bg-white text-ink border border-gray-200 rounded-2xl rounded-bl-md"}`}>
-                    {(m.from === "staff" || m.from === "ai") && <p className="text-[11px] font-semibold text-brand-text mb-0.5">{m.name || "Agent"}{m.from === "ai" && <span className="ml-1.5 rounded bg-brand-50 px-1.5 py-px text-[10px] font-bold uppercase tracking-wide text-brand-text">AI</span>}</p>}
+                    {(m.from === "staff" || m.from === "ai") && <p className="text-[11px] font-semibold text-brand-text mb-0.5">{m.name || "Agent"}</p>}
                     {m.text}
                   </div>
                 </div>
@@ -135,7 +168,17 @@ export default function ChatPanel({ onClose }: { onClose: () => void }) {
           </div>
           {status === "closed" ? (
             <div className="p-4 border-t border-gray-200 bg-white text-center space-y-3">
-              <p className="text-sm text-gray-600">This chat has ended.</p>
+              <p className="text-sm text-gray-600">{closedBy === "visitor" ? "You ended this chat." : "This chat has ended."}</p>
+              {!rated ? (
+                <div className="space-y-2">
+                  <p className="text-sm font-semibold text-ink">How was your experience?</p>
+                  <div className="flex justify-center gap-1" role="radiogroup" aria-label="Rating">
+                    {[1, 2, 3, 4, 5].map((n) => <button key={n} type="button" role="radio" aria-checked={stars === n} aria-label={`${n} star${n > 1 ? "s" : ""}`} onClick={() => setStars(n)} className={`text-2xl leading-none ${n <= stars ? "text-amber-400" : "text-gray-300"} hover:text-amber-400`}>★</button>)}
+                  </div>
+                  <textarea value={comment} onChange={(e) => setComment(e.target.value)} maxLength={600} rows={2} aria-label="Comment (optional)" placeholder="Anything you'd like to add? (optional)" className="w-full px-3 py-2 rounded-xl border border-gray-300 text-sm focus:outline-none focus:ring-2 focus:ring-brand/40" />
+                  <button type="button" onClick={sendFeedback} disabled={!stars} className="btn btn-primary w-full disabled:opacity-50">Send feedback</button>
+                </div>
+              ) : thanks ? <p className="text-sm text-brand-text font-semibold">Thank you for your feedback!</p> : null}
               <button type="button" onClick={newChat} className="btn btn-secondary w-full">Start a new chat</button>
             </div>
           ) : (

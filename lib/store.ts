@@ -2,7 +2,7 @@ import "server-only";
 import fs from "node:fs/promises";
 import path from "node:path";
 import { randomUUID } from "node:crypto";
-import type { Chat, Country, Landing, FaqGroup, MediaItem, Otp, PageSettings, Post, Review, Service, SocialLink, WhatsAppNumber, Term, Ticket, User } from "@/types/content";
+import type { Chat, Country, Knowledge, Landing, FaqGroup, MediaItem, Otp, PageSettings, Post, Review, Service, SocialLink, WhatsAppNumber, Term, Ticket, User } from "@/types/content";
 import { countries as seedCountries } from "@/data/countries";
 import { services as seedServices } from "@/data/services";
 import { posts as seedPosts } from "@/data/posts";
@@ -36,6 +36,7 @@ export type CollectionMap = {
   social: SocialLink;
   otps: Otp;
   landings: Landing;
+  knowledge: Knowledge;
 };
 export type CollectionName = keyof CollectionMap;
 
@@ -78,6 +79,7 @@ function seed<K extends CollectionName>(name: K): CollectionMap[K][] {
     social: [],
     otps: [],
     landings: [],
+    knowledge: [],
     whatsapp: [{ id: "wa-main", label: "Main line", number: site.phone.replace(/\D/g, ""), active: true }],
   };
   return data[name] as CollectionMap[K][];
