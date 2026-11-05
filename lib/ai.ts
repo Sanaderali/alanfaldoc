@@ -13,6 +13,7 @@ export const AI_NAME = "Al Anfal Assistant";
 export const HANDOFF = "[HANDOFF]";
 export const MAX_AI_REPLIES = 20;
 
+export const aiStatus = (): "ok" | "no-key" | "off" => (process.env.AI_CHAT === "off" ? "off" : process.env.GROQ_API_KEY ? "ok" : "no-key");
 export const aiEnabled = () => !!process.env.GROQ_API_KEY && process.env.AI_CHAT !== "off";
 
 type Chunk = { title: string; url: string; text: string };
@@ -59,6 +60,26 @@ Rules:
 ${name ? `- The visitor's name is ${name}.\n` : ""}
 Website content:
 ${context || "(no specific page matched; use general facts above)"}`;
+
+/** Dashboard "Test AI" button: one tiny request, returns a human-readable result (never the key). */
+export async function testAI(): Promise<{ ok: boolean; message: string }> {
+  const key = process.env.GROQ_API_KEY;
+  if (!key) return { ok: false, message: "GROQ_API_KEY is not set on the server. Add it in the Node.js app environment variables and restart the app." };
+  const model = process.env.GROQ_MODEL || "openai/gpt-oss-120b";
+  try {
+    const res = await fetch(`${process.env.GROQ_BASE_URL || "https://api.groq.com/openai/v1"}/chat/completions`, {
+      method: "POST", headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
+      body: JSON.stringify({ model, max_tokens: 20, messages: [{ role: "user", content: "Reply with the single word: ready" }], ...(model.startsWith("openai/gpt-oss") ? { reasoning_effort: "low" } : {}) }),
+      signal: AbortSignal.timeout(15000),
+    });
+    if (res.ok) return { ok: true, message: `Connected to Groq (model ${model}). The assistant is working.` };
+    const body = (await res.json().catch(() => ({}))) as { error?: { message?: string } };
+    const why = res.status === 401 ? "The key was rejected (wrong or revoked). Create a new key in console.groq.com." : res.status === 404 || /model/i.test(body.error?.message ?? "") ? `Model "${model}" is not available for this key. Set GROQ_MODEL to one your account can use.` : res.status === 429 ? "Groq rate limit or quota reached." : (body.error?.message ?? "Request refused.");
+    return { ok: false, message: `Groq answered ${res.status}. ${why}` };
+  } catch (e) {
+    return { ok: false, message: `Could not reach Groq (${e instanceof Error ? e.message : "network error"}). The server may block outgoing connections to api.groq.com.` };
+  }
+}
 
 export type AiResult = { text: string; handoff: boolean } | null;
 

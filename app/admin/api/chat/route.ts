@@ -1,5 +1,5 @@
 import { assertAdminRequest } from "@/lib/auth";
-import { aiEnabled } from "@/lib/ai";
+import { aiEnabled, aiStatus } from "@/lib/ai";
 import { summary } from "@/lib/chat";
 import { readAll } from "@/lib/store";
 
@@ -18,6 +18,7 @@ export async function GET(req: Request) {
   return Response.json({
     chats: chats.slice(0, 200).map(summary),
     ai: aiEnabled(),
+    aiStatus: aiStatus(),
     unread: chats.filter((c) => c.unreadStaff > 0).length,
     selected: selected
       ? {

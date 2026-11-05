@@ -22,6 +22,8 @@ const device = (ua = "") => `${/Mobile|Android|iPhone/i.test(ua) ? "Mobile" : "D
 export default function ChatInbox({ canReply }: { canReply: boolean }) {
   const [chats, setChats] = useState<Summary[]>([]);
   const [aiOn, setAiOn] = useState(false);
+  const [aiState, setAiState] = useState<"ok" | "no-key" | "off">("no-key");
+  const [aiTest, setAiTest] = useState<{ ok: boolean; message: string } | "busy" | null>(null);
   const [sel, setSel] = useState<Selected | null>(null);
   const [selId, setSelId] = useState<string | null>(null);
   const [text, setText] = useState("");
@@ -45,9 +47,10 @@ export default function ChatInbox({ canReply }: { canReply: boolean }) {
     try {
       const r = await fetch(`/admin/api/chat${id ? `?id=${id}&since=${total}` : ""}`, { cache: "no-store" });
       if (!r.ok) return;
-      const d: { chats: Summary[]; selected: Selected | null; ai?: boolean } = await r.json();
+      const d: { chats: Summary[]; selected: Selected | null; ai?: boolean; aiStatus?: "ok" | "no-key" | "off" } = await r.json();
       setChats(d.chats);
       setAiOn(!!d.ai);
+      if (d.aiStatus) setAiState(d.aiStatus);
       setLoaded(true);
 
       // ---- alerts: new chat, or more unread messages than before (for chats you are not looking at right now) ----
@@ -101,6 +104,7 @@ export default function ChatInbox({ canReply }: { canReply: boolean }) {
     setText(""); void tick();
   };
   const setAi = async (paused: boolean) => { if (!sel) return; setSel({ ...sel, aiPaused: paused }); await post("/admin/api/chat/ai", { id: sel.id, paused }); void tick(); };
+  const runAiTest = async () => { setAiTest("busy"); try { const r = await post("/admin/api/chat/ai-test", {}); setAiTest(await r.json()); } catch { setAiTest({ ok: false, message: "Could not run the test." }); } };
   const setStatus = async (status: "open" | "closed") => { if (!sel) return; await post("/admin/api/chat/status", { id: sel.id, status }); void tick(); };
   const toggleSound = () => { const n = !sound; setSound(n); setSoundEnabled(n); if (n) { playBeep(); void askDesktopPermission(); } };
 
@@ -118,6 +122,15 @@ export default function ChatInbox({ canReply }: { canReply: boolean }) {
           <h2 className="font-semibold text-[14px]">Conversations</h2>
           <button type="button" onClick={toggleSound} aria-pressed={sound} title={sound ? "Sound alerts on" : "Sound alerts off"} className={`inline-flex items-center gap-1.5 text-[12px] px-2 py-1 border rounded-[3px] ${sound ? "border-brand text-brand-text" : "border-a-line text-a-muted"}`}><Icon name={sound ? "volume-high" : "volume-xmark"} />{sound ? "Sound on" : "Sound off"}</button>
         </div>
+        {canReply && (
+          <div className="px-3 py-2 border-b border-a-line text-[12px] text-a-muted">
+            <div className="flex items-center justify-between gap-2">
+              <span className="inline-flex items-center gap-1.5"><span className={`inline-block h-2 w-2 rounded-full ${aiState === "ok" ? "bg-green-500" : "bg-amber-400"}`} aria-hidden="true" />AI assistant: {aiState === "ok" ? "on" : aiState === "off" ? "switched off (AI_CHAT=off)" : "not configured"}</span>
+              <button type="button" onClick={runAiTest} disabled={aiTest === "busy"} className={btnGhost}>{aiTest === "busy" ? "Testing…" : "Test AI"}</button>
+            </div>
+            {aiTest && aiTest !== "busy" && <p role="status" className={`mt-1.5 ${aiTest.ok ? "text-green-500" : "text-amber-300"}`}>{aiTest.message}</p>}
+          </div>
+        )}
         <ul className="flex-1 overflow-y-auto divide-y divide-a-line">
           {!loaded && <li className="p-4 text-[13px] text-a-muted">Loading…</li>}
           {loaded && chats.length === 0 && <li className="p-6 text-[13px] text-a-muted text-center">No chats yet. When a visitor starts a chat you will hear a sound and see it here instantly.</li>}
