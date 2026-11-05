@@ -242,3 +242,11 @@ The assistant introduces itself as a virtual assistant, never invents fees or ap
 ### One translations file for every language
 
 `content-packs/translations-all.json` holds translations for all languages in one file: `{ "ar": { "English sentence": "translation" }, "de": { ... } }`. Upload it in **Dashboard -> Translations -> Upload a translations file**, or from the terminal: `CONTENT_DIR=<content folder> node scripts/import-translations.js translations-all.json`. Sentences are matched by their English text, newer uploads replace older translations and anything not in the file is kept. Languages: ar, zh, hi, de, fr, ja, ko, it, es, nl. This replaces the earlier per-language files in `content-packs/translations/`.
+
+### Import / Export (Dashboard -> Import / Export)
+
+- **Export / Backup tab:** tick what to export (services, countries, blog posts, service × country pages, FAQ groups, reviews, page SEO settings, translations by language, AI knowledge), optionally choose single items, and choose "everything" or "published only". You download one JSON file.
+- **Import / Restore tab:** choose a file (an export or any content pack); the page lists what is inside with counts, you tick the parts and items to import, then pick how to treat existing items: save as draft, keep current status, **restore exactly as exported** (published stays published; use this for backups) or schedule blog posts. Large files are fine (the import runs through an API route, because server actions limit their input to about a million characters).
+- Images are not inside the file (copy the `uploads` folder of your content folder for a full backup). Chats and tickets are not part of this export; "Download backup" in the account menu still includes them.
+- Translations are exported with their English text. Translations made before this version have no recorded English text and are skipped on export; importing a translations file records it.
+- The older `content-packs/translations-all.json` and the terminal commands (`scripts/import-pack.js`, `scripts/import-translations.js`) still work.

@@ -21,6 +21,17 @@ async function load(lang: string): Promise<Record<string, string>> {
   mem.set(lang, data);
   return data;
 }
+/** English source of every cached sentence (hash -> English), so translations can be exported with readable keys. */
+let srcMem: Record<string, string> | null = null;
+async function loadSrc(): Promise<Record<string, string>> {
+  if (srcMem) return srcMem;
+  try { srcMem = JSON.parse(await fs.readFile(path.join(DIR, "_en.json"), "utf8")); } catch { srcMem = {}; }
+  return srcMem!;
+}
+async function saveSrc() {
+  try { await fs.mkdir(DIR, { recursive: true }); const f = path.join(DIR, "_en.json"); await fs.writeFile(f + ".tmp", JSON.stringify(srcMem ?? {})); await fs.rename(f + ".tmp", f); } catch { /* read-only disk */ }
+}
+
 async function save(lang: string, data: Record<string, string>) {
   try {
     await fs.mkdir(DIR, { recursive: true });
@@ -65,6 +76,7 @@ export async function translateBatch(lang: string, texts: string[]): Promise<{ o
   const todo: string[] = [];
   for (const t of texts) { const c = cache[key(t)]; if (c) out[t] = c; else if (!todo.includes(t)) todo.push(t); }
   let fresh = 0;
+  const src = await loadSrc();
   // groups of up to 20 strings (and about 5,000 characters) per request
   const groups: string[][] = [];
   let cur: string[] = [], size = 0;
@@ -76,11 +88,11 @@ export async function translateBatch(lang: string, texts: string[]): Promise<{ o
       const g = groups[next++];
       const r = await callGroq(lang, g);
       if (!r) continue;
-      g.forEach((t, i) => { if (r[i]) { cache[key(t)] = r[i]; out[t] = r[i]; fresh++; } });
+      g.forEach((t, i) => { if (r[i]) { cache[key(t)] = r[i]; out[t] = r[i]; fresh++; src[key(t)] = t; } });
     }
   };
   await Promise.all([worker(), worker()]);
-  if (fresh) await save(lang, cache);
+  if (fresh) { await save(lang, cache); await saveSrc(); }
   return { out, fresh };
 }
 
@@ -102,15 +114,45 @@ export async function importTranslations(data: unknown): Promise<{ ok: boolean; 
   for (const [lang, entries] of Object.entries(data as Record<string, unknown>)) {
     if (!codes.has(lang) || !entries || typeof entries !== "object" || Array.isArray(entries)) continue;
     const cache = await load(lang);
+    const src = await loadSrc();
     let n = 0;
     for (const [en, tr] of Object.entries(entries as Record<string, unknown>)) {
       const source = en.trim(), text = typeof tr === "string" ? tr.trim() : "";
       if (!source || !text || source.length > 600 || text.length > 2000) continue;
+      if (src[key(source)] !== source) src[key(source)] = source;
       if (cache[key(source)] !== text) { cache[key(source)] = text; n++; }
     }
     if (n) await save(lang, cache);
     result[lang] = n;
   }
+  await saveSrc();
   if (!Object.keys(result).length) return { ok: false, message: "No supported language codes found. Use: " + [...codes].join(", ") + ".", result };
   return { ok: true, result };
+}
+
+/** Translations that can be exported with their English text: { lang: { english: translation } }. */
+export async function exportTranslations(langs: string[]): Promise<Record<string, Record<string, string>>> {
+  const src = await loadSrc();
+  const out: Record<string, Record<string, string>> = {};
+  for (const lang of langs) {
+    if (!LANGUAGES.some((l) => l.code === lang && l.code !== "en")) continue;
+    const cache = await load(lang);
+    const m: Record<string, string> = {};
+    for (const [h, tr] of Object.entries(cache)) if (src[h]) m[src[h]] = tr;
+    if (Object.keys(m).length) out[lang] = m;
+  }
+  return out;
+}
+
+/** How many sentences each language has (and how many of those can be exported). */
+export async function translationStats(): Promise<{ code: string; name: string; total: number; exportable: number }[]> {
+  const src = await loadSrc();
+  const rows: { code: string; name: string; total: number; exportable: number }[] = [];
+  for (const l of LANGUAGES) {
+    if (l.code === "en") continue;
+    const cache = await load(l.code);
+    const keys = Object.keys(cache);
+    rows.push({ code: l.code, name: l.english, total: keys.length, exportable: keys.filter((h) => src[h]).length });
+  }
+  return rows;
 }

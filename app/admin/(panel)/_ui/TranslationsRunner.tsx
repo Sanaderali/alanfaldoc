@@ -21,16 +21,6 @@ export default function TranslationsRunner() {
     const d = await r.json().catch(() => ({}));
     if (!r.ok) setMsg(d.message ?? "Could not start."); void tick();
   };
-  const [up, setUp] = useState("");
-  const upload = async (f: File | undefined) => {
-    if (!f) return;
-    setUp("Uploading…");
-    try {
-      const r = await fetch("/admin/api/translations/import", { method: "POST", headers: { "Content-Type": "application/json" }, body: await f.text() });
-      const d = await r.json().catch(() => ({}));
-      setUp(r.ok ? "Imported: " + Object.entries(d.result as Record<string, number>).map(([l, n]) => `${l} ${n}`).join(", ") + " sentences. Pick the language on the site to see it." : d.message ?? "Upload failed.");
-    } catch { setUp("Upload failed."); }
-  };
   const pct = job && job.stringsTotal ? Math.min(100, Math.round((job.stringsDone / job.stringsTotal) * 100)) : 0;
   return (
     <div className="space-y-4 max-w-3xl">
@@ -47,12 +37,7 @@ export default function TranslationsRunner() {
         </div>
         <div className="mt-4"><button type="button" onClick={start} disabled={!!job?.running || !picked.length || !ai} className={btnPrimary}>{job?.running ? "Translating…" : "Translate the site now"}</button>{msg && <span role="alert" className="ml-3 text-[13px] text-a-red">{msg}</span>}</div>
       </fieldset>
-      <fieldset className="bg-a-surface border border-a-line p-4 text-[13px]">
-        <legend className="px-1 font-semibold">Upload a translations file (all languages in one file)</legend>
-        <p className="text-a-muted mb-2">One JSON file such as <code>{"{ \"ar\": { \"Home\": \"الرئيسية\" }, \"de\": { \"Home\": \"Startseite\" } }"}</code>. Matching sentences are replaced, everything else is kept, so you can upload newer versions at any time.</p>
-        <input type="file" accept="application/json,.json" onChange={(e) => void upload(e.target.files?.[0])} aria-label="Translations file" />
-        {up && <p role="status" className="mt-2">{up}</p>}
-      </fieldset>
+      <p className="text-[13px] text-a-muted">To upload or download translations (all languages in one file), use <a href="/admin/data?tab=import" className="text-brand-text hover:underline">Import / Export</a>.</p>
       {job && (
         <div className="bg-a-surface border border-a-line p-4 text-[13px] space-y-2" role="status">
           <p>{job.running ? (job.pagesDone < job.pagesTotal ? `Reading pages… ${job.pagesDone} of ${job.pagesTotal}` : `Translating ${LANGUAGES.find((l) => l.code === job.lang)?.english ?? job.lang}…`) : job.error ? `Stopped: ${job.error}` : `Finished in ${Math.round(((job.finishedAt ?? Date.now()) - job.startedAt) / 1000)} seconds.`}</p>
