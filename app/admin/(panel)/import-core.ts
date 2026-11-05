@@ -31,6 +31,11 @@ function scheduleAt(day: number, time: string): string {
 export async function runImport(me: User, pack: Record<string, unknown>, mode: ImportMode): Promise<ImportResult> {
   if (!pack || typeof pack !== "object" || Array.isArray(pack)) return { ok: false, message: "The file must be an object with services, countries, posts and/or other lists.", rows: [] };
 
+  // a translations-only file may have the language codes at the top level: { "ar": {...}, "de": {...} }
+  const LANG_CODES = ["ar", "zh", "hi", "de", "fr", "ja", "ko", "it", "es", "nl"];
+  if (!pack.translations && LANG_CODES.some((c) => pack[c] && typeof pack[c] === "object" && !Array.isArray(pack[c]))) {
+    pack = { ...Object.fromEntries(Object.entries(pack).filter(([k]) => !LANG_CODES.includes(k))), translations: Object.fromEntries(LANG_CODES.filter((c) => pack[c] && typeof pack[c] === "object" && !Array.isArray(pack[c])).map((c) => [c, pack[c]])) };
+  }
   const rows: ImportRow[] = [];
   let total = 0;
   for (const k of ["servicePatches", "countryPatches", "landings", "regions", "faqs", "reviews", "pages", "knowledge"] as const) { const l = pack[k]; if (l !== undefined) { if (!Array.isArray(l)) return { ok: false, message: `"${k}" must be a list.`, rows }; total += l.length; } }

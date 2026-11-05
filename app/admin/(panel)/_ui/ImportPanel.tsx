@@ -32,6 +32,11 @@ export default function ImportPanel() {
     let p: Record<string, unknown>;
     try { p = JSON.parse(await f.text()); } catch { setErr("That file is not valid JSON."); return; }
     if (!p || typeof p !== "object" || Array.isArray(p)) { setErr("The file must be a JSON object (an export or a content pack)."); return; }
+    // a translations-only file has the language codes at the top: { "ar": { "English": "translation" }, "de": { ... } }
+    const CODES = ["ar", "zh", "hi", "de", "fr", "ja", "ko", "it", "es", "nl"];
+    if (!p.translations && CODES.some((c) => p[c] && typeof p[c] === "object" && !Array.isArray(p[c]))) {
+      p = { ...Object.fromEntries(Object.entries(p).filter(([k]) => !CODES.includes(k))), translations: Object.fromEntries(CODES.filter((c) => p[c] && typeof p[c] === "object" && !Array.isArray(p[c])).map((c) => [c, p[c]])) };
+    }
     const found: Section[] = [];
     for (const [k, label] of Object.entries(LABELS)) {
       const list = p[k];
