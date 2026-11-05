@@ -345,3 +345,55 @@ export function SchemaPanel({ faqSchema, onFaqSchema, custom, onCustom, error, p
     </div>
   );
 }
+
+type Region = { name: string; summary: string; cities?: string };
+/** States / provinces list. Add one by one, or paste many lines as: Name | short description | main cities */
+export function RegionsEditor({ value, onChange }: { value: Region[]; onChange: (v: Region[]) => void }) {
+  const list = value ?? [];
+  const [bulk, setBulk] = useState("");
+  const [open, setOpen] = useState<number | null>(null);
+  const addBulk = () => {
+    const rows = bulk.split("\n").map((l) => l.trim()).filter(Boolean).map((l) => {
+      const [name = "", summary = "", cities = ""] = l.split("|").map((x) => x.trim());
+      return { name, summary, cities };
+    }).filter((r) => r.name);
+    if (rows.length) { onChange([...list, ...rows]); setBulk(""); }
+  };
+  const patch = (i: number, p: Partial<Region>) => onChange(list.map((x, n) => (n === i ? { ...x, ...p } : x)));
+  const swap = (i: number, d: number) => { const j = i + d; if (j < 0 || j >= list.length) return; const c = [...list]; [c[i], c[j]] = [c[j], c[i]]; onChange(c); setOpen(j); };
+  return (
+    <div className="space-y-3">
+      {list.map((r, i) => {
+        const isOpen = open === i;
+        return (
+          <div key={i} className={`border rounded-md ${isOpen ? "border-brand/50" : "border-a-line"} bg-a-raised`}>
+            <button type="button" aria-expanded={isOpen} onClick={() => setOpen(isOpen ? null : i)} className="w-full flex items-center gap-2 px-3 py-2 text-left text-sm">
+              <Icon name="chevron-right" className={`text-xs text-a-subtle transition-transform ${isOpen ? "rotate-90" : ""}`} />
+              <span className="flex-1 min-w-0 truncate font-medium">{r.name || <em className="text-a-subtle">New state</em>}</span>
+              <span className={`text-xs ${r.summary ? "text-a-subtle" : "text-amber-300"}`}>{r.summary ? `${r.summary.trim().split(/\s+/).length} words` : "no description"}</span>
+            </button>
+            {isOpen && (
+              <div className="px-3 pb-3 pt-1 space-y-3 border-t border-a-line">
+                <Field label="Name" htmlFor={`rg-n${i}`}><TextField id={`rg-n${i}`} value={r.name} onChange={(v) => patch(i, { name: v })} placeholder="e.g. Maharashtra" /></Field>
+                <Field label="Description" htmlFor={`rg-s${i}`} hint="Write something unique for this state (what makes it special, who it suits). 40-80 words is a good size."><TextArea id={`rg-s${i}`} rows={4} value={r.summary} onChange={(v) => patch(i, { summary: v })} /></Field>
+                <Field label="Main cities" htmlFor={`rg-c${i}`} hint="Comma separated"><TextField id={`rg-c${i}`} value={r.cities ?? ""} onChange={(v) => patch(i, { cities: v })} placeholder="Mumbai, Pune, Nagpur" /></Field>
+                <div className="flex flex-wrap gap-2">
+                  <button type="button" onClick={() => swap(i, -1)} disabled={i === 0} className={btnGhost}><Icon name="arrow-up" />Up</button>
+                  <button type="button" onClick={() => swap(i, 1)} disabled={i === list.length - 1} className={btnGhost}><Icon name="arrow-down" />Down</button>
+                  <button type="button" onClick={() => { onChange(list.filter((_, n) => n !== i)); setOpen(null); }} className="inline-flex items-center gap-2 px-3 py-1.5 border border-a-red/40 text-a-red text-[13px] font-medium rounded-[3px] hover:bg-a-red/10"><Icon name="trash-can" />Remove</button>
+                </div>
+              </div>
+            )}
+          </div>
+        );
+      })}
+      <button type="button" onClick={() => { onChange([...list, { name: "", summary: "", cities: "" }]); setOpen(list.length); }} className={btnGhost}><Icon name="plus" />Add state</button>
+      <details className="rounded-md border border-a-line p-3">
+        <summary className="cursor-pointer text-sm font-medium text-a-muted">Paste many at once</summary>
+        <p className="text-xs text-a-muted my-2">One state per line: <code>Name | description | main cities</code>. Description and cities are optional.</p>
+        <textarea value={bulk} onChange={(e) => setBulk(e.target.value)} rows={6} placeholder={"Kerala | Known for backwaters, tourism and a strong Gulf link. | Kochi, Thiruvananthapuram\nGujarat | A major trading and industrial state. | Ahmedabad, Surat"} className={`${inputCls} font-mono text-xs`} />
+        <button type="button" onClick={addBulk} disabled={!bulk.trim()} className={`${btnGhost} mt-2`}>Add these states</button>
+      </details>
+    </div>
+  );
+}

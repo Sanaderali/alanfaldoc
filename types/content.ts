@@ -87,9 +87,15 @@ export type Country = Managed & {
   /** services most relevant to this country (slugs) */
   serviceSlugs?: string[];
   featured?: boolean;
+  /** "States", "Provinces", "Regions"... heading for the regions section */
+  regionsLabel?: string;
+  /** states / provinces / regions: each gets its own heading + text on the country page (good for local search) */
+  regions?: Region[];
   faqs?: Faq[];
   seo?: Seo;
 };
+
+export type Region = { name: string; summary: string; /** comma separated main cities */ cities?: string };
 
 export type Service = Managed & {
   slug: string;

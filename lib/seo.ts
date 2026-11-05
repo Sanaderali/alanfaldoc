@@ -190,7 +190,7 @@ export function countryPageLd(c: Country) {
     name: c.headline,
     description: c.intro || c.summary,
     isPartOf: { "@id": `${abs("/")}#website` },
-    about: { "@type": "Country", name: c.name },
+    about: { "@type": "Country", name: c.name, ...(c.regions?.length ? { containsPlace: c.regions.map((r) => ({ "@type": "AdministrativeArea", name: r.name, ...(r.summary ? { description: r.summary } : {}) })) } : {}) },
     inLanguage: "en",
     ...(c.createdAt ? { datePublished: c.createdAt } : {}),
     ...(c.updatedAt ? { dateModified: c.updatedAt, lastReviewed: c.updatedAt } : {}),

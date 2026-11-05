@@ -11,7 +11,7 @@ import { CategoryBox, TagBox } from "./TaxonomyBoxes";
 import RichEditor from "./RichEditor";
 import Flag from "@/app/components/Flag";
 import { BUILTIN_FLAGS, builtinFlag, emojiToCode } from "@/lib/flags";
-import { CheckList, Counter, Field, FaqsEditor, ImageField, LinesField, PairsEditor, SchemaPanel, SeoPanel, TextArea, TextField, Toggle, type Errors, type Form } from "./fields";
+import { CheckList, Counter, Field, FaqsEditor, ImageField, LinesField, PairsEditor, RegionsEditor, SchemaPanel, SeoPanel, TextArea, TextField, Toggle, type Errors, type Form } from "./fields";
 
 type Kind = "services" | "countries" | "posts";
 export type EditorContext = { siteUrl: string; siteName: string; services: { value: string; label: string }[]; categories: { name: string; count: number }[]; tags: { name: string; count: number }[] };
@@ -35,7 +35,7 @@ const slugify = (s: string) => s.toLowerCase().trim().replace(/[^a-z0-9]+/g, "-"
 function blank(kind: Kind): Form {
   const b = { status: "draft", publishAt: "", slug: "", image: "", imageAlt: "", faqSchema: true, schemaCustom: "", seo: {}, faqs: [], contentHtml: "", answer: "", takeaways: [], summaryTable: [], sources: [] };
   if (kind === "services") return { ...b, title: "", icon: "briefcase", summary: "", relatedSlugs: [], serviceType: "", featured: false };
-  if (kind === "countries") return { ...b, name: "", flag: "", flagImage: "", tagline: "", headline: "", summary: "", facts: [], gradient: GRADIENTS[0], categories: [], serviceSlugs: [], featured: false };
+  if (kind === "countries") return { ...b, name: "", flag: "", flagImage: "", tagline: "", headline: "", summary: "", facts: [], gradient: GRADIENTS[0], categories: [], serviceSlugs: [], featured: false, regions: [], regionsLabel: "" };
   return { ...b, title: "", excerpt: "", category: "", author: "Al Anfal Doc Team", tags: [], readMinutes: "" };
 }
 
@@ -301,6 +301,13 @@ export default function ItemEditor({ kind, id, initial, ctx }: { kind: Kind; id?
               <div className="flex flex-wrap gap-2">{GRADIENTS.map((g) => <button key={g} type="button" aria-label={g} onClick={() => set({ gradient: g })} className={`w-9 h-7 rounded bg-gradient-to-br ${g} border ${f.gradient === g ? "ring-2 ring-brand border-brand" : "border-a-line"}`} />)}</div>
             </Field>
             <Toggle checked={!!f.featured} onChange={(v) => set({ featured: v })} label="Featured country" />
+            <details open={(f.regions?.length ?? 0) > 0}>
+              <summary className="cursor-pointer text-sm font-medium text-a-text">States / provinces ({f.regions?.length ?? 0}) <span className="text-a-muted font-normal">· shown instead of "Big Cities", great for local search</span></summary>
+              <div className="pt-3 space-y-4">
+                <Field label="Section name" htmlFor="regionsLabel" hint="Shown as the heading, e.g. States, Provinces, Regions"><TextField id="regionsLabel" value={f.regionsLabel ?? ""} onChange={(v) => set({ regionsLabel: v })} placeholder="States" /></Field>
+                <RegionsEditor value={f.regions ?? []} onChange={(v) => set({ regions: v })} />
+              </div>
+            </details>
             <details><summary className="cursor-pointer text-sm font-medium text-a-muted">Sidebar links & related services</summary>
               <div className="pt-3 space-y-4">
                 <Field label="Visa categories (links)" hint="Leave empty to list the related services."><PairsEditor value={f.categories ?? []} onChange={(v) => set({ categories: v })} a="title" b="href" addLabel="Add link" aPlace="Study Visa" bPlace="/services/visa-processing" /></Field>

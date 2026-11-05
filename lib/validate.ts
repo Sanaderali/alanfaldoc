@@ -176,6 +176,13 @@ export function cleanCountry(o: Record<string, unknown>): { item: Omit<Country, 
       categories: categories.length ? categories : undefined,
       serviceSlugs: strList(o.serviceSlugs, 80, 20),
       featured: bool(o.featured),
+      regionsLabel: str(o.regionsLabel, 40) || undefined,
+      regions: Array.isArray(o.regions)
+        ? (o.regions as { name?: string; summary?: string; cities?: string }[])
+            .map((r) => ({ name: str(r?.name, 80), summary: str(r?.summary, 900), cities: str(r?.cities, 240) || undefined }))
+            .filter((r) => r.name)
+            .slice(0, 80)
+        : undefined,
       faqs: cleanFaqs(o.faqs),
     } as never,
   };

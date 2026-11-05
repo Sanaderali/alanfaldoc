@@ -65,11 +65,28 @@ export default async function CountryView({ country }: { country: Country }) {
             {country.contentHtml ? (
               <Reveal><RichContent html={country.contentHtml} /></Reveal>
             ) : (
-              country.sections.map((s, i) => (
+              country.sections.filter((s) => !(country.regions?.length && /^big cities/i.test(s.heading))).map((s, i) => (
                 <Reveal key={i}>
                   <ContentSections sections={[s]} />
                 </Reveal>
               ))
+            )}
+            {country.regions && country.regions.length > 0 && (
+              <Reveal>
+                <section id="regions" className="mt-10" aria-labelledby="regions-h">
+                  <h2 id="regions-h" className="text-2xl font-bold text-ink mb-2">{country.regionsLabel || "States"} of {country.name}</h2>
+                  <p className="text-gray-600 mb-5 text-sm">A quick guide to the main {(country.regionsLabel || "states").toLowerCase()} of {country.name}. Contact us for help with visas and documents for any of them.</p>
+                  <div className="grid sm:grid-cols-2 gap-4">
+                    {country.regions.map((r) => (
+                      <article key={r.name} className="rounded-lg border border-gray-200 bg-white p-5 hover:shadow-md transition-shadow">
+                        <h3 className="text-lg font-bold text-ink mb-1.5">{r.name}</h3>
+                        {r.summary && <p className="text-gray-600 text-sm leading-relaxed">{r.summary}</p>}
+                        {r.cities && <p className="text-sm mt-2"><span className="font-semibold text-ink">Main cities:</span> <span className="text-gray-600">{r.cities}</span></p>}
+                      </article>
+                    ))}
+                  </div>
+                </section>
+              </Reveal>
             )}
             <Sources sources={country.sources} />
           </article>

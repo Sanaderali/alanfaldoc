@@ -103,6 +103,22 @@ function withMissingPages(items: PageSettings[]): PageSettings[] {
   return missing.length ? [...items, ...missing] : items;
 }
 
+/**
+ * Built-in countries added in later versions (e.g. India) are merged ONCE into an existing countries.json.
+ * A small marker file remembers which built-in slugs were already offered, so anything you delete never comes back.
+ */
+const LEGACY_COUNTRY_SLUGS = ["united-arab-emirates", "canada", "united-kingdom", "united-states", "australia", "saudi-arabia"];
+async function mergeNewBuiltInCountries(items: Country[]): Promise<{ items: Country[]; changed: boolean }> {
+  const marker = path.join(CONTENT_DIR, ".offered-countries.json");
+  let offered: string[];
+  try { offered = JSON.parse(await fs.readFile(marker, "utf8")); } catch { offered = LEGACY_COUNTRY_SLUGS; }
+  const fresh = seedCountries.filter((c) => !offered.includes(c.slug));
+  if (fresh.length === 0 && offered !== LEGACY_COUNTRY_SLUGS) return { items, changed: false };
+  const add = fresh.filter((c) => !items.some((x) => x.slug === c.slug)).map((c) => stamp(c) as unknown as Country);
+  try { await fs.writeFile(marker, JSON.stringify([...new Set([...offered, ...seedCountries.map((c) => c.slug)])])); } catch { /* read-only disk */ }
+  return { items: [...items, ...add], changed: add.length > 0 };
+}
+
 /** parsed JSON is cached until the file changes (cheap stat), so frequent polling (chat) stays fast */
 const cache = new Map<string, { sig: string; data: unknown }>();
 
@@ -114,6 +130,10 @@ export async function readAll<K extends CollectionName>(name: K): Promise<Collec
     if (hit && hit.sig === sig) return structuredClone(hit.data) as CollectionMap[K][];
     const data = JSON.parse(await fs.readFile(file(name), "utf8"));
     let out = (name === "pages" ? withMissingPages(data) : data) as CollectionMap[K][];
+    if (name === "countries") {
+      const m = await mergeNewBuiltInCountries(out as unknown as Country[]);
+      if (m.changed) { out = m.items as unknown as CollectionMap[K][]; try { await writeAll(name, out); } catch { /* read-only disk */ } }
+    }
     if (name === "services" || name === "countries" || name === "posts") {
       const seedItems = (name === "services" ? seedServices : name === "countries" ? seedCountries : seedPosts) as unknown as { slug: string; geoV?: number }[];
       const r = backfillGeo(out as unknown as { slug: string; geoV?: number }[], seedItems);
