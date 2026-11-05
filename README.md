@@ -220,7 +220,7 @@ All emails are wired in code (`lib/notify.ts`): welcome email for new team membe
 The live chat can answer visitors automatically from the website's own content (services, country guides, FAQs, articles). Set these environment variables on the server, then restart:
 
 - `GROQ_API_KEY` - key from console.groq.com (required; without it the chat works as before, staff only)
-- `GROQ_MODEL` - optional, default `llama-3.3-70b-versatile`
+- `GROQ_MODEL` - optional, default `openai/gpt-oss-120b`
 - `AI_CHAT=off` - optional switch to disable the assistant without removing the key
 
 The assistant introduces itself as a virtual assistant, never invents fees or approvals, answers at most 20 times per chat, and ends with a hand-off (staff are alerted, AI pauses) when someone asks for a person or a quote. When any staff member replies, the AI stops for that chat; use "Resume AI assistant" / "Take over" in Dashboard -> Live chat.
