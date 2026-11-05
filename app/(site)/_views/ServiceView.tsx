@@ -10,6 +10,7 @@ import Reveal from "@/app/components/Reveal";
 import RichContent from "@/app/components/RichContent";
 import { Byline, GeoBlock, Sources } from "@/app/components/GeoBlock";
 import Image from "next/image";
+import CtaBlock from "@/app/components/CtaBlock";
 import { buildMetadata, customLd, faqLd, serviceLd, servicePageLd } from "@/lib/seo";
 import { formatDate, getCountries, getLandings, getPosts, getService, getServices, landingHref } from "@/lib/content";
 import type { Service } from "@/types/content";
@@ -38,6 +39,7 @@ export default async function ServiceView({ service }: { service: Service }) {
             <h1 className="text-3xl md:text-4xl font-bold text-ink mb-3 animate-fadeIn">{service.title}</h1>
             <Byline author={service.author} updated={service.updatedAt} published={service.createdAt} className="mb-6" />
             <GeoBlock item={service} />
+            <CtaBlock variant="inline" topic={service.title} className="!mt-0" />
             {service.contentHtml ? (
               <Reveal><RichContent html={service.contentHtml} /></Reveal>
             ) : (
@@ -57,6 +59,7 @@ export default async function ServiceView({ service }: { service: Service }) {
             ))}
               </>
             )}
+            <CtaBlock topic={service.title} title={`Need help with ${service.title}?`} text="Tell us what you need and we confirm the steps, documents and fees in writing before any work starts." />
             {forCountries.length > 0 && (
               <Reveal>
                 <section className="mt-10" aria-labelledby="by-country">

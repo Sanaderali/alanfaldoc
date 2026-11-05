@@ -3,6 +3,7 @@ import Link from "@/app/components/SiteLink";
 import Breadcrumb from "@/app/components/Breadcrumb";
 import CTABanner from "@/app/components/CTABanner";
 import Icon from "@/app/components/Icon";
+import CtaBlock from "@/app/components/CtaBlock";
 import Reveal from "@/app/components/Reveal";
 import { site, stats } from "@/data/site";
 import { getServices, getPageSeo } from "@/lib/content";
@@ -44,9 +45,7 @@ export default async function AboutPage() {
             <p className="text-gray-600 leading-relaxed mb-8">
               We prepare each file, submit it in the right order and follow it until the authority has decided. Our visa services are document preparation, processing and application support: the UAE authorities make every decision.
             </p>
-            <Link href="/contact" className="btn btn-cta inline-block">
-              Get a Free Quote
-            </Link>
+            <CtaBlock variant="inline" className="!mt-0 !mb-0" />
           </div>
           <Reveal variant="right">
             <div className="rounded-lg bg-gradient-to-br from-brand-50 to-canvas border border-gray-200 text-ink p-8 sm:p-10 grid grid-cols-2 gap-6">
@@ -97,6 +96,8 @@ export default async function AboutPage() {
           </ol>
         </div>
       </section>
+
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8"><CtaBlock title="Not sure where to start?" text="Tell us your goal and our advisors will recommend the route, the documents and the cost." /></div>
 
       <section className="py-14 md:py-20 bg-canvas">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
