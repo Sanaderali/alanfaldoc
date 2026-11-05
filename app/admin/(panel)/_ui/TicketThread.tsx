@@ -42,7 +42,7 @@ export default function TicketThread({ ticket, canReply, agents, names }: { tick
         {canReply && (
           <section className="bg-a-surface border border-a-line p-3 space-y-3">
             <label htmlFor="reply" className="text-[13px] font-semibold">Reply to {ticket.name}</label>
-            <textarea id="reply" rows={6} value={text} onChange={(e) => setText(e.target.value)} className={inputCls} placeholder="Write your reply. It is emailed to the customer when email is connected." />
+            <textarea id="reply" rows={6} value={text} onChange={(e) => setText(e.target.value)} className={inputCls} placeholder="Write your reply. It is saved in the ticket and emailed to the customer." />
             {msg && <p role={msg.ok ? "status" : "alert"} className={`text-[13px] px-2.5 py-1.5 border-l-4 ${msg.ok ? "border-brand text-brand" : "border-a-red text-a-red"}`}>{msg.text}</p>}
             <div className="flex gap-2"><button type="button" disabled={pending || !text.trim()} onClick={() => send(false)} className={btnPrimary}>Send reply</button><button type="button" disabled={pending || !text.trim()} onClick={() => send(true)} className={btnGhost}>Reply & close</button></div>
           </section>

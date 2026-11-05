@@ -29,9 +29,10 @@ export async function replyTicket(id: string, text: string, closeAfter = false):
   let updated: Ticket | undefined;
   await mutate("tickets", (all) => all.map((t) => (t.id === id ? (updated = { ...t, replies: [...t.replies, reply], status: closeAfter ? "closed" : "pending", unreadStaff: false, updatedAt: reply.at, assignedTo: t.assignedTo ?? me.id, firstResponseAt: t.firstResponseAt ?? reply.at, ...(closeAfter ? { closedBy: me.id, closedAt: reply.at } : {}) }) : t)));
   if (!updated) return { ok: false, message: "Ticket not found" };
-  void notifyTicketReply(updated, reply);
+  const mail = await notifyTicketReply(updated, reply);
   refreshView();
-  return { ok: true, message: closeAfter ? "Reply sent and ticket closed" : "Reply sent" };
+  const done = closeAfter ? "Reply saved and ticket closed" : "Reply saved";
+  return { ok: true, message: mail.sent ? `${done}. Email sent to ${updated.email}.` : mail.skipped ? `${done}. Email is not connected yet, so nothing was emailed.` : `${done}, but the email could not be sent. Check the email settings.` };
 }
 
 /** One-click status change from the ticket list (form action). */

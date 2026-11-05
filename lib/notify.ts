@@ -57,9 +57,9 @@ export async function notifyTicketCreated(t: Ticket) {
   });
   return sendMail({
     to: t.email,
-    subject: `We received your message (#${t.number})`,
-    text: `Hi ${t.name},\n\nThank you for contacting ${site.name}. We have received your message and will reply shortly.\n\nTicket #${t.number}: ${t.subject}`,
-    html: wrap("We received your message", `<p>Hi ${esc(t.name)},</p><p>Thank you for contacting ${esc(site.name)}. We have received your message and will reply shortly.</p><p>Ticket #${t.number}: ${esc(t.subject)}</p>`),
+    subject: `Thank you for contacting ${site.name} (#${t.number})`,
+    text: `Hi ${t.name},\n\nThank you for contacting ${site.name}. We have received your message and our team will get back to you as soon as possible.\n\nYour reference: Ticket #${t.number}\nSubject: ${t.subject}\n\nIf your matter is urgent, call us on ${site.phone}.\n\nKind regards,\nThe ${site.name} team\n${site.address}`,
+    html: wrap("Thank you for contacting us", `<p>Hi ${esc(t.name)},</p><p>Thank you for contacting <strong>${esc(site.name)}</strong>. We have received your message and <strong>our team will get back to you as soon as possible</strong>.</p><p style="background:#f3f7f5;border-radius:8px;padding:12px 16px"><strong>Your reference:</strong> Ticket #${t.number}<br/><strong>Subject:</strong> ${esc(t.subject)}</p><p>If your matter is urgent, call us on <a href="tel:${site.phone.replace(/\s/g, "")}">${esc(site.phone)}</a>.</p><p>Kind regards,<br/>The ${esc(site.name)} team</p>`),
   });
 }
 
@@ -67,6 +67,7 @@ export async function notifyTicketCreated(t: Ticket) {
 export async function notifyTicketReply(t: Ticket, reply: TicketReply) {
   return sendMail({
     to: t.email,
+    replyTo: process.env.REPLY_TO_EMAIL || undefined,
     subject: `Re: ${t.subject} (#${t.number})`,
     text: `${reply.body}\n\n- ${reply.staffName || site.name}`,
     html: wrap(`Re: ${t.subject}`, `<p style="white-space:pre-wrap">${esc(reply.body)}</p><p>- ${esc(reply.staffName || site.name)}</p>`),

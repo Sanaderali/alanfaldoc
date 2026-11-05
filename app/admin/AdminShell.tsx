@@ -22,7 +22,7 @@ const MENU: Item[] = [
   { label: "FAQs", href: "/admin/faqs", icon: "circle-question", perm: "faqs.manage" },
   { label: "Media", href: "/admin/media", icon: "images", perm: "media.manage" },
   { label: "Page SEO", href: "/admin/pages", icon: "magnifying-glass-chart", perm: "seo.manage" },
-  { label: "Team", href: "/admin/users", icon: "users-gear", perm: "users.manage", children: [{ label: "All Users", href: "/admin/users" }, { label: "Add New", href: "/admin/users/new" }, { label: "Support Activity", href: "/admin/users/activity" }] },
+  { label: "Team", href: "/admin/users", icon: "users-gear", perm: "users.manage", children: [{ label: "All Users", href: "/admin/users" }, { label: "Add New", href: "/admin/users/new" }, { label: "Support Activity", href: "/admin/users/activity" }, { label: "Email", href: "/admin/users/email" }] },
 ];
 
 const NEW_LINKS = [
