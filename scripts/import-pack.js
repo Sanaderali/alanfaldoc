@@ -4,7 +4,7 @@
  *
  *   CONTENT_DIR=/home/alanuucp/alanfaldoc-content node scripts/import-pack.js content-packs/site-pack-2.json
  *
- * A pack may contain:  services, countries, servicePatches, countryPatches, faqs (groups), reviews
+ * A pack may contain:  services, countries, landings (service x country pages), servicePatches, countryPatches, faqs (groups), reviews
  * Options:  --dry-run      show what would happen, change nothing
  *           --keep-status  updated pages keep their current status (default: updated pages become drafts for review)
  *
@@ -37,6 +37,7 @@ const bump = (k, what) => { stats[k] = stats[k] || { created: 0, updated: 0, ski
 function load(name) {
   if (pending.has(name)) return pending.get(name);
   const f = path.join(dir, name + ".json");
+  if (!fs.existsSync(f) && name === "landings") { fs.mkdirSync(dir, { recursive: true }); pending.set(name, []); return pending.get(name); }
   if (!fs.existsSync(f)) { console.error(`No ${f}. Open the website or the dashboard once so it creates its content files, or set CONTENT_DIR to the right folder.`); process.exit(1); }
   const arr = JSON.parse(fs.readFileSync(f, "utf8"));
   pending.set(name, arr);
@@ -77,6 +78,22 @@ for (const [key, coll, label] of [["servicePatches", "services", "service change
   }
 }
 
+for (const l of pack.landings || []) {
+  const arr = load("landings");
+  const bad = [];
+  if (!l.service || !SLUG.test(l.service)) bad.push("service");
+  if (!l.country || !SLUG.test(l.country)) bad.push("country");
+  if (!l.title) bad.push("title");
+  if (!l.headline) bad.push("headline");
+  if (!strip(l.contentHtml)) bad.push("contentHtml");
+  if (bad.length) { console.error(`SKIPPED landing "${l.title || l.service + "/" + l.country}": missing/invalid ${bad.join(", ")}`); bump("service x country pages", "skipped"); continue; }
+  const slug = `${l.service}/${l.country}`;
+  const i = arr.findIndex((x) => x.slug === slug); const prev = i >= 0 ? arr[i] : null;
+  const item = { ...(prev || {}), ...l, slug, id: prev?.id || crypto.randomUUID(), status: prev && keep ? prev.status || "published" : "draft", faqSchema: true, createdAt: prev?.createdAt || now, updatedAt: now };
+  if (prev) arr[i] = item; else arr.push(item);
+  bump("service x country pages", prev ? "updated" : "created"); console.log(`${prev ? "updated" : "created"}  landings/${slug}`);
+}
+
 for (const g of pack.faqs || []) {
   const arr = load("faqs");
   const faqs = (g.faqs || []).filter((f) => f.question && f.answer);
@@ -101,7 +118,7 @@ if (!pending.size) { console.error("The pack had nothing to import."); process.e
 if (dry) { console.log("\nDry run: nothing was written."); process.exit(0); }
 for (const [name, arr] of pending) {
   const f = path.join(dir, name + ".json");
-  fs.copyFileSync(f, `${f}.bak-${stamp}`);
+  if (fs.existsSync(f)) fs.copyFileSync(f, `${f}.bak-${stamp}`);
   const tmp = `${f}.tmp-${process.pid}`;
   fs.writeFileSync(tmp, JSON.stringify(arr, null, 2));
   fs.renameSync(tmp, f);

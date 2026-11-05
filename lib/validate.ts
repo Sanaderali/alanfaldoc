@@ -1,5 +1,5 @@
 import { cleanRichHtml, htmlToText } from "@/lib/html";
-import type { ContentSection, Country, Faq, PageSettings, Post, Region, Seo, Service } from "@/types/content";
+import type { ContentSection, Country, Faq, Landing, PageSettings, Post, Region, Seo, Service } from "@/types/content";
 
 /** Server-side cleaning + validation of everything the dashboard saves. Never trust the browser. */
 
@@ -258,4 +258,24 @@ export function cleanPage(o: Record<string, unknown>, base: PageSettings): { ite
   const errors: Errors = {};
   const seo = cleanSeo(o.seo, errors);
   return { errors, item: { ...base, seo: Object.keys(seo).length ? seo : undefined, faqSchema: bool(o.faqSchema, true), schemaCustom: cleanSchemaCustom(o.schemaCustom, errors) } };
+}
+
+/** Service x country page (imported from a content pack). The slug is always "<service>/<country>". */
+export function cleanLanding(o: Record<string, unknown>): { item: Omit<Landing, "id" | "createdAt" | "updatedAt" | "status">; errors: Errors } {
+  const errors: Errors = {};
+  const service = str(o.service, 80), country = str(o.country, 80);
+  if (!SLUG_RE.test(service)) errors.service = "Service slug is missing or invalid";
+  if (!SLUG_RE.test(country)) errors.country = "Country slug is missing or invalid";
+  const title = str(o.title, 160), headline = str(o.headline, 200), summary = str(o.summary, 400);
+  if (!title) errors.title = "Title is required";
+  if (!headline) errors.headline = "Headline is required";
+  if (!summary) errors.summary = "Summary is required";
+  const html = cleanRichHtml(o.contentHtml);
+  if (!htmlToText(html)) errors.contentHtml = "The page needs content";
+  const seo = cleanSeo(o.seo, errors);
+  const geo = cleanGeo(o, errors);
+  return {
+    errors,
+    item: { slug: `${service}/${country}`, service, country, title, headline, summary, contentHtml: html, faqs: cleanFaqs(o.faqs), ...(Object.keys(seo).length ? { seo } : {}), faqSchema: true, ...geo } as never,
+  };
 }

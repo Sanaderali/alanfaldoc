@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { site } from "@/data/site";
-import type { Country, Faq, Post, Seo, Service, Region } from "@/types/content";
+import type { Country, Faq, Landing, Post, Seo, Service, Region } from "@/types/content";
 
 /**
  * Everything SEO / AI-SEO lives here: metadata + schema.org (JSON-LD) builders.
@@ -251,4 +251,40 @@ export function regionPageLd(country: Country, r: Region, path: string) {
     speakable,
     ...citations(r.sources),
   };
+}
+
+/** Service x country page: the service, offered to people from that country, plus the page itself. */
+export function landingLd(l: Landing, service: Service, country: Country) {
+  const path = `/services/${l.service}/${l.country}`;
+  return [
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "@id": `${abs(path)}#service`,
+      name: l.title,
+      serviceType: service.serviceType ?? service.title,
+      description: l.summary,
+      url: abs(path),
+      provider: { "@id": orgId() },
+      areaServed: site.areaServed.map((n) => ({ "@type": "Place", name: n })),
+      audience: { "@type": "Audience", audienceType: `Investors and business owners from ${country.name}` },
+      isRelatedTo: { "@id": `${abs(`/services/${service.slug}`)}#service` },
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "@id": `${abs(path)}#webpage`,
+      url: abs(path),
+      name: l.headline,
+      description: l.answer || l.summary,
+      isPartOf: { "@id": `${abs("/")}#website` },
+      about: { "@id": `${abs(path)}#service` },
+      inLanguage: "en",
+      ...(l.updatedAt ? { dateModified: l.updatedAt, lastReviewed: l.updatedAt } : {}),
+      author: authorEntity(l.author),
+      publisher: { "@id": orgId() },
+      speakable,
+      ...citations(l.sources),
+    },
+  ];
 }

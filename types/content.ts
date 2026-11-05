@@ -125,6 +125,23 @@ export type Region = {
   updatedAt?: string;
 };
 
+/**
+ * A service page written for one country, e.g. "Company formation in Dubai for Indian investors".
+ * Lives at /services/<service>/<country> (slug is "<service>/<country>"). Created by importing a content pack.
+ */
+export type Landing = Managed & {
+  slug: string;
+  /** slug of the service */
+  service: string;
+  /** slug of the country */
+  country: string;
+  title: string;
+  headline: string;
+  summary: string;
+  faqs?: Faq[];
+  seo?: Seo;
+};
+
 /** Password-recovery code state for one team member (stored hashed; see lib/otp.ts). */
 export type Otp = { id: string; salt: string; codeHash: string; expiresAt: number; attempts: number; requests: number[]; resetHash?: string; resetExpires?: number };
 

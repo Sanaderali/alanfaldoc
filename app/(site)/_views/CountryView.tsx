@@ -11,13 +11,14 @@ import Reveal from "@/app/components/Reveal";
 import RichContent from "@/app/components/RichContent";
 import { Byline, GeoBlock, Sources } from "@/app/components/GeoBlock";
 import { buildMetadata, countryPageLd, customLd, faqLd } from "@/lib/seo";
-import { getCountries, getCountry, getServices, regionHasPage, regionHref } from "@/lib/content";
+import { getCountries, getCountry, getLandings, getServices, landingHref, regionHasPage, regionHref } from "@/lib/content";
 import CtaBlock from "@/app/components/CtaBlock";
 import type { Country } from "@/types/content";
 
 /** Shared layout for the live page and the dashboard preview. */
 export default async function CountryView({ country }: { country: Country }) {
-  const [allCountries, allServices] = await Promise.all([getCountries(), getServices()]);
+  const [allCountries, allServices, allLandings] = await Promise.all([getCountries(), getServices(), getLandings()]);
+  const landingsHere = allLandings.filter((l) => l.country === country.slug);
 
   const others = allCountries.filter((c) => c.slug !== country.slug);
   const popular = others.filter((c) => c.featured).concat(others.filter((c) => !c.featured)).slice(0, 3);
@@ -84,6 +85,16 @@ export default async function CountryView({ country }: { country: Country }) {
                   <ContentSections sections={[s]} />
                 </Reveal>
               ))
+            )}
+            {landingsHere.length > 0 && (
+              <Reveal>
+                <section className="my-8" aria-labelledby="svc-here">
+                  <h2 id="svc-here" className="text-2xl font-bold text-ink mb-3">Services for investors from {country.name}</h2>
+                  <ul className="grid sm:grid-cols-2 gap-3">
+                    {landingsHere.map((l) => <li key={l.slug}><Link href={landingHref(l)} className="group flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-4 py-3 text-gray-700 hover:border-brand hover:text-brand-text transition-colors"><span className="text-accent font-bold group-hover:translate-x-1 transition-transform" aria-hidden="true">»</span>{allServices.find((s) => s.slug === l.service)?.title ?? l.service}</Link></li>)}
+                  </ul>
+                </section>
+              </Reveal>
             )}
             <CtaBlock topic={country.name} />
             {country.regions && country.regions.length > 0 && (

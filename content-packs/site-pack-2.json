@@ -87,6 +87,12 @@
    "status": "draft"
   }
  ],
+ "countryPatches": [
+  {
+   "slug": "united-arab-emirates",
+   "featured": false
+  }
+ ],
  "countries": [
   {
    "slug": "united-states",
@@ -2958,12 +2964,6 @@
      "answer": "Timing depends on the authority's review, the number of departments involved and whether the file is complete the first time. We give an estimate at the start and tell you promptly if an authority asks for more."
     }
    ]
-  }
- ],
- "countryPatches": [
-  {
-   "slug": "united-arab-emirates",
-   "featured": false
   }
  ]
 }

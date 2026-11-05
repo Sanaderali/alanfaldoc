@@ -5,8 +5,8 @@ import { can } from "@/lib/rbac";
 import { randomUUID } from "node:crypto";
 import { mutate, readAll, now } from "@/lib/store";
 import { refreshSite } from "@/lib/revalidate";
-import { cleanFaqs, str } from "@/lib/validate";
-import type { FaqGroup, Review } from "@/types/content";
+import { cleanFaqs, cleanLanding, str } from "@/lib/validate";
+import type { FaqGroup, Landing, Review } from "@/types/content";
 import { saveItem } from "./actions";
 
 export type ImportRow = { kind: string; title: string; slug: string; result: "created" | "updated" | "error"; message?: string };
@@ -29,7 +29,7 @@ export async function importPack(json: string, mode: "draft" | "keep"): Promise<
 
   const rows: ImportRow[] = [];
   let total = 0;
-  for (const k of ["servicePatches", "countryPatches", "faqs", "reviews"] as const) { const l = pack[k]; if (l !== undefined) { if (!Array.isArray(l)) return { ok: false, message: `"${k}" must be a list.`, rows }; total += l.length; } }
+  for (const k of ["servicePatches", "countryPatches", "landings", "faqs", "reviews"] as const) { const l = pack[k]; if (l !== undefined) { if (!Array.isArray(l)) return { ok: false, message: `"${k}" must be a list.`, rows }; total += l.length; } }
   for (const kind of KINDS) {
     const list = pack[kind];
     if (list === undefined) continue;
@@ -64,6 +64,23 @@ export async function importPack(json: string, mode: "draft" | "keep"): Promise<
       const status = p.status === "draft" || p.status === "published" ? p.status : undefined;
       await mutate(coll, (all) => (all as unknown as { slug: string }[]).map((x) => (x.slug === slug ? { ...x, ...(typeof p.featured === "boolean" ? { featured: p.featured } : {}), ...(status ? { status } : {}), updatedAt: now() } : x)) as never);
       rows.push({ kind: label, title: ex.title ?? ex.name ?? slug, slug, result: "updated", message: [typeof p.featured === "boolean" ? `featured: ${p.featured}` : "", status ? `status: ${status}` : ""].filter(Boolean).join(", ") });
+    }
+  }
+
+  /* ---- service x country pages (always drafts) ---- */
+  if (Array.isArray(pack.landings) && pack.landings.length) {
+    const [services, countries] = await Promise.all([readAll("services"), readAll("countries")]);
+    for (const raw of pack.landings as Record<string, unknown>[]) {
+      const { item, errors } = cleanLanding(raw);
+      const label = String(raw.title ?? `${raw.service}/${raw.country}`);
+      if (!services.some((x) => x.slug === item.service)) errors.service = `No service with the URL "${item.service}"`;
+      if (!countries.some((x) => x.slug === item.country)) errors.country = `No country with the URL "${item.country}"`;
+      if (Object.keys(errors).length) { rows.push({ kind: "landing", title: label, slug: item.slug, result: "error", message: Object.values(errors).join(" · ") }); continue; }
+      const ex = (await readAll("landings")).find((x) => x.slug === item.slug);
+      const status = ex && mode === "keep" ? ex.status ?? "published" : "draft";
+      const next = { ...(ex ?? {}), ...item, id: ex?.id ?? randomUUID(), status, createdAt: ex?.createdAt ?? now(), updatedAt: now() } as Landing;
+      await mutate("landings", (all) => (ex ? all.map((x) => (x.id === ex.id ? next : x)) : [...all, next]));
+      rows.push({ kind: "landing", title: item.title, slug: item.slug, result: ex ? "updated" : "created" });
     }
   }
 

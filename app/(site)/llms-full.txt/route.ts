@@ -1,6 +1,6 @@
 import { site } from "@/data/site";
 import { abs } from "@/lib/seo";
-import { getCountries, getFaqGroups, getPosts, getServices } from "@/lib/content";
+import { getCountries, getFaqGroups, getLandings, getPosts, getServices } from "@/lib/content";
 
 export const revalidate = 900;
 
@@ -20,7 +20,7 @@ function block(r: Rich) {
 
 /** /llms-full.txt: the key facts of every page in one plain-text file, for AI assistants and RAG crawlers. */
 export async function GET() {
-  const [services, countries, posts, faqGroups] = await Promise.all([getServices(), getCountries(), getPosts(), getFaqGroups()]);
+  const [services, countries, posts, faqGroups, landings] = await Promise.all([getServices(), getCountries(), getPosts(), getFaqGroups(), getLandings()]);
   const parts: string[] = [
     `# ${site.name}`,
     `> ${site.description}`,
@@ -31,6 +31,7 @@ export async function GET() {
     "",
     "# Countries",
     ...countries.map((c) => block({ title: c.name, url: abs(`/countries/${c.slug}`), answer: c.answer ?? c.summary, takeaways: c.takeaways, table: [...(c.stats ?? []).map((x) => ({ label: x.label, value: x.value + (x.note ? ` (${x.note})` : "") })), ...c.facts.map((f) => ({ label: f.label, value: f.value })), ...(c.summaryTable ?? [])], faqs: c.faqs, sources: c.sources, regions: c.regions, regionsLabel: c.regionsLabel, updated: c.updatedAt, author: c.author ?? site.defaultAuthor })),
+    ...landings.map((l) => block({ title: l.title, url: abs(`/services/${l.service}/${l.country}`), answer: l.answer ?? l.summary, takeaways: l.takeaways, table: l.summaryTable, faqs: l.faqs, sources: l.sources, updated: l.updatedAt, author: l.author ?? site.defaultAuthor })),
     "",
     "# Articles",
     ...posts.map((p) => block({ title: p.title, url: abs(`/blog/${p.slug}`), answer: p.answer ?? p.excerpt, takeaways: p.takeaways, table: p.summaryTable, sources: p.sources, updated: p.updatedAt ?? p.date, author: p.author ?? site.defaultAuthor })),

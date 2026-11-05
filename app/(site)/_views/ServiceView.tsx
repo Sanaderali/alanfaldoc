@@ -11,12 +11,13 @@ import RichContent from "@/app/components/RichContent";
 import { Byline, GeoBlock, Sources } from "@/app/components/GeoBlock";
 import Image from "next/image";
 import { buildMetadata, customLd, faqLd, serviceLd, servicePageLd } from "@/lib/seo";
-import { formatDate, getCountries, getPosts, getService, getServices } from "@/lib/content";
+import { formatDate, getCountries, getLandings, getPosts, getService, getServices, landingHref } from "@/lib/content";
 import type { Service } from "@/types/content";
 
 /** Shared layout for the live page and the dashboard preview. */
 export default async function ServiceView({ service }: { service: Service }) {
-  const [services, countries, posts] = await Promise.all([getServices(), getCountries(), getPosts()]);
+  const [services, countries, posts, landings] = await Promise.all([getServices(), getCountries(), getPosts(), getLandings()]);
+  const forCountries = landings.filter((l) => l.service === service.slug).map((l) => ({ l, c: countries.find((c) => c.slug === l.country) })).filter((x): x is { l: typeof landings[number]; c: NonNullable<typeof x.c> } => !!x.c);
 
   const related = (service.relatedSlugs ?? []).map((r) => services.find((s) => s.slug === r)).filter((s): s is NonNullable<typeof s> => !!s);
 
@@ -55,6 +56,17 @@ export default async function ServiceView({ service }: { service: Service }) {
               <Reveal key={i}><ContentSections sections={[s]} /></Reveal>
             ))}
               </>
+            )}
+            {forCountries.length > 0 && (
+              <Reveal>
+                <section className="mt-10" aria-labelledby="by-country">
+                  <h2 id="by-country" className="text-2xl font-bold text-ink mb-3">{service.title} for investors from your country</h2>
+                  <p className="text-gray-600 text-sm mb-4">Each guide covers the home-country tax points, document route, currency and payment rules that affect this service.</p>
+                  <ul className="flex flex-wrap gap-2">
+                    {forCountries.map(({ l, c }) => <li key={l.slug}><Link href={landingHref(l)} className="inline-flex items-center gap-2 rounded-full border border-brand/30 bg-brand-50 px-3.5 py-1.5 text-sm font-medium text-brand-text hover:bg-brand hover:text-white transition-colors"><Flag country={c} size={18} />{c.name}</Link></li>)}
+                  </ul>
+                </section>
+              </Reveal>
             )}
             <Sources sources={service.sources} />
           </article>

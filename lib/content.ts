@@ -1,4 +1,4 @@
-import type { Country, FaqGroup, PageKey, Post, Region, Review, Seo, Service, SocialLink, WhatsAppNumber } from "@/types/content";
+import type { Country, FaqGroup, Landing, PageKey, Post, Region, Review, Seo, Service, SocialLink, WhatsAppNumber } from "@/types/content";
 import { readAll } from "@/lib/store";
 import { htmlToText } from "@/lib/html";
 
@@ -119,3 +119,12 @@ export async function getRegion(countrySlug: string, regionSlugValue: string): P
 export async function getSocial(): Promise<SocialLink[]> {
   return (await readAll("social")).filter((x) => x.active && /^https:\/\//.test(x.url));
 }
+
+/* ---------------- Service x country pages ---------------- */
+export async function getLandings(): Promise<Landing[]> {
+  return live(await readAll("landings"));
+}
+export async function getLanding(service: string, country: string): Promise<Landing | undefined> {
+  return (await getLandings()).find((l) => l.service === service && l.country === country);
+}
+export const landingHref = (l: { service: string; country: string }) => `/services/${l.service}/${l.country}`;
