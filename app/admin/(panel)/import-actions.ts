@@ -71,7 +71,7 @@ export async function importPack(json: string, mode: "draft" | "keep" | "schedul
       const ex = ((await readAll(coll)) as unknown as { slug: string; title?: string; name?: string }[]).find((x) => x.slug === slug);
       if (!ex) { rows.push({ kind: label, title: slug, slug, result: "error", message: "No page with this URL" }); continue; }
       const status = p.status === "draft" || p.status === "published" ? p.status : undefined;
-      await mutate(coll, (all) => (all as unknown as { slug: string }[]).map((x) => (x.slug === slug ? { ...x, ...(typeof p.featured === "boolean" ? { featured: p.featured } : {}), ...(status ? { status } : {}), updatedAt: now() } : x)) as never);
+      await mutate(coll, (all) => (all as unknown as { slug: string }[]).map((x) => (x.slug === slug ? { ...x, ...(coll === "services" && Array.isArray(p.faqs) ? { faqs: cleanFaqs(p.faqs) } : {}), ...(typeof p.featured === "boolean" ? { featured: p.featured } : {}), ...(status ? { status } : {}), updatedAt: now() } : x)) as never);
       rows.push({ kind: label, title: ex.title ?? ex.name ?? slug, slug, result: "updated", message: [typeof p.featured === "boolean" ? `featured: ${p.featured}` : "", status ? `status: ${status}` : ""].filter(Boolean).join(", ") });
     }
   }

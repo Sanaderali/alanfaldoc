@@ -114,6 +114,7 @@ for (const [key, coll, label] of [["servicePatches", "services", "service change
     if (i < 0) { console.error(`SKIPPED change: no page ${coll}/${p.slug}`); bump(label, "skipped"); continue; }
     if (typeof p.featured === "boolean") arr[i].featured = p.featured;
     if (p.status === "draft" || p.status === "published") arr[i].status = p.status;
+    if (coll === "services" && Array.isArray(p.faqs)) arr[i].faqs = p.faqs.filter((f) => f && f.question && f.answer).map((f) => ({ question: String(f.question), answer: String(f.answer) }));
     arr[i].updatedAt = now; bump(label, "updated");
     console.log(`changed  ${coll}/${p.slug}  ${typeof p.featured === "boolean" ? "featured=" + p.featured : ""} ${p.status ? "status=" + p.status : ""}`);
   }

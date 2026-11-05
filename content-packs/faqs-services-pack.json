@@ -1,0 +1,94 @@
+{
+ "servicePatches": [
+  {
+   "slug": "legal-translation",
+   "faqs": [
+    {
+     "question": "What is a certified legal translation?",
+     "answer": "A translation prepared by an approved translator and stamped as an accurate rendering, accepted by courts and government bodies."
+    },
+    {
+     "question": "Which languages do you translate?",
+     "answer": "Arabic and English are the most common pairs, with other languages available on request."
+    },
+    {
+     "question": "Can you translate and attest in one go?",
+     "answer": "Yes. We can handle the translation and the follow-on notarisation or attestation as one service."
+    },
+    {
+     "question": "Which documents usually need legal translation?",
+     "answer": "Contracts, powers of attorney, memoranda of association, certificates, court papers and company documents that are not in Arabic and must be filed with a UAE authority."
+    },
+    {
+     "question": "Do I need Arabic translations for a trade licence application?",
+     "answer": "Many UAE authorities work in Arabic, so foreign-language documents are usually translated. The exact requirement depends on the authority and the document, and we confirm it before you order."
+    },
+    {
+     "question": "Do you translate the original or a scan?",
+     "answer": "We work from the original or a clear certified copy. A poor scan can cause errors in names and numbers, so send the best copy you have."
+    },
+    {
+     "question": "How long does a legal translation take?",
+     "answer": "Short documents are often ready within a day or two. Longer files, rare languages and attestation steps take longer. We give a written estimate after we see the documents."
+    },
+    {
+     "question": "How do you handle names and spellings?",
+     "answer": "We follow the spelling in the passport. Names must match across every document, so tell us if a certificate uses a different spelling."
+    },
+    {
+     "question": "Is my document kept confidential?",
+     "answer": "Yes. Documents are used only for the work you ask for, and we do not share them with anyone who does not need them to complete it."
+    },
+    {
+     "question": "How much does it cost?",
+     "answer": "The price depends on the language pair, the length and how fast you need it. Government attestation fees, where needed, are shown separately. We confirm the cost before work starts."
+    }
+   ]
+  },
+  {
+   "slug": "bank-account-opening",
+   "faqs": [
+    {
+     "question": "Can you guarantee my bank account will be approved?",
+     "answer": "No. Banks make their own compliance decisions. We prepare a complete application and introduce you to banks that fit your profile to improve your chances."
+    },
+    {
+     "question": "What documents are needed to open a corporate account?",
+     "answer": "Typically the trade licence, memorandum of association, shareholder and manager IDs, proof of address and a business profile. Requirements vary by bank."
+    },
+    {
+     "question": "Do I need to be in the UAE to open an account?",
+     "answer": "Some banks require an in-person visit and others support remote steps. We confirm the process for your chosen bank."
+    },
+    {
+     "question": "How long does it take to open a corporate account?",
+     "answer": "It can take from a couple of weeks to a few months, depending on the bank, the activity and how complete the file is. We cannot promise a date because the bank decides."
+    },
+    {
+     "question": "Why do banks ask so many questions?",
+     "answer": "Banks must verify who owns and controls the company, what it does and where the money comes from. A clear business profile and supporting contracts answer most questions in advance."
+    },
+    {
+     "question": "Do I need a minimum balance?",
+     "answer": "Most banks set a minimum balance or charge fees if the balance falls below it. The amount differs by bank and account type, so we check it before you apply."
+    },
+    {
+     "question": "Can a new start-up with no turnover open an account?",
+     "answer": "Often yes, but banks look closely at the business plan, the owners' background and the expected activity. Some banks are more open to start-ups than others."
+    },
+    {
+     "question": "What if my application is rejected?",
+     "answer": "We find out the reason where the bank shares it, fix what can be fixed and apply to a more suitable bank. A rejection at one bank does not always prevent approval at another."
+    },
+    {
+     "question": "Is a personal account also possible?",
+     "answer": "Yes. Personal accounts have their own requirements, such as a residence visa and Emirates ID. Ask us and we will confirm what your chosen bank needs."
+    },
+    {
+     "question": "Do you charge bank fees?",
+     "answer": "Bank fees are charged by the bank. Our fee covers preparing and following up the application, and we show both separately in the quote."
+    }
+   ]
+  }
+ ]
+}
