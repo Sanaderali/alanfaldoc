@@ -20,7 +20,17 @@ import { CONTENT_DIR } from "@/lib/store";
 export type MailMessage = { to: string | string[]; subject: string; text: string; html?: string; replyTo?: string };
 export type MailResult = { sent: boolean; skipped?: string; error?: string };
 
-export const mailFrom = () => process.env.MAIL_FROM ?? "";
+/**
+ * Sender. MAIL_FROM may be "Name <a@b.com>", a bare address, or just a display name (hosting forms often strip the <...> part):
+ * in that last case the SMTP user is used as the address.
+ */
+export const mailFrom = () => {
+  const v = (process.env.MAIL_FROM ?? "").trim();
+  const user = (process.env.SMTP_USER ?? "").trim();
+  if (!v) return user;
+  if (v.includes("@")) return v;
+  return user ? `"${v.replace(/"/g, "")}" <${user}>` : v;
+};
 export const leadRecipients = () => (process.env.LEAD_ALERT_EMAIL ?? "").split(",").map((s) => s.trim()).filter(Boolean);
 export const mailConfigured = () => !!process.env.SMTP_HOST || !!process.env.MAIL_API_URL;
 export const mailMode = () => (process.env.SMTP_HOST ? "SMTP" : process.env.MAIL_API_URL ? "HTTP API" : "not configured");
@@ -50,7 +60,7 @@ function logMail(e: MailLogEntry) {
 export async function sendMail(m: MailMessage): Promise<MailResult> {
   const r = await dispatch(m);
   const to = (Array.isArray(m.to) ? m.to.join(", ") : m.to) || "-";
-  if (r.sent || r.error) logMail({ at: new Date().toISOString(), to, subject: m.subject, ok: r.sent, error: r.error });
+  if (r.sent || r.error || r.skipped) logMail({ at: new Date().toISOString(), to, subject: m.subject, ok: r.sent, error: r.error ?? (r.skipped ? `Not sent: ${r.skipped}` : undefined) });
   return r;
 }
 
