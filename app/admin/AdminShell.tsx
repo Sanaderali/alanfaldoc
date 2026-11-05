@@ -21,6 +21,7 @@ const MENU: Item[] = [
   { label: "Reviews", href: "/admin/reviews", icon: "star", perm: "content.view" },
   { label: "FAQs", href: "/admin/faqs", icon: "circle-question", perm: "faqs.manage" },
   { label: "WhatsApp", href: "/admin/whatsapp", icon: "fa-brands fa-whatsapp", perm: "settings.manage" },
+  { label: "Social media", href: "/admin/social", icon: "share-nodes", perm: "settings.manage" },
   { label: "Media", href: "/admin/media", icon: "images", perm: "media.manage" },
   { label: "Page SEO", href: "/admin/pages", icon: "magnifying-glass-chart", perm: "seo.manage" },
   { label: "Team", href: "/admin/users", icon: "users-gear", perm: "users.manage", children: [{ label: "All Users", href: "/admin/users" }, { label: "Add New", href: "/admin/users/new" }, { label: "Support Activity", href: "/admin/users/activity" }, { label: "Email", href: "/admin/users/email" }] },

@@ -45,7 +45,7 @@ export default async function AboutPage() {
               With over 20 years of experience, our team removes the complexity from government procedures so you can focus on what matters: your business and your family.
             </p>
             <Link href="/contact" className="btn btn-cta inline-block">
-              Get Consultation
+              Get a Free Quote
             </Link>
           </div>
           <Reveal variant="right">

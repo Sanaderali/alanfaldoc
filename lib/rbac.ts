@@ -36,7 +36,7 @@ export const PERMISSIONS = [
   { key: "chat.reply", label: "Reply to live chats" },
   { key: "tickets.view", label: "View tickets" },
   { key: "tickets.reply", label: "Reply to and close tickets" },
-  { key: "settings.manage", label: "Manage site settings (WhatsApp numbers)" },
+  { key: "settings.manage", label: "Manage site settings (WhatsApp numbers, social links)" },
   { key: "backup.export", label: "Download backups" },
   { key: "users.manage", label: "Manage team members and roles" },
 ] as const;
@@ -51,11 +51,13 @@ export const ROLE_PERMISSIONS: Record<Role, Permission[]> = {
   support_agent: ["chat.view", "chat.reply", "tickets.view", "tickets.reply"],
 };
 
-type Who = { role: Role; extraPermissions?: string[] };
+type Who = { role: Role; extraPermissions?: string[]; removedPermissions?: string[] };
 
 export function permissionsOf(user: Who): Set<string> {
   const set = new Set<string>(ROLE_PERMISSIONS[user.role] ?? []);
   for (const p of user.extraPermissions ?? []) if ((ALL as string[]).includes(p)) set.add(p);
+  // switched-off permissions (a Super Admin can never be restricted)
+  if (user.role !== "super_admin") for (const p of user.removedPermissions ?? []) set.delete(p);
   return set;
 }
 export const can = (user: Who | null | undefined, perm: Permission) => !!user && permissionsOf(user).has(perm);

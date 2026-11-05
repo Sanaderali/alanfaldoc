@@ -1,20 +1,19 @@
 import Image from "next/image";
 import Link from "@/app/components/SiteLink";
 import { site } from "@/data/site";
-import { getServices } from "@/lib/content";
+import { getServices, getSocial } from "@/lib/content";
+import { platformOf } from "@/lib/social";
 import Icon from "./Icon";
 
 export default async function Footer() {
-  const services = await getServices();
+  const [services, social] = await Promise.all([getServices(), getSocial()]);
   const h = "text-lg font-bold mb-5 text-ink";
   const a = "hover:text-brand-text transition-colors";
   return (
     <footer className="bg-canvas border-t border-gray-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
         <div>
-          <div className="relative w-32 h-12 mb-5">
-            <Image src="/logo-black.png" alt={site.name} fill sizes="130px" className="object-contain object-left" />
-          </div>
+          <Image src="/logo-header.png" alt={site.name} width={1000} height={333} sizes="190px" className="h-[56px] w-auto mb-5" />
           <p className="text-gray-600 text-sm leading-relaxed">{site.description}</p>
         </div>
 
@@ -54,15 +53,16 @@ export default async function Footer() {
       <div className="border-t border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row justify-between items-center gap-4">
           <p className="text-gray-600 text-sm">© {new Date().getFullYear()} <strong>{site.name}</strong>. All Rights Reserved<span className="mx-2 text-gray-300" aria-hidden="true">|</span><Link href="/sitemap" className={a}>Sitemap</Link></p>
-          <ul className="flex gap-4">
-            {site.social.map((s) => (
-              <li key={s.label}>
-                <a href={s.href} aria-label={s.label} className="text-gray-400 hover:text-brand-text transition-colors">
-                  <Icon name={s.icon} className="text-lg" />
-                </a>
-              </li>
-            ))}
-          </ul>
+          {social.length > 0 && (
+            <ul className="flex gap-3">
+              {social.map((x) => { const p = platformOf(x.platform); return p ? (
+                <li key={x.url}>
+                  <a href={x.url} target="_blank" rel="noopener noreferrer" aria-label={p.label} className="w-9 h-9 rounded-full border border-gray-300 flex items-center justify-center text-gray-500 hover:bg-brand hover:border-brand hover:text-white transition-colors">
+                    <Icon name={p.icon} fixedWidth={false} />
+                  </a>
+                </li>) : null; })}
+            </ul>
+          )}
         </div>
       </div>
     </footer>

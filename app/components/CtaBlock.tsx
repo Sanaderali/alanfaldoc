@@ -13,14 +13,14 @@ export default async function CtaBlock({ topic, title, text, variant = "card", c
   const wa = numbers[0];
   const message = wa?.message || `Hello Al Anfal Doc, I would like help${topic ? ` with ${topic}` : ""}.`;
   const buttons = (
-    <div className="flex flex-wrap gap-3">
+    <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-3 w-full sm:w-auto">
       {(wa || site.phone) && (
-        <a href={waLink(wa?.number ?? site.phone.replace(/\D/g, ""), message)} target="_blank" rel="noopener noreferrer" className="btn btn-sm !bg-[#25D366] !text-white hover:!bg-[#1ebe5b] !border-transparent">
+        <a href={waLink(wa?.number ?? site.phone.replace(/\D/g, ""), message)} target="_blank" rel="noopener noreferrer" className="btn btn-wa w-full sm:w-auto">
           <Icon name="fa-brands fa-whatsapp" fixedWidth={false} className="mr-2 text-lg" />WhatsApp us
         </a>
       )}
-      <Link href="/contact" className="btn btn-cta btn-sm">Contact us</Link>
-      <a href={`tel:${site.phone.replace(/\s/g, "")}`} className="btn btn-secondary btn-sm"><Icon name="phone" fixedWidth={false} className="mr-2" />Call {site.phone}</a>
+      <Link href="/contact" className="btn btn-cta w-full sm:w-auto">Contact us now</Link>
+      <a href={`tel:${site.phone.replace(/\s/g, "")}`} className="btn btn-secondary w-full sm:w-auto"><Icon name="phone" fixedWidth={false} className="mr-2" />Call {site.phone}</a>
     </div>
   );
   if (variant === "inline") return <div className={`my-6 ${className}`}>{buttons}</div>;

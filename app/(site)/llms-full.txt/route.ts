@@ -30,7 +30,7 @@ export async function GET() {
     ...services.map((s) => block({ title: s.title, url: abs(`/services/${s.slug}`), answer: s.answer ?? s.summary, takeaways: s.takeaways, table: s.summaryTable, faqs: s.faqs, sources: s.sources, updated: s.updatedAt, author: s.author ?? site.defaultAuthor })),
     "",
     "# Countries",
-    ...countries.map((c) => block({ title: c.name, url: abs(`/countries/${c.slug}`), answer: c.answer ?? c.summary, takeaways: c.takeaways, table: [...c.facts.map((f) => ({ label: f.label, value: f.value })), ...(c.summaryTable ?? [])], faqs: c.faqs, sources: c.sources, regions: c.regions, regionsLabel: c.regionsLabel, updated: c.updatedAt, author: c.author ?? site.defaultAuthor })),
+    ...countries.map((c) => block({ title: c.name, url: abs(`/countries/${c.slug}`), answer: c.answer ?? c.summary, takeaways: c.takeaways, table: [...(c.stats ?? []).map((x) => ({ label: x.label, value: x.value + (x.note ? ` (${x.note})` : "") })), ...c.facts.map((f) => ({ label: f.label, value: f.value })), ...(c.summaryTable ?? [])], faqs: c.faqs, sources: c.sources, regions: c.regions, regionsLabel: c.regionsLabel, updated: c.updatedAt, author: c.author ?? site.defaultAuthor })),
     "",
     "# Articles",
     ...posts.map((p) => block({ title: p.title, url: abs(`/blog/${p.slug}`), answer: p.answer ?? p.excerpt, takeaways: p.takeaways, table: p.summaryTable, sources: p.sources, updated: p.updatedAt ?? p.date, author: p.author ?? site.defaultAuthor })),

@@ -12,7 +12,7 @@ import RegionsEditor from "./RegionsEditor";
 import RichEditor from "./RichEditor";
 import Flag from "@/app/components/Flag";
 import { BUILTIN_FLAGS, builtinFlag, emojiToCode } from "@/lib/flags";
-import { CheckList, Counter, Field, FaqsEditor, ImageField, LinesField, PairsEditor, SchemaPanel, SeoPanel, TextArea, TextField, Toggle, type Errors, type Form } from "./fields";
+import { CheckList, Counter, Repeater, Field, FaqsEditor, ImageField, LinesField, PairsEditor, SchemaPanel, SeoPanel, TextArea, TextField, Toggle, type Errors, type Form } from "./fields";
 
 type Kind = "services" | "countries" | "posts";
 export type EditorContext = { siteUrl: string; siteName: string; services: { value: string; label: string }[]; categories: { name: string; count: number }[]; tags: { name: string; count: number }[] };
@@ -36,7 +36,7 @@ const slugify = (s: string) => s.toLowerCase().trim().replace(/[^a-z0-9]+/g, "-"
 function blank(kind: Kind): Form {
   const b = { status: "draft", publishAt: "", slug: "", image: "", imageAlt: "", faqSchema: true, schemaCustom: "", seo: {}, faqs: [], contentHtml: "", answer: "", takeaways: [], summaryTable: [], sources: [] };
   if (kind === "services") return { ...b, title: "", icon: "briefcase", summary: "", relatedSlugs: [], serviceType: "", featured: false };
-  if (kind === "countries") return { ...b, name: "", flag: "", flagImage: "", tagline: "", headline: "", summary: "", facts: [], gradient: GRADIENTS[0], categories: [], serviceSlugs: [], featured: false, regions: [], regionsLabel: "" };
+  if (kind === "countries") return { ...b, name: "", flag: "", flagImage: "", tagline: "", headline: "", summary: "", facts: [], gradient: GRADIENTS[0], categories: [], serviceSlugs: [], featured: false, regions: [], regionsLabel: "", stats: [] };
   return { ...b, title: "", excerpt: "", category: "", author: "Al Anfal Doc Team", tags: [], readMinutes: "" };
 }
 
@@ -302,6 +302,20 @@ export default function ItemEditor({ kind, id, initial, ctx }: { kind: Kind; id?
               <div className="flex flex-wrap gap-2">{GRADIENTS.map((g) => <button key={g} type="button" aria-label={g} onClick={() => set({ gradient: g })} className={`w-9 h-7 rounded bg-gradient-to-br ${g} border ${f.gradient === g ? "ring-2 ring-brand border-brand" : "border-a-line"}`} />)}</div>
             </Field>
             <Toggle checked={!!f.featured} onChange={(v) => set({ featured: v })} label="Featured country" />
+            <details open={(f.stats?.length ?? 0) > 0}>
+              <summary className="cursor-pointer text-sm font-medium text-a-text">Key stats ({f.stats?.length ?? 0}) <span className="text-a-muted font-normal">· number cards shown at the top of the country page</span></summary>
+              <div className="pt-3 space-y-3">
+                <p className="text-xs text-a-muted">Example: value <code>3.5M</code>, label <code>Indians in the UAE</code>, note <code>2023, Government of India</code>. Only add figures you can source.</p>
+                <Repeater<Record<string, string>> items={(f.stats ?? []) as Record<string, string>[]} onChange={(v) => set({ stats: v })} empty={{ value: "", label: "", note: "" }} addLabel="Add stat" blank="No stats yet."
+                  render={(x, setX, i) => (
+                    <div className="grid sm:grid-cols-[130px_1fr_1fr] gap-3">
+                      <TextField id={`st-v${i}`} value={x.value} onChange={(v) => setX({ value: v })} placeholder="Value (3.5M)" />
+                      <TextField id={`st-l${i}`} value={x.label} onChange={(v) => setX({ label: v })} placeholder="Label (Indians in the UAE)" />
+                      <TextField id={`st-n${i}`} value={x.note ?? ""} onChange={(v) => setX({ note: v })} placeholder="Note / source and year (optional)" />
+                    </div>
+                  )} />
+              </div>
+            </details>
             <details open={(f.regions?.length ?? 0) > 0}>
               <summary className="cursor-pointer text-sm font-medium text-a-text">States / provinces ({f.regions?.length ?? 0}) <span className="text-a-muted font-normal">· shown instead of "Big Cities", great for local search</span></summary>
               <div className="pt-3 space-y-4">

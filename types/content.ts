@@ -87,6 +87,8 @@ export type Country = Managed & {
   /** services most relevant to this country (slugs) */
   serviceSlugs?: string[];
   featured?: boolean;
+  /** key statistics shown as cards at the top of the country page, e.g. { value: "3.5M", label: "Indians in the UAE", note: "2023, Government of India" } */
+  stats?: { value: string; label: string; note?: string }[];
   /** "States", "Provinces", "Regions"... heading for the regions section */
   regionsLabel?: string;
   /** states / provinces / regions: each gets its own heading + text on the country page (good for local search) */
@@ -122,6 +124,12 @@ export type Region = {
   v?: number;
   updatedAt?: string;
 };
+
+/** Password-recovery code state for one team member (stored hashed; see lib/otp.ts). */
+export type Otp = { id: string; salt: string; codeHash: string; expiresAt: number; attempts: number; requests: number[]; resetHash?: string; resetExpires?: number };
+
+/** A social media profile link shown in the header, footer and structured data (Dashboard -> Social media). */
+export type SocialLink = { id: string; platform: string; url: string; active: boolean };
 
 /** WhatsApp contact numbers (Dashboard -> WhatsApp). The first active number is the default for buttons. */
 export type WhatsAppNumber = {
@@ -228,6 +236,8 @@ export type User = {
   role: Role;
   /** extra permissions granted on top of the role (granular overrides set by the Super Admin) */
   extraPermissions?: string[];
+  /** permissions of the role that the Super Admin switched off for this person */
+  removedPermissions?: string[];
   active: boolean;
   createdAt: string;
   updatedAt: string;

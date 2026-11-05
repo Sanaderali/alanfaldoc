@@ -151,3 +151,21 @@ export async function notifyTicketReply(t: Ticket, reply: TicketReply) {
     ),
   });
 }
+
+/** 6-digit sign-in recovery code (valid 10 minutes). */
+export async function notifyOtp(to: string, name: string, code: string) {
+  const first = name.trim().split(/\s+/)[0] || "there";
+  return sendMail({
+    to,
+    subject: `Your ${site.name} dashboard code: ${code}`,
+    text: `Hi ${first},\n\nYour verification code is ${code}. It expires in 10 minutes.\n\nIf you did not ask to recover your dashboard login, ignore this email: nobody can sign in without this code.\n\n${site.name}`,
+    html: wrap(
+      "Your verification code",
+      `<p style="margin:0 0 6px;">Hi ${esc(first)}, use this code to recover your dashboard login:</p>` +
+        `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:18px 0;"><tr><td align="center" style="background:${C.tint};border-radius:12px;padding:22px 12px;${FONT}font-size:38px;font-weight:800;letter-spacing:12px;color:${C.brand};">${esc(code)}</td></tr></table>` +
+        `<p style="margin:0 0 10px;">The code expires in <strong>10 minutes</strong> and works once.</p>` +
+        `<p style="margin:0;color:${C.muted};font-size:13px;">If you did not ask for this, you can ignore this email. Nobody can sign in without the code.</p>`,
+      `Your verification code is ${code}`
+    ),
+  });
+}

@@ -50,6 +50,19 @@ export default async function CountryView({ country }: { country: Country }) {
             <Byline author={country.author} updated={country.updatedAt} published={country.createdAt} className="mb-6" />
             <GeoBlock item={country} tableTitle={`${country.name} at a glance`} />
             {country.intro && <p className="text-gray-600 leading-relaxed mb-6">{country.intro}</p>}
+            {country.stats && country.stats.length > 0 && (
+              <Reveal>
+                <section aria-label={`${country.name} key statistics`} className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 mb-8">
+                  {country.stats.map((st) => (
+                    <div key={st.label} className="rounded-xl border border-brand/20 bg-brand-50 px-4 py-5 text-center">
+                      <p className="text-3xl sm:text-4xl font-extrabold text-brand-text leading-none">{st.value}</p>
+                      <p className="mt-2 text-sm font-semibold text-ink">{st.label}</p>
+                      {st.note && <p className="mt-1 text-xs text-gray-500">{st.note}</p>}
+                    </div>
+                  ))}
+                </section>
+              </Reveal>
+            )}
             <CtaBlock variant="inline" topic={country.name} className="!mt-0" />
 
             <Reveal>

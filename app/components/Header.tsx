@@ -5,9 +5,10 @@ import Image from "next/image";
 import Link from "@/app/components/SiteLink";
 import { usePathname } from "next/navigation";
 import { mainNav, site } from "@/data/site";
+import { platformOf } from "@/lib/social";
 import Icon from "./Icon";
 
-export default function Header() {
+export default function Header({ social = [] }: { social?: { platform: string; url: string }[] }) {
   const pathname = usePathname();
   const [menuFor, setMenuFor] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
@@ -31,6 +32,11 @@ export default function Header() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 flex justify-between items-center gap-4">
           <span><Icon name="location-dot" className="text-brand-text mr-1.5" /> {site.address}</span>
           <span className="flex items-center gap-5">
+            {social.length > 0 && (
+              <span className="flex items-center gap-1" aria-label="Social media">
+                {social.map((x) => { const p = platformOf(x.platform); return p ? <a key={x.url} href={x.url} target="_blank" rel="noopener noreferrer" aria-label={p.label} title={p.label} className="w-7 h-7 rounded-full flex items-center justify-center text-gray-500 hover:bg-brand hover:text-white transition-colors"><Icon name={p.icon} fixedWidth={false} className="text-[13px]" /></a> : null; })}
+              </span>
+            )}
             <a href={`tel:${site.phone.replace(/\s/g, "")}`} className="hover:text-brand-text"><Icon name="phone" className="text-brand-text mr-1.5" /> {site.phone}</a>
             <a href={`mailto:${site.email}`} className="hidden md:inline hover:text-brand-text"><Icon name="envelope" className="text-brand-text mr-1.5" /> {site.email}</a>
           </span>
@@ -39,11 +45,9 @@ export default function Header() {
 
       <header className={`bg-white border-b border-gray-200 sticky top-0 z-50 transition-shadow duration-300 ${scrolled ? "shadow-lg" : "shadow-sm"}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16 sm:h-20">
+          <div className="flex justify-between items-center h-[68px] sm:h-[84px]">
             <Link href="/" aria-label={`${site.name} home`} className="flex items-center">
-              <div className={`relative w-32 h-10 sm:w-36 sm:h-12 origin-left transition-transform duration-300 ${scrolled ? "scale-90" : "scale-100"}`}>
-                <Image src="/logo-black.png" alt={site.name} fill sizes="150px" className="object-contain" priority />
-              </div>
+              <Image src="/logo-header.png" alt={site.name} width={1000} height={333} sizes="(min-width:640px) 190px, 150px" priority className={`h-[46px] sm:h-[58px] w-auto origin-left transition-transform duration-300 ${scrolled ? "scale-95" : "scale-100"}`} />
             </Link>
 
             <nav aria-label="Main" className="hidden lg:flex items-center gap-8">
@@ -51,7 +55,7 @@ export default function Header() {
                 <Link key={n.href} href={n.href} className={`${link(n.href)} uppercase`}>{n.label}</Link>
               ))}
               <Link href="/contact" className="btn btn-cta btn-sm">
-                Get Consultation
+                Get a Free Quote
               </Link>
             </nav>
 
@@ -73,9 +77,14 @@ export default function Header() {
                 {mainNav.map((n) => (
                   <Link key={n.href} href={n.href} className={`${link(n.href)} uppercase py-3 border-b border-gray-100`}>{n.label}</Link>
                 ))}
-                <Link href="/contact" className="btn btn-cta mt-4 text-center">
-                  Get Consultation
+                <Link href="/contact" className="btn btn-cta mt-4">
+                  Get a Free Quote
                 </Link>
+                {social.length > 0 && (
+                  <div className="flex items-center justify-center gap-3 pt-4">
+                    {social.map((x) => { const p = platformOf(x.platform); return p ? <a key={x.url} href={x.url} target="_blank" rel="noopener noreferrer" aria-label={p.label} className="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center text-gray-600 hover:bg-brand hover:text-white transition-colors"><Icon name={p.icon} fixedWidth={false} /></a> : null; })}
+                  </div>
+                )}
               </div>
             </nav>
           )}

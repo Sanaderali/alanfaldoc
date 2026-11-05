@@ -3,7 +3,7 @@
 import { randomUUID } from "node:crypto";
 import { requirePerm, requireUser } from "@/lib/auth";
 import { hashPassword, passwordProblem, verifyPassword } from "@/lib/password";
-import { PERMISSIONS, ROLES } from "@/lib/rbac";
+import { PERMISSIONS, ROLES, ROLE_PERMISSIONS } from "@/lib/rbac";
 import { notifyWelcome } from "@/lib/notify";
 import { mutate, now, readAll } from "@/lib/store";
 import { str } from "@/lib/validate";
@@ -32,6 +32,9 @@ export async function saveUser(payload: string, id?: string): Promise<UserResult
   const password = typeof raw.password === "string" ? raw.password : "";
   const extra = (Array.isArray(raw.extraPermissions) ? raw.extraPermissions : []).map(String).filter((p) => GRANTABLE.has(p));
 
+  const roleSet = new Set<string>(ROLE_PERMISSIONS[role]);
+  const removed = role === "super_admin" ? [] : (Array.isArray(raw.removedPermissions) ? raw.removedPermissions : []).map(String).filter((p) => roleSet.has(p));
+
   if (!name) errors.name = "Name is required";
   if (!USERNAME_RE.test(username)) errors.username = "3-32 characters: letters, numbers, dot, dash, underscore";
   if (!EMAIL_RE.test(email)) errors.email = "Enter a valid email";
@@ -52,7 +55,7 @@ export async function saveUser(payload: string, id?: string): Promise<UserResult
 
   const stamp = now();
   const hash = password ? await hashPassword(password) : existing!.passwordHash;
-  const user: User = { id: existing?.id ?? randomUUID(), name, username, email, passwordHash: hash, role, active, extraPermissions: extra.length ? extra : undefined, createdAt: existing?.createdAt ?? stamp, updatedAt: stamp, lastLoginAt: existing?.lastLoginAt };
+  const user: User = { id: existing?.id ?? randomUUID(), name, username, email, passwordHash: hash, role, active, extraPermissions: extra.length ? extra : undefined, removedPermissions: removed.length ? removed : undefined, createdAt: existing?.createdAt ?? stamp, updatedAt: stamp, lastLoginAt: existing?.lastLoginAt };
   await mutate("users", (all) => (existing ? all.map((u) => (u.id === existing.id ? user : u)) : [...all, user]));
   if (!existing) void notifyWelcome(user); // welcome email (skipped until a mail provider is configured)
   return { ok: true, id: user.id, message: existing ? "User updated" : "User created" };

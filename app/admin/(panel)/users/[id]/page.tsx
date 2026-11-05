@@ -14,7 +14,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
   return (
     <>
       <PageHeader title="Edit User" addNew={{ href: "/admin/users/new", label: "Add New User" }} />
-      <UserForm key={id} id={id} isSelf={me.id === id} initial={{ name: u.name, username: u.username, email: u.email, role: u.role, active: u.active, extraPermissions: u.extraPermissions ?? [] }} />
+      <UserForm key={id} id={id} isSelf={me.id === id} initial={{ name: u.name, username: u.username, email: u.email, role: u.role, active: u.active, extraPermissions: u.extraPermissions ?? [], removedPermissions: u.removedPermissions ?? [] }} />
     </>
   );
 }

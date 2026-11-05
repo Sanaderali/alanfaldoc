@@ -180,7 +180,7 @@ export default async function HomeSections() {
               <p className="text-gray-600 text-sm">Aliquam a augue suscipit, luctus neque purus ipsum neque dolor primis libero tempus, and blandit ligula varius</p>
             </div>
             <Link href="/contact" className="btn btn-cta">
-              GET CONSULTATION
+              GET A FREE QUOTE
             </Link>
           </div>
         </div>
@@ -268,23 +268,6 @@ export default async function HomeSections() {
         </section>
       )}
 
-      {/* Final CTA */}
-      <section className="py-12 md:py-16 bg-gradient-to-r from-canvas to-canvas text-ink">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4">
-            Free Immigration & Visa Consultation
-          </h2>
-          <p className="text-gray-600 mb-6 max-w-3xl mx-auto text-sm sm:text-base">
-            Aliquam a augue suscipit, luctus neque purus ipsum neque dolor primis libero tempus, and blandit posuere ligula varius magna congue cursus porta ultrice
-          </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <span className="text-sm sm:text-base">Call : <a href={`tel:${site.phone.replace(/\s/g, "")}`} className="font-bold text-lg hover:text-brand-text">{site.phone}</a></span>
-            <Link href="/contact" className="btn btn-cta">
-              GET CONSULTATION
-            </Link>
-          </div>
-        </div>
-      </section>
     </>
   );
 }

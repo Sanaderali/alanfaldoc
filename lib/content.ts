@@ -1,4 +1,4 @@
-import type { Country, FaqGroup, PageKey, Post, Region, Review, Seo, Service, WhatsAppNumber } from "@/types/content";
+import type { Country, FaqGroup, PageKey, Post, Region, Review, Seo, Service, SocialLink, WhatsAppNumber } from "@/types/content";
 import { readAll } from "@/lib/store";
 import { htmlToText } from "@/lib/html";
 
@@ -113,4 +113,9 @@ export async function getRegion(countrySlug: string, regionSlugValue: string): P
   const country = await getCountry(countrySlug);
   const region = country?.regions?.find((r) => regionSlug(r) === regionSlugValue && regionHasPage(r));
   return country && region ? { country, region } : undefined;
+}
+
+/* ---------------- Social media links ---------------- */
+export async function getSocial(): Promise<SocialLink[]> {
+  return (await readAll("social")).filter((x) => x.active && /^https:\/\//.test(x.url));
 }

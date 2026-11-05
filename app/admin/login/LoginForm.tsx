@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import Icon from "@/app/components/Icon";
 import { btnPrimary, inputCls } from "../ui";
@@ -31,6 +32,7 @@ export default function LoginForm({ error }: { error?: string }) {
       </div>
       {error && <p role="alert" className="text-sm text-a-red">{error}</p>}
       <button type="submit" className={`${btnPrimary} w-full`}>Sign in</button>
+      <p className="text-center"><Link href="/admin/forgot" className="text-sm text-a-muted hover:text-a-text hover:underline">Forgot username or password?</Link></p>
     </form>
   );
 }

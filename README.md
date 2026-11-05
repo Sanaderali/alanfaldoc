@@ -180,6 +180,14 @@ No CAPTCHA for real customers. Layers (see `lib/antispam.ts`): hidden trap field
 - **Call-to-action buttons:** every country, state and blog page shows WhatsApp / Contact us / Call buttons in three places (after the intro, after the content, and a banner at the end).
 - **WhatsApp:** Dashboard -> WhatsApp (Super Admin and Administrator). Add several numbers, each with the team role that looks after it. One active number opens WhatsApp directly; several show a small picker. The round live-chat button sits bottom-left and the WhatsApp button bottom-right.
 
+### Social links, recovery codes, permissions, country stats
+
+- **Social media:** Dashboard -> Social media (Super Admin / Administrator). Add Facebook, Instagram, X, LinkedIn, YouTube, TikTok and more with https links; they show as round icons in the top header (and the mobile menu), the footer and the search-engine data (`sameAs`).
+- **Forgot username or password:** `/admin/forgot` (link on the login page). A 6-digit code is emailed (valid 10 minutes, one use, 5 wrong tries, max 3 codes per hour). A correct code shows the username and lets the person set a new password. A Super Admin without an email on the account gets the code at `ADMIN_RECOVERY_EMAIL` (or the first `LEAD_ALERT_EMAIL`). Needs email to be connected.
+- **Permissions:** choosing a role ticks its permissions; any box can be unticked (or extra ones ticked) per person. Super Admin is never restricted; team management stays Super Admin only.
+- **Country key stats:** in a country's editor, "Key stats" (value, label, optional source note) show as number cards at the top of the country page.
+- **Buttons / CTA:** all buttons are rounded pills. The header button says "Get a Free Quote". Every public page ends with a WhatsApp / Contact us now / Call banner (country, state and blog pages have their own topic versions).
+
 ### Support Activity (manage your support team)
 
 **Team → Support Activity** (Super Admin / anyone with *Manage users*) shows, for each person who can reply to tickets or chat: which channels they can reply to, how many tickets they replied to, total replies, tickets currently open / pending that are assigned to them, tickets they closed, average first-response time and chats handled. Filter by 7 / 30 / 90 days or all time. A ticket is assigned to whoever replies first, or you can choose **Assigned to** on the ticket; the Tickets list has an *Assigned to* column.

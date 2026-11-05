@@ -58,7 +58,7 @@ export function buildMetadata({ title, description, path, seo, image, type = "we
 
 /* ---------------- schema.org builders ---------------- */
 
-export function organizationLd(services: Service[] = []) {
+export function organizationLd(services: Service[] = [], social: string[] = []) {
   const a = site.addressParts;
   return {
     "@context": "https://schema.org",
@@ -88,7 +88,7 @@ export function organizationLd(services: Service[] = []) {
     })),
     areaServed: site.areaServed.map((n) => ({ "@type": "Place", name: n })),
     contactPoint: [{ "@type": "ContactPoint", contactType: "customer service", telephone: site.phone, email: site.email, areaServed: "AE", availableLanguage: ["English", "Arabic"] }],
-    sameAs: cleanSocial(),
+    sameAs: [...new Set([...cleanSocial(), ...social])],
     ...(services.length
       ? {
           hasOfferCatalog: {
