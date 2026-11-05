@@ -1,4 +1,4 @@
-import { authenticate, clearFailures, clientIp, recordFailure, startSession, throttled } from "@/lib/auth";
+import { authenticate, clearFailures, clientIp, recordFailure, sameSite, startSession, throttled } from "@/lib/auth";
 import { landingPath } from "@/lib/rbac";
 
 export const dynamic = "force-dynamic";
@@ -11,9 +11,7 @@ const to = (path: string) => new Response(null, { status: 303, headers: { Locati
  */
 export async function POST(req: Request) {
   // reject cross-site form posts
-  const origin = req.headers.get("origin");
-  const host = req.headers.get("host");
-  if (origin && host && new URL(origin).host !== host) return new Response("Forbidden", { status: 403 });
+  if (!sameSite(req)) return new Response("Forbidden", { status: 403 });
 
   const ip = await clientIp();
   if (throttled(ip)) return to("/admin/login?e=throttle");

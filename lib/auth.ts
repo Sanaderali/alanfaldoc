@@ -119,13 +119,26 @@ export async function requirePerm(perm: Permission): Promise<User> {
   return user;
 }
 
+/**
+ * CSRF guard: a request carrying an Origin header must come from this site. Behind a reverse proxy (cPanel / LiteSpeed) the Host
+ * header can be an internal address, so the proxy's forwarded host and the configured site URL are accepted too.
+ */
+export function sameSite(req: Request): boolean {
+  const origin = req.headers.get("origin");
+  if (!origin) return true;
+  let o: string;
+  try { o = new URL(origin).host.toLowerCase(); } catch { return false; }
+  const allowed = new Set<string>();
+  for (const h of [req.headers.get("host"), req.headers.get("x-forwarded-host")?.split(",")[0]]) if (h) allowed.add(h.trim().toLowerCase());
+  try { allowed.add(new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "").host.toLowerCase()); } catch { /* not set */ }
+  return allowed.has(o);
+}
+
 /** For route handlers: 401 if not logged in, 403 for cross-site requests or missing permission. */
 export async function assertAdminRequest(req: Request, perm?: Permission): Promise<{ user: User } | { error: Response }> {
   const user = await getCurrentUser();
   if (!user) return { error: new Response("Unauthorized", { status: 401 }) };
-  const origin = req.headers.get("origin");
-  const host = (await headers()).get("host");
-  if (origin && host && new URL(origin).host !== host) return { error: new Response("Forbidden", { status: 403 }) };
+  if (!sameSite(req)) return { error: new Response("Forbidden", { status: 403 }) };
   if (perm && !can(user, perm)) return { error: new Response("Forbidden", { status: 403 }) };
   return { user };
 }
