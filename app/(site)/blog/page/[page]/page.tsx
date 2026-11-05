@@ -22,5 +22,5 @@ export default async function BlogPageN({ params }: Props) {
   if (n === 1) redirect("/blog");
   const { posts, pages } = await getPostsPage(n);
   if (n > pages) notFound();
-  return <BlogListing crumbs={[{ label: "Our Latest News & Articles", href: "/blog" }, { label: `Page ${n}` }]} posts={posts} page={n} pages={pages} />;
+  return <BlogListing heading={`Our Latest News & Articles - Page ${n}`} crumbs={[{ label: "Our Latest News & Articles", href: "/blog" }, { label: `Page ${n}` }]} posts={posts} page={n} pages={pages} />;
 }

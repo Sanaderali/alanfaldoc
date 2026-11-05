@@ -31,7 +31,9 @@ type MetaInput = {
 
 export function buildMetadata({ title, description, path, seo, image, type = "website", publishedTime, modifiedTime }: MetaInput): Metadata {
   const t = seo?.title ?? title;
-  const d = seo?.description ?? description;
+  let d = seo?.description ?? description;
+  // very short descriptions are padded with the brand line so search snippets are never thin (explicit dashboard SEO text is left alone)
+  if (!seo?.description && d.length < 110) d = `${d.replace(/\.?$/, ".")} ${site.name}: document clearing and business setup support in Dubai, UAE.`.slice(0, 160);
   const img = seo?.image ?? image ?? "/opengraph-image"; // default: app/opengraph-image.tsx
   return {
     title: t,

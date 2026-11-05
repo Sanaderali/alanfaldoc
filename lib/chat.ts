@@ -1,5 +1,5 @@
 import "server-only";
-import { createHash, randomBytes, randomUUID } from "node:crypto";
+import { createHash, randomBytes, randomUUID, timingSafeEqual } from "node:crypto";
 import type { Chat, ChatMessage } from "@/types/content";
 
 /** Shared helpers for the live chat (public APIs + dashboard APIs). */
@@ -9,6 +9,8 @@ export const MAX_MESSAGES_PER_CHAT = 500;
 
 export const newToken = () => randomBytes(24).toString("hex");
 export const hashToken = (t: string) => createHash("sha256").update(t).digest("hex");
+/** constant-time comparison of a visitor token against the stored hash */
+export const tokenMatches = (token: string, hash: string) => { const a = Buffer.from(hashToken(token)), b = Buffer.from(hash); return a.length === b.length && timingSafeEqual(a, b); };
 export const msg = (from: ChatMessage["from"], text: string, name?: string, staffId?: string): ChatMessage => ({ id: randomUUID(), from, text, name, ...(staffId ? { staffId } : {}), at: new Date().toISOString() });
 
 export const cleanText = (v: unknown, max = MAX_MESSAGE) => (typeof v === "string" ? v.replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f]/g, "").trim().slice(0, max) : "");

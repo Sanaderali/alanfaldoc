@@ -30,9 +30,9 @@ export async function POST(req: Request) {
   const input = Buffer.from(await file.arrayBuffer());
   let out: Buffer, info: { width: number; height: number };
   try {
-    const meta = await sharp(input).metadata();
+    const meta = await sharp(input, { limitInputPixels: 50_000_000 }).metadata();
     if (!meta.format || !["jpeg", "png", "webp", "gif", "heif", "avif"].includes(meta.format)) throw new Error("format");
-    ({ data: out, info } = await sharp(input).rotate().resize({ width: 1600, withoutEnlargement: true }).webp({ quality: 80 }).toBuffer({ resolveWithObject: true }));
+    ({ data: out, info } = await sharp(input, { limitInputPixels: 50_000_000 }).rotate().resize({ width: 1600, withoutEnlargement: true }).webp({ quality: 80 }).toBuffer({ resolveWithObject: true }));
   } catch {
     return Response.json({ error: "Not a valid JPG, PNG, WebP or GIF image" }, { status: 400 });
   }

@@ -1,5 +1,5 @@
 import { clientIp } from "@/lib/auth";
-import { cleanText, hashToken, MAX_MESSAGES_PER_CHAT, msg, publicView } from "@/lib/chat";
+import { cleanText, tokenMatches, MAX_MESSAGES_PER_CHAT, msg, publicView } from "@/lib/chat";
 import { allow } from "@/lib/ratelimit";
 import { mutate, now } from "@/lib/store";
 
@@ -22,7 +22,7 @@ export async function POST(req: Request) {
   await mutate("chats", (all) =>
     all.map((c) => {
       if (c.id !== id) return c;
-      if (c.tokenHash !== hashToken(token)) { denied = true; return c; }
+      if (!tokenMatches(token, c.tokenHash)) { denied = true; return c; }
       if (c.status === "closed" || c.messages.length >= MAX_MESSAGES_PER_CHAT) { result = publicView(c); return c; }
       const m = msg("visitor", text, c.name);
       const next = { ...c, messages: [...c.messages, m], unreadStaff: c.unreadStaff + 1, lastMessageAt: m.at, updatedAt: now() };
