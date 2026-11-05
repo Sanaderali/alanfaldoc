@@ -29,19 +29,25 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ q
       <div className="bg-a-surface border border-a-line overflow-x-auto">
         {rows.length === 0 ? <Empty>No enquiries yet.</Empty> : (
           <table className="w-full text-[13px]">
-            <thead><tr className="text-left border-b border-a-line">{["Client", "Location", "Nationality", "Business / company", "Visa / stay / travel", "Enquiry", "Status", "Feedback"].map((h) => <th key={h} className="px-3 py-2.5 font-normal text-a-muted whitespace-nowrap">{h}</th>)}</tr></thead>
+            <thead><tr className="text-left border-b border-a-line">{["Name", "Phone", "Email", "Company", "Looking for / response / next step", "Location", "Nationality", "Business", "Visa · stay · travel", "Status", "Feedback"].map((h) => <th key={h} className="px-3 py-2.5 font-normal text-a-muted whitespace-nowrap">{h}</th>)}</tr></thead>
             <tbody>
               {rows.map((c, n) => {
                 const p = c.profile ?? {};
                 const place = p.basedIn || [c.city, c.country].filter(Boolean).join(", ");
+                const lines = (c.summary ?? "").split("\n").map((l) => l.trim()).filter(Boolean);
                 return (
                   <tr key={c.id} className={`align-top ${n % 2 ? "bg-a-surface" : "bg-a-raised"}`}>
-                    <td className="px-3 py-2.5 min-w-[11rem]"><Link href={`/admin/chat?c=${c.id}`} className="font-semibold text-brand-text hover:underline">{p.name || c.name || "Visitor"}</Link><div className="text-a-muted">{c.phone}</div><div className="text-a-muted break-all">{p.email || ""}</div><div className="text-[11px] text-a-subtle">{new Date(c.createdAt).toLocaleDateString("en-GB")}</div></td>
-                    <td className="px-3 py-2.5">{dash(place)}</td>
+                    <td className="px-3 py-2.5 min-w-[9rem]"><Link href={`/admin/chat?c=${c.id}`} className="font-semibold text-brand-text hover:underline">{p.name || c.name || "Visitor"}</Link><div className="text-[11px] text-a-subtle">{new Date(c.createdAt).toLocaleDateString("en-GB")}</div>{c.followUp && <div className="text-[11px] text-amber-300">Needs follow-up</div>}</td>
+                    <td className="px-3 py-2.5 whitespace-nowrap">{c.phone}</td>
+                    <td className="px-3 py-2.5 break-all min-w-[9rem]">{dash(p.email)}</td>
+                    <td className="px-3 py-2.5 min-w-[8rem]">{dash(p.companyName)}</td>
+                    <td className="px-3 py-2.5 min-w-[22rem] max-w-[30rem]">
+                      {lines.length ? lines.map((l, i) => { const m = l.match(/^(Looking for|Response given|Next step):\s*(.*)$/i); return <p key={i} className="mb-1 last:mb-0">{m ? <><span className="font-semibold">{m[1]}:</span> {m[2]}</> : l}</p>; }) : <>{p.query ? <p><span className="font-semibold">Looking for:</span> {p.query}</p> : dash()}<p className="text-[11px] text-a-subtle mt-1">The full summary is written when the chat is closed.</p></>}
+                    </td>
+                    <td className="px-3 py-2.5 min-w-[8rem]">{dash(place)}</td>
                     <td className="px-3 py-2.5">{dash(p.nationality)}</td>
-                    <td className="px-3 py-2.5 min-w-[9rem]">{dash(p.businessType)}<div className="text-a-muted">{p.companyName}</div></td>
+                    <td className="px-3 py-2.5 min-w-[8rem]">{dash(p.businessType)}</td>
                     <td className="px-3 py-2.5 min-w-[10rem]">{dash(p.visaStatus)}<div className="text-a-muted">{p.stayDuration}</div><div className="text-a-muted">{p.travelHistory}</div></td>
-                    <td className="px-3 py-2.5 min-w-[16rem]">{dash(p.query)}{c.summary && <details className="mt-1"><summary className="cursor-pointer text-brand-text">Chat summary</summary><p className="mt-1 whitespace-pre-wrap text-a-muted">{c.summary}</p></details>}</td>
                     <td className="px-3 py-2.5 whitespace-nowrap">{c.status === "open" ? <span className="text-green-500">Open</span> : <span className="text-a-muted">Closed</span>}{c.status === "closed" && <div className="text-[11px] text-a-subtle">by {c.closedBy === "visitor" ? "client" : c.closedByName || "staff"}</div>}</td>
                     <td className="px-3 py-2.5 min-w-[9rem]">{c.feedback ? <><span className="text-amber-400">{"★".repeat(c.feedback.rating)}{"☆".repeat(5 - c.feedback.rating)}</span>{c.feedback.comment && <div className="text-a-muted">&ldquo;{c.feedback.comment}&rdquo;</div>}{canReview && (c.feedback.reviewId ? <div className="text-[11px] text-a-subtle">In Reviews (draft)</div> : <form action={feedbackToReview.bind(null, c.id)}><button className="mt-1 text-[12px] text-brand-text hover:underline">Add to Reviews</button></form>)}</> : dash()}</td>
                   </tr>

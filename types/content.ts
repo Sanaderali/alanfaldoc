@@ -337,6 +337,10 @@ export type Chat = {
   /** short summary of the whole conversation */
   summary?: string;
   summaryAt?: string;
+  /** the assistant told the client it would check with the team: staff should answer (cleared when staff reply) */
+  followUp?: boolean;
+  /** the assistant is writing a reply (shows "typing…" to the visitor) */
+  aiTyping?: boolean;
   closedBy?: "visitor" | "staff";
   closedAt?: string;
   closedByName?: string;

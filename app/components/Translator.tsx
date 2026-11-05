@@ -64,6 +64,8 @@ export default function Translator() {
       try {
         const myLang = lang;
         const slots = collect();
+        // 1) everything already known (this browser remembers earlier translations) is applied at once, before any network request
+        for (const s of slots) { const v = translated.get(s.orig.trim()); if (v) s.apply(v); }
         const need = [...new Set(slots.map((s) => s.orig.trim()).filter((t) => !translated.has(t)))];
         for (let i = 0; i < need.length && lang === myLang; i += 40) {
           const chunk = need.slice(i, i + 40);
@@ -73,10 +75,12 @@ export default function Translator() {
             if (!r.ok) continue;
             const d = (await r.json()) as { map: Record<string, string> };
             for (const [k, v] of Object.entries(d.map)) translated.set(k, v);
+            saveDict();
           } catch { continue; }
           if (lang === myLang) for (const s of slots) { const v = translated.get(s.orig.trim()); if (v) s.apply(v); }
         }
         if (lang === myLang) for (const s of slots) { const v = translated.get(s.orig.trim()); if (v) s.apply(v); }
+        reveal();
         // some sentences may not be translated yet (the AI service is busy or rate limited): try again shortly
         const missing = need.some((t) => !translated.has(t));
         clearTimeout(retryTimer);
@@ -90,12 +94,19 @@ export default function Translator() {
       document.body.querySelectorAll<HTMLElement>("[placeholder],[alt],[aria-label],[title]").forEach((el) => { const o = attrOrig.get(el); if (o) for (const [a, v] of Object.entries(o)) el.setAttribute(a, v); });
     };
 
+    const reveal = () => document.documentElement.removeAttribute("data-tr");
+    const loadDict = (l: string) => { try { const d = JSON.parse(localStorage.getItem(`aa-tr-${l}`) || "{}") as Record<string, string>; for (const [k, v] of Object.entries(d)) translated.set(k, v); } catch { /* no saved translations yet */ } };
+    let saveTimer: ReturnType<typeof setTimeout> | undefined;
+    const saveDict = () => {
+      clearTimeout(saveTimer);
+      saveTimer = setTimeout(() => { try { const o = Object.fromEntries(translated); const s = JSON.stringify(o); if (s.length < 2_000_000) localStorage.setItem(`aa-tr-${lang}`, s); } catch { /* storage full or blocked */ } }, 800);
+    };
     const change = () => {
       const next = getLang();
       if (next === lang) return;
       if (lang !== "en") restore();
       lang = next; translated.clear(); retries = 0; clearTimeout(retryTimer); setDoc(lang);
-      if (lang !== "en") void run();
+      if (lang !== "en") { loadDict(lang); void run(); } else reveal();
     };
 
     let timer: ReturnType<typeof setTimeout> | undefined;
@@ -103,6 +114,7 @@ export default function Translator() {
     mo.observe(document.body, { childList: true, subtree: true });
     window.addEventListener(LANG_EVENT, change);
     change();
+    if (lang === "en") reveal();
     return () => { clearTimeout(retryTimer); mo.disconnect(); window.removeEventListener(LANG_EVENT, change); clearTimeout(timer); };
   }, []);
   return null;

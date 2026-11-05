@@ -18,7 +18,7 @@ export async function POST(req: Request) {
     found = true;
     if (!tokenMatches(token, c.tokenHash)) { denied = true; return c; }
     if (c.status === "closed") return c;
-    const m = msg("system", "You ended this chat. Thank you for contacting us!");
+    const m = msg("system", "You ended this chat. Our conversations are recorded for quality, so please leave a quick rating below. Thank you for contacting us!");
     return { ...c, status: "closed" as const, closedBy: "visitor" as const, closedAt: m.at, closedByName: c.name || "Visitor", messages: [...c.messages, m], unreadStaff: c.unreadStaff + 1, lastMessageAt: m.at, updatedAt: now() };
   }));
   if (!found) return Response.json({ error: "Chat not found" }, { status: 404 });

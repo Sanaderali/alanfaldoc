@@ -23,6 +23,7 @@ export default function ChatPanel({ onClose }: { onClose: () => void }) {
   const [text, setText] = useState("");
   const [err, setErr] = useState("");
   const [busy, setBusy] = useState(false);
+  const [typing, setTyping] = useState(false);
   const [closedBy, setClosedBy] = useState<"visitor" | "staff" | undefined>();
   const [rated, setRated] = useState(false);
   const [stars, setStars] = useState(0);
@@ -40,7 +41,8 @@ export default function ChatPanel({ onClose }: { onClose: () => void }) {
       const r = await fetch(`/api/chat/poll?id=${chat.id}&token=${chat.token}&since=${total.current}`, { cache: "no-store" });
       if (r.status === 404 || r.status === 403) { writeChat(null); setChat(null); setMsgs([]); total.current = 0; known.current.clear(); return; }
       if (!r.ok) return;
-      const d: { total: number; status: "open" | "closed"; messages: Msg[]; closedBy?: "visitor" | "staff"; feedbackGiven?: boolean } = await r.json();
+      const d: { total: number; status: "open" | "closed"; messages: Msg[]; closedBy?: "visitor" | "staff"; feedbackGiven?: boolean; typing?: boolean } = await r.json();
+      setTyping(!!d.typing);
       setStatus(d.status); setClosedBy(d.closedBy); if (d.feedbackGiven) setRated(true);
       if (d.messages.length) {
         const hadAny = known.current.size > 0;
@@ -60,7 +62,7 @@ export default function ChatPanel({ onClose }: { onClose: () => void }) {
     return () => { clearInterval(t); document.removeEventListener("visibilitychange", vis); };
   }, [chat, poll]);
 
-  useEffect(() => { end.current?.scrollIntoView({ block: "end" }); }, [msgs.length]);
+  useEffect(() => { end.current?.scrollIntoView({ block: "end" }); }, [msgs.length, typing]);
   useEffect(() => { input.current?.focus(); }, [chat]);
   useEffect(() => {
     const k = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
@@ -164,6 +166,7 @@ export default function ChatPanel({ onClose }: { onClose: () => void }) {
                 </div>
               )
             )}
+            {typing && status === "open" && <div className="flex justify-start" aria-live="polite"><div className="bg-white border border-gray-200 rounded-2xl rounded-bl-md px-4 py-3 shadow-sm flex items-center gap-1" aria-label="Sanader is typing"><span className="w-1.5 h-1.5 rounded-full bg-gray-400 animate-bounce [animation-delay:-0.2s]" /><span className="w-1.5 h-1.5 rounded-full bg-gray-400 animate-bounce [animation-delay:-0.1s]" /><span className="w-1.5 h-1.5 rounded-full bg-gray-400 animate-bounce" /></div></div>}
             <div ref={end} />
           </div>
           {status === "closed" ? (

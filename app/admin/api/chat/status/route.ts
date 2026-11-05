@@ -17,7 +17,7 @@ export async function POST(req: Request) {
   await mutate("chats", (all) =>
     all.map((c) => {
       if (c.id !== id || c.status === status) return c;
-      const m = msg("system", status === "closed" ? "This chat has been closed. Thanks for contacting us!" : "This chat was reopened.");
+      const m = msg("system", status === "closed" ? "This chat has been closed. Our conversations are recorded for quality, so please leave a quick rating. Thanks for contacting us!" : "This chat was reopened.");
       const closing = status === "closed" ? { closedBy: "staff" as const, closedAt: m.at, closedByName: auth.user.name || auth.user.username } : { closedBy: undefined, closedAt: undefined, closedByName: undefined };
       return { ...c, ...closing, status, messages: [...c.messages, m], unreadVisitor: c.unreadVisitor + 1, lastMessageAt: m.at, updatedAt: now() };
     })

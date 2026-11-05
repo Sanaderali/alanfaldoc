@@ -20,7 +20,7 @@ export async function POST(req: Request) {
       if (c.messages.length >= MAX_MESSAGES_PER_CHAT) return c;
       const m = msg("staff", text, auth.user.name || auth.user.username, auth.user.id);
       const joined = !c.messages.some((x) => x.from === "staff") && (c.aiReplies ?? 0) > 0 ? [msg("system", `${auth.user.name || "A team member"} has joined the chat.`)] : [];
-      return { ...c, aiPaused: true, closedBy: undefined, closedAt: undefined, closedByName: undefined, status: "open" as const, messages: [...c.messages, ...joined, m], unreadStaff: 0, unreadVisitor: c.unreadVisitor + 1, lastMessageAt: m.at, updatedAt: now(), assignedTo: c.assignedTo ?? auth.user.id };
+      return { ...c, followUp: false, aiTyping: false, aiPaused: true, closedBy: undefined, closedAt: undefined, closedByName: undefined, status: "open" as const, messages: [...c.messages, ...joined, m], unreadStaff: 0, unreadVisitor: c.unreadVisitor + 1, lastMessageAt: m.at, updatedAt: now(), assignedTo: c.assignedTo ?? auth.user.id };
     })
   );
   return found ? Response.json({ ok: true }) : Response.json({ error: "Chat not found" }, { status: 404 });

@@ -8,7 +8,7 @@ import { btnGhost, btnPrimary } from "../../ui";
 type Summary = { id: string; name: string; phone: string; status: "open" | "closed"; unread: number; lastAt: string; createdAt: string; preview: string; lastFrom?: string; country?: string; city?: string };
 type Msg = { id: string; from: "visitor" | "staff" | "system" | "ai"; name?: string; text: string; at: string };
 type Profile = { name?: string; email?: string; nationality?: string; basedIn?: string; businessType?: string; companyName?: string; visaStatus?: string; stayDuration?: string; travelHistory?: string; query?: string };
-type Selected = { id: string; name: string; phone: string; status: "open" | "closed"; createdAt: string; ip?: string; country?: string; city?: string; page?: string; referrer?: string; userAgent?: string; language?: string; handledBy?: string; profile?: Profile | null; summary?: string; closedBy?: "visitor" | "staff"; closedByName?: string; closedAt?: string; feedback?: { rating: number; comment?: string; at: string } | null; aiPaused?: boolean; aiReplies?: number; total: number; messages: Msg[] };
+type Selected = { id: string; name: string; phone: string; status: "open" | "closed"; createdAt: string; ip?: string; country?: string; city?: string; page?: string; referrer?: string; userAgent?: string; language?: string; handledBy?: string; profile?: Profile | null; followUp?: boolean; summary?: string; closedBy?: "visitor" | "staff"; closedByName?: string; closedAt?: string; feedback?: { rating: number; comment?: string; at: string } | null; aiPaused?: boolean; aiReplies?: number; total: number; messages: Msg[] };
 
 const ago = (iso: string) => {
   const s = Math.max(0, (Date.now() - new Date(iso).getTime()) / 1000);
@@ -214,6 +214,7 @@ export default function ChatInbox({ canReply, initialId }: { canReply: boolean; 
         ) : <p className="p-3 text-[13px] text-a-muted">Select a conversation to see visitor details.</p>}
         {sel && (
           <div className="p-3 border-t border-a-line text-[13px] space-y-3">
+            {sel.followUp && <p className="px-2 py-1.5 border border-amber-400/60 text-amber-300">The assistant promised this client a follow-up. Reply to clear this flag.</p>}
             <h3 className="font-semibold text-[13px]">Client details (noted from the chat)</h3>
             <dl className="space-y-2">
               {([["Name", sel.profile?.name], ["Email", sel.profile?.email], ["Nationality", sel.profile?.nationality], ["Based in", sel.profile?.basedIn], ["Business", sel.profile?.businessType], ["Company", sel.profile?.companyName], ["Visa / in or out of UAE", sel.profile?.visaStatus], ["Length of stay", sel.profile?.stayDuration], ["Travel history", sel.profile?.travelHistory], ["Wants", sel.profile?.query]] as [string, string | undefined][]).map(([k, v]) => <div key={k}><dt className="text-[11px] uppercase tracking-wide text-a-subtle">{k}</dt><dd className={v ? "break-words" : "text-a-subtle"}>{v || "Not mentioned yet"}</dd></div>)}

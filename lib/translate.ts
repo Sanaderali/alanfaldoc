@@ -31,7 +31,7 @@ async function save(lang: string, data: Record<string, string>) {
 }
 
 const BASE = () => process.env.GROQ_BASE_URL || "https://api.groq.com/openai/v1";
-const MODEL = () => process.env.GROQ_MODEL || "openai/gpt-oss-120b";
+const MODEL = () => process.env.GROQ_TRANSLATE_MODEL || "openai/gpt-oss-20b"; // own model: translations never use up the chat assistant's rate limit
 
 async function callGroq(lang: string, items: string[]): Promise<string[] | null> {
   const key2 = process.env.GROQ_API_KEY;
@@ -70,11 +70,22 @@ export async function translateBatch(lang: string, texts: string[]): Promise<{ o
   let cur: string[] = [], size = 0;
   for (const t of todo) { if (cur.length >= 20 || size + t.length > 5000) { groups.push(cur); cur = []; size = 0; } cur.push(t); size += t.length; }
   if (cur.length) groups.push(cur);
-  await Promise.all(groups.map(async (g) => {
-    const r = await callGroq(lang, g);
-    if (!r) return;
-    g.forEach((t, i) => { if (r[i]) { cache[key(t)] = r[i]; out[t] = r[i]; fresh++; } });
-  }));
+  let next = 0;
+  const worker = async () => {
+    while (next < groups.length) {
+      const g = groups[next++];
+      const r = await callGroq(lang, g);
+      if (!r) continue;
+      g.forEach((t, i) => { if (r[i]) { cache[key(t)] = r[i]; out[t] = r[i]; fresh++; } });
+    }
+  };
+  await Promise.all([worker(), worker()]);
   if (fresh) await save(lang, cache);
   return { out, fresh };
+}
+
+/** how many strings of this list are not translated yet (used by the pre-translation tool) */
+export async function countMissing(lang: string, texts: string[]): Promise<number> {
+  const cache = await load(lang);
+  return texts.filter((t) => !cache[key(t)]).length;
 }

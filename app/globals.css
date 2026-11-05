@@ -432,6 +432,9 @@ html, body { overflow-x: clip; }
    .btn-primary solid green   .btn-cta solid red (calls to action)   .btn-wa WhatsApp green
    .btn-secondary outlined    sizes: .btn-sm .btn-lg
    ===================================================================== */
+html[data-tr] body { opacity: 0; }
+body { transition: opacity 0.12s ease; }
+
 @layer components {
   .btn {
     display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;

@@ -29,6 +29,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <link rel="preconnect" href="https://ka-f.fontawesome.com" crossOrigin="anonymous" />
         {/* Font Awesome config, runs before the kit. "nest" keeps each <i> in place so React hydration is never disturbed */}
         <script dangerouslySetInnerHTML={{ __html: "window.FontAwesomeConfig={autoReplaceSvg:'nest'};" }} />
+        {/* visitors who chose another language: set direction at once and keep the English text hidden for a split second (max 1.2s) so it never flashes */}
+        <script dangerouslySetInnerHTML={{ __html: "try{var l=localStorage.getItem('aa-lang');if(l&&l!=='en'&&!/^\\/(admin|preview)/.test(location.pathname)){var d=document.documentElement;d.lang=l;d.dir=l==='ar'?'rtl':'ltr';d.setAttribute('data-tr','1');setTimeout(function(){d.removeAttribute('data-tr')},1200)}}catch(e){}" }} />
       </head>
       <body className="antialiased" suppressHydrationWarning>
         {/* Font Awesome Free kit */}
