@@ -3,6 +3,7 @@ import Link from "@/app/components/SiteLink";
 import Icon from "./Icon";
 import Flag from "./Flag";
 import FaqList from "./FaqList";
+import HeroForm from "./HeroForm";
 import { site } from "@/data/site";
 import { getCountries, getReviews, getServices, pickFeatured } from "@/lib/content";
 
@@ -78,21 +79,7 @@ export default async function HomeSections() {
 
           {/* Consultation Form */}
           <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-2xl p-6 sm:p-8">
-            <form className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              <input type="text" placeholder="Enter Your Name*" className="px-4 py-3 border border-gray-300 rounded text-ink focus:ring-2 focus:ring-brand focus:border-transparent" />
-              <input type="email" placeholder="Enter Your Email*" className="px-4 py-3 border border-gray-300 rounded text-ink focus:ring-2 focus:ring-brand focus:border-transparent" />
-              <select className="px-4 py-3 border border-gray-300 rounded text-gray-700 focus:ring-2 focus:ring-brand focus:border-transparent">
-                <option>Visa Type</option>
-                <option>Company Formation</option>
-                <option>Business Immigration</option>
-                <option>PRO Services</option>
-                <option>Trade License</option>
-                <option>Document Clearing</option>
-              </select>
-              <button type="submit" className="btn btn-primary">
-                SEND REQUEST
-              </button>
-            </form>
+            <HeroForm services={allServices.map((x) => x.title)} />
           </div>
         </div>
       </section>

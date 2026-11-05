@@ -32,6 +32,8 @@ export async function POST(req: Request) {
     ticket = { id: randomUUID(), number: all.reduce((n, t) => Math.max(n, t.number), 1000) + 1, name, email, phone, subject, message, status: "open", source: "contact", createdAt: stamp, updatedAt: stamp, ip, replies: [], unreadStaff: true };
     return [ticket, ...all];
   });
-  void notifyTicketCreated(ticket);
+  // send before answering: on shared hosting a background task can be cut off once the response is sent.
+  // Capped at 12 s so a slow mail server can never block the visitor for long; the ticket is saved either way.
+  await Promise.race([notifyTicketCreated(ticket).catch(() => undefined), new Promise((r) => setTimeout(r, 12_000))]);
   return Response.json({ ok: true, number: ticket.number });
 }

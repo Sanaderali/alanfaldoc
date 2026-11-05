@@ -58,8 +58,8 @@ export async function notifyTicketCreated(t: Ticket) {
   return sendMail({
     to: t.email,
     subject: `Thank you for contacting ${site.name} (#${t.number})`,
-    text: `Hi ${t.name},\n\nThank you for contacting ${site.name}. We have received your message and our team will get back to you as soon as possible.\n\nYour reference: Ticket #${t.number}\nSubject: ${t.subject}\n\nIf your matter is urgent, call us on ${site.phone}.\n\nKind regards,\nThe ${site.name} team\n${site.address}`,
-    html: wrap("Thank you for contacting us", `<p>Hi ${esc(t.name)},</p><p>Thank you for contacting <strong>${esc(site.name)}</strong>. We have received your message and <strong>our team will get back to you as soon as possible</strong>.</p><p style="background:#f3f7f5;border-radius:8px;padding:12px 16px"><strong>Your reference:</strong> Ticket #${t.number}<br/><strong>Subject:</strong> ${esc(t.subject)}</p><p>If your matter is urgent, call us on <a href="tel:${site.phone.replace(/\s/g, "")}">${esc(site.phone)}</a>.</p><p>Kind regards,<br/>The ${esc(site.name)} team</p>`),
+    text: `Hi ${t.name},\n\nThank you for contacting ${site.name} about ${t.subject}. We have received your request and our team will get back to you as soon as possible.\n\nYour reference: Ticket #${t.number}\nService: ${t.subject}\n\nIf your matter is urgent, call us on ${site.phone}.\n\nKind regards,\nThe ${site.name} team\n${site.address}`,
+    html: wrap("Thank you for contacting us", `<p>Hi ${esc(t.name)},</p><p>Thank you for contacting <strong>${esc(site.name)}</strong> about <strong>${esc(t.subject)}</strong>. We have received your request and <strong>our team will get back to you as soon as possible</strong>.</p><p style="background:#f3f7f5;border-radius:8px;padding:12px 16px"><strong>Your reference:</strong> Ticket #${t.number}<br/><strong>Service:</strong> ${esc(t.subject)}</p><p>If your matter is urgent, call us on <a href="tel:${site.phone.replace(/\s/g, "")}">${esc(site.phone)}</a>.</p><p>Kind regards,<br/>The ${esc(site.name)} team</p>`),
   });
 }
 

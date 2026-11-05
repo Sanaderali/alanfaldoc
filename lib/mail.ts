@@ -1,4 +1,7 @@
 import "server-only";
+import fs from "node:fs/promises";
+import path from "node:path";
+import { CONTENT_DIR } from "@/lib/store";
 
 /**
  * Email dispatch. Every automatic email (welcome, lead alerts, thank-you to customers, ticket replies, chat transcripts,
@@ -27,7 +30,31 @@ function apiPayload(m: MailMessage) {
   return { from: mailFrom(), to: Array.isArray(m.to) ? m.to : [m.to], subject: m.subject, text: m.text, html: m.html, reply_to: m.replyTo };
 }
 
+/** the last 50 send attempts (success or failure) so problems are visible in Dashboard -> Team -> Email */
+export type MailLogEntry = { at: string; to: string; subject: string; ok: boolean; error?: string };
+const LOG = () => path.join(CONTENT_DIR, "mail-log.json");
+export async function readMailLog(): Promise<MailLogEntry[]> {
+  try { return JSON.parse(await fs.readFile(LOG(), "utf8")); } catch { return []; }
+}
+let logChain: Promise<unknown> = Promise.resolve();
+function logMail(e: MailLogEntry) {
+  logChain = logChain.then(async () => {
+    try {
+      const all = await readMailLog();
+      await fs.mkdir(CONTENT_DIR, { recursive: true });
+      await fs.writeFile(LOG(), JSON.stringify([e, ...all].slice(0, 50)));
+    } catch { /* logging must never break sending */ }
+  });
+}
+
 export async function sendMail(m: MailMessage): Promise<MailResult> {
+  const r = await dispatch(m);
+  const to = (Array.isArray(m.to) ? m.to.join(", ") : m.to) || "-";
+  if (r.sent || r.error) logMail({ at: new Date().toISOString(), to, subject: m.subject, ok: r.sent, error: r.error });
+  return r;
+}
+
+async function dispatch(m: MailMessage): Promise<MailResult> {
   const to = Array.isArray(m.to) ? m.to.filter(Boolean) : m.to ? [m.to] : [];
   if (to.length === 0) {
     console.info(`[mail] skipped, no recipient (set LEAD_ALERT_EMAIL): "${m.subject}"`);
