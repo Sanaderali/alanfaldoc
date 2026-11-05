@@ -43,7 +43,7 @@ export async function POST(req: Request) {
     referrer: cleanText(body.referrer, 300) || undefined,
     userAgent: (h.get("user-agent") ?? "").slice(0, 300),
     language: (h.get("accept-language") ?? "").split(",")[0]?.slice(0, 20),
-    messages: [msg("system", aiEnabled() ? `Hi! I am ${AI_NAME}, a virtual assistant. Ask me anything, and a team member can join this chat at any time.` : "Thanks for reaching out! An agent will join this chat shortly.")],
+    messages: [msg("system", aiEnabled() ? `Hi, I'm ${AI_NAME}, Al Anfal's AI assistant. Ask me anything about our services, and a team member can join this chat at any time.` : "Thanks for reaching out! An agent will join this chat shortly.")],
     unreadStaff: 1, // a brand-new chat counts as unread so the dashboard alerts
     unreadVisitor: 0,
   };

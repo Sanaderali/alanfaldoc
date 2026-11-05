@@ -1,5 +1,5 @@
 import { after } from "next/server";
-import { askAI, AI_NAME, aiEnabled, MAX_AI_REPLIES } from "@/lib/ai";
+import { askAI, AI_NAME, aiEnabled, MAX_AI_REPLIES, wantsHuman } from "@/lib/ai";
 import { clientIp } from "@/lib/auth";
 import { cleanText, tokenMatches, MAX_MESSAGES_PER_CHAT, msg, publicView } from "@/lib/chat";
 import { allow } from "@/lib/ratelimit";
@@ -43,14 +43,25 @@ async function aiReply(id: string) {
   const chat = (await readAll("chats")).find((c) => c.id === id);
   if (!chat || chat.status !== "open" || chat.aiPaused || (chat.aiReplies ?? 0) >= MAX_AI_REPLIES) return;
   if (chat.messages[chat.messages.length - 1]?.from !== "visitor") return;
+  const lastText = chat.messages[chat.messages.length - 1]?.text ?? "";
+  // the visitor asks for a person: say so, alert the team and step back
+  if (wantsHuman(lastText)) {
+    await mutate("chats", (all) =>
+      all.map((c) => {
+        if (c.id !== id || c.aiPaused) return c;
+        const a = msg("ai", "Of course, I've let the team know. Someone will join this chat shortly. I'll step back so they can take over.", AI_NAME);
+        return { ...c, messages: [...c.messages, a], unreadVisitor: c.unreadVisitor + 1, unreadStaff: c.unreadStaff + 1, aiPaused: true, aiReplies: (c.aiReplies ?? 0) + 1, lastMessageAt: a.at, updatedAt: now() };
+      })
+    );
+    return;
+  }
   const r = await askAI(chat);
   if (!r) return;
   await mutate("chats", (all) =>
     all.map((c) => {
       if (c.id !== id || c.aiPaused || c.status !== "open") return c; // a person took over while the AI was thinking
       const a = msg("ai", r.text, AI_NAME);
-      const added = [a, ...(r.handoff ? [msg("system", "A team member has been notified and will join this chat shortly.")] : [])];
-      return { ...c, messages: [...c.messages, ...added], unreadVisitor: c.unreadVisitor + 1, ...(r.handoff ? { aiPaused: true, unreadStaff: c.unreadStaff + 1 } : {}), aiReplies: (c.aiReplies ?? 0) + 1, lastMessageAt: a.at, updatedAt: now() };
+      return { ...c, messages: [...c.messages, a], unreadVisitor: c.unreadVisitor + 1, aiReplies: (c.aiReplies ?? 0) + 1, lastMessageAt: a.at, updatedAt: now() };
     })
   );
 }
