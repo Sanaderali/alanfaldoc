@@ -52,7 +52,7 @@ async function callGroq(lang: string, items: string[]): Promise<string[] | null>
     model: MODEL(), temperature: 0.2, max_tokens: 4000, response_format: { type: "json_object" },
     ...(MODEL().startsWith("openai/gpt-oss") ? { reasoning_effort: "low" } : {}),
     messages: [
-      { role: "system", content: `You translate website text for Al Anfal Documents Clearing Services LLC, a Dubai business-setup and document-clearing company, into ${language}. Use natural, professional wording a native speaker would use. Keep brand names (Al Anfal Doc), phone numbers, email addresses, URLs, numbers, currency codes (AED) and official UAE authority abbreviations (DET, MOHRE, GDRFA, ICP, DLD, PRO, Ejari) unchanged. Do not add or remove information. Input is a JSON object {"0": "text", ...}. Return ONLY a JSON object with the same keys and the translated text as values.` },
+      { role: "system", content: `You translate website text for Al Anfal Documents Clearing Services LLC, a Dubai business-setup and document-clearing company, into ${language}. Use natural, professional wording a native speaker would use. Keep brand names (Al Anfal Doc), phone numbers, email addresses, URLs, numbers, currency codes (AED) and official UAE authority abbreviations (DET, MOHRE, GDRFA, ICP, DLD, PRO, Ejari) unchanged. Some inputs are short pieces of HTML (tags such as a, strong, em, br): keep every tag and attribute exactly as given and translate only the visible text, placing the tags where they belong in the translated sentence. Do not add or remove information. Input is a JSON object {"0": "text", ...}. Return ONLY a JSON object with the same keys and the translated text as values.` },
       { role: "user", content: JSON.stringify(Object.fromEntries(items.map((t, i) => [String(i), t]))) },
     ],
   });
@@ -80,7 +80,7 @@ export async function translateBatch(lang: string, texts: string[]): Promise<{ o
   // groups of up to 20 strings (and about 5,000 characters) per request
   const groups: string[][] = [];
   let cur: string[] = [], size = 0;
-  for (const t of todo) { if (cur.length >= 20 || size + t.length > 5000) { groups.push(cur); cur = []; size = 0; } cur.push(t); size += t.length; }
+  for (const t of todo) { if (cur.length >= 20 || size + t.length > 6000) { groups.push(cur); cur = []; size = 0; } cur.push(t); size += t.length; }
   if (cur.length) groups.push(cur);
   let next = 0;
   const worker = async () => {

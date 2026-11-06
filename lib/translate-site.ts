@@ -1,35 +1,62 @@
 import "server-only";
-import { Parser } from "htmlparser2";
+import { parseDocument } from "htmlparser2";
+import type { ChildNode, Element } from "domhandler";
 import { LANGUAGES } from "@/lib/languages";
 import { countMissing, translateBatch } from "@/lib/translate";
 
 /**
  * Pre-translation: read the site's own pages (from the sitemap), collect every sentence the browser would translate and
  * translate them in the background, so visitors get their language instantly instead of waiting for the first translation.
- * The text collection mirrors components/Translator.tsx (same skipped elements, same length rules).
+ * The text collection mirrors components/Translator.tsx exactly (same skipped elements, same length rules, and the same rule
+ * that a paragraph with links or bold text inside an article is translated as ONE unit, written as canonical HTML).
  */
-const SKIP_TAGS = new Set(["script", "style", "noscript", "code", "pre", "textarea", "svg"]);
+const SKIP_TAGS = new Set(["script", "style", "noscript", "code", "pre", "textarea", "svg", "title"]);
 const ATTRS = ["placeholder", "alt", "aria-label", "title"];
-const VOID = new Set(["area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"]);
+const INLINE = new Set(["a", "strong", "em", "b", "i", "u", "br", "span", "code", "sup", "sub"]);
+const BLOCKS = new Set(["p", "li", "h2", "h3", "h4", "blockquote"]);
+const VOID = new Set(["br"]);
+export const MAX_UNIT = 1800;
+
+const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+const escA = (s: string) => s.replace(/&/g, "&amp;").replace(/"/g, "&quot;");
+/** Canonical HTML of a node list: the same text the browser produces in Translator.tsx (attributes sorted, text escaped). */
+export function canon(nodes: ChildNode[]): string {
+  return nodes.map((n) => {
+    if (n.type === "text") return esc((n as unknown as { data: string }).data);
+    if (n.type === "tag") {
+      const el = n as Element;
+      const attrs = Object.entries(el.attribs).sort(([x], [y]) => x.localeCompare(y)).map(([k, v]) => ` ${k}="${escA(v)}"`).join("");
+      return VOID.has(el.name) ? `<${el.name}${attrs}>` : `<${el.name}${attrs}>${canon(el.children as ChildNode[])}</${el.name}>`;
+    }
+    return "";
+  }).join("");
+}
+const isSkipped = (el: Element) => SKIP_TAGS.has(el.name) || "data-notranslate" in el.attribs || el.attribs.translate === "no" || el.attribs.contenteditable === "true";
+const hasClass = (el: Element, c: string) => (el.attribs.class ?? "").split(/\s+/).includes(c);
+const onlyInline = (el: Element): boolean => (el.children as ChildNode[]).every((c) => c.type !== "tag" || (INLINE.has((c as Element).name) && onlyInline(c as Element)));
 
 export function collectStrings(html: string): string[] {
   const out = new Set<string>();
-  const stack: boolean[] = []; // true = this element (or an ancestor) is skipped
-  let buf = ""; // the parser hands over text in pieces (it splits at entities such as &#x27;); a browser text node is the whole run
-  const add = (t: string) => { const s = t.trim(); if (s.length >= 2 && s.length <= 600 && /\p{L}/u.test(s)) out.add(s); };
-  const flush = () => { if (buf && !(stack[stack.length - 1] ?? false)) add(buf); buf = ""; };
-  const p = new Parser({
-    onopentag(name, attrs) {
-      flush();
-      const skipped = (stack[stack.length - 1] ?? false) || SKIP_TAGS.has(name) || "data-notranslate" in attrs || attrs.translate === "no" || attrs.contenteditable === "true";
-      if (!skipped) for (const a of ATTRS) if (attrs[a]) add(attrs[a]);
-      if (!VOID.has(name)) stack.push(skipped);
-    },
-    onclosetag(name) { flush(); if (!VOID.has(name)) stack.pop(); },
-    oncomment() { flush(); }, // React puts <!-- --> between adjacent text pieces: those are separate text nodes in the browser too
-    ontext(text) { buf += text; },
-  }, { decodeEntities: true });
-  p.write(html); p.end(); flush();
+  const doc = parseDocument(html, { decodeEntities: true });
+  const addText = (t: string) => { const s = t.trim(); if (s.length >= 2 && s.length <= 600 && /\p{L}/u.test(s)) out.add(s); };
+  const walk = (nodes: ChildNode[], inRich: boolean) => {
+    for (const n of nodes) {
+      if (n.type === "text") { addText((n as unknown as { data: string }).data); continue; }
+      if (n.type !== "tag" && n.type !== "script" && n.type !== "style") continue;
+      const el = n as Element;
+      if (isSkipped(el)) continue;
+      for (const a of ATTRS) if (el.attribs[a]) addText(el.attribs[a]);
+      const rich = inRich || hasClass(el, "rich-content");
+      // inside an article: a paragraph with links / bold text is one unit
+      if (rich && BLOCKS.has(el.name) && (el.children as ChildNode[]).some((c) => c.type === "tag") && onlyInline(el)) {
+        const unit = canon(el.children as ChildNode[]).trim();
+        if (unit.length >= 2 && unit.length <= MAX_UNIT && /\p{L}/u.test(unit)) out.add(unit);
+        continue;
+      }
+      walk(el.children as ChildNode[], rich);
+    }
+  };
+  walk(doc.children as ChildNode[], false);
   return [...out];
 }
 
