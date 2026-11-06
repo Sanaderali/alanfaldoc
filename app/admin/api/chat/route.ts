@@ -24,7 +24,7 @@ export async function GET(req: Request) {
       ? {
           id: selected.id, name: selected.name ?? "", phone: selected.phone, status: selected.status, createdAt: selected.createdAt,
           ip: selected.ip, country: selected.country, city: selected.city, page: selected.page, referrer: selected.referrer, userAgent: selected.userAgent, language: selected.language,
-          profile: selected.profile ?? null, followUp: !!selected.followUp, summary: selected.summary ?? "", closedBy: selected.closedBy, closedByName: selected.closedByName, closedAt: selected.closedAt, feedback: selected.feedback ?? null, aiPaused: !!selected.aiPaused, aiReplies: selected.aiReplies ?? 0,
+          profile: selected.profile ?? null, returning: selected.returning ?? null, followUp: !!selected.followUp, summary: selected.summary ?? "", closedBy: selected.closedBy, closedByName: selected.closedByName, closedAt: selected.closedAt, feedback: selected.feedback ?? null, aiPaused: !!selected.aiPaused, aiReplies: selected.aiReplies ?? 0,
           handledBy: selected.assignedTo ? names.get(selected.assignedTo) ?? "" : "",
           total: selected.messages.length, messages: selected.messages.slice(since),
         }

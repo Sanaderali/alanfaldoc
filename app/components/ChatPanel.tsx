@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Icon from "./Icon";
 import { readChat, writeChat } from "./ChatLauncher";
+import { getLang } from "./LanguageSwitcher";
 import { beep, flashTitle } from "./chatSound";
 
 type Msg = { id: string; from: "visitor" | "staff" | "system" | "ai"; name?: string; text: string; at: string };
@@ -76,7 +77,7 @@ export default function ChatPanel({ onClose }: { onClose: () => void }) {
     if (!PHONE_RE.test(phone.trim()) || phone.replace(/\D/g, "").length < 7) return setErr("Please enter a valid phone number.");
     setBusy(true);
     try {
-      const r = await fetch("/api/chat/start", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ phone, name, website: trap, page: location.pathname, referrer: document.referrer }) });
+      const r = await fetch("/api/chat/start", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ phone, name, lang: getLang(), website: trap, page: location.pathname, referrer: document.referrer }) });
       const d = await r.json();
       if (!r.ok) throw new Error(d.error ?? "Could not start the chat");
       writeChat({ id: d.id, token: d.token, seen: d.total });

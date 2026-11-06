@@ -215,6 +215,24 @@ export type Review = Managed & {
   image?: string;
 };
 
+/** A question visitors ask, counted per day (Dashboard -> AI knowledge). Personal details are removed before it is saved. */
+export type QuestionStat = {
+  id?: string;
+  key: string;
+  sample: string;
+  count: number;
+  days: Record<string, number>;
+  local: number;
+  groq: number;
+  team: number;
+  lastAnswer?: string;
+  lang?: string;
+  lastAt: string;
+  status?: "published" | "draft";
+  createdAt?: string;
+  updatedAt?: string;
+};
+
 /** An answer the team approved for the chat assistant ("Learn from this reply" in Live chat). */
 export type Knowledge = { id?: string; status?: "published" | "draft"; question: string; answer: string; fromChat?: string; addedBy?: string; createdAt?: string; updatedAt?: string };
 
@@ -288,7 +306,7 @@ export type Ticket = {
   closedAt?: string;
 };
 
-export type ChatMessage = { id: string; from: "visitor" | "staff" | "system" | "ai"; name?: string; staffId?: string; text: string; at: string };
+export type ChatMessage = { id: string; from: "visitor" | "staff" | "system" | "ai"; name?: string; staffId?: string; text: string; at: string; /** how an assistant reply was produced: from our own library or by Groq */ src?: "local" | "groq" };
 export type ChatProfile = {
   name?: string;
   email?: string;
@@ -339,6 +357,12 @@ export type Chat = {
   summaryAt?: string;
   /** the assistant told the client it would check with the team: staff should answer (cleared when staff reply) */
   followUp?: boolean;
+  /** language the visitor uses (their site language, then what they write) */
+  lang?: string;
+  /** same phone number has chatted before */
+  returning?: { count: number; lastAt: string };
+  /** the "passing this to the team" message was already sent because Groq was unavailable */
+  fallbackSent?: boolean;
   /** the assistant is writing a reply (shows "typing…" to the visitor) */
   aiTyping?: boolean;
   closedBy?: "visitor" | "staff";

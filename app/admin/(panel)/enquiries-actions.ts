@@ -25,3 +25,16 @@ export async function deleteKnowledge(id: string) {
   await mutate("knowledge", (all) => all.filter((k) => k.id !== id));
   redirect("/admin/knowledge");
 }
+
+/** Turn a frequently asked question into an approved library answer (served without Groq from now on). */
+export async function approveQuestion(formData: FormData) {
+  const me = await requirePerm("chat.reply");
+  const id = String(formData.get("id") ?? "");
+  const answer = String(formData.get("answer") ?? "").replace(/\s+/g, " ").trim().slice(0, 1200);
+  const q = (await readAll("questions")).find((x) => x.id === id);
+  if (q && answer.length >= 10 && !/(\bAED\b|\bUSD\b|\$\s?\d|\d+\s?(dirhams?|aed)|iban|swift|account number|card number|invoice|receipt|payment link)/i.test(answer) && !/@|\+?\d[\d\s-]{8,}/.test(answer)) {
+    await mutate("knowledge", (all) => [{ id: randomUUID(), status: "published" as const, question: q.sample, answer, addedBy: me.name || me.username, createdAt: now(), updatedAt: now() }, ...all.filter((k) => k.question !== q.sample)].slice(0, 400));
+    await mutate("questions", (all) => all.map((x) => (x.id === id ? { ...x, status: "draft" as const, updatedAt: now() } : x)));
+  }
+  redirect("/admin/knowledge");
+}

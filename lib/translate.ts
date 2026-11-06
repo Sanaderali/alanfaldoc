@@ -48,18 +48,22 @@ async function callGroq(lang: string, items: string[]): Promise<string[] | null>
   const key2 = process.env.GROQ_API_KEY;
   if (!key2) return null;
   const language = LANGUAGES.find((l) => l.code === lang)!.english;
-  const body = JSON.stringify({
-    model: MODEL(), temperature: 0.2, max_tokens: 4000, response_format: { type: "json_object" },
-    ...(MODEL().startsWith("openai/gpt-oss") ? { reasoning_effort: "low" } : {}),
+  const bodyFor = (model: string) => JSON.stringify({
+    model, temperature: 0.2, max_tokens: 4000, response_format: { type: "json_object" },
+    ...(model.startsWith("openai/gpt-oss") ? { reasoning_effort: "low" } : {}),
     messages: [
       { role: "system", content: `You translate website text for Al Anfal Documents Clearing Services LLC, a Dubai business-setup and document-clearing company, into ${language}. Use natural, professional wording a native speaker would use. Keep brand names (Al Anfal Doc), phone numbers, email addresses, URLs, numbers, currency codes (AED) and official UAE authority abbreviations (DET, MOHRE, GDRFA, ICP, DLD, PRO, Ejari) unchanged. Some inputs are short pieces of HTML (tags such as a, strong, em, br): keep every tag and attribute exactly as given and translate only the visible text, placing the tags where they belong in the translated sentence. Do not add or remove information. Input is a JSON object {"0": "text", ...}. Return ONLY a JSON object with the same keys and the translated text as values.` },
       { role: "user", content: JSON.stringify(Object.fromEntries(items.map((t, i) => [String(i), t]))) },
     ],
   });
-  for (let attempt = 0; attempt < 2; attempt++) {
+  // the translation model first; if the project blocks it, the main model does the job
+  const models = [...new Set([MODEL(), process.env.GROQ_MODEL || "openai/gpt-oss-120b"])];
+  let mi = 0;
+  for (let attempt = 0; attempt < 3; attempt++) {
     try {
-      const res = await fetch(`${BASE()}/chat/completions`, { method: "POST", headers: { Authorization: `Bearer ${key2}`, "Content-Type": "application/json" }, body, signal: AbortSignal.timeout(40000) });
+      const res = await fetch(`${BASE()}/chat/completions`, { method: "POST", headers: { Authorization: `Bearer ${key2}`, "Content-Type": "application/json" }, body: bodyFor(models[mi]), signal: AbortSignal.timeout(40000) });
       if (res.status === 429 && attempt === 0) { await new Promise((r) => setTimeout(r, Math.min(8, Number(res.headers.get("retry-after")) || 3) * 1000)); continue; }
+      if ((res.status === 403 || res.status === 404) && mi < models.length - 1) { mi++; continue; }
       if (!res.ok) { console.error("[translate] Groq returned", res.status); return null; }
       const data = (await res.json()) as { choices?: { message?: { content?: string } }[] };
       const j = JSON.parse((data.choices?.[0]?.message?.content ?? "{}").replace(/^```json|```$/g, "").trim()) as Record<string, unknown>;
@@ -155,4 +159,11 @@ export async function translationStats(): Promise<{ code: string; name: string; 
     rows.push({ code: l.code, name: l.english, total: keys.length, exportable: keys.filter((h) => src[h]).length });
   }
   return rows;
+}
+
+/** A translation already in the cache (never calls the AI): used by the local chat library to answer in the visitor's language. */
+export async function cachedTranslation(lang: string, text: string): Promise<string | undefined> {
+  if (lang === "en") return text;
+  const cache = await load(lang);
+  return cache[key(text.trim())];
 }

@@ -1,9 +1,9 @@
 import { after } from "next/server";
-import { askAI, AI_NAME, aiEnabled, MAX_AI_REPLIES, refreshSummary, updateProfile, wantsHuman } from "@/lib/ai";
+import { assistantOn, handleChat } from "@/lib/chat-assistant";
 import { clientIp } from "@/lib/auth";
 import { cleanText, tokenMatches, MAX_MESSAGES_PER_CHAT, msg, publicView } from "@/lib/chat";
 import { allow } from "@/lib/ratelimit";
-import { mutate, now, readAll } from "@/lib/store";
+import { mutate, now } from "@/lib/store";
 
 export const dynamic = "force-dynamic";
 
@@ -34,41 +34,7 @@ export async function POST(req: Request) {
   );
   if (denied) return Response.json({ error: "Not allowed" }, { status: 403 });
   if (!result) return Response.json({ error: "Chat not found" }, { status: 404 });
-  // AI assistant: answers in the background while no staff member has joined. It never blocks the visitor's message.
-  if (aiEnabled()) after(async () => { await aiReply(id); await updateProfile(id); await refreshSummary(id); });
+  // the assistant answers in the background (library first, Groq for the rest). It never blocks the visitor's message.
+  if (assistantOn()) after(() => handleChat(id));
   return Response.json(result);
-}
-
-async function aiReply(id: string) {
-  const chat = (await readAll("chats")).find((c) => c.id === id);
-  if (!chat || chat.status !== "open" || chat.aiPaused || (chat.aiReplies ?? 0) >= MAX_AI_REPLIES) return;
-  if (chat.messages[chat.messages.length - 1]?.from !== "visitor") return;
-  const lastText = chat.messages[chat.messages.length - 1]?.text ?? "";
-  // the visitor asks for a person: say so, alert the team and step back
-  if (wantsHuman(lastText)) {
-    await mutate("chats", (all) =>
-      all.map((c) => {
-        if (c.id !== id || c.aiPaused) return c;
-        const a = msg("ai", "Of course, I've let the team know. Someone will join this chat shortly.", AI_NAME);
-        return { ...c, messages: [...c.messages, a], unreadVisitor: c.unreadVisitor + 1, unreadStaff: c.unreadStaff + 1, aiPaused: true, aiReplies: (c.aiReplies ?? 0) + 1, lastMessageAt: a.at, updatedAt: now() };
-      })
-    );
-    return;
-  }
-  const started = Date.now();
-  await mutate("chats", (all) => all.map((c) => (c.id === id ? { ...c, aiTyping: true } : c)));
-  const r = await askAI(chat);
-  if (r) {
-    // a short, natural pause (reading + typing time) with the "typing..." indicator showing: about 2 to 7 seconds in total
-    const wait = Math.min(7000, 2000 + r.text.length * 25) - (Date.now() - started);
-    if (wait > 0) await new Promise((res) => setTimeout(res, wait));
-  }
-  await mutate("chats", (all) =>
-    all.map((c) => {
-      if (c.id !== id) return c;
-      if (!r || c.aiPaused || c.status !== "open") return { ...c, aiTyping: false }; // a person took over while the AI was thinking
-      const a = msg("ai", r.text, AI_NAME);
-      return { ...c, aiTyping: false, messages: [...c.messages, a], unreadVisitor: c.unreadVisitor + 1, aiReplies: (c.aiReplies ?? 0) + 1, lastMessageAt: a.at, updatedAt: now(), ...(r.followUp ? { followUp: true, unreadStaff: c.unreadStaff + 1 } : {}) };
-    })
-  );
 }

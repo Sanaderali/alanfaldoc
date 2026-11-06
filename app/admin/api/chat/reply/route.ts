@@ -1,6 +1,7 @@
 import { assertAdminRequest } from "@/lib/auth";
 import { cleanText, MAX_MESSAGES_PER_CHAT, msg } from "@/lib/chat";
-import { mutate, now } from "@/lib/store";
+import { recordQuestion } from "@/lib/questions";
+import { mutate, now, readAll } from "@/lib/store";
 
 export const dynamic = "force-dynamic";
 
@@ -23,5 +24,9 @@ export async function POST(req: Request) {
       return { ...c, followUp: false, aiTyping: false, aiPaused: true, closedBy: undefined, closedAt: undefined, closedByName: undefined, status: "open" as const, messages: [...c.messages, ...joined, m], unreadStaff: 0, unreadVisitor: c.unreadVisitor + 1, lastMessageAt: m.at, updatedAt: now(), assignedTo: c.assignedTo ?? auth.user.id };
     })
   );
+  // remember what the team answered to the visitor's last question, so it can be approved for the library
+  const chat = (await readAll("chats")).find((c) => c.id === id);
+  const q = [...(chat?.messages ?? [])].reverse().find((m) => m.from === "visitor");
+  if (q && text.length >= 20) await recordQuestion(q.text, "team", text, chat?.lang);
   return found ? Response.json({ ok: true }) : Response.json({ error: "Chat not found" }, { status: 404 });
 }

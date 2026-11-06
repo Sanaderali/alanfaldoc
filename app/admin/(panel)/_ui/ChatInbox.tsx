@@ -6,9 +6,9 @@ import { askDesktopPermission, desktopNotify, flashTitle, playBeep, setSoundEnab
 import { btnGhost, btnPrimary } from "../../ui";
 
 type Summary = { id: string; name: string; phone: string; status: "open" | "closed"; unread: number; lastAt: string; createdAt: string; preview: string; lastFrom?: string; country?: string; city?: string };
-type Msg = { id: string; from: "visitor" | "staff" | "system" | "ai"; name?: string; text: string; at: string };
+type Msg = { id: string; from: "visitor" | "staff" | "system" | "ai"; name?: string; text: string; at: string; src?: "local" | "groq" };
 type Profile = { name?: string; email?: string; nationality?: string; basedIn?: string; businessType?: string; companyName?: string; visaStatus?: string; stayDuration?: string; travelHistory?: string; query?: string };
-type Selected = { id: string; name: string; phone: string; status: "open" | "closed"; createdAt: string; ip?: string; country?: string; city?: string; page?: string; referrer?: string; userAgent?: string; language?: string; handledBy?: string; profile?: Profile | null; followUp?: boolean; summary?: string; closedBy?: "visitor" | "staff"; closedByName?: string; closedAt?: string; feedback?: { rating: number; comment?: string; at: string } | null; aiPaused?: boolean; aiReplies?: number; total: number; messages: Msg[] };
+type Selected = { id: string; name: string; phone: string; status: "open" | "closed"; createdAt: string; ip?: string; country?: string; city?: string; page?: string; referrer?: string; userAgent?: string; language?: string; handledBy?: string; profile?: Profile | null; returning?: { count: number; lastAt: string } | null; followUp?: boolean; summary?: string; closedBy?: "visitor" | "staff"; closedByName?: string; closedAt?: string; feedback?: { rating: number; comment?: string; at: string } | null; aiPaused?: boolean; aiReplies?: number; total: number; messages: Msg[] };
 
 const ago = (iso: string) => {
   const s = Math.max(0, (Date.now() - new Date(iso).getTime()) / 1000);
@@ -177,7 +177,7 @@ export default function ChatInbox({ canReply, initialId }: { canReply: boolean; 
                 ) : (
                   <div key={m.id} className={`flex ${m.from === "staff" || m.from === "ai" ? "justify-end" : "justify-start"}`}>
                     <div className={`max-w-[80%] px-3 py-2 text-[13px] leading-relaxed whitespace-pre-wrap break-words ${m.from === "staff" ? "bg-brand text-a-on" : m.from === "ai" ? "bg-a-surface border border-brand/50" : "bg-a-surface border border-a-line"}`}>
-                      <p className={`text-[11px] mb-0.5 ${m.from === "staff" ? "text-a-on/70" : "text-a-subtle"}`}>{m.from === "staff" ? m.name || "Agent" : m.from === "ai" ? "AI assistant" : sel.name || "Visitor"} · {new Date(m.at).toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" })}</p>
+                      <p className={`text-[11px] mb-0.5 ${m.from === "staff" ? "text-a-on/70" : "text-a-subtle"}`}>{m.from === "staff" ? m.name || "Agent" : m.from === "ai" ? `AI assistant${m.src === "local" ? " · library" : m.src === "groq" ? " · Groq" : ""}` : sel.name || "Visitor"} · {new Date(m.at).toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" })}</p>
                       {m.text}
                       {m.from === "staff" && canReply && <button type="button" onClick={() => learn(m.id)} className="block mt-1 text-[11px] underline opacity-70 hover:opacity-100" title="Let the assistant use this answer for similar questions">Learn from this reply</button>}
                     </div>
@@ -214,6 +214,7 @@ export default function ChatInbox({ canReply, initialId }: { canReply: boolean; 
         ) : <p className="p-3 text-[13px] text-a-muted">Select a conversation to see visitor details.</p>}
         {sel && (
           <div className="p-3 border-t border-a-line text-[13px] space-y-3">
+            {sel.returning && <p className="px-2 py-1.5 border border-brand/60 text-brand-text">Returning client: this phone number chatted {sel.returning.count} time{sel.returning.count === 1 ? "" : "s"} before (last {new Date(sel.returning.lastAt).toLocaleDateString("en-GB")}). <a href={`/admin/enquiries?q=${encodeURIComponent(sel.phone)}`} className="underline">See earlier chats</a></p>}
             {sel.followUp && <p className="px-2 py-1.5 border border-amber-400/60 text-amber-300">The assistant promised this client a follow-up. Reply to clear this flag.</p>}
             <h3 className="font-semibold text-[13px]">Client details (noted from the chat)</h3>
             <dl className="space-y-2">
