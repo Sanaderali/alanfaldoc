@@ -3,10 +3,10 @@ ar: 3106/3106 translated (100%), 0 missing, 0 flagged, 14 unchanged-English
 zh: no work file
 hi: no work file
 de: 3106/3106 translated (100%), 0 missing, 0 flagged, 0 unchanged-English
-fr: no work file
+fr: 3106/3106 translated (100%), 0 missing, 0 flagged, 0 unchanged-English
 ja: no work file
 ko: no work file
 it: no work file
 es: no work file
 nl: no work file
-Written: content-packs/translations-all.json (1568 KB)
+Written: content-packs/translations-all.json (2290 KB)

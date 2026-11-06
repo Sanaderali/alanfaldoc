@@ -4,7 +4,7 @@
 |---|---|---|---|
 | ar | 3,106 (100%) | 0 | stage 1 complete and quality-checked; units 0-331 use singular address ("لك"), the rest plural ("لكم") — acceptable, harmonise later if wanted |
 | de | 3,106 (100%) | 0 | stage 1 complete, quality-checked (formal Sie). Numbers kept in source format (e.g. 3.6725, AED 375,000) as the importer requires |
-| fr | 0 | 0 | |
+| fr | 3,106 (100%) | 0 | stage 1 complete, quality-checked (formal vous). Numbers kept in source format (e.g. 3.6725, AED 375,000); "Memorandum of Association" rendered as "acte constitutif (Memorandum of Association)"; authority names (MOHRE, ICP, DHA) kept in English |
 | hi | 0 | 0 | |
 | zh | 0 | 0 | |
 | es | 0 | 0 | |
