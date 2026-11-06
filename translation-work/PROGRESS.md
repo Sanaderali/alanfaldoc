@@ -8,7 +8,7 @@
 | hi | 3,106 (100%) | 0 | stage 1 complete, quality-checked (formal आप). Numbers kept in source format (e.g. 3.6725, AED 375,000); authority names, university names and URLs kept in Latin script; "Ejari" written as एजारी (Ejari) |
 | zh | 3,106 (100%) | 0 | stage 1 complete, quality-checked (formal, Simplified). Numbers kept in source format (e.g. 3.6725, AED 375,000; "7.7 million" kept as written); authority names, universities and URLs kept in Latin script; Ejari kept in Latin; mainland = 本土公司（非自贸区） |
 | es | 3,106 (100%) | 0 | stage 1 complete, quality-checked (neutral usted). Numbers kept in source format (e.g. 3.6725, AED 375,000); "mainland" kept (with "territorio continental" on first use in prose); legalización used for attestation/legalisation; authority names and URLs kept as in source |
-| it | 0 | 0 | |
+| it | 3,106 (100%) | 0 | stage 1 complete, quality-checked (formal Lei). Numbers kept in source format (e.g. 3.6725, AED 375,000); mainland kept (with zona franca for free zone); atto costitutivo for memorandum; authority names (MOHRE, ICP, GDRFA, DHA), universities and URLs kept as in source; country, state and city names given in Italian |
 | ja | 0 | 0 | |
 | ko | 0 | 0 | |
 | nl | 0 | 0 | |
