@@ -1,6 +1,6 @@
 Source units: 3106 (stage 1)
 ar: 3106/3106 translated (100%), 0 missing, 0 flagged, 14 unchanged-English
-zh: no work file
+zh: 3106/3106 translated (100%), 0 missing, 0 flagged, 14 unchanged-English
 hi: 3106/3106 translated (100%), 0 missing, 0 flagged, 35 unchanged-English
 de: 3106/3106 translated (100%), 0 missing, 0 flagged, 0 unchanged-English
 fr: 3106/3106 translated (100%), 0 missing, 0 flagged, 0 unchanged-English
@@ -9,4 +9,4 @@ ko: no work file
 it: no work file
 es: no work file
 nl: no work file
-Written: content-packs/translations-all.json (3404 KB)
+Written: content-packs/translations-all.json (3987 KB)
