@@ -10,7 +10,7 @@
 | es | 3,106 (100%) | 0 | stage 1 complete, quality-checked (neutral usted). Numbers kept in source format (e.g. 3.6725, AED 375,000); "mainland" kept (with "territorio continental" on first use in prose); legalización used for attestation/legalisation; authority names and URLs kept as in source |
 | it | 3,106 (100%) | 0 | stage 1 complete, quality-checked (formal Lei). Numbers kept in source format (e.g. 3.6725, AED 375,000); mainland kept (with zona franca for free zone); atto costitutivo for memorandum; authority names (MOHRE, ICP, GDRFA, DHA), universities and URLs kept as in source; country, state and city names given in Italian |
 | ja | 3,106 (100%) | 0 | stage 1 complete, quality-checked (です・ます). Numbers kept in source format (e.g. 3.6725, AED 375,000; "7.7 million" written 7.7百万, dates as 2026年11月5日 with leading zeros kept, e.g. 2026年10月02日); authority names (MOHRE, GDRFA, ICP, DHA, DET), university names and URLs kept in Latin script; mainland = メインランド(本土); free zone = フリーゾーン; country, state and city names in katakana/kanji |
-| ko | 0 | 0 | |
+| ko | 3,106 (100%) | 0 | stage 1 complete, quality-checked (합쇼체). Numbers kept in source format (e.g. 3.6725, AED 375,000; "7.7 million" written 7.7백만, dates as 2026년 10월 02일 with leading zeros kept); authority names (MOHRE, GDRFA, ICP, DHA, DET), university names and URLs kept in Latin script; Ejari written 에자리(Ejari); mainland = 메인랜드(본토); free zone = 프리존 |
 | nl | 0 | 0 | |
 
 Older machine-translated drafts (Groq) are kept in `*.groq-or-draft.json` for reference only; they were keyed by text fragments and are not used.
