@@ -4,9 +4,9 @@ zh: 3106/3106 translated (100%), 0 missing, 0 flagged, 14 unchanged-English
 hi: 3106/3106 translated (100%), 0 missing, 0 flagged, 35 unchanged-English
 de: 3106/3106 translated (100%), 0 missing, 0 flagged, 0 unchanged-English
 fr: 3106/3106 translated (100%), 0 missing, 0 flagged, 0 unchanged-English
-ja: no work file
+ja: 3106/3106 translated (100%), 0 missing, 0 flagged, 26 unchanged-English
 ko: no work file
 it: 3106/3106 translated (100%), 0 missing, 0 flagged, 0 unchanged-English
 es: 3106/3106 translated (100%), 0 missing, 0 flagged, 0 unchanged-English
 nl: no work file
-Written: content-packs/translations-all.json (5397 KB)
+Written: content-packs/translations-all.json (6134 KB)

@@ -9,7 +9,7 @@
 | zh | 3,106 (100%) | 0 | stage 1 complete, quality-checked (formal, Simplified). Numbers kept in source format (e.g. 3.6725, AED 375,000; "7.7 million" kept as written); authority names, universities and URLs kept in Latin script; Ejari kept in Latin; mainland = 本土公司（非自贸区） |
 | es | 3,106 (100%) | 0 | stage 1 complete, quality-checked (neutral usted). Numbers kept in source format (e.g. 3.6725, AED 375,000); "mainland" kept (with "territorio continental" on first use in prose); legalización used for attestation/legalisation; authority names and URLs kept as in source |
 | it | 3,106 (100%) | 0 | stage 1 complete, quality-checked (formal Lei). Numbers kept in source format (e.g. 3.6725, AED 375,000); mainland kept (with zona franca for free zone); atto costitutivo for memorandum; authority names (MOHRE, ICP, GDRFA, DHA), universities and URLs kept as in source; country, state and city names given in Italian |
-| ja | 0 | 0 | |
+| ja | 3,106 (100%) | 0 | stage 1 complete, quality-checked (です・ます). Numbers kept in source format (e.g. 3.6725, AED 375,000; "7.7 million" written 7.7百万, dates as 2026年11月5日 with leading zeros kept, e.g. 2026年10月02日); authority names (MOHRE, GDRFA, ICP, DHA, DET), university names and URLs kept in Latin script; mainland = メインランド(本土); free zone = フリーゾーン; country, state and city names in katakana/kanji |
 | ko | 0 | 0 | |
 | nl | 0 | 0 | |
 
