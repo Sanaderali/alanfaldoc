@@ -2,7 +2,7 @@
 
 | language | stage 1 (3,106 units) | stage 2 (9,660 units) | notes |
 |---|---|---|---|
-| ar | 332 | 0 | first 332 units hand-translated |
+| ar | 3,106 (100%) | 0 | stage 1 complete and quality-checked; units 0-331 use singular address ("لك"), the rest plural ("لكم") — acceptable, harmonise later if wanted |
 | de | 0 | 0 | |
 | fr | 0 | 0 | |
 | hi | 0 | 0 | |
