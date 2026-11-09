@@ -96,7 +96,7 @@ Before launch: replace sample content/contact details, add real social URLs, add
 
 ## Icons (Font Awesome Free kit)
 
-The kit is loaded once in `app/layout.tsx` (override with `NEXT_PUBLIC_FA_KIT=<your kit id>`). Use icons through `app/components/Icon.tsx`:
+Icons now come from the site's own sprite (no external Font Awesome kit): after using a NEW icon name run `npm run icons` and commit `public/icons.*.svg` and `lib/icons-meta.json`. Use icons through `app/components/Icon.tsx`:
 
 ```tsx
 <Icon name="building" />                      // solid icon
@@ -258,3 +258,8 @@ The assistant introduces itself as a virtual assistant, never invents fees or ap
 - **Daily question record** (Dashboard -> AI knowledge): the most asked questions of the last 14 days (personal details removed), how each was answered (library / Groq / team) and an "Approve as library answer" form. Approved answers are served without Groq from then on. The page also shows how many answers came from the library vs Groq in the last 7 days.
 - **Returning clients:** the same phone number is recognised. The visitor is greeted with "Welcome back" (with their name only when they typed it now, or the earlier chat came from the same connection), the team sees a "Returning client" note with a link to the earlier chats, and the assistant silently knows the facts already collected so it does not ask again. It never reads earlier details back.
 - Groq models: `GROQ_MODEL` (replies, default openai/gpt-oss-120b), `GROQ_FALLBACK_MODEL` and `GROQ_BACKGROUND_MODEL` (client notes and summaries, default openai/gpt-oss-20b); if a model is blocked for the Groq project the main model is used instead. `CHAT_DEBUG=1` writes one log line per answered message.
+
+### Speed and search (build 38)
+
+- **Core Web Vitals work:** removed the page fade-in and the JavaScript scroll-reveal (they delayed the first paint and the largest content; scroll-reveal is now CSS only), replaced the 837 KB hero background, replaced the external Font Awesome kit with a same-site SVG sprite, loaded Google Analytics late, made the home, lists and FAQs pages cached pages refreshed every minute, lazy-loaded the map. Lighthouse (mobile, simulated slow 4G, 4x slower CPU): home 47 -> 97-98, other pages 96-99, desktop 100; LCP about 2.1 s, CLS 0, TBT 100-150 ms.
+- **Search:** titles are now at most 60 characters without a doubled brand name, descriptions at most 155; fixed default titles for About/Contact/Services/Blog/FAQs. Dashboard -> **Search Console** has the verification-code box (no rebuild needed), a health check and a 6-step setup guide. www / http addresses redirect to the main https address (set `NEXT_PUBLIC_SITE_URL` when building).

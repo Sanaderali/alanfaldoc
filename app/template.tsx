@@ -1,4 +1,4 @@
-/** Re-mounted on every navigation, so each page fades/slides in smoothly. CSS only, no JS. */
+/** Plain wrapper. (It used to fade every page in; that delayed the first paint and the largest content, which hurts Core Web Vitals.) */
 export default function Template({ children }: { children: React.ReactNode }) {
-  return <div className="page-enter">{children}</div>;
+  return <>{children}</>;
 }

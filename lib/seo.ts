@@ -29,14 +29,34 @@ type MetaInput = {
   modifiedTime?: string;
 };
 
+/** Google shows about 60 characters of a title and 155 of a description: longer text is cut off ("...") or rewritten, which lowers clicks. */
+const TITLE_MAX = 60, DESC_MAX = 155;
+const stripBrand = (t: string) => t.replace(new RegExp(`\\s*[|\\-–—:]\\s*${site.name}\\s*$`, "i"), "").replace(/\s+/g, " ").trim();
+export function finalTitle(t: string): string {
+  const base = stripBrand(t);
+  const full = `${base} | ${site.name}`;
+  if (full.length <= TITLE_MAX) return full;
+  if (base.length <= TITLE_MAX) return base;
+  return base.slice(0, TITLE_MAX - 1).replace(/[\s,:;|&-]+\S*$/, "") + "…";
+}
+export function finalDescription(d: string): string {
+  const s = d.replace(/\s+/g, " ").trim();
+  if (s.length <= DESC_MAX) return s;
+  const cut = s.slice(0, DESC_MAX);
+  const sentence = Math.max(cut.lastIndexOf(". "), cut.lastIndexOf("? "), cut.lastIndexOf("! "));
+  if (sentence >= 100) return cut.slice(0, sentence + 1);
+  return cut.replace(/[\s,;:–-]+\S*$/, "") + "…";
+}
+
 export function buildMetadata({ title, description, path, seo, image, type = "website", publishedTime, modifiedTime }: MetaInput): Metadata {
-  const t = seo?.title ?? title;
+  const t = finalTitle(seo?.title ?? title);
   let d = seo?.description ?? description;
-  // very short descriptions are padded with the brand line so search snippets are never thin (explicit dashboard SEO text is left alone)
-  if (!seo?.description && d.length < 110) d = `${d.replace(/\.?$/, ".")} ${site.name}: document clearing and business setup support in Dubai, UAE.`.slice(0, 160);
+  // very short descriptions get a closing line so the snippet is never thin (text written in the dashboard SEO box is left as it is)
+  if (!seo?.description && d.length < 100) { const padded = `${d.replace(/\.?$/, ".")} Free quote from a Dubai team that handles the paperwork.`; if (padded.length <= DESC_MAX) d = padded; }
+  d = finalDescription(d);
   const img = seo?.image ?? image ?? "/opengraph-image"; // default: app/opengraph-image.tsx
   return {
-    title: t,
+    title: { absolute: t },
     description: d,
     keywords: seo?.keywords,
     alternates: { canonical: seo?.canonical ?? abs(path) },
@@ -49,12 +69,12 @@ export function buildMetadata({ title, description, path, seo, image, type = "we
       url: abs(path),
       siteName: site.name,
       locale: site.locale,
-      title: `${t} | ${site.name}`,
+      title: t,
       description: d,
       ...(img ? { images: [{ url: img.startsWith("http") ? img : abs(img) }] } : {}),
       ...(type === "article" ? { publishedTime, modifiedTime } : {}),
     },
-    twitter: { card: "summary_large_image", title: `${t} | ${site.name}`, description: d, ...(site.twitterHandle ? { site: site.twitterHandle } : {}) },
+    twitter: { card: "summary_large_image", title: t, description: d, ...(site.twitterHandle ? { site: site.twitterHandle } : {}) },
   };
 }
 

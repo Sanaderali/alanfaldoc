@@ -125,7 +125,8 @@ body {
 }
 
 .animate-fadeIn {
-  animation: fadeIn 0.8s ease-out forwards;
+  /* no entrance animation: it sits on the top-of-page text and would delay the largest paint */
+  animation: none;
 }
 
 .animate-pulse-slow {
@@ -332,22 +333,18 @@ body {
 /* ---------- Smooth scrolling & page transitions ---------- */
 html { scroll-behavior: smooth; scroll-padding-top: 5rem; }
 
-/* page enter: every route change (see app/template.tsx) */
-@keyframes pageEnter {
-  from { opacity: 0; transform: translateY(14px); }
-  to   { opacity: 1; transform: none; }
+/* scroll reveal, CSS only (see components/Reveal.tsx): only in browsers with scroll-driven animations, otherwise content is just visible */
+@supports (animation-timeline: view()) {
+  @keyframes revealUp   { from { opacity: 0; transform: translateY(32px); } to { opacity: 1; transform: none; } }
+  @keyframes revealLeft { from { opacity: 0; transform: translateX(-32px); } to { opacity: 1; transform: none; } }
+  @keyframes revealRight{ from { opacity: 0; transform: translateX(32px); } to { opacity: 1; transform: none; } }
+  @keyframes revealZoom { from { opacity: 0; transform: scale(0.94); } to { opacity: 1; transform: none; } }
+  .reveal { animation: revealUp linear both; animation-timeline: view(); animation-range: entry 0% entry 35%; }
+  .reveal-left { animation-name: revealLeft; }
+  .reveal-right { animation-name: revealRight; }
+  .reveal-zoom { animation-name: revealZoom; }
+  @media (max-width: 1023px) { .reveal-left, .reveal-right { animation-name: revealUp; } }
 }
-/* "backwards" (not "both"): once finished no transform is left on the wrapper, which would otherwise break position:fixed descendants (chat widget, preview bar) */
-.page-enter { animation: pageEnter 0.5s cubic-bezier(0.22, 1, 0.36, 1) backwards; }
-
-/* scroll reveal, works scrolling down AND up (see components/Reveal.tsx) */
-.reveal { transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1); will-change: opacity, transform; }
-.reveal[data-reveal="below"], .reveal[data-reveal="ready"] { opacity: 0; transform: translateY(36px); }
-.reveal[data-reveal="above"] { opacity: 0; transform: translateY(-36px); }
-.reveal-left[data-reveal="below"],  .reveal-left[data-reveal="above"],  .reveal-left[data-reveal="ready"]  { transform: translateX(-36px); }
-.reveal-right[data-reveal="below"], .reveal-right[data-reveal="above"], .reveal-right[data-reveal="ready"] { transform: translateX(36px); }
-.reveal-zoom[data-reveal="below"],  .reveal-zoom[data-reveal="above"],  .reveal-zoom[data-reveal="ready"]  { transform: scale(0.92); }
-.reveal[data-reveal="in"] { opacity: 1; transform: none; }
 
 /* carousel: hide scrollbar */
 .carousel-track { scrollbar-width: none; }
@@ -355,16 +352,11 @@ html { scroll-behavior: smooth; scroll-padding-top: 5rem; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .page-enter, [class*="animate-"], [class*="stagger-"] { animation: none !important; opacity: 1 !important; }
-  .reveal { transition: none; }
+  [class*="animate-"], [class*="stagger-"], .reveal { animation: none !important; opacity: 1 !important; transform: none !important; }
 }
 
 /* never let slide-in animations or wide children create sideways scroll */
 html, body { overflow-x: clip; }
-@media (max-width: 1023px) {
-  .reveal-left[data-reveal="below"],  .reveal-left[data-reveal="above"],  .reveal-left[data-reveal="ready"],
-  .reveal-right[data-reveal="below"], .reveal-right[data-reveal="above"], .reveal-right[data-reveal="ready"] { transform: translateY(36px); }
-}
 
 /* ---------- Rich text (public pages + dashboard visual editor share these styles) ---------- */
 .rich-content { color: #1A1A1A; line-height: 1.75; font-size: 1rem; }
@@ -435,6 +427,8 @@ html, body { overflow-x: clip; }
 html[data-tr] body { opacity: 0; }
 body { transition: opacity 0.12s ease; }
 
+.icon { display: inline-block; fill: currentColor; vertical-align: -0.125em; flex-shrink: 0; }
+
 @layer components {
   .btn {
     display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
@@ -455,8 +449,8 @@ body { transition: opacity 0.12s ease; }
   .btn-cta { --ring: var(--accent); background: rgb(var(--accent)); color: #fff; box-shadow: 0 6px 16px -6px rgb(var(--accent) / 0.6); }
   .btn-cta:hover:not(:disabled) { background: rgb(var(--accent-dark)); transform: translateY(-1px); box-shadow: 0 10px 22px -8px rgb(var(--accent) / 0.65); }
 
-  .btn-wa { --ring: 37 211 102; background: #25d366; color: #fff; box-shadow: 0 6px 16px -6px rgba(37, 211, 102, 0.65); }
-  .btn-wa:hover:not(:disabled) { background: #1ebe5b; transform: translateY(-1px); box-shadow: 0 10px 22px -8px rgba(37, 211, 102, 0.7); }
+  .btn-wa { --ring: 15 122 105; background: #0f7a69; color: #fff; box-shadow: 0 6px 16px -6px rgba(15, 122, 105, 0.6); }
+  .btn-wa:hover:not(:disabled) { background: #0b6355; transform: translateY(-1px); box-shadow: 0 10px 22px -8px rgba(15, 122, 105, 0.7); }
 
   .btn-secondary { background: #fff; border-color: rgb(var(--brand)); color: rgb(var(--brand-text)); }
   .btn-secondary:hover:not(:disabled) { background: rgb(var(--brand)); color: #fff; transform: translateY(-1px); box-shadow: 0 10px 22px -10px rgb(var(--brand) / 0.55); }

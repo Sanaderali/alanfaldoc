@@ -233,6 +233,9 @@ export type QuestionStat = {
   updatedAt?: string;
 };
 
+/** Site-wide search engine settings (Dashboard -> Search Console). */
+export type SiteSettings = { id?: string; googleVerification?: string; bingVerification?: string; updatedAt?: string; status?: "published" | "draft"; createdAt?: string };
+
 /** An answer the team approved for the chat assistant ("Learn from this reply" in Live chat). */
 export type Knowledge = { id?: string; status?: "published" | "draft"; question: string; answer: string; fromChat?: string; addedBy?: string; createdAt?: string; updatedAt?: string };
 

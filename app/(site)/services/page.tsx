@@ -8,11 +8,11 @@ import { getServices, getPageSeo } from "@/lib/content";
 import { buildMetadata } from "@/lib/seo";
 
 
-/** Lists read the (cached) content files on every request, so newly published items appear immediately. */
-export const dynamic = "force-dynamic";
+/** Rendered once, served from the cache and refreshed every minute (and at once when you save in the dashboard), so every visit is fast. */
+export const revalidate = 60;
 export async function generateMetadata(): Promise<Metadata> {
   const { seo } = await getPageSeo("services");
-  return buildMetadata({ title: "Our Services", description: "Company formation, PRO services, visa processing, document clearing and more in Dubai & UAE.", path: "/services", seo });
+  return buildMetadata({ title: "Dubai PRO, Visa & Business Setup Services", description: "Company formation, trade licences, PRO services, visa application support, attestation and document clearing in Dubai. See what we handle and get a free quote.", path: "/services", seo });
 }
 
 export default async function ServicesPage() {

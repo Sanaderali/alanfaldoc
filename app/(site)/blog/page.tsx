@@ -4,11 +4,11 @@ import { getPostsPage, getPageSeo } from "@/lib/content";
 import { buildMetadata } from "@/lib/seo";
 
 
-/** Lists read the (cached) content files on every request, so newly published items appear immediately. */
-export const dynamic = "force-dynamic";
+/** Rendered once, served from the cache and refreshed every minute (and at once when you save in the dashboard), so every visit is fast. */
+export const revalidate = 60;
 export async function generateMetadata(): Promise<Metadata> {
   const { seo } = await getPageSeo("blog");
-  return buildMetadata({ title: "Our Latest News & Articles", description: "Practical guides on Dubai company setup, trade licences, Ejari, document attestation and visa paperwork, written for investors and business owners.", path: "/blog", seo });
+  return buildMetadata({ title: "Dubai Business Setup, Visa & Attestation Guides", description: "Practical guides on Dubai company setup, trade licences, Ejari, document attestation and visa paperwork, written for investors and business owners.", path: "/blog", seo });
 }
 
 export default async function BlogPage() {

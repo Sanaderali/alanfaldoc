@@ -18,7 +18,7 @@ export default function FloatingWhatsApp({ numbers }: { numbers: Num[] }) {
   }, [open]);
   if (numbers.length === 0) return null;
   const link = (n: Num) => `https://wa.me/${n.number}?text=${encodeURIComponent(n.message || "Hello Al Anfal Doc, I would like some help.")}`;
-  const cls = "w-12 h-12 rounded-full bg-[#25D366] text-white flex items-center justify-center shadow-[0_8px_22px_-6px_rgba(37,211,102,.7)] hover:scale-105 active:scale-95 transition-transform focus:outline-none focus-visible:ring-4 focus-visible:ring-[#25D366]/40";
+  const cls = "w-12 h-12 rounded-full bg-[#0f7a69] text-white flex items-center justify-center shadow-[0_8px_22px_-6px_rgba(37,211,102,.7)] hover:scale-105 active:scale-95 transition-transform focus:outline-none focus-visible:ring-4 focus-visible:ring-[#25D366]/40";
   return (
     <div ref={box} className="fixed z-[70] bottom-5 right-4 sm:right-5 flex flex-col items-end gap-2">
       {open && numbers.length > 1 && (

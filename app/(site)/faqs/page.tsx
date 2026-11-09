@@ -3,11 +3,11 @@ import FaqsView from "../_views/FaqsView";
 import { getFaqGroups, getPageSeo, getServices } from "@/lib/content";
 import { buildMetadata, customLd } from "@/lib/seo";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 60;
 
 export async function generateMetadata(): Promise<Metadata> {
   const { seo } = await getPageSeo("faqs");
-  return buildMetadata({ title: "Frequently Asked Questions", description: "Answers to common questions about company formation, visas, document attestation and our process in Dubai & the UAE.", path: "/faqs", seo });
+  return buildMetadata({ title: "FAQs: Dubai Company Setup, Visas & Attestation", description: "Answers to common questions about company formation, visas, document attestation and our process in Dubai & the UAE.", path: "/faqs", seo });
 }
 
 export default async function FaqsPage() {

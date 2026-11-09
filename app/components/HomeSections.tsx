@@ -36,7 +36,7 @@ export default async function HomeSections() {
     <>
       {/* Hero Section */}
       <section id="home" className="relative bg-gradient-to-b from-brand-50 via-white to-canvas text-ink py-16 sm:py-20 md:py-28">
-        <div className="absolute inset-0 bg-[url('/hero-team.jpg')] bg-cover bg-center opacity-[0.08]"></div>
+        <div aria-hidden="true" className="absolute inset-0 bg-[radial-gradient(60%_55%_at_85%_8%,rgb(var(--brand)/0.08),transparent),radial-gradient(45%_45%_at_8%_85%,rgb(var(--brand)/0.06),transparent)]"></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8">
             <p className="text-sm sm:text-base mb-4">Al Anfal Documents Clearing Services in Dubai</p>
@@ -73,7 +73,7 @@ export default async function HomeSections() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="relative h-[300px] sm:h-[400px] rounded-lg overflow-hidden group">
-              <Image src="/hero-team.jpg" alt="About Us" fill sizes="(min-width:1024px) 50vw, 100vw" className="object-cover transform group-hover:scale-110 transition-transform duration-700" />
+              <Image src="/hero-team.webp" alt="About Al Anfal Doc: the team that handles your Dubai paperwork" fill sizes="(min-width:1024px) 50vw, 100vw" className="object-cover transform group-hover:scale-110 transition-transform duration-700" />
               <div className="absolute inset-0 flex items-center justify-center group-hover:backdrop-blur-sm transition-all duration-500">
                 <div className="w-16 h-16 sm:w-20 sm:h-20 bg-white rounded-full flex items-center justify-center shadow-lg cursor-pointer hover:scale-125 hover:shadow-2xl transition-all duration-500 animate-pulse-slow group">
                   <Icon name="play" className="text-2xl sm:text-3xl text-brand-text ml-1 group-hover:scale-110 transition-transform duration-300" />

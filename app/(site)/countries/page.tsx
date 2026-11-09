@@ -7,8 +7,8 @@ import { getCountries, getPageSeo } from "@/lib/content";
 import { buildMetadata } from "@/lib/seo";
 
 
-/** Lists read the (cached) content files on every request, so newly published items appear immediately. */
-export const dynamic = "force-dynamic";
+/** Rendered once, served from the cache and refreshed every minute (and at once when you save in the dashboard), so every visit is fast. */
+export const revalidate = 60;
 export async function generateMetadata(): Promise<Metadata> {
   const { seo } = await getPageSeo("countries");
   return buildMetadata({ title: "Setting Up in Dubai: Guides by Country", description: "Explore the countries we support with company setup, visas and document services.", path: "/countries", seo });

@@ -79,9 +79,9 @@ export default function ContactPage() {
                     <Icon name="location-dot" className="text-2xl text-brand-text" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold text-ink mb-2">
+                    <h2 className="text-xl font-bold text-ink mb-2">
                       {site.address}
-                    </h3>
+                    </h2>
                     <p className="text-gray-500 text-sm">Our Location</p>
                   </div>
                 </div>
@@ -94,9 +94,9 @@ export default function ContactPage() {
                     <Icon name="phone" className="text-2xl text-brand-text" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold text-ink mb-2">
+                    <h2 className="text-xl font-bold text-ink mb-2">
                       <a href={`tel:${site.phone.replace(/\s/g, "")}`} className="hover:text-brand-text transition-colors">{site.phone}</a>
-                    </h3>
+                    </h2>
                     <p className="text-gray-500 text-sm">Let's Talk</p>
                   </div>
                 </div>
@@ -109,9 +109,9 @@ export default function ContactPage() {
                     <Icon name="envelope" className="text-2xl text-brand-text" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold text-ink mb-2">
+                    <h2 className="text-xl font-bold text-ink mb-2">
                       <a href={`mailto:${site.email}`} className="hover:text-brand-text transition-colors">{site.email}</a>
-                    </h3>
+                    </h2>
                     <p className="text-gray-500 text-sm">Drop a Line</p>
                   </div>
                 </div>
@@ -150,6 +150,7 @@ export default function ContactPage() {
 
                 <div>
                   <select
+                    aria-label="Your question is about"
                     name="question"
                     value={formData.question}
                     onChange={handleChange}
@@ -218,9 +219,9 @@ export default function ContactPage() {
           <div className="bg-white rounded-lg p-8 shadow-md border border-gray-100">
             <div className="flex flex-col md:flex-row items-center justify-between gap-6">
               <div className="flex-1">
-                <h3 className="text-2xl font-bold text-ink mb-2">
+                <h2 className="text-2xl font-bold text-ink mb-2">
                   Stay Always In Touch
-                </h3>
+                </h2>
                 <p className="text-gray-600">
                   Subscribe to our newsletter for latest updates
                 </p>

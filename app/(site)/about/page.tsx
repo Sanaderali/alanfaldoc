@@ -11,7 +11,7 @@ import { buildMetadata } from "@/lib/seo";
 
 export async function generateMetadata(): Promise<Metadata> {
   const { seo } = await getPageSeo("about");
-  return buildMetadata({ title: "About Us", description: `Learn about ${site.name}: a Dubai team for company formation, licence renewals, government approvals, attestation and visa application support.`, path: "/about", seo });
+  return buildMetadata({ title: "About Us: Dubai PRO & Document Clearing Team", description: `Learn about ${site.name}: a Dubai team for company formation, licence renewals, government approvals, attestation and visa application support.`, path: "/about", seo });
 }
 
 const values = [

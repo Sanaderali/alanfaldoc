@@ -29,6 +29,7 @@ const MENU: Item[] = [
   { label: "Import / Export", href: "/admin/data", icon: "right-left", perm: "content.edit" },
   { label: "Media", href: "/admin/media", icon: "images", perm: "media.manage" },
   { label: "Page SEO", href: "/admin/pages", icon: "magnifying-glass-chart", perm: "seo.manage" },
+  { label: "Search Console", href: "/admin/search-console", icon: "chart-line", perm: "seo.manage" },
   { label: "Team", href: "/admin/users", icon: "users-gear", perm: "users.manage", children: [{ label: "All Users", href: "/admin/users" }, { label: "Add New", href: "/admin/users/new" }, { label: "Support Activity", href: "/admin/users/activity" }, { label: "Email", href: "/admin/users/email" }] },
 ];
 

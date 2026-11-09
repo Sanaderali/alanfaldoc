@@ -9,11 +9,11 @@ const isProd = process.env.NODE_ENV === "production";
  */
 const csp = [
   "default-src 'self'",
-  `script-src 'self' 'unsafe-inline'${isProd ? "" : " 'unsafe-eval'"} https://kit.fontawesome.com https://www.googletagmanager.com`,
-  "style-src 'self' 'unsafe-inline' https://ka-f.fontawesome.com",
+  `script-src 'self' 'unsafe-inline'${isProd ? "" : " 'unsafe-eval'"} https://www.googletagmanager.com`,
+  "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob: https://ui-avatars.com https://www.google-analytics.com https://www.googletagmanager.com https://*.google-analytics.com",
-  "font-src 'self' data: https://ka-f.fontawesome.com",
-  "connect-src 'self' https://ka-f.fontawesome.com https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com",
+  "font-src 'self' data:",
+  "connect-src 'self' https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com",
   "frame-src https://www.google.com https://maps.google.com",
   "frame-ancestors 'self'",
   "base-uri 'self'",
@@ -54,9 +54,21 @@ const nextConfig = {
       },
     ],
   },
+  // one address for everything: www / non-www and http / https all end on the main https address (Search Console treats them as separate sites otherwise)
+  async redirects() {
+    if (!isProd || !siteHost || /localhost|127\.0\.0\.1/.test(siteHost)) return [];
+    const alt = siteHost.startsWith("www.") ? siteHost.slice(4) : `www.${siteHost}`;
+    return [
+      { source: "/:path*", has: [{ type: "host", value: alt }], destination: `https://${siteHost}/:path*`, permanent: true },
+      { source: "/:path*", has: [{ type: "host", value: siteHost }, { type: "header", key: "x-forwarded-proto", value: "http" }], destination: `https://${siteHost}/:path*`, permanent: true },
+    ];
+  },
   async headers() {
     return [
       { source: "/:path*", headers: security },
+      // the icon sprite has a content hash in its name, so it can be cached for a year
+      { source: "/:file(icons\\.[0-9a-f]{8}\\.svg)", headers: [{ key: "Cache-Control", value: "public, max-age=31536000, immutable" }] },
+      { source: "/:file(hero-team.webp)", headers: [{ key: "Cache-Control", value: "public, max-age=2592000, stale-while-revalidate=86400" }] },
       // static brand images and flags change rarely
       { source: "/flags/:path*", headers: [{ key: "Cache-Control", value: "public, max-age=2592000, stale-while-revalidate=86400" }] },
       { source: "/:file(logo.*|logo-.*|hero-team.jpg|email-logo.png)", headers: [{ key: "Cache-Control", value: "public, max-age=604800, stale-while-revalidate=86400" }] },

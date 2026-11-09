@@ -20,7 +20,7 @@ export default async function CtaBlock({ topic, title, text, variant = "card", c
         </a>
       )}
       <Link href="/contact" className="btn btn-cta w-full !px-4">Contact us now</Link>
-      <a href={`tel:${site.phone.replace(/\s/g, "")}`} aria-label={`Call ${site.phone}`} className="btn btn-secondary w-full !px-4"><Icon name="phone" fixedWidth={false} className="mr-2" />{variant === "banner" ? `Call ${site.phone}` : "Call us"}</a>
+      <a href={`tel:${site.phone.replace(/\s/g, "")}`} className="btn btn-secondary w-full !px-4"><Icon name="phone" fixedWidth={false} className="mr-2" />{variant === "banner" ? `Call ${site.phone}` : "Call us"}</a>
     </div>
   );
   if (variant === "inline") return <div className={`my-6 ${className}`}>{buttons}</div>;
