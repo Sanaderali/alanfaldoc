@@ -19,7 +19,6 @@ const csp = [
   "base-uri 'self'",
   "form-action 'self'",
   "object-src 'none'",
-  ...(isProd ? ["upgrade-insecure-requests"] : []),
 ].join("; ");
 
 const security = [
@@ -54,14 +53,11 @@ const nextConfig = {
       },
     ],
   },
-  // one address for everything: www / non-www and http / https all end on the main https address (Search Console treats them as separate sites otherwise)
+  // www -> main address only (http -> https is left to the hosting panel, a proxy header check here could break asset requests)
   async redirects() {
     if (!isProd || !siteHost || /localhost|127\.0\.0\.1/.test(siteHost)) return [];
     const alt = siteHost.startsWith("www.") ? siteHost.slice(4) : `www.${siteHost}`;
-    return [
-      { source: "/:path*", has: [{ type: "host", value: alt }], destination: `https://${siteHost}/:path*`, permanent: true },
-      { source: "/:path*", has: [{ type: "host", value: siteHost }, { type: "header", key: "x-forwarded-proto", value: "http" }], destination: `https://${siteHost}/:path*`, permanent: true },
-    ];
+    return [{ source: "/:path((?!_next/).*)", has: [{ type: "host", value: alt }], destination: `https://${siteHost}/:path`, permanent: true }];
   },
   async headers() {
     return [
