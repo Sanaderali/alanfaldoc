@@ -333,18 +333,9 @@ body {
 /* ---------- Smooth scrolling & page transitions ---------- */
 html { scroll-behavior: smooth; scroll-padding-top: 5rem; }
 
-/* scroll reveal, CSS only (see components/Reveal.tsx): only in browsers with scroll-driven animations, otherwise content is just visible */
-@supports (animation-timeline: view()) {
-  @keyframes revealUp   { from { opacity: 0; transform: translateY(32px); } to { opacity: 1; transform: none; } }
-  @keyframes revealLeft { from { opacity: 0; transform: translateX(-32px); } to { opacity: 1; transform: none; } }
-  @keyframes revealRight{ from { opacity: 0; transform: translateX(32px); } to { opacity: 1; transform: none; } }
-  @keyframes revealZoom { from { opacity: 0; transform: scale(0.94); } to { opacity: 1; transform: none; } }
-  .reveal { animation: revealUp linear both; animation-timeline: view(); animation-range: entry 0% entry 35%; }
-  .reveal-left { animation-name: revealLeft; }
-  .reveal-right { animation-name: revealRight; }
-  .reveal-zoom { animation-name: revealZoom; }
-  @media (max-width: 1023px) { .reveal-left, .reveal-right { animation-name: revealUp; } }
-}
+/* scroll reveal: switched off. The CSS scroll-driven version could leave very tall blocks (the sitemap page) invisible in current Chrome,
+   so content is always visible. The .reveal class stays on the markup and does nothing. */
+.reveal { opacity: 1; transform: none; }
 
 /* carousel: hide scrollbar */
 .carousel-track { scrollbar-width: none; }
