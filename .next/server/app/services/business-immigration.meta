@@ -1,0 +1,45 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/(site)/layout,_N_T_/(site)/services/layout,_N_T_/(site)/services/[slug]/layout,_N_T_/(site)/services/[slug]/page,_N_T_/services/business-immigration"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/!KHNpdGUp",
+    "/!KHNpdGUp/services/$d$slug/__PAGE__"
+  ],
+  "prefetchHints": {
+    "hints": 64,
+    "slots": {
+      "children": {
+        "hints": 32,
+        "slots": {
+          "children": {
+            "hints": 64,
+            "slots": {
+              "children": {
+                "hints": 96,
+                "slots": {
+                  "children": {
+                    "hints": 160,
+                    "slots": null
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "routeCache": {
+    "key": "/route-cache/APP_PAGE/2456f14f362f051a32de7b28d5efc840b57df76591a8fdcb38aa785c3b561840/$/services/business-immigration",
+    "owner": {
+      "kind": "APP_PAGE",
+      "sourceRoute": "/(site)/services/[slug]/page"
+    },
+    "isFallback": false
+  }
+}

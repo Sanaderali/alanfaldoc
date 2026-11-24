@@ -1,0 +1,45 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/(site)/layout,_N_T_/(site)/blog/layout,_N_T_/(site)/blog/[slug]/layout,_N_T_/(site)/blog/[slug]/page,_N_T_/blog/golden-visa-basics"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/!KHNpdGUp",
+    "/!KHNpdGUp/blog/$d$slug/__PAGE__"
+  ],
+  "prefetchHints": {
+    "hints": 64,
+    "slots": {
+      "children": {
+        "hints": 32,
+        "slots": {
+          "children": {
+            "hints": 64,
+            "slots": {
+              "children": {
+                "hints": 96,
+                "slots": {
+                  "children": {
+                    "hints": 160,
+                    "slots": null
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "routeCache": {
+    "key": "/route-cache/APP_PAGE/92f768094a81d9e88d0a444b0e0e738596f587199066ee34038af93ff0666531/$/blog/golden-visa-basics",
+    "owner": {
+      "kind": "APP_PAGE",
+      "sourceRoute": "/(site)/blog/[slug]/page"
+    },
+    "isFallback": false
+  }
+}

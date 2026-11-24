@@ -1,0 +1,1 @@
+globalThis.__RSC_MANIFEST=(globalThis.__RSC_MANIFEST||{});globalThis.__RSC_MANIFEST["/(site)/blog/search-index.json/route"]={"moduleLoading":{"prefix":"/_next/"},"ssrModuleMapping":{},"edgeSSRModuleMapping":{},"clientModules":{},"entryCSSFiles":{"/home/user/alanfaldoc/app/(site)/blog/search-index.json/route":[]},"rscModuleMapping":{},"edgeRscModuleMapping":{}};

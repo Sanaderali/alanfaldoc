@@ -1,0 +1,71 @@
+User-Agent: *
+Allow: /
+Disallow: /admin
+Disallow: /api/
+Disallow: /preview/
+
+User-Agent: GPTBot
+Allow: /
+Disallow: /admin
+Disallow: /api/
+Disallow: /preview/
+
+User-Agent: OAI-SearchBot
+Allow: /
+Disallow: /admin
+Disallow: /api/
+Disallow: /preview/
+
+User-Agent: ChatGPT-User
+Allow: /
+Disallow: /admin
+Disallow: /api/
+Disallow: /preview/
+
+User-Agent: ClaudeBot
+Allow: /
+Disallow: /admin
+Disallow: /api/
+Disallow: /preview/
+
+User-Agent: Claude-SearchBot
+Allow: /
+Disallow: /admin
+Disallow: /api/
+Disallow: /preview/
+
+User-Agent: Claude-User
+Allow: /
+Disallow: /admin
+Disallow: /api/
+Disallow: /preview/
+
+User-Agent: PerplexityBot
+Allow: /
+Disallow: /admin
+Disallow: /api/
+Disallow: /preview/
+
+User-Agent: Perplexity-User
+Allow: /
+Disallow: /admin
+Disallow: /api/
+Disallow: /preview/
+
+User-Agent: Google-Extended
+Allow: /
+Disallow: /admin
+Disallow: /api/
+Disallow: /preview/
+
+User-Agent: Applebot-Extended
+Allow: /
+Disallow: /admin
+Disallow: /api/
+Disallow: /preview/
+
+User-Agent: CCBot
+Disallow: /
+
+Host: https://alanfaldoc.com
+Sitemap: https://alanfaldoc.com/sitemap.xml

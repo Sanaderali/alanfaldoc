@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "functions": {
+    "/admin/api/data/import": {
+      "maxDuration": 300
+    },
+    "/admin/api/upload": {},
+    "/uploads/[file]": {}
+  }
+}

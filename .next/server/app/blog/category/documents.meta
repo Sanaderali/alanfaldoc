@@ -1,0 +1,50 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/(site)/layout,_N_T_/(site)/blog/layout,_N_T_/(site)/blog/category/layout,_N_T_/(site)/blog/category/[slug]/layout,_N_T_/(site)/blog/category/[slug]/page,_N_T_/blog/category/documents"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/!KHNpdGUp",
+    "/!KHNpdGUp/blog/category/$d$slug/__PAGE__"
+  ],
+  "prefetchHints": {
+    "hints": 64,
+    "slots": {
+      "children": {
+        "hints": 32,
+        "slots": {
+          "children": {
+            "hints": 64,
+            "slots": {
+              "children": {
+                "hints": 96,
+                "slots": {
+                  "children": {
+                    "hints": 96,
+                    "slots": {
+                      "children": {
+                        "hints": 160,
+                        "slots": null
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "routeCache": {
+    "key": "/route-cache/APP_PAGE/3716630d360a01e8e0fd40b06ba4353e419875a4b6efa1874df6fbb428b77079/$/blog/category/documents",
+    "owner": {
+      "kind": "APP_PAGE",
+      "sourceRoute": "/(site)/blog/category/[slug]/page"
+    },
+    "isFallback": false
+  }
+}

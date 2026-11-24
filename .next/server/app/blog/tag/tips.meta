@@ -1,0 +1,50 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/(site)/layout,_N_T_/(site)/blog/layout,_N_T_/(site)/blog/tag/layout,_N_T_/(site)/blog/tag/[tag]/layout,_N_T_/(site)/blog/tag/[tag]/page,_N_T_/blog/tag/tips"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/!KHNpdGUp",
+    "/!KHNpdGUp/blog/tag/$d$tag/__PAGE__"
+  ],
+  "prefetchHints": {
+    "hints": 64,
+    "slots": {
+      "children": {
+        "hints": 32,
+        "slots": {
+          "children": {
+            "hints": 64,
+            "slots": {
+              "children": {
+                "hints": 96,
+                "slots": {
+                  "children": {
+                    "hints": 96,
+                    "slots": {
+                      "children": {
+                        "hints": 160,
+                        "slots": null
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "routeCache": {
+    "key": "/route-cache/APP_PAGE/19032483348c7b2de8a87383628d7300e8c1c23fb294eb222a071afddcc2dff9/$/blog/tag/tips",
+    "owner": {
+      "kind": "APP_PAGE",
+      "sourceRoute": "/(site)/blog/tag/[tag]/page"
+    },
+    "isFallback": false
+  }
+}

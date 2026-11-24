@@ -1,0 +1,37 @@
+1:"$Sreact.fragment"
+2:I[7121,[],""]
+3:I[4581,[],""]
+4:"static/chunks/8500-107859ed31978aa3.js"
+5:"static/chunks/8437-f247c3c76d03ac75.js"
+6:"static/chunks/app/(site)/page-541c93912e550b0a.js"
+7:I[8500,["8500","$4","8437","$5","13","$6"],""]
+e:I[484,[],"OutletBoundary"]
+f:"$Sreact.suspense"
+12:"ViewportBoundary"
+13:I[484,[],"$12"]
+14:"MetadataBoundary"
+15:I[484,[],"$14"]
+:HL["/_next/static/css/813816ec482e7899.css","style"]
+9:X
+c:X
+c:C
+d:[["children",{"s":"__PAGE__","h":160,"d":{"r":["$","$1","c",{"children":[["$","section",null,{"className":"max-w-xl mx-auto px-4 py-24 text-center","children":[["$","p",null,{"className":"text-6xl font-extrabold text-brand-text mb-4","children":"404"}],["$","h1",null,{"className":"text-2xl font-bold text-ink mb-3","children":"Page not found"}],["$","p",null,{"className":"text-gray-600 mb-8","children":["The page you are looking for doesn't exist or has moved. Try the home page, or ",["$","$L7",null,{"href":"/contact","className":"text-brand-text font-semibold hover:underline","children":"contact our team"}]," and we will point you to the right place."]}],["$","$L7",null,{"href":"/","className":"btn btn-primary","children":"Back to Home"}]]}],null,["$","$Le",null,{"children":["$","$f",null,{"name":"Next.MetadataOutlet","children":"$@10"}]}]]}],"p":"$@11","v":null,"s":"$9"}}]]
+a:[["children",{"s":"_not-found","h":96,"d":{"r":["$","$1","c",{"children":[null,["$","$L2",null,{"parallelRouterKey":"children","template":["$","$L3",null,{}]}]]}],"p":"$@b","v":"$c","s":"$9"},"c":"$Qd"}]]
+0:{"t":{"t":{"s":"","h":80,"d":{"r":["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/css/813816ec482e7899.css","precedence":"next"}]],["$","html",null,{"lang":"en","suppressHydrationWarning":true,"children":[["$","head",null,{"children":["$","script",null,{"dangerouslySetInnerHTML":{"__html":"try{var l=localStorage.getItem('aa-lang');if(l&&l!=='en'&&!/^\\/(admin|preview)/.test(location.pathname)){var d=document.documentElement;d.lang=l;d.dir=l==='ar'?'rtl':'ltr';d.setAttribute('data-tr','1');setTimeout(function(){d.removeAttribute('data-tr')},1200)}}catch(e){}"}}]}],["$","body",null,{"className":"antialiased","suppressHydrationWarning":true,"children":["$","$L2",null,{"parallelRouterKey":"children","template":["$","$L3",null,{}],"templateStyles":[],"templateScripts":null,"notFound":[["$","section",null,{"className":"max-w-xl mx-auto px-4 py-24 text-center","children":[["$","p",null,{"className":"text-6xl font-extrabold text-brand-text mb-4","children":"404"}],["$","h1",null,{"className":"text-2xl font-bold text-ink mb-3","children":"Page not found"}],["$","p",null,{"className":"text-gray-600 mb-8","children":["The page you are looking for doesn't exist or has moved. Try the home page, or ",["$","$L7",null,{"href":"/contact","className":"text-brand-text font-semibold hover:underline","children":"contact our team"}]," and we will point you to the right place."]}],["$","$L7",null,{"href":"/","className":"btn btn-primary","children":"Back to Home"}]]}],[]]}]}]]}]]}],"p":"$@8","v":null,"s":"$9"},"c":"$Qa"},"h":{"r":["$","$1","h",{"children":[["$","meta",null,{"name":"robots","content":"noindex"}],["$","$L13",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}],["$","meta","2",{"name":"theme-color","content":"#0A5C36"}]]}],["$","$L15",null,{"children":[["$","div",null,{"hidden":true,"children":["$","$f",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"Al Anfal Doc - Document Clearing & Business Setup in Dubai"}],["$","meta","1",{"name":"description","content":"Dubai company formation, trade licence renewal, government approvals, document attestation and visa application support for business owners, investors and expatriates."}],["$","meta","2",{"name":"application-name","content":"Al Anfal Doc"}],["$","meta","3",{"name":"robots","content":"index, follow"}],["$","meta","4",{"name":"googlebot","content":"index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1"}],["$","meta","5",{"property":"og:title","content":"Al Anfal Doc - Document Clearing & Business Setup in Dubai"}],["$","meta","6",{"property":"og:description","content":"Dubai company formation, trade licence renewal, government approvals, document attestation and visa application support for business owners, investors and expatriates."}],["$","meta","7",{"property":"og:url","content":"https://alanfaldoc.com"}],["$","meta","8",{"property":"og:site_name","content":"Al Anfal Doc"}],["$","meta","9",{"property":"og:locale","content":"en_AE"}],["$","meta","10",{"property":"og:image","content":"https://alanfaldoc.com/opengraph-image?d173cc7f463e39c4"}],["$","meta","11",{"property":"og:image:type","content":"image/png"}],["$","meta","12",{"property":"og:image:width","content":"1200"}],["$","meta","13",{"property":"og:image:height","content":"630"}],["$","meta","14",{"property":"og:image:alt","content":"Al Anfal Doc - Document Clearing & Business Setup in Dubai"}],["$","meta","15",{"property":"og:type","content":"website"}],["$","meta","16",{"name":"twitter:card","content":"summary_large_image"}],["$","meta","17",{"name":"twitter:title","content":"Al Anfal Doc - Document Clearing & Business Setup in Dubai"}],["$","meta","18",{"name":"twitter:description","content":"Dubai company formation, trade licence renewal, government approvals, document attestation and visa application support for business owners, investors and expatriates."}],["$","meta","19",{"name":"twitter:image","content":"https://alanfaldoc.com/opengraph-image?d173cc7f463e39c4"}],["$","meta","20",{"name":"twitter:image:alt","content":"Al Anfal Doc - Document Clearing & Business Setup in Dubai"}],"$L16","$L17","$L18","$L19","$L1a","$L1b","$L1c"]}]}],null]}],null]}],"p":"$@1d","v":null,"s":"$9"}},"a":"$@1e","u":"$@1f","b":"m_aoOApcRbH53g-E-JVq2"}
+20:I[6869,[],"IconMark"]
+10:null
+16:["$","meta","21",{"name":"twitter:image:type","content":"image/png"}]
+17:["$","meta","22",{"name":"twitter:image:width","content":"1200"}]
+18:["$","meta","23",{"name":"twitter:image:height","content":"630"}]
+19:["$","link","24",{"rel":"icon","href":"/favicon.ico?70761b3506b05a12","type":"image/x-icon","sizes":"16x16"}]
+1a:["$","link","25",{"rel":"icon","href":"/icon.png?9107c77e93bdde84","type":"image/png","sizes":"512x512"}]
+1b:["$","link","26",{"rel":"apple-touch-icon","href":"/apple-icon.png?ac5cf9af14a47ee9","type":"image/png","sizes":"180x180"}]
+1c:["$","$L20","27",{}]
+9:300
+1f:true
+9:C
+1e:0
+b:"$undefined"
+8:"$undefined"
+1d:"$undefined"
+11:"$undefined"

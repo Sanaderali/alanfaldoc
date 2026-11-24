@@ -1,0 +1,40 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/(site)/layout,_N_T_/(site)/countries/layout,_N_T_/(site)/countries/page,_N_T_/countries"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/!KHNpdGUp",
+    "/!KHNpdGUp/countries/__PAGE__"
+  ],
+  "prefetchHints": {
+    "hints": 64,
+    "slots": {
+      "children": {
+        "hints": 32,
+        "slots": {
+          "children": {
+            "hints": 64,
+            "slots": {
+              "children": {
+                "hints": 160,
+                "slots": null
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "routeCache": {
+    "key": "/route-cache/APP_PAGE/f6621045ded4cf2254c3f5c8b6a4c8d0ffcd4ae04f7bc585207a65583f8ba89e/$/countries",
+    "owner": {
+      "kind": "APP_PAGE",
+      "sourceRoute": "/(site)/countries/page"
+    },
+    "isFallback": false
+  }
+}
